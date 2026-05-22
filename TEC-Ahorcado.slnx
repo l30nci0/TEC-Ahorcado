@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="LetterClashClient/LetterClashClient.csproj" Id="4d1986da-fbd7-4e27-a678-0a5b7f57491e" />
+  <Project Path="LetterClashServer/LetterClashServer.csproj" Id="7801dffc-55e1-4e14-b3ef-a09331116e75" />
+</Solution>
