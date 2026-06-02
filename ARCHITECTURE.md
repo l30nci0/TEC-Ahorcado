@@ -122,13 +122,13 @@ LetterClashClient/
 ├── App.xaml.cs                        # Código subyacente de App.xaml (inicializaciones)
 │
 ├── Views/                             # Vistas de WPF (XAML + Code-Behind mínimo)
-│   ├── LoginView.xaml                 # Pantalla de inicio de sesión
-│   ├── RegisterView.xaml              # Pantalla de registro de nuevos usuarios
-│   ├── LobbyView.xaml                 # Lista de partidas públicas y código de acceso a privada
-│   ├── GameView.xaml                  # Pantalla de juego (ahorcado, chat y puntuación)
-│   ├── ProfileView.xaml               # Visualización y edición de perfil de usuario
-│   ├── HistoryView.xaml               # Historial de partidas jugadas
-│   └── LeaderboardView.xaml           # Marcador global (Top 100)
+│   ├── GUILoginView.xaml              # Pantalla de inicio de sesión
+│   ├── GUIRegisterView.xaml           # Pantalla de registro de nuevos usuarios
+│   ├── GUILobbyView.xaml              # Lista de partidas públicas y código de acceso a privada
+│   ├── GUIGameView.xaml               # Pantalla de juego (ahorcado, chat y puntuación)
+│   ├── GUIProfileView.xaml            # Visualización y edición de perfil de usuario
+│   ├── GUIHistoryView.xaml            # Historial de partidas jugadas
+│   └── GUILeaderboardView.xaml        # Marcador global (Top 100)
 │
 ├── ViewModels/                        # Lógica de presentación y enlace de datos (MVVM)
 │   ├── ViewModelBase.cs               # Base con implementación de INotifyPropertyChanged
@@ -182,7 +182,7 @@ sequenceDiagram
     S->>M: RegistrarPartidaEnMemoria(código, partidaId)
     S-->>C1: Retornar CódigoAcceso (e.g. "AB12CD")
 
-    Note over C1,C2: Cliente 1 espera en la pantalla GUIPartida
+    Note over C1,C2: Cliente 1 espera en la pantalla GUIPartidaView
 
     C2->>S: UnirseAPartidaPrivada("AB12CD")
     S->>M: ObtenerPartidaPorCodigo("AB12CD")
