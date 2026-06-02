@@ -73,18 +73,65 @@
   <ItemGroup>
     <Content Include="Service1.svc" />
     <Content Include="Web.config" />
+    <Content Include="DataAccess\Context\LetterClashModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LetterClashModel.edmx</DependentUpon>
+      <LastGenOutput>LetterClashModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataAccess\Context\LetterClashModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LetterClashModel.edmx</DependentUpon>
+      <LastGenOutput>LetterClashModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>
     </Compile>
     <Compile Include="IService1.cs" />
+    <Compile Include="DataAccess\Context\Jugador.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LetterClashModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Context\LetterClashModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LetterClashModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Context\LetterClashModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LetterClashModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Context\LetterClashModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LetterClashModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Context\Palabra.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LetterClashModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Context\Partida.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LetterClashModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="DataAccess\Context\LetterClashModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LetterClashModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataAccess\Context\LetterClashModel.edmx.diagram">
+      <DependentUpon>LetterClashModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
