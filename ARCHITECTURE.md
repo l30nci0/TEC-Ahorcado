@@ -86,8 +86,13 @@ LetterClashServer/
 │       └── CryptographyHelper.cs      # Hashing de contraseñas y sanitización
 │
 ├── DataAccess/                        # Capa de Persistencia (SQL Server)
-│   ├── ConnectionManager.cs           # Proveedor de conexiones SQL
-│   └── Repositories/                  # Consultas SQL nativas usando ADO.NET
+│   ├── Context/                       # Contexto de Entity Framework 6 y entidades auto-generadas
+│   │   ├── LetterClashContext.cs      # DbContext para gestionar las entidades en la BD
+│   │   ├── Jugador.cs                 # Entidad mapeada de la tabla Jugador
+│   │   ├── Palabra.cs                 # Entidad mapeada de la tabla Palabra
+│   │   └── Partida.cs                 # Entidad mapeada de la tabla Partida
+│   │
+│   └── Repositories/                  # Acceso a datos y consultas utilizando EF 6
 │       ├── JugadorRepository.cs
 │       ├── PalabraRepository.cs
 │       └── PartidaRepository.cs
