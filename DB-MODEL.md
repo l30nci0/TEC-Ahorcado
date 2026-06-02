@@ -32,9 +32,11 @@ Contiene el catálogo de palabras disponibles para el juego, asociadas a su resp
 ```typescript
 type Palabra {
   IDPalabra: int [auto_increment, identity]
-  Palabra: str[3:16] [unique]
+  Palabra: str[3:16]
   Descripción: str[:128]
   Idioma: enum('ESPAÑOL', 'INGLÉS')
+
+  [unique (Palabra, Idioma)]
 }
 ```
 

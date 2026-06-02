@@ -47,7 +47,7 @@ CREATE TABLE Palabra (
 
     -- Restricciones de Clave y Unicidad
     CONSTRAINT PK_Palabra PRIMARY KEY (IDPalabra),
-    CONSTRAINT UQ_Palabra_Palabra UNIQUE (Palabra),
+    CONSTRAINT UQ_Palabra_Palabra_Idioma UNIQUE (Palabra, Idioma),
 
     -- Validación del Enum para Idioma
     CONSTRAINT CK_Palabra_Idioma CHECK (Idioma IN ('ESPAÑOL', 'INGLÉS'))
