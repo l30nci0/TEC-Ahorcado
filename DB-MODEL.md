@@ -64,11 +64,46 @@ El siguiente script en SQL Server (T-SQL) crea las tablas necesarias respetando 
 
 ```sql
 -- =========================================================================
--- SCRIPT DE CREACIÓN DE BASE DE DATOS: LETTERCLASH
+-- SCRIPT DE CREACIÓN DE BASE DE DATOS Y SEGURIDAD: LETTERCLASH
 -- =========================================================================
 
--- 1. CREACIÓN DE LA TABLA: Palabra
--- Se crea primero porque 'Partida' depende de ella.
+-- 1. CREACIÓN DE LA BASE DE DATOS
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'LetterClashDB')
+BEGIN
+    CREATE DATABASE LetterClashDB;
+END;
+GO
+
+USE LetterClashDB;
+GO
+
+-- 2. CONFIGURACIÓN DE SEGURIDAD (AUTENTICACIÓN SQL SERVER)
+-- Se crea el Login a nivel de servidor (debe ejecutarse desde la base de datos master)
+USE master;
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.server_principals WHERE name = 'LetterClashUser')
+BEGIN
+    -- Crea el inicio de sesión para usar autenticación de SQL Server
+    CREATE LOGIN LetterClashUser WITH PASSWORD = 'TuContraseñaSegura123!', DEFAULT_DATABASE = LetterClashDB;
+END;
+GO
+
+-- Se crea el usuario de base de datos en LetterClashDB y se le asocian los permisos correspondientes
+USE LetterClashDB;
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'LetterClashUser')
+BEGIN
+    CREATE USER LetterClashUser FOR LOGIN LetterClashUser;
+    
+    -- Se le otorgan permisos de propietario únicamente sobre la base de datos del juego
+    ALTER ROLE db_owner ADD MEMBER LetterClashUser;
+END;
+GO
+
+-- 3. CREACIÓN DE LAS TABLAS
+-- Se crea 'Palabra' primero porque 'Partida' depende de ella.
 CREATE TABLE Palabra (
     IDPalabra INT IDENTITY(1,1) NOT NULL,
     Palabra NVARCHAR(16) NOT NULL,
@@ -140,5 +175,4 @@ CREATE TABLE Partida (
     CONSTRAINT CK_Partida_Resultado CHECK (Resultado IN ('ADIVINADA', 'SIN_ADIVINAR', 'ABANDONADA')),
     CONSTRAINT CK_Partida_Privacidad CHECK (Privacidad IN ('PRIVADA', 'PÚBLICA'))
 );
-GO
 ```
