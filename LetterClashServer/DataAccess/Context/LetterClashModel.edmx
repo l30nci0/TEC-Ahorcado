@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LetterClashServer.DataAccess.Context.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Jugador">
+          <Key>
+            <PropertyRef Name="IDJugador" />
+          </Key>
+          <Property Name="IDJugador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="NombreDeUsuario" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" />
+          <Property Name="Contrasena" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Puntuacion" Type="int" Nullable="false" />
+          <Property Name="Avatar" Type="varbinary(max)" />
+          <Property Name="IdiomaPreferido" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaDeNacimiento" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Palabra">
+          <Key>
+            <PropertyRef Name="IDPalabra" />
+          </Key>
+          <Property Name="IDPalabra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Palabra" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="128" />
+          <Property Name="Idioma" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Partida">
+          <Key>
+            <PropertyRef Name="IDPartida" />
+          </Key>
+          <Property Name="IDPartida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDAnfitrion" Type="int" Nullable="false" />
+          <Property Name="IDAdivinador" Type="int" />
+          <Property Name="IDPalabra" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Resultado" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Privacidad" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Turno" Type="int" Nullable="false" />
+          <Property Name="CodigoAcceso" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="FechaDeJuego" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Partida_Adivinador">
+          <End Role="Jugador" Type="Self.Jugador" Multiplicity="0..1" />
+          <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jugador">
+              <PropertyRef Name="IDJugador" />
+            </Principal>
+            <Dependent Role="Partida">
+              <PropertyRef Name="IDAdivinador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partida_Anfitrion">
+          <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+          <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jugador">
+              <PropertyRef Name="IDJugador" />
+            </Principal>
+            <Dependent Role="Partida">
+              <PropertyRef Name="IDAnfitrion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partida_Palabra">
+          <End Role="Palabra" Type="Self.Palabra" Multiplicity="1" />
+          <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Palabra">
+              <PropertyRef Name="IDPalabra" />
+            </Principal>
+            <Dependent Role="Partida">
+              <PropertyRef Name="IDPalabra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LetterClashServerDataAccessContextStoreContainer">
+          <EntitySet Name="Jugador" EntityType="Self.Jugador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Palabra" EntityType="Self.Palabra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Partida" EntityType="Self.Partida" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Partida_Adivinador" Association="Self.FK_Partida_Adivinador">
+            <End Role="Jugador" EntitySet="Jugador" />
+            <End Role="Partida" EntitySet="Partida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partida_Anfitrion" Association="Self.FK_Partida_Anfitrion">
+            <End Role="Jugador" EntitySet="Jugador" />
+            <End Role="Partida" EntitySet="Partida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partida_Palabra" Association="Self.FK_Partida_Palabra">
+            <End Role="Palabra" EntitySet="Palabra" />
+            <End Role="Partida" EntitySet="Partida" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LetterClashServer.DataAccess.Context" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Jugador">
+          <Key>
+            <PropertyRef Name="IDJugador" />
+          </Key>
+          <Property Name="IDJugador" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NombreDeUsuario" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Contrasena" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Puntuacion" Type="Int32" Nullable="false" />
+          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IdiomaPreferido" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaDeNacimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Partidas" Relationship="Self.FK_Partida_Adivinador" FromRole="Jugador" ToRole="Partida" />
+          <NavigationProperty Name="Partidas1" Relationship="Self.FK_Partida_Anfitrion" FromRole="Jugador" ToRole="Partida" />
+        </EntityType>
+        <EntityType Name="Palabra">
+          <Key>
+            <PropertyRef Name="IDPalabra" />
+          </Key>
+          <Property Name="IDPalabra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Palabra1" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Idioma" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Partidas" Relationship="Self.FK_Partida_Palabra" FromRole="Palabra" ToRole="Partida" />
+        </EntityType>
+        <EntityType Name="Partida">
+          <Key>
+            <PropertyRef Name="IDPartida" />
+          </Key>
+          <Property Name="IDPartida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDAnfitrion" Type="Int32" Nullable="false" />
+          <Property Name="IDAdivinador" Type="Int32" />
+          <Property Name="IDPalabra" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Resultado" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Privacidad" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Turno" Type="Int32" Nullable="false" />
+          <Property Name="CodigoAcceso" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaDeJuego" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Jugador" Relationship="Self.FK_Partida_Adivinador" FromRole="Partida" ToRole="Jugador" />
+          <NavigationProperty Name="Jugador1" Relationship="Self.FK_Partida_Anfitrion" FromRole="Partida" ToRole="Jugador" />
+          <NavigationProperty Name="Palabra" Relationship="Self.FK_Partida_Palabra" FromRole="Partida" ToRole="Palabra" />
+        </EntityType>
+        <Association Name="FK_Partida_Adivinador">
+          <End Role="Jugador" Type="Self.Jugador" Multiplicity="0..1" />
+          <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jugador">
+              <PropertyRef Name="IDJugador" />
+            </Principal>
+            <Dependent Role="Partida">
+              <PropertyRef Name="IDAdivinador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partida_Anfitrion">
+          <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+          <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jugador">
+              <PropertyRef Name="IDJugador" />
+            </Principal>
+            <Dependent Role="Partida">
+              <PropertyRef Name="IDAnfitrion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partida_Palabra">
+          <End Role="Palabra" Type="Self.Palabra" Multiplicity="1" />
+          <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Palabra">
+              <PropertyRef Name="IDPalabra" />
+            </Principal>
+            <Dependent Role="Partida">
+              <PropertyRef Name="IDPalabra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LetterClashDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Jugadors" EntityType="Self.Jugador" />
+          <EntitySet Name="Palabras" EntityType="Self.Palabra" />
+          <EntitySet Name="Partidas" EntityType="Self.Partida" />
+          <AssociationSet Name="FK_Partida_Adivinador" Association="Self.FK_Partida_Adivinador">
+            <End Role="Jugador" EntitySet="Jugadors" />
+            <End Role="Partida" EntitySet="Partidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partida_Anfitrion" Association="Self.FK_Partida_Anfitrion">
+            <End Role="Jugador" EntitySet="Jugadors" />
+            <End Role="Partida" EntitySet="Partidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partida_Palabra" Association="Self.FK_Partida_Palabra">
+            <End Role="Palabra" EntitySet="Palabras" />
+            <End Role="Partida" EntitySet="Partidas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LetterClashServerDataAccessContextStoreContainer" CdmEntityContainer="LetterClashDBEntities">
+          <EntitySetMapping Name="Jugadors">
+            <EntityTypeMapping TypeName="LetterClashServer.DataAccess.Context.Jugador">
+              <MappingFragment StoreEntitySet="Jugador">
+                <ScalarProperty Name="IDJugador" ColumnName="IDJugador" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NombreDeUsuario" ColumnName="NombreDeUsuario" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="Puntuacion" ColumnName="Puntuacion" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="IdiomaPreferido" ColumnName="IdiomaPreferido" />
+                <ScalarProperty Name="FechaDeNacimiento" ColumnName="FechaDeNacimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Palabras">
+            <EntityTypeMapping TypeName="LetterClashServer.DataAccess.Context.Palabra">
+              <MappingFragment StoreEntitySet="Palabra">
+                <ScalarProperty Name="IDPalabra" ColumnName="IDPalabra" />
+                <ScalarProperty Name="Palabra1" ColumnName="Palabra" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Idioma" ColumnName="Idioma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partidas">
+            <EntityTypeMapping TypeName="LetterClashServer.DataAccess.Context.Partida">
+              <MappingFragment StoreEntitySet="Partida">
+                <ScalarProperty Name="IDPartida" ColumnName="IDPartida" />
+                <ScalarProperty Name="IDAnfitrion" ColumnName="IDAnfitrion" />
+                <ScalarProperty Name="IDAdivinador" ColumnName="IDAdivinador" />
+                <ScalarProperty Name="IDPalabra" ColumnName="IDPalabra" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Privacidad" ColumnName="Privacidad" />
+                <ScalarProperty Name="Turno" ColumnName="Turno" />
+                <ScalarProperty Name="CodigoAcceso" ColumnName="CodigoAcceso" />
+                <ScalarProperty Name="FechaDeJuego" ColumnName="FechaDeJuego" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
