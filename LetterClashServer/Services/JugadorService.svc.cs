@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using LetterClashServer.Contracts;
 using LetterClashServer.Domain.Models;
 using LetterClashServer.DataAccess.Repositories;
@@ -15,8 +16,22 @@ namespace LetterClashServer.Services {
 
     public List<PartidaDTO> ConsultarHistorial(int jugadorID) {
       if (jugadorID <= 0) {
-        throw new ArgumentException("El ID del jugador debe ser mayor a cero.");
+        var fault = new ServiceFault {
+          Mensaje = "El ID del jugador debe ser un entero positivo.",
+          CodigoError = "PARAMETRO_INVALIDO",
+          Detalle = "jugadorID <= 0"
+        };
+        throw new FaultException<ServiceFault>(fault, "ID de jugador inválido.");
       }
+
+      if (!jugadorRepository.ExisteJugador(jugadorID)) {
+        var fault = new ServiceFault {
+          Mensaje = "El jugador especificado no existe en el sistema.",
+          CodigoError = "RECURSO_NO_ENCONTRADO",
+          Detalle = $"Jugador con ID {jugadorID} no encontrado."
+        };
+        throw new FaultException<ServiceFault>(fault, "Jugador no encontrado.");
+      } 
 
       var partidas = jugadorRepository.ObtenerHistorialPartidas(jugadorID);
 

@@ -18,6 +18,14 @@ namespace LetterClashServer.DataAccess.Repositories {
       }
     }
 
+    public bool ExisteJugador(int jugadorID) {
+      using (var context = new LetterClashDBEntities()) {
+        return context.Jugadores
+                      .AsNoTracking()
+                      .Any(j => j.IDJugador == jugadorID);
+      }
+    } 
+
     public List<Jugador> ObtenerMarcadores() {
       using (var context = new LetterClashDBEntities()) {
         return context.Jugadores

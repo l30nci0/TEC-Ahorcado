@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using LetterClashServer.Contracts;
 using LetterClashServer.Domain.Models;
 using LetterClashServer.DataAccess.Repositories;
@@ -9,8 +10,14 @@ namespace LetterClashServer.Services {
     private readonly PalabraRepository palabraRepository = new PalabraRepository();
 
     public List<PalabraDTO> ObtenerPalabrasPorIdioma(string idioma) {
+      // Validamos que el idioma sea uno de los definidos en el sistema
       if (string.IsNullOrEmpty(idioma) || !Idiomas.EsValido(idioma)) {
-        throw new System.ArgumentException("El idioma proporcionado no es válido. Debe ser 'ESPAÑOL' o 'INGLÉS'.");
+        var fault = new ServiceFault {
+          Mensaje = "El idioma proporcionado no es válido. Debe ser 'ESPAÑOL' o 'INGLÉS'.",
+          CodigoError = "PARAMETRO_INVALIDO",
+          Detalle = $"idioma = '{idioma}'"
+        };
+        throw new FaultException<ServiceFault>(fault, "Idioma inválido.");
       }
 
       var palabras = palabraRepository.ObtenerPalabrasPorIdioma(idioma);
