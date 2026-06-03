@@ -71,7 +71,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Service1.svc" />
+    <Content Include="Services\JugadorService.svc" />
+    <Content Include="Services\LobbyService.svc" />
+    <Content Include="Services\GameService.svc" />
+    <Content Include="Services\PalabraService.svc" />
     <Content Include="Web.config" />
     <Content Include="DataAccess\Context\LetterClashModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -85,10 +88,26 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service1.svc.cs">
-      <DependentUpon>Service1.svc</DependentUpon>
+    <Compile Include="Contracts\IJugadorService.cs" />
+    <Compile Include="Contracts\ILobbyService.cs" />
+    <Compile Include="Contracts\IGameService.cs" />
+    <Compile Include="Contracts\IPalabraService.cs" />
+    <Compile Include="Contracts\IGameServiceCallback.cs" />
+    <Compile Include="Domain\Models\JugadorDTO.cs" />
+    <Compile Include="Domain\Models\PalabraDTO.cs" />
+    <Compile Include="Domain\Models\PartidaDTO.cs" />
+    <Compile Include="Services\JugadorService.svc.cs">
+      <DependentUpon>JugadorService.svc</DependentUpon>
     </Compile>
-    <Compile Include="IService1.cs" />
+    <Compile Include="Services\LobbyService.svc.cs">
+      <DependentUpon>LobbyService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\GameService.svc.cs">
+      <DependentUpon>GameService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\PalabraService.svc.cs">
+      <DependentUpon>PalabraService.svc</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\Context\Jugador.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
