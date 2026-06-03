@@ -108,6 +108,7 @@
     <Compile Include="Services\PalabraService.svc.cs">
       <DependentUpon>PalabraService.svc</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\Repositories\PalabraRepository.cs" />
     <Compile Include="DataAccess\Context\Jugador.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
