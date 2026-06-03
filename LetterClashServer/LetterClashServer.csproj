@@ -94,6 +94,7 @@
     <Compile Include="Contracts\IPalabraService.cs" />
     <Compile Include="Contracts\IGameServiceCallback.cs" />
     <Compile Include="Domain\Models\JugadorDTO.cs" />
+    <Compile Include="Domain\Models\JugadorPublicoDTO.cs" />
     <Compile Include="Domain\Models\PalabraDTO.cs" />
     <Compile Include="Domain\Models\PartidaDTO.cs" />
     <Compile Include="Domain\Models\Idiomas.cs" />
@@ -110,6 +111,7 @@
       <DependentUpon>PalabraService.svc</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\Repositories\PalabraRepository.cs" />
+    <Compile Include="DataAccess\Repositories\JugadorRepository.cs" />
     <Compile Include="DataAccess\Context\Jugador.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

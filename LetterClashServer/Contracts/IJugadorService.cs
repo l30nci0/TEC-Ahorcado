@@ -12,7 +12,7 @@ namespace LetterClashServer.Contracts {
     List<PartidaDTO> ConsultarHistorial(int jugadorID);
 
     [OperationContract]
-    List<JugadorDTO> ConsultarMarcadores();
+    List<JugadorPublicoDTO> ConsultarMarcadores();
 
     [OperationContract]
     bool CambiarIdiomaPreferido(int jugadorID, string idioma);
