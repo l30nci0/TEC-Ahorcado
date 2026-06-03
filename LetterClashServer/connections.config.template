@@ -1,0 +1,10 @@
+<!--
+  INSTRUCCIONES:
+  1. Copia este archivo y cámbiale el nombre a "connections.config" en esta misma carpeta.
+  2. Modifica el atributo "data source" con el nombre de tu servidor SQL Server local.
+  3. Modifica la contraseña "password" si asignaste una diferente en tu script de seguridad.
+  4. Nota: El archivo "connections.config" está ignorado en Git para evitar subir credenciales locales o causar conflictos.
+-->
+<connectionStrings>
+  <add name="LetterClashDBEntities" connectionString="metadata=res://*/DataAccess.Context.LetterClashModel.csdl|res://*/DataAccess.Context.LetterClashModel.ssdl|res://*/DataAccess.Context.LetterClashModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=TU_SERVIDOR_SQL_AQUÍ;initial catalog=LetterClashDB;user id=LetterClashUser;password=TU_CONTRASEÑA_AQUÍ;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+</connectionStrings>

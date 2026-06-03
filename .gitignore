@@ -427,3 +427,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Local connection strings configuration for WCF/EF
+LetterClashServer/connections.config
