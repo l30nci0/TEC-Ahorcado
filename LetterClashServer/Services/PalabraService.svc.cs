@@ -9,6 +9,10 @@ namespace LetterClashServer.Services {
     private readonly PalabraRepository palabraRepository = new PalabraRepository();
 
     public List<PalabraDTO> ObtenerPalabrasPorIdioma(string idioma) {
+      if (string.IsNullOrEmpty(idioma) || !Idiomas.EsValido(idioma)) {
+        throw new System.ArgumentException("El idioma proporcionado no es válido. Debe ser 'ESPAÑOL' o 'INGLÉS'.");
+      }
+
       var palabras = palabraRepository.ObtenerPalabrasPorIdioma(idioma);
        
       // Nota: En C# la propiedad de la palabra se llama Palabra1 debido a la desambiguación de EF
