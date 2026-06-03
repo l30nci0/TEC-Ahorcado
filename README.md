@@ -59,8 +59,8 @@ Para más detalles, consulta el documento completo de [Arquitectura y Componente
 * **SQL Server** LocalDB o una instancia Express ejecutable.
 
 ### 2. Base de Datos
-1. Ejecuta los scripts de creación de base de datos definidos en la documentación (ver el modelo en [DB-MODEL.md](./DB-MODEL.md)).
-2. Configura tu cadena de conexión en el archivo `Web.config` del servidor (`LetterClashServer/Web.config`).
+1. Ejecuta los scripts de creación de la base de datos (puedes usar el script [DB-MODEL.sql](./DB-MODEL.sql) para la estructura del esquema y [DB-SEED.sql](./DB-SEED.sql) para poblar las palabras de juego).
+2. Copia el archivo `LetterClashServer/connections.config.template`, renómbralo como `connections.config` en la misma carpeta y configura allí las credenciales y nombre de tu servidor SQL Server local.
 
 ### 3. Ejecución del Servidor
 1. Abre la solución `TEC-Ahorcado.slnx` en Visual Studio.
