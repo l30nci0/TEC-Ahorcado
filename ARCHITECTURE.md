@@ -103,9 +103,22 @@ LetterClashServer/
 │   └── Utilities/
 │       └── CustomLogger.cs            # Registro de logs del servidor
 │
-├── Web.config                         # Configuración de WCF, Endpoints (NetTcpBinding) e IIS Express
-└── Service1.svc                       # Archivo de host de servicio IIS/WCF
+├── Web.config                         # Configuración de WCF, Endpoints (HTTP/Dúplex) e IIS Express
+├── JugadorService.svc                 # Archivo de host del servicio de Jugador
+├── LobbyService.svc                   # Archivo de host del servicio de Lobby
+├── GameService.svc                    # Archivo de host del servicio de Game (dúplex)
+└── PalabraService.svc                 # Archivo de host del servicio de Palabra
 ```
+
+### 3.1 Ciclo de Vida y Hospedaje de Servicios (WCF)
+
+A diferencia de los entornos de un solo proceso en ejecución continua (como Bun o Node.js), los servicios WCF en este servidor se ejecutan bajo un esquema de **Hospedaje Administrado** por IIS/IIS Express:
+
+1. **Hospedador del Proceso (Process Host):** IIS Express se inicia de forma pasiva escuchando en el puerto asignado. Los servicios no ocupan memoria hasta recibir la primera petición del cliente.
+2. **Activación Bajo Demanda (On-Demand):** WCF intercepta la llamada dirigida a un archivo `.svc` y en ese instante instancia la clase de servicio correspondiente para resolver la petición.
+3. **Modos de Instanciación (`InstanceContextMode`):**
+   * **`PerCall` (Por llamada - Predeterminado):** WCF crea una nueva instancia del servicio para cada petición entrante y la destruye inmediatamente tras finalizar la ejecución. Esto asegura que los servicios sean libres de estado (*stateless*). Se aplica a: `JugadorService`, `LobbyService` y `PalabraService`.
+   * **`Single` (Singleton):** Se crea una única instancia del servicio para todo el tiempo de vida de la aplicación. Todas las peticiones de todos los clientes comparten este mismo objeto en memoria. Se aplica de forma obligatoria a: `GameService`, permitiendo que el motor de juego en memoria (`GameSessionManager`) centralice el flujo de partidas multijugador activas en tiempo real.
 
 ---
 
