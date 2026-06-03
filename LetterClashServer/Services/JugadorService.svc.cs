@@ -8,7 +8,13 @@ using LetterClashServer.DataAccess.Repositories;
 
 namespace LetterClashServer.Services {
   public class JugadorService : IJugadorService {
-    private readonly JugadorRepository jugadorRepository = new JugadorRepository();
+    private readonly JugadorRepository jugadorRepository;
+
+    public JugadorService() : this(new JugadorRepository()) {}
+
+    public JugadorService(JugadorRepository repository) {
+      this.jugadorRepository = repository;
+    }
 
     public bool ActualizarPerfil(JugadorDTO jugadorDTO) {
       return false;

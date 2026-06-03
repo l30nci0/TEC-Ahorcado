@@ -7,7 +7,13 @@ using LetterClashServer.DataAccess.Repositories;
 
 namespace LetterClashServer.Services {
   public class PalabraService : IPalabraService {
-    private readonly PalabraRepository palabraRepository = new PalabraRepository();
+    private readonly PalabraRepository palabraRepository;
+
+    public PalabraService() : this(new PalabraRepository()) {}
+
+    public PalabraService(PalabraRepository repository) {
+      this.palabraRepository = repository;
+    }
 
     public List<PalabraDTO> ObtenerPalabrasPorIdioma(string idioma) {
       // Validamos que el idioma sea uno de los definidos en el sistema

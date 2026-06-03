@@ -7,7 +7,13 @@ using LetterClashServer.DataAccess.Repositories;
 
 namespace LetterClashServer.Services {
   public class LobbyService : ILobbyService {
-    private readonly PartidaRepository partidaRepository = new PartidaRepository();
+    private readonly PartidaRepository partidaRepository;
+
+    public LobbyService() : this(new PartidaRepository()) {}
+
+    public LobbyService(PartidaRepository repository) {
+      this.partidaRepository = repository;
+    }
 
     public List<PartidaDTO> ObtenerPartidasLobby() {
       var partidas = partidaRepository.ObtenerPartidasDisponibles();

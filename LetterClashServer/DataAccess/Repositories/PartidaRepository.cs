@@ -5,7 +5,7 @@ using LetterClashServer.DataAccess.Context;
 
 namespace LetterClashServer.DataAccess.Repositories {
   public class PartidaRepository {
-    public List<Partida> ObtenerPartidasDisponibles() {
+    public virtual List<Partida> ObtenerPartidasDisponibles() {
       using (var context = new LetterClashDBEntities()) {
         return context.Partidas
                       .AsNoTracking()

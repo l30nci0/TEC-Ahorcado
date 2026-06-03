@@ -5,7 +5,7 @@ using LetterClashServer.DataAccess.Context;
 
 namespace LetterClashServer.DataAccess.Repositories {
   public class JugadorRepository {
-    public List<Partida> ObtenerHistorialPartidas(int jugadorID) {
+    public virtual List<Partida> ObtenerHistorialPartidas(int jugadorID) {
       using (var context = new LetterClashDBEntities()) {
         return context.Partidas
                       .AsNoTracking()
@@ -18,7 +18,7 @@ namespace LetterClashServer.DataAccess.Repositories {
       }
     }
 
-    public bool ExisteJugador(int jugadorID) {
+    public virtual bool ExisteJugador(int jugadorID) {
       using (var context = new LetterClashDBEntities()) {
         return context.Jugadores
                       .AsNoTracking()
@@ -26,7 +26,7 @@ namespace LetterClashServer.DataAccess.Repositories {
       }
     } 
 
-    public List<Jugador> ObtenerMarcadores() {
+    public virtual List<Jugador> ObtenerMarcadores() {
       using (var context = new LetterClashDBEntities()) {
         return context.Jugadores
                       .AsNoTracking()

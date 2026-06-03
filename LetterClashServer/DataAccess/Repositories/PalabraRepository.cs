@@ -5,7 +5,7 @@ using LetterClashServer.DataAccess.Context;
 
 namespace LetterClashServer.DataAccess.Repositories {
   public class PalabraRepository {
-    public List<Palabra> ObtenerPalabrasPorIdioma(string idioma) {
+    public virtual List<Palabra> ObtenerPalabrasPorIdioma(string idioma) {
       using (var context = new LetterClashDBEntities()) {
         // Usamos AsNoTracking() para optimizar consultas de solo lectura
         return context.Palabras
