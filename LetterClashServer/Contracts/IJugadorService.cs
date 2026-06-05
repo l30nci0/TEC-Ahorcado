@@ -20,5 +20,9 @@ namespace LetterClashServer.Contracts {
     [OperationContract]
     [FaultContract(typeof(ServiceFault))]
     bool CambiarIdiomaPreferido(int jugadorID, string idioma);
+
+    [OperationContract]
+    [FaultContract(typeof(ServiceFault))]
+    bool CambiarContrasena(int jugadorID, string contrasenaActual, string nuevaContrasena);
   }
 }

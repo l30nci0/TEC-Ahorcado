@@ -4,7 +4,7 @@ using LetterClashServer.Domain.Models;
 namespace LetterClashServer.Contracts {
   public interface IGameServiceCallback {
     [OperationContract(IsOneWay = true)]
-    void OnJugadorSeUnio(JugadorDTO jugadorDTO);
+    void OnJugadorSeUnio(JugadorPublicoDTO jugadorDTO);
 
     [OperationContract(IsOneWay = true)]
     void OnLetraPropuesta(char letra, bool esCorrecta, string palabraRevelada, int vidaRestante);

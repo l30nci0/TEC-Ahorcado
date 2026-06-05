@@ -72,5 +72,9 @@ namespace LetterClashServer.Services {
     public bool CambiarIdiomaPreferido(int jugadorID, string idioma) {
       return false;
     }
+
+    public bool CambiarContrasena(int jugadorID, string contrasenaActual, string nuevaContrasena) {
+      return false;
+    }
   }
 }
