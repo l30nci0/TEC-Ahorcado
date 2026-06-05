@@ -22,11 +22,11 @@ namespace LetterClashServer.Services {
       this.palabraRepository = palabraRepo;
     }
 
-    public List<PartidaDTO> ObtenerPartidasLobby() {
+    public ServiceResult<List<PartidaDTO>> ObtenerPartidasLobby() {
       try {
         var partidas = partidaRepository.ObtenerPartidasDisponibles();
 
-        return partidas.Select(p => new PartidaDTO {
+        var dtos = partidas.Select(p => new PartidaDTO {
           IDPartida = p.IDPartida,
           IDAnfitrion = p.IDAnfitrion,
           NombreAnfitrion = p.Jugador.NombreDeUsuario,
@@ -41,185 +41,168 @@ namespace LetterClashServer.Services {
           CodigoAcceso = p.CodigoAcceso,
           FechaDeJuego = p.FechaDeJuego
         }).ToList();
+
+        return ServiceResult<List<PartidaDTO>>.Success(dtos);
       } catch (Exception ex) {
-        var fault = new ServiceFault {
-          Mensaje = "No ha sido posible recuperar la información del lobby debido a un error en el sistema. Intente de nuevo más tarde.",
-          CodigoError = "ERROR_INTERNO",
-          Detalle = ex.Message
-        };
-        throw new FaultException<ServiceFault>(fault, "Error interno.");
+        return ServiceResult<List<PartidaDTO>>.Failure(
+          "ERROR_INTERNO",
+          "No ha sido posible recuperar la información del lobby debido a un error en el sistema. Intente de nuevo más tarde.",
+          ex.Message
+        );
       }
     }
 
-    public string CrearPartida(int anfitrionID, int palabraID, string privacidad, string idioma) {
+    public ServiceResult<string> CrearPartida(int anfitrionID, int palabraID, string privacidad, string idioma) {
       if (anfitrionID <= 0 || palabraID <= 0) {
-        var fault = new ServiceFault {
-          Mensaje = "El ID del anfitrión y de la palabra deben ser enteros positivos.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"anfitrionID = {anfitrionID}, palabraID = {palabraID}"
-        };
-        throw new FaultException<ServiceFault>(fault, "Parámetros inválidos.");
+        return ServiceResult<string>.Failure(
+          "PARAMETRO_INVALIDO",
+          "El ID del anfitrión y de la palabra deben ser enteros positivos.",
+          $"anfitrionID = {anfitrionID}, palabraID = {palabraID}"
+        );
       }
 
       if (string.IsNullOrEmpty(privacidad) || (privacidad != "PRIVADA" && privacidad != "PÚBLICA")) {
-        var fault = new ServiceFault {
-          Mensaje = "La privacidad debe ser 'PRIVADA' o 'PÚBLICA'.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"privacidad = '{privacidad}'"
-        };
-        throw new FaultException<ServiceFault>(fault, "Privacidad inválida.");
+        return ServiceResult<string>.Failure(
+          "PARAMETRO_INVALIDO",
+          "La privacidad debe ser 'PRIVADA' o 'PÚBLICA'.",
+          $"privacidad = '{privacidad}'"
+        );
       }
 
       if (string.IsNullOrEmpty(idioma) || !Idiomas.EsValido(idioma)) {
-        var fault = new ServiceFault {
-          Mensaje = "El idioma proporcionado no es válido. Debe ser 'ESPAÑOL' o 'INGLÉS'.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"idioma = '{idioma}'"
-        };
-        throw new FaultException<ServiceFault>(fault, "Idioma inválido.");
-      }
-
-      if (!jugadorRepository.ExisteJugador(anfitrionID)) {
-        var fault = new ServiceFault {
-          Mensaje = "El jugador anfitrión especificado no existe en el sistema.",
-          CodigoError = "RECURSO_NO_ENCONTRADO",
-          Detalle = $"Jugador con ID {anfitrionID} no encontrado."
-        };
-        throw new FaultException<ServiceFault>(fault, "Anfitrión no encontrado.");
-      }
-
-      if (!palabraRepository.ExistePalabra(palabraID)) {
-        var fault = new ServiceFault {
-          Mensaje = "La palabra especificada no existe en el catálogo.",
-          CodigoError = "RECURSO_NO_ENCONTRADO",
-          Detalle = $"Palabra con ID {palabraID} no encontrada."
-        };
-        throw new FaultException<ServiceFault>(fault, "Palabra no encontrada.");
+        return ServiceResult<string>.Failure(
+          "PARAMETRO_INVALIDO",
+          "El idioma proporcionado no es válido. Debe ser 'ESPAÑOL' o 'INGLÉS'.",
+          $"idioma = '{idioma}'"
+        );
       }
 
       try {
-        return partidaRepository.CrearPartida(anfitrionID, palabraID, privacidad);
+        if (!jugadorRepository.ExisteJugador(anfitrionID)) {
+          return ServiceResult<string>.Failure(
+            "RECURSO_NO_ENCONTRADO",
+            "El jugador anfitrión especificado no existe en el sistema.",
+            $"Jugador con ID {anfitrionID} no encontrado."
+          );
+        }
+
+        if (!palabraRepository.ExistePalabra(palabraID)) {
+          return ServiceResult<string>.Failure(
+            "RECURSO_NO_ENCONTRADO",
+            "La palabra especificada no existe en el catálogo.",
+            $"Palabra con ID {palabraID} no encontrada."
+          );
+        }
+
+        string codigo = partidaRepository.CrearPartida(anfitrionID, palabraID, privacidad);
+        return ServiceResult<string>.Success(codigo);
       } catch (Exception ex) {
-        var fault = new ServiceFault {
-          Mensaje = "No ha sido posible registrar la partida debido a un error en el sistema. Intente de nuevo más tarde.",
-          CodigoError = "ERROR_INTERNO",
-          Detalle = ex.Message
-        };
-        throw new FaultException<ServiceFault>(fault, "Error interno del servidor.");
+        return ServiceResult<string>.Failure(
+          "ERROR_INTERNO",
+          "No ha sido posible registrar la partida debido a un error en el sistema. Intente de nuevo más tarde.",
+          ex.Message
+        );
       }
     }
 
-    public bool UnirseAPartidaDeLobby(int jugadorID, int partidaID) {
+    public ServiceResult<bool> UnirseAPartidaDeLobby(int jugadorID, int partidaID) {
       if (jugadorID <= 0 || partidaID <= 0) {
-        var fault = new ServiceFault {
-          Mensaje = "El ID del jugador y de la partida deben ser enteros positivos.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"jugadorID = {jugadorID}, partidaID = {partidaID}"
-        };
-        throw new FaultException<ServiceFault>(fault, "Parámetros inválidos.");
-      }
-
-      if (!jugadorRepository.ExisteJugador(jugadorID)) {
-        var fault = new ServiceFault {
-          Mensaje = "El jugador especificado no existe en el sistema.",
-          CodigoError = "RECURSO_NO_ENCONTRADO",
-          Detalle = $"Jugador con ID {jugadorID} no encontrado."
-        };
-        throw new FaultException<ServiceFault>(fault, "Jugador no encontrado.");
-      }
-
-      if (!partidaRepository.ExistePartida(partidaID)) {
-        var fault = new ServiceFault {
-          Mensaje = "La partida especificada no existe en el sistema.",
-          CodigoError = "RECURSO_NO_ENCONTRADO",
-          Detalle = $"Partida con ID {partidaID} no encontrada."
-        };
-        throw new FaultException<ServiceFault>(fault, "Partida no encontrada.");
+        return ServiceResult<bool>.Failure(
+          "PARAMETRO_INVALIDO",
+          "El ID del jugador y de la partida deben ser enteros positivos.",
+          $"jugadorID = {jugadorID}, partidaID = {partidaID}"
+        );
       }
 
       try {
+        if (!jugadorRepository.ExisteJugador(jugadorID)) {
+          return ServiceResult<bool>.Failure(
+            "RECURSO_NO_ENCONTRADO",
+            "El jugador especificado no existe en el sistema.",
+            $"Jugador con ID {jugadorID} no encontrado."
+          );
+        }
+
+        if (!partidaRepository.ExistePartida(partidaID)) {
+          return ServiceResult<bool>.Failure(
+            "RECURSO_NO_ENCONTRADO",
+            "La partida especificada no existe en el sistema.",
+            $"Partida con ID {partidaID} no encontrada."
+          );
+        }
+
         bool exito = partidaRepository.UnirseAPartidaDeLobby(jugadorID, partidaID);
         if (!exito) {
-          var fault = new ServiceFault {
-            Mensaje = "No ha sido posible unirse a la partida. Asegúrese de que no sea el anfitrión, que la partida esté PENDIENTE y no tenga un adivinador asignado.",
-            CodigoError = "OPERACION_INVALIDA",
-            Detalle = $"No se pudo unir Jugador ID {jugadorID} a Partida ID {partidaID}"
-          };
-          throw new FaultException<ServiceFault>(fault, "Unión fallida.");
+          return ServiceResult<bool>.Failure(
+            "OPERACION_INVALIDA",
+            "No ha sido posible unirse a la partida. Asegúrese de que no sea el anfitrión, que la partida esté PENDIENTE y no tenga un adivinador asignado.",
+            $"No se pudo unir Jugador ID {jugadorID} a Partida ID {partidaID}"
+          );
         }
-        return true;
-      } catch (FaultException<ServiceFault>) {
-        throw;
+        return ServiceResult<bool>.Success(true);
       } catch (Exception ex) {
-        var fault = new ServiceFault {
-          Mensaje = "No ha sido posible comenzar la partida debido a un error en el sistema. Intente de nuevo más tarde.",
-          CodigoError = "ERROR_INTERNO",
-          Detalle = ex.Message
-        };
-        throw new FaultException<ServiceFault>(fault, "Error interno del servidor.");
+        return ServiceResult<bool>.Failure(
+          "ERROR_INTERNO",
+          "No ha sido posible comenzar la partida debido a un error en el sistema. Intente de nuevo más tarde.",
+          ex.Message
+        );
       }
     }
 
-    public PartidaDTO UnirseAPartidaPrivada(int jugadorID, string codigoAcceso) {
+    public ServiceResult<PartidaDTO> UnirseAPartidaPrivada(int jugadorID, string codigoAcceso) {
       if (jugadorID <= 0 || string.IsNullOrEmpty(codigoAcceso) || codigoAcceso.Length != 6) {
-        var fault = new ServiceFault {
-          Mensaje = "Parámetros de unión inválidos. El ID del jugador debe ser positivo y el código de acceso debe tener 6 caracteres.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"jugadorID = {jugadorID}, codigoAcceso = '{codigoAcceso}'"
-        };
-        throw new FaultException<ServiceFault>(fault, "Parámetros inválidos.");
-      }
-
-      if (!jugadorRepository.ExisteJugador(jugadorID)) {
-        var fault = new ServiceFault {
-          Mensaje = "El jugador especificado no existe en el sistema.",
-          CodigoError = "RECURSO_NO_ENCONTRADO",
-          Detalle = $"Jugador con ID {jugadorID} no encontrado."
-        };
-        throw new FaultException<ServiceFault>(fault, "Jugador no encontrado.");
+        return ServiceResult<PartidaDTO>.Failure(
+          "PARAMETRO_INVALIDO",
+          "Parámetros de unión inválidos. El ID del jugador debe ser positivo y el código de acceso debe tener 6 caracteres.",
+          $"jugadorID = {jugadorID}, codigoAcceso = '{codigoAcceso}'"
+        );
       }
 
       try {
+        if (!jugadorRepository.ExisteJugador(jugadorID)) {
+          return ServiceResult<PartidaDTO>.Failure(
+            "RECURSO_NO_ENCONTRADO",
+            "El jugador especificado no existe en el sistema.",
+            $"Jugador con ID {jugadorID} no encontrado."
+          );
+        }
+
         var partida = partidaRepository.ObtenerPartidaPorCodigo(codigoAcceso);
         if (partida == null) {
-          var fault = new ServiceFault {
-            Mensaje = "Partida no encontrada.",
-            CodigoError = "RECURSO_NO_ENCONTRADO",
-            Detalle = $"No existe una partida con el código de acceso '{codigoAcceso}'."
-          };
-          throw new FaultException<ServiceFault>(fault, "Partida no encontrada.");
+          return ServiceResult<PartidaDTO>.Failure(
+            "RECURSO_NO_ENCONTRADO",
+            "Partida no encontrada.",
+            $"No existe una partida con el código de acceso '{codigoAcceso}'."
+          );
         }
 
         if (partida.IDAnfitrion == jugadorID) {
-          var fault = new ServiceFault {
-            Mensaje = "No puedes unirte a una partida creada por ti mismo.",
-            CodigoError = "OPERACION_INVALIDA",
-            Detalle = $"Jugador ID {jugadorID} intentó unirse a su propia partida ID {partida.IDPartida}."
-          };
-          throw new FaultException<ServiceFault>(fault, "Operación inválida.");
+          return ServiceResult<PartidaDTO>.Failure(
+            "OPERACION_INVALIDA",
+            "No puedes unirte a una partida creada por ti mismo.",
+            $"Jugador ID {jugadorID} intentó unirse a su propia partida ID {partida.IDPartida}."
+          );
         }
 
         if (partida.Estado != "PENDIENTE" || partida.IDAdivinador != null) {
-          var fault = new ServiceFault {
-            Mensaje = "La partida ya no está disponible para unirse (ya ha comenzado o concluido).",
-            CodigoError = "OPERACION_INVALIDA",
-            Detalle = $"Partida ID {partida.IDPartida} tiene Estado = '{partida.Estado}' e IDAdivinador = '{partida.IDAdivinador}'."
-          };
-          throw new FaultException<ServiceFault>(fault, "Partida no disponible.");
+          return ServiceResult<PartidaDTO>.Failure(
+            "OPERACION_INVALIDA",
+            "La partida ya no está disponible para unirse (ya ha comenzado o concluido).",
+            $"Partida ID {partida.IDPartida} tiene Estado = '{partida.Estado}' e IDAdivinador = '{partida.IDAdivinador}'."
+          );
         }
 
         bool exito = partidaRepository.UnirseAPartidaDeLobby(jugadorID, partida.IDPartida);
         if (!exito) {
-          var fault = new ServiceFault {
-            Mensaje = "No ha sido posible unirse a la partida debido a un conflicto de estado.",
-            CodigoError = "ERROR_CONCURRENTE",
-            Detalle = "Fallo en la actualización de la base de datos."
-          };
-          throw new FaultException<ServiceFault>(fault, "Conflicto.");
+          return ServiceResult<PartidaDTO>.Failure(
+            "ERROR_CONCURRENTE",
+            "No ha sido posible unirse a la partida debido a un conflicto de estado.",
+            "Fallo en la actualización de la base de datos."
+          );
         }
 
         var jugadorAdivinador = jugadorRepository.ObtenerJugadorPorID(jugadorID);
-        return new PartidaDTO {
+        var dto = new PartidaDTO {
           IDPartida = partida.IDPartida,
           IDAnfitrion = partida.IDAnfitrion,
           NombreAnfitrion = partida.Jugador.NombreDeUsuario,
@@ -234,90 +217,80 @@ namespace LetterClashServer.Services {
           CodigoAcceso = partida.CodigoAcceso,
           FechaDeJuego = partida.FechaDeJuego
         };
-      } catch (FaultException<ServiceFault>) {
-        throw;
+
+        return ServiceResult<PartidaDTO>.Success(dto);
       } catch (Exception ex) {
-        var fault = new ServiceFault {
-          Mensaje = "No ha sido posible comenzar la partida debido a un error en el sistema. Intente de nuevo más tarde.",
-          CodigoError = "ERROR_INTERNO",
-          Detalle = ex.Message
-        };
-        throw new FaultException<ServiceFault>(fault, "Error interno.");
+        return ServiceResult<PartidaDTO>.Failure(
+          "ERROR_INTERNO",
+          "No ha sido posible comenzar la partida debido a un error en el sistema. Intente de nuevo más tarde.",
+          ex.Message
+        );
       }
     }
 
-    public bool PublicarPartida(string codigoAcceso, int anfitrionID) {
+    public ServiceResult<bool> PublicarPartida(string codigoAcceso, int anfitrionID) {
       if (string.IsNullOrEmpty(codigoAcceso) || codigoAcceso.Length != 6 || anfitrionID <= 0) {
-        var fault = new ServiceFault {
-          Mensaje = "Parámetros inválidos. El código de acceso debe tener 6 caracteres y el ID del anfitrión debe ser un entero positivo.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"codigoAcceso = '{codigoAcceso}', anfitrionID = {anfitrionID}"
-        };
-        throw new FaultException<ServiceFault>(fault, "Parámetros inválidos.");
-      }
-
-      if (!jugadorRepository.ExisteJugador(anfitrionID)) {
-        var fault = new ServiceFault {
-          Mensaje = "El anfitrión especificado no existe en el sistema.",
-          CodigoError = "RECURSO_NO_ENCONTRADO",
-          Detalle = $"Jugador con ID {anfitrionID} no encontrado."
-        };
-        throw new FaultException<ServiceFault>(fault, "Jugador no encontrado.");
+        return ServiceResult<bool>.Failure(
+          "PARAMETRO_INVALIDO",
+          "Parámetros inválidos. El código de acceso debe tener 6 caracteres y el ID del anfitrión debe ser un entero positivo.",
+          $"codigoAcceso = '{codigoAcceso}', anfitrionID = {anfitrionID}"
+        );
       }
 
       try {
+        if (!jugadorRepository.ExisteJugador(anfitrionID)) {
+          return ServiceResult<bool>.Failure(
+            "RECURSO_NO_ENCONTRADO",
+            "El anfitrión especificado no existe en el sistema.",
+            $"Jugador con ID {anfitrionID} no encontrado."
+          );
+        }
+
         var partida = partidaRepository.ObtenerPartidaPorCodigo(codigoAcceso);
         if (partida == null) {
-          var fault = new ServiceFault {
-            Mensaje = "Partida no encontrada.",
-            CodigoError = "RECURSO_NO_ENCONTRADO",
-            Detalle = $"No existe una partida con el código de acceso '{codigoAcceso}'."
-          };
-          throw new FaultException<ServiceFault>(fault, "Partida no encontrada.");
+          return ServiceResult<bool>.Failure(
+            "RECURSO_NO_ENCONTRADO",
+            "Partida no encontrada.",
+            $"No existe una partida con el código de acceso '{codigoAcceso}'."
+          );
         }
 
         if (partida.IDAnfitrion != anfitrionID) {
-          var fault = new ServiceFault {
-            Mensaje = "No tienes permisos para modificar esta partida.",
-            CodigoError = "OPERACION_INVALIDA",
-            Detalle = $"Jugador ID {anfitrionID} intentó publicar una partida cuyo anfitrión es ID {partida.IDAnfitrion}."
-          };
-          throw new FaultException<ServiceFault>(fault, "Operación inválida.");
+          return ServiceResult<bool>.Failure(
+            "OPERACION_INVALIDA",
+            "No tienes permisos para modificar esta partida.",
+            $"Jugador ID {anfitrionID} intentó publicar una partida cuyo anfitrión es ID {partida.IDAnfitrion}."
+          );
         }
 
         if (partida.Privacidad == "PÚBLICA") {
-          return true;
+          return ServiceResult<bool>.Success(true);
         }
 
         if (partida.Estado != "PENDIENTE") {
-          var fault = new ServiceFault {
-            Mensaje = "La partida ya no puede hacerse pública porque ya ha comenzado o concluido.",
-            CodigoError = "OPERACION_INVALIDA",
-            Detalle = $"Partida ID {partida.IDPartida} tiene Estado = '{partida.Estado}'."
-          };
-          throw new FaultException<ServiceFault>(fault, "Operación inválida.");
+          return ServiceResult<bool>.Failure(
+            "OPERACION_INVALIDA",
+            "La partida ya no puede hacerse pública porque ya ha comenzado o concluido.",
+            $"Partida ID {partida.IDPartida} tiene Estado = '{partida.Estado}'."
+          );
         }
 
         bool exito = partidaRepository.PublicarPartida(codigoAcceso, anfitrionID);
         if (!exito) {
-          var fault = new ServiceFault {
-            Mensaje = "No ha sido posible publicar la partida debido a un error del servidor.",
-            CodigoError = "ERROR_INTERNO",
-            Detalle = "Fallo al guardar los cambios en la base de datos."
-          };
-          throw new FaultException<ServiceFault>(fault, "Error interno.");
+          return ServiceResult<bool>.Failure(
+            "ERROR_INTERNO",
+            "No ha sido posible publicar la partida debido a un error del servidor.",
+            "Fallo al guardar los cambios en la base de datos."
+          );
         }
 
-        return true;
-      } catch (FaultException<ServiceFault>) {
-        throw;
+        return ServiceResult<bool>.Success(true);
       } catch (Exception ex) {
-        var fault = new ServiceFault {
-          Mensaje = "No ha sido posible cambiar la privacidad de la partida debido a un error en el sistema. Intente de nuevo más tarde.",
-          CodigoError = "ERROR_INTERNO",
-          Detalle = ex.Message
-        };
-        throw new FaultException<ServiceFault>(fault, "Error interno.");
+        return ServiceResult<bool>.Failure(
+          "ERROR_INTERNO",
+          "No ha sido posible cambiar la privacidad de la partida debido a un error en el sistema. Intente de nuevo más tarde.",
+          ex.Message
+        );
       }
     }
   }
