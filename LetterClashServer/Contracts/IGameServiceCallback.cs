@@ -17,5 +17,8 @@ namespace LetterClashServer.Contracts {
 
     [OperationContract(IsOneWay = true)]
     void OnOponenteAbandono(string oponenteNombre);
+
+    [OperationContract(IsOneWay = true)]
+    void OnErrorOcurrido(ServiceFault fault);
   }
 }
