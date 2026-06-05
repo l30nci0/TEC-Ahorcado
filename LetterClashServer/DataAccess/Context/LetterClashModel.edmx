@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
@@ -184,15 +184,15 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="LetterClashDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Jugadors" EntityType="Self.Jugador" />
+          <EntitySet Name="Jugadores" EntityType="Self.Jugador" />
           <EntitySet Name="Palabras" EntityType="Self.Palabra" />
           <EntitySet Name="Partidas" EntityType="Self.Partida" />
           <AssociationSet Name="FK_Partida_Adivinador" Association="Self.FK_Partida_Adivinador">
-            <End Role="Jugador" EntitySet="Jugadors" />
+            <End Role="Jugador" EntitySet="Jugadores" />
             <End Role="Partida" EntitySet="Partidas" />
           </AssociationSet>
           <AssociationSet Name="FK_Partida_Anfitrion" Association="Self.FK_Partida_Anfitrion">
-            <End Role="Jugador" EntitySet="Jugadors" />
+            <End Role="Jugador" EntitySet="Jugadores" />
             <End Role="Partida" EntitySet="Partidas" />
           </AssociationSet>
           <AssociationSet Name="FK_Partida_Palabra" Association="Self.FK_Partida_Palabra">
@@ -206,7 +206,7 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LetterClashServerDataAccessContextStoreContainer" CdmEntityContainer="LetterClashDBEntities">
-          <EntitySetMapping Name="Jugadors">
+          <EntitySetMapping Name="Jugadores">
             <EntityTypeMapping TypeName="LetterClashServer.DataAccess.Context.Jugador">
               <MappingFragment StoreEntitySet="Jugador">
                 <ScalarProperty Name="IDJugador" ColumnName="IDJugador" />
