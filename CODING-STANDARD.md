@@ -144,6 +144,26 @@ switch (estadoPartida) {
 ### 4.4 Localización y Recursos
 * Todo texto visible al usuario (etiquetas, botones, mensajes de error, diálogos) debe estar definido en los archivos de recursos (`.resx`) del cliente (`AppResources.resx` para español, `AppResources.en.resx` para inglés) para facilitar la internacionalización y cumplir con el requisito de cambio de idioma preferido.
 
+### 4.5 Patrón Result para Servicios
+
+Para comunicar el resultado de las operaciones entre el servidor WCF y los clientes de manera eficiente y testable, se utilizará la clase genérica `ServiceResult<T>`.
+
+* **Regla:** En lugar de lanzar excepciones SOAP (`FaultException<ServiceFault>`) para errores de validación, lógica de negocio o credenciales incorrectas, las operaciones de los servicios WCF deben retornar un objeto `ServiceResult<T>`.
+* **Beneficios:**
+  * Evita la sobrecarga de rendimiento al lanzar y capturar excepciones en el transporte de red.
+  * Facilita el desarrollo de pruebas de unidad al poder validar flujos alternativos evaluando el objeto retornado.
+  * Homogeneiza la lectura de errores en el cliente mediante propiedades estandarizadas (`IsSuccess`, `Value`, `Error`).
+* **Ejemplo de Uso en el Servidor:**
+  ```csharp
+  public ServiceResult<JugadorDTO> IniciarSesion(string usuario, string contrasena) {
+    if (string.IsNullOrEmpty(usuario)) {
+      return ServiceResult<JugadorDTO>.Failure("PARAMETRO_INVALIDO", "El usuario es obligatorio.");
+    }
+    // ... lógica exitosa ...
+    return ServiceResult<JugadorDTO>.Success(dto);
+  }
+  ```
+
 ---
 
 ## 5. Manejo de Excepciones y Logging
