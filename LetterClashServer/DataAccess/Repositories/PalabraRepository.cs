@@ -7,11 +7,18 @@ namespace LetterClashServer.DataAccess.Repositories {
   public class PalabraRepository {
     public virtual List<Palabra> ObtenerPalabrasPorIdioma(string idioma) {
       using (var context = new LetterClashDBEntities()) {
-        // Usamos AsNoTracking() para optimizar consultas de solo lectura
         return context.Palabras
                       .AsNoTracking()
                       .Where(p => p.Idioma == idioma)
                       .ToList();
+      }
+    }
+
+    public virtual bool ExistePalabra(int palabraID) {
+      using (var context = new LetterClashDBEntities()) {
+        return context.Palabras
+                      .AsNoTracking()
+                      .Any(p => p.IDPalabra == palabraID);
       }
     }
   }
