@@ -17,37 +17,34 @@ namespace LetterClashServer.Services {
       this.jugadorRepository = repository;
     }
 
-    public JugadorDTO IniciarSesion(string correoONombreUsuario, string contrasenaPlana) {
+    public ServiceResult<JugadorDTO> IniciarSesion(string correoONombreUsuario, string contrasenaPlana) {
       if (string.IsNullOrWhiteSpace(correoONombreUsuario) || string.IsNullOrEmpty(contrasenaPlana)) {
-        var fault = new ServiceFault {
-          Mensaje = "El correo/usuario y la contraseña son obligatorios.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = "correoONombreUsuario o contrasenaPlana vacías"
-        };
-        throw new FaultException<ServiceFault>(fault, "Parámetros inválidos.");
+        return ServiceResult<JugadorDTO>.Failure(
+          "PARAMETRO_INVALIDO",
+          "El correo/usuario y la contraseña son obligatorios.",
+          "correoONombreUsuario o contrasenaPlana vacías"
+        );
       }
 
       try {
         var jugador = jugadorRepository.ObtenerJugadorPorCredenciales(correoONombreUsuario);
         if (jugador == null) {
-          var fault = new ServiceFault {
-            Mensaje = "Las credenciales de inicio de sesión no son correctas.",
-            CodigoError = "CREDENCIALES_INVALIDAS",
-            Detalle = "Usuario no encontrado"
-          };
-          throw new FaultException<ServiceFault>(fault, "Credenciales incorrectas.");
+          return ServiceResult<JugadorDTO>.Failure(
+            "CREDENCIALES_INVALIDAS",
+            "Las credenciales de inicio de sesión no son correctas.",
+            "Usuario no encontrado"
+          );
         }
 
         if (!CryptographyHelper.VerificarContrasena(contrasenaPlana, jugador.Contrasena)) {
-          var fault = new ServiceFault {
-            Mensaje = "Las credenciales de inicio de sesión no son correctas.",
-            CodigoError = "CREDENCIALES_INVALIDAS",
-            Detalle = "Contraseña no coincide"
-          };
-          throw new FaultException<ServiceFault>(fault, "Credenciales incorrectas.");
+          return ServiceResult<JugadorDTO>.Failure(
+            "CREDENCIALES_INVALIDAS",
+            "Las credenciales de inicio de sesión no son correctas.",
+            "Contraseña no coincide"
+          );
         }
 
-        return new JugadorDTO {
+        var dto = new JugadorDTO {
           IDJugador = jugador.IDJugador,
           Nombre = jugador.Nombre,
           NombreDeUsuario = jugador.NombreDeUsuario,
@@ -58,83 +55,75 @@ namespace LetterClashServer.Services {
           IdiomaPreferido = jugador.IdiomaPreferido,
           FechaDeNacimiento = jugador.FechaDeNacimiento
         };
-      } catch (FaultException<ServiceFault>) {
-        throw;
+
+        return ServiceResult<JugadorDTO>.Success(dto);
       } catch (Exception ex) {
-        var fault = new ServiceFault {
-          Mensaje = "No ha sido posible iniciar sesión debido a un error en el servidor. Intente de nuevo más tarde.",
-          CodigoError = "ERROR_INTERNO",
-          Detalle = ex.Message
-        };
-        throw new FaultException<ServiceFault>(fault, "Error interno.");
+        return ServiceResult<JugadorDTO>.Failure(
+          "ERROR_INTERNO",
+          "No ha sido posible iniciar sesión debido a un error en el servidor. Intente de nuevo más tarde.",
+          ex.Message
+        );
       }
     }
 
-    public bool RegistrarJugador(JugadorDTO datosJugador, string contrasenaPlana) {
+    public ServiceResult<bool> RegistrarJugador(JugadorDTO datosJugador, string contrasenaPlana) {
       if (datosJugador == null || string.IsNullOrEmpty(contrasenaPlana)) {
-        var fault = new ServiceFault {
-          Mensaje = "Los datos de registro del jugador no pueden ser nulos o vacíos.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = "datosJugador o contrasenaPlana nulos"
-        };
-        throw new FaultException<ServiceFault>(fault, "Datos de registro nulos.");
+        return ServiceResult<bool>.Failure(
+          "PARAMETRO_INVALIDO",
+          "Los datos de registro del jugador no pueden ser nulos o vacíos.",
+          "datosJugador o contrasenaPlana nulos"
+        );
       }
 
       if (string.IsNullOrWhiteSpace(datosJugador.Nombre) ||
           string.IsNullOrWhiteSpace(datosJugador.NombreDeUsuario) ||
           string.IsNullOrWhiteSpace(datosJugador.Correo)) {
-        var fault = new ServiceFault {
-          Mensaje = "El nombre, el nombre de usuario y el correo electrónico son campos obligatorios.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = "Campos obligatorios vacíos"
-        };
-        throw new FaultException<ServiceFault>(fault, "Datos obligatorios faltantes.");
+        return ServiceResult<bool>.Failure(
+          "PARAMETRO_INVALIDO",
+          "El nombre, el nombre de usuario y el correo electrónico son campos obligatorios.",
+          "Campos obligatorios vacíos"
+        );
       }
 
       if (datosJugador.NombreDeUsuario.Length < 3 || datosJugador.NombreDeUsuario.Length > 16) {
-        var fault = new ServiceFault {
-          Mensaje = "El nombre de usuario debe tener entre 3 y 16 caracteres.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"Longitud de usuario: {datosJugador.NombreDeUsuario.Length}"
-        };
-        throw new FaultException<ServiceFault>(fault, "Nombre de usuario inválido.");
+        return ServiceResult<bool>.Failure(
+          "PARAMETRO_INVALIDO",
+          "El nombre de usuario debe tener entre 3 y 16 caracteres.",
+          $"Longitud de usuario: {datosJugador.NombreDeUsuario.Length}"
+        );
       }
 
       if (!EsCorreoValido(datosJugador.Correo)) {
-        var fault = new ServiceFault {
-          Mensaje = "El correo electrónico proporcionado no tiene un formato válido.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"Correo: {datosJugador.Correo}"
-        };
-        throw new FaultException<ServiceFault>(fault, "Correo electrónico inválido.");
+        return ServiceResult<bool>.Failure(
+          "PARAMETRO_INVALIDO",
+          "El correo electrónico proporcionado no tiene un formato válido.",
+          $"Correo: {datosJugador.Correo}"
+        );
       }
 
       if (datosJugador.FechaDeNacimiento == default(DateTime) || datosJugador.FechaDeNacimiento > DateTime.Today) {
-        var fault = new ServiceFault {
-          Mensaje = "La fecha de nacimiento no es válida.",
-          CodigoError = "PARAMETRO_INVALIDO",
-          Detalle = $"Fecha de nacimiento: {datosJugador.FechaDeNacimiento}"
-        };
-        throw new FaultException<ServiceFault>(fault, "Fecha de nacimiento inválida.");
+        return ServiceResult<bool>.Failure(
+          "PARAMETRO_INVALIDO",
+          "La fecha de nacimiento no es válida.",
+          $"Fecha de nacimiento: {datosJugador.FechaDeNacimiento}"
+        );
       }
 
       // Validar si el usuario o correo ya existen
       if (jugadorRepository.ExisteNombreDeUsuario(datosJugador.NombreDeUsuario)) {
-        var fault = new ServiceFault {
-          Mensaje = "El nombre de usuario ya se encuentra registrado en el sistema.",
-          CodigoError = "RECURSO_DUPLICADO",
-          Detalle = $"Nombre de usuario ya en uso: '{datosJugador.NombreDeUsuario}'"
-        };
-        throw new FaultException<ServiceFault>(fault, "Usuario duplicado.");
+        return ServiceResult<bool>.Failure(
+          "RECURSO_DUPLICADO",
+          "El nombre de usuario ya se encuentra registrado en el sistema.",
+          $"Nombre de usuario ya en uso: '{datosJugador.NombreDeUsuario}'"
+        );
       }
 
       if (jugadorRepository.ExisteCorreo(datosJugador.Correo)) {
-        var fault = new ServiceFault {
-          Mensaje = "El correo electrónico ya se encuentra registrado en el sistema.",
-          CodigoError = "RECURSO_DUPLICADO",
-          Detalle = $"Correo ya en uso: '{datosJugador.Correo}'"
-        };
-        throw new FaultException<ServiceFault>(fault, "Correo duplicado.");
+        return ServiceResult<bool>.Failure(
+          "RECURSO_DUPLICADO",
+          "El correo electrónico ya se encuentra registrado en el sistema.",
+          $"Correo ya en uso: '{datosJugador.Correo}'"
+        );
       }
 
       try {
@@ -150,14 +139,14 @@ namespace LetterClashServer.Services {
           FechaDeNacimiento = datosJugador.FechaDeNacimiento
         };
 
-        return jugadorRepository.RegistrarJugador(nuevoJugador);
+        bool exito = jugadorRepository.RegistrarJugador(nuevoJugador);
+        return ServiceResult<bool>.Success(exito);
       } catch (Exception ex) {
-        var fault = new ServiceFault {
-          Mensaje = "No ha sido posible registrar su cuenta debido a un error en el sistema. Intente de nuevo más tarde.",
-          CodigoError = "ERROR_INTERNO",
-          Detalle = ex.Message
-        };
-        throw new FaultException<ServiceFault>(fault, "Error interno.");
+        return ServiceResult<bool>.Failure(
+          "ERROR_INTERNO",
+          "No ha sido posible registrar su cuenta debido a un error en el sistema. Intente de nuevo más tarde.",
+          ex.Message
+        );
       }
     }
 
