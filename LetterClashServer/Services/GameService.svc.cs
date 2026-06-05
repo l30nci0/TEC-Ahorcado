@@ -37,7 +37,7 @@ namespace LetterClashServer.Services {
       if (jugadorID <= 0 || string.IsNullOrEmpty(codigoAcceso) || codigoAcceso.Length != 6) {
         var fault = new ServiceFault {
           Mensaje = "Los parámetros de conexión son inválidos.",
-          CodigoError = "PARAMETRO_INVALIDO",
+          CodigoError = CodigoError.PARAMETRO_INVALIDO,
           Detalle = $"jugadorID = {jugadorID}, codigoAcceso = '{codigoAcceso}'"
         };
         try { callback.OnErrorOcurrido(fault); } catch { }
@@ -49,7 +49,7 @@ namespace LetterClashServer.Services {
         if (jugador == null) {
           var fault = new ServiceFault {
             Mensaje = "El jugador especificado no existe en el sistema.",
-            CodigoError = "RECURSO_NO_ENCONTRADO",
+            CodigoError = CodigoError.RECURSO_NO_ENCONTRADO,
             Detalle = $"Jugador con ID {jugadorID} no encontrado."
           };
           callback.OnErrorOcurrido(fault);
@@ -60,7 +60,7 @@ namespace LetterClashServer.Services {
         if (partida == null) {
           var fault = new ServiceFault {
             Mensaje = "La partida especificada no existe.",
-            CodigoError = "RECURSO_NO_ENCONTRADO",
+            CodigoError = CodigoError.RECURSO_NO_ENCONTRADO,
             Detalle = $"Partida con código {codigoAcceso} no encontrada."
           };
           callback.OnErrorOcurrido(fault);
@@ -70,7 +70,7 @@ namespace LetterClashServer.Services {
         if (partida.IDAnfitrion != jugadorID && partida.IDAdivinador != jugadorID) {
           var fault = new ServiceFault {
             Mensaje = "No tienes permiso para ingresar a esta partida.",
-            CodigoError = "ACCESO_DENEGADO",
+            CodigoError = CodigoError.ACCESO_DENEGADO,
             Detalle = $"Jugador ID {jugadorID} no es participante de la partida ID {partida.IDPartida}."
           };
           callback.OnErrorOcurrido(fault);
@@ -131,7 +131,7 @@ namespace LetterClashServer.Services {
       } catch (Exception ex) {
         var fault = new ServiceFault {
           Mensaje = "Ocurrió un error al intentar conectarse a la partida.",
-          CodigoError = "ERROR_INTERNO",
+          CodigoError = CodigoError.ERROR_INTERNO,
           Detalle = ex.Message
         };
         try { callback.OnErrorOcurrido(fault); } catch { }

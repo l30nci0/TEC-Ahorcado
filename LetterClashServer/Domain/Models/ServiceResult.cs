@@ -19,7 +19,7 @@ namespace LetterClashServer.Domain.Models {
       };
     }
 
-    public static ServiceResult<T> Failure(string codigoError, string mensaje, string detalle = null) {
+    public static ServiceResult<T> Failure(CodigoError codigoError, string mensaje, string detalle = null) {
       return new ServiceResult<T> {
         IsSuccess = false,
         Error = new ServiceFault {

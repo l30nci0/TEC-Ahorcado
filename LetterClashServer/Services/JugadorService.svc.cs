@@ -20,7 +20,7 @@ namespace LetterClashServer.Services {
     public ServiceResult<bool> ActualizarPerfil(JugadorDTO jugadorDTO) {
       if (jugadorDTO == null) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "Los datos del perfil no pueden ser nulos.",
           "jugadorDTO es null"
         );
@@ -28,7 +28,7 @@ namespace LetterClashServer.Services {
 
       if (jugadorDTO.IDJugador <= 0) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El ID del jugador debe ser un entero positivo.",
           $"IDJugador = {jugadorDTO.IDJugador}"
         );
@@ -36,7 +36,7 @@ namespace LetterClashServer.Services {
 
       if (string.IsNullOrWhiteSpace(jugadorDTO.Nombre)) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El nombre del jugador es requerido y no puede estar vacío.",
           "Nombre es nulo o vacío"
         );
@@ -45,7 +45,7 @@ namespace LetterClashServer.Services {
       try {
         if (!jugadorRepository.ExisteJugador(jugadorDTO.IDJugador)) {
           return ServiceResult<bool>.Failure(
-            "RECURSO_NO_ENCONTRADO",
+            CodigoError.RECURSO_NO_ENCONTRADO,
             "El jugador especificado no existe en el sistema.",
             $"Jugador con ID {jugadorDTO.IDJugador} no encontrado."
           );
@@ -55,7 +55,7 @@ namespace LetterClashServer.Services {
         return ServiceResult<bool>.Success(exito);
       } catch (Exception ex) {
         return ServiceResult<bool>.Failure(
-          "ERROR_INTERNO",
+          CodigoError.ERROR_INTERNO,
           "No ha sido posible actualizar su perfil debido a un error en el sistema. Intente de nuevo más tarde.",
           ex.Message
         );
@@ -65,7 +65,7 @@ namespace LetterClashServer.Services {
     public ServiceResult<List<PartidaDTO>> ConsultarHistorial(int jugadorID) {
       if (jugadorID <= 0) {
         return ServiceResult<List<PartidaDTO>>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El ID del jugador debe ser un entero positivo.",
           "jugadorID <= 0"
         );
@@ -74,7 +74,7 @@ namespace LetterClashServer.Services {
       try {
         if (!jugadorRepository.ExisteJugador(jugadorID)) {
           return ServiceResult<List<PartidaDTO>>.Failure(
-            "RECURSO_NO_ENCONTRADO",
+            CodigoError.RECURSO_NO_ENCONTRADO,
             "El jugador especificado no existe en el sistema.",
             $"Jugador con ID {jugadorID} no encontrado."
           );
@@ -101,7 +101,7 @@ namespace LetterClashServer.Services {
         return ServiceResult<List<PartidaDTO>>.Success(dtos);
       } catch (Exception ex) {
         return ServiceResult<List<PartidaDTO>>.Failure(
-          "ERROR_INTERNO",
+          CodigoError.ERROR_INTERNO,
           "No ha sido posible obtener el historial de partidas debido a un error en el sistema. Intente de nuevo más tarde.",
           ex.Message
         );
@@ -122,7 +122,7 @@ namespace LetterClashServer.Services {
         return ServiceResult<List<JugadorPublicoDTO>>.Success(dtos);
       } catch (Exception ex) {
         return ServiceResult<List<JugadorPublicoDTO>>.Failure(
-          "ERROR_INTERNO",
+          CodigoError.ERROR_INTERNO,
           "No ha sido posible obtener los marcadores debido a un error en el sistema. Intente de nuevo más tarde.",
           ex.Message
         );
@@ -132,7 +132,7 @@ namespace LetterClashServer.Services {
     public ServiceResult<bool> CambiarIdiomaPreferido(int jugadorID, string idioma) {
       if (jugadorID <= 0) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El ID del jugador debe ser un entero positivo.",
           $"jugadorID = {jugadorID}"
         );
@@ -140,7 +140,7 @@ namespace LetterClashServer.Services {
 
       if (string.IsNullOrEmpty(idioma) || !Idiomas.EsValido(idioma)) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El idioma proporcionado no es válido. Debe ser 'ESPAÑOL' o 'INGLÉS'.",
           $"idioma = '{idioma}'"
         );
@@ -149,7 +149,7 @@ namespace LetterClashServer.Services {
       try {
         if (!jugadorRepository.ExisteJugador(jugadorID)) {
           return ServiceResult<bool>.Failure(
-            "RECURSO_NO_ENCONTRADO",
+            CodigoError.RECURSO_NO_ENCONTRADO,
             "El jugador especificado no existe en el sistema.",
             $"Jugador con ID {jugadorID} no encontrado."
           );
@@ -159,7 +159,7 @@ namespace LetterClashServer.Services {
         return ServiceResult<bool>.Success(exito);
       } catch (Exception ex) {
         return ServiceResult<bool>.Failure(
-          "ERROR_INTERNO",
+          CodigoError.ERROR_INTERNO,
           "No ha sido posible cambiar el idioma debido a un error en el sistema. Intente de nuevo más tarde.",
           ex.Message
         );
@@ -169,7 +169,7 @@ namespace LetterClashServer.Services {
     public ServiceResult<bool> CambiarContrasena(int jugadorID, string contrasenaActual, string nuevaContrasena) {
       if (jugadorID <= 0) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El ID del jugador debe ser un entero positivo.",
           $"jugadorID = {jugadorID}"
         );
@@ -177,7 +177,7 @@ namespace LetterClashServer.Services {
 
       if (string.IsNullOrEmpty(contrasenaActual) || string.IsNullOrEmpty(nuevaContrasena)) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "Las contraseñas no pueden estar vacías.",
           "contrasenaActual o nuevaContrasena vacías"
         );
@@ -187,7 +187,7 @@ namespace LetterClashServer.Services {
         var jugador = jugadorRepository.ObtenerJugadorPorID(jugadorID);
         if (jugador == null) {
           return ServiceResult<bool>.Failure(
-            "RECURSO_NO_ENCONTRADO",
+            CodigoError.RECURSO_NO_ENCONTRADO,
             "El jugador especificado no existe en el sistema.",
             $"Jugador con ID {jugadorID} no encontrado."
           );
@@ -195,7 +195,7 @@ namespace LetterClashServer.Services {
 
         if (!CryptographyHelper.VerificarContrasena(contrasenaActual, jugador.Contrasena)) {
           return ServiceResult<bool>.Failure(
-            "CREDENCIALES_INVALIDAS",
+            CodigoError.CREDENCIALES_INVALIDAS,
             "La contraseña actual introducida no es correcta.",
             "Contraseña actual no coincide con la almacenada"
           );
@@ -206,7 +206,7 @@ namespace LetterClashServer.Services {
         return ServiceResult<bool>.Success(exito);
       } catch (Exception ex) {
         return ServiceResult<bool>.Failure(
-          "ERROR_INTERNO",
+          CodigoError.ERROR_INTERNO,
           "No ha sido posible cambiar la contraseña debido a un error en el sistema. Intente de nuevo más tarde.",
           ex.Message
         );

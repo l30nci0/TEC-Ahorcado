@@ -115,6 +115,7 @@
     <Compile Include="Domain\Models\JugadorPublicoDTO.cs" />
     <Compile Include="Domain\Models\PalabraDTO.cs" />
     <Compile Include="Domain\Models\PartidaDTO.cs" />
+    <Compile Include="Domain\Models\CodigoError.cs" />
     <Compile Include="Domain\Models\Idiomas.cs" />
     <Compile Include="Domain\Models\ServiceFault.cs" />
     <Compile Include="Domain\Models\ServiceResult.cs" />

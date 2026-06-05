@@ -20,7 +20,7 @@ namespace LetterClashServer.Services {
     public ServiceResult<JugadorDTO> IniciarSesion(string correoONombreUsuario, string contrasenaPlana) {
       if (string.IsNullOrWhiteSpace(correoONombreUsuario) || string.IsNullOrEmpty(contrasenaPlana)) {
         return ServiceResult<JugadorDTO>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El correo/usuario y la contraseña son obligatorios.",
           "correoONombreUsuario o contrasenaPlana vacías"
         );
@@ -30,7 +30,7 @@ namespace LetterClashServer.Services {
         var jugador = jugadorRepository.ObtenerJugadorPorCredenciales(correoONombreUsuario);
         if (jugador == null) {
           return ServiceResult<JugadorDTO>.Failure(
-            "CREDENCIALES_INVALIDAS",
+            CodigoError.CREDENCIALES_INVALIDAS,
             "Las credenciales de inicio de sesión no son correctas.",
             "Usuario no encontrado"
           );
@@ -38,7 +38,7 @@ namespace LetterClashServer.Services {
 
         if (!CryptographyHelper.VerificarContrasena(contrasenaPlana, jugador.Contrasena)) {
           return ServiceResult<JugadorDTO>.Failure(
-            "CREDENCIALES_INVALIDAS",
+            CodigoError.CREDENCIALES_INVALIDAS,
             "Las credenciales de inicio de sesión no son correctas.",
             "Contraseña no coincide"
           );
@@ -59,7 +59,7 @@ namespace LetterClashServer.Services {
         return ServiceResult<JugadorDTO>.Success(dto);
       } catch (Exception ex) {
         return ServiceResult<JugadorDTO>.Failure(
-          "ERROR_INTERNO",
+          CodigoError.ERROR_INTERNO,
           "No ha sido posible iniciar sesión debido a un error en el servidor. Intente de nuevo más tarde.",
           ex.Message
         );
@@ -69,7 +69,7 @@ namespace LetterClashServer.Services {
     public ServiceResult<bool> RegistrarJugador(JugadorDTO datosJugador, string contrasenaPlana) {
       if (datosJugador == null || string.IsNullOrEmpty(contrasenaPlana)) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "Los datos de registro del jugador no pueden ser nulos o vacíos.",
           "datosJugador o contrasenaPlana nulos"
         );
@@ -79,7 +79,7 @@ namespace LetterClashServer.Services {
           string.IsNullOrWhiteSpace(datosJugador.NombreDeUsuario) ||
           string.IsNullOrWhiteSpace(datosJugador.Correo)) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El nombre, el nombre de usuario y el correo electrónico son campos obligatorios.",
           "Campos obligatorios vacíos"
         );
@@ -87,7 +87,7 @@ namespace LetterClashServer.Services {
 
       if (datosJugador.NombreDeUsuario.Length < 3 || datosJugador.NombreDeUsuario.Length > 16) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El nombre de usuario debe tener entre 3 y 16 caracteres.",
           $"Longitud de usuario: {datosJugador.NombreDeUsuario.Length}"
         );
@@ -95,7 +95,7 @@ namespace LetterClashServer.Services {
 
       if (!EsCorreoValido(datosJugador.Correo)) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "El correo electrónico proporcionado no tiene un formato válido.",
           $"Correo: {datosJugador.Correo}"
         );
@@ -103,7 +103,7 @@ namespace LetterClashServer.Services {
 
       if (datosJugador.FechaDeNacimiento == default(DateTime) || datosJugador.FechaDeNacimiento > DateTime.Today) {
         return ServiceResult<bool>.Failure(
-          "PARAMETRO_INVALIDO",
+          CodigoError.PARAMETRO_INVALIDO,
           "La fecha de nacimiento no es válida.",
           $"Fecha de nacimiento: {datosJugador.FechaDeNacimiento}"
         );
@@ -112,7 +112,7 @@ namespace LetterClashServer.Services {
       // Validar si el usuario o correo ya existen
       if (jugadorRepository.ExisteNombreDeUsuario(datosJugador.NombreDeUsuario)) {
         return ServiceResult<bool>.Failure(
-          "RECURSO_DUPLICADO",
+          CodigoError.RECURSO_DUPLICADO,
           "El nombre de usuario ya se encuentra registrado en el sistema.",
           $"Nombre de usuario ya en uso: '{datosJugador.NombreDeUsuario}'"
         );
@@ -120,7 +120,7 @@ namespace LetterClashServer.Services {
 
       if (jugadorRepository.ExisteCorreo(datosJugador.Correo)) {
         return ServiceResult<bool>.Failure(
-          "RECURSO_DUPLICADO",
+          CodigoError.RECURSO_DUPLICADO,
           "El correo electrónico ya se encuentra registrado en el sistema.",
           $"Correo ya en uso: '{datosJugador.Correo}'"
         );
@@ -143,7 +143,7 @@ namespace LetterClashServer.Services {
         return ServiceResult<bool>.Success(exito);
       } catch (Exception ex) {
         return ServiceResult<bool>.Failure(
-          "ERROR_INTERNO",
+          CodigoError.ERROR_INTERNO,
           "No ha sido posible registrar su cuenta debido a un error en el sistema. Intente de nuevo más tarde.",
           ex.Message
         );

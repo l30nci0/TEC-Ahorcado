@@ -7,7 +7,7 @@ namespace LetterClashServer.Domain.Models {
     public string Mensaje { get; set; }
 
     [DataMember]
-    public string CodigoError { get; set; }
+    public CodigoError CodigoError { get; set; }
 
     [DataMember]
     public string Detalle { get; set; }
