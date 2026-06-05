@@ -73,10 +73,15 @@ LetterClashServer/
 │   └── GameService.cs                 # Implementa IGameService (DuplexService)
 │
 ├── Domain/                            # Lógica de Negocio y Motor del Juego
-│   ├── Models/                        # DTOs y clases de negocio
+│   ├── Models/                        # DTOs, Enums y modelos de servicio
 │   │   ├── JugadorDTO.cs              # Información del jugador a transferir
+│   │   ├── JugadorPublicoDTO.cs       # Información pública reducida del jugador
 │   │   ├── PartidaDTO.cs              # Detalles de la partida
-│   │   └── PalabraDTO.cs              # Palabra seleccionada con descripción
+│   │   ├── PalabraDTO.cs              # Palabra seleccionada con descripción
+│   │   ├── Idiomas.cs                 # Constantes de idiomas del sistema
+│   │   ├── CodigoError.cs             # Enum de códigos de error de WCF
+│   │   ├── ServiceFault.cs            # Estructura de falla WCF para errores
+│   │   └── ServiceResult.cs           # Wrapper genérico para retornos de servicio WCF
 │   │
 │   ├── GameEngine/                    # Motor de emparejamiento y juego en memoria
 │   │   ├── ActiveGame.cs              # Estado de una partida activa en el servidor
