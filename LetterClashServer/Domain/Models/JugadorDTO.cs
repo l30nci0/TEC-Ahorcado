@@ -19,7 +19,6 @@ namespace LetterClashServer.Domain.Models {
     [DataMember]
     public string Telefono { get; set; }
 
-
     [DataMember]
     public int Puntuacion { get; set; }
 
