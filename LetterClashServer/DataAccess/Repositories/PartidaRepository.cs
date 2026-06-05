@@ -62,7 +62,6 @@ namespace LetterClashServer.DataAccess.Repositories {
       }
     }
 
-
     public virtual Partida ObtenerPartidaPorCodigo(string codigoAcceso) {
       using (var context = new LetterClashDBEntities()) {
         return context.Partidas
@@ -70,6 +69,19 @@ namespace LetterClashServer.DataAccess.Repositories {
                       .Include(p => p.Jugador)
                       .Include(p => p.Palabra)
                       .SingleOrDefault(p => p.CodigoAcceso == codigoAcceso);
+      }
+    }
+
+    public virtual bool PublicarPartida(string codigoAcceso, int anfitrionID) {
+      using (var context = new LetterClashDBEntities()) {
+        var partida = context.Partidas.SingleOrDefault(p => p.CodigoAcceso == codigoAcceso);
+        if (partida == null || partida.IDAnfitrion != anfitrionID || partida.Privacidad != "PRIVADA" || partida.Estado != "PENDIENTE") {
+          return false;
+        }
+
+        partida.Privacidad = "PÚBLICA";
+        context.SaveChanges();
+        return true;
       }
     }
 

@@ -245,5 +245,80 @@ namespace LetterClashServer.Services {
         throw new FaultException<ServiceFault>(fault, "Error interno.");
       }
     }
+
+    public bool PublicarPartida(string codigoAcceso, int anfitrionID) {
+      if (string.IsNullOrEmpty(codigoAcceso) || codigoAcceso.Length != 6 || anfitrionID <= 0) {
+        var fault = new ServiceFault {
+          Mensaje = "Parámetros inválidos. El código de acceso debe tener 6 caracteres y el ID del anfitrión debe ser un entero positivo.",
+          CodigoError = "PARAMETRO_INVALIDO",
+          Detalle = $"codigoAcceso = '{codigoAcceso}', anfitrionID = {anfitrionID}"
+        };
+        throw new FaultException<ServiceFault>(fault, "Parámetros inválidos.");
+      }
+
+      if (!jugadorRepository.ExisteJugador(anfitrionID)) {
+        var fault = new ServiceFault {
+          Mensaje = "El anfitrión especificado no existe en el sistema.",
+          CodigoError = "RECURSO_NO_ENCONTRADO",
+          Detalle = $"Jugador con ID {anfitrionID} no encontrado."
+        };
+        throw new FaultException<ServiceFault>(fault, "Jugador no encontrado.");
+      }
+
+      try {
+        var partida = partidaRepository.ObtenerPartidaPorCodigo(codigoAcceso);
+        if (partida == null) {
+          var fault = new ServiceFault {
+            Mensaje = "Partida no encontrada.",
+            CodigoError = "RECURSO_NO_ENCONTRADO",
+            Detalle = $"No existe una partida con el código de acceso '{codigoAcceso}'."
+          };
+          throw new FaultException<ServiceFault>(fault, "Partida no encontrada.");
+        }
+
+        if (partida.IDAnfitrion != anfitrionID) {
+          var fault = new ServiceFault {
+            Mensaje = "No tienes permisos para modificar esta partida.",
+            CodigoError = "OPERACION_INVALIDA",
+            Detalle = $"Jugador ID {anfitrionID} intentó publicar una partida cuyo anfitrión es ID {partida.IDAnfitrion}."
+          };
+          throw new FaultException<ServiceFault>(fault, "Operación inválida.");
+        }
+
+        if (partida.Privacidad == "PÚBLICA") {
+          return true;
+        }
+
+        if (partida.Estado != "PENDIENTE") {
+          var fault = new ServiceFault {
+            Mensaje = "La partida ya no puede hacerse pública porque ya ha comenzado o concluido.",
+            CodigoError = "OPERACION_INVALIDA",
+            Detalle = $"Partida ID {partida.IDPartida} tiene Estado = '{partida.Estado}'."
+          };
+          throw new FaultException<ServiceFault>(fault, "Operación inválida.");
+        }
+
+        bool exito = partidaRepository.PublicarPartida(codigoAcceso, anfitrionID);
+        if (!exito) {
+          var fault = new ServiceFault {
+            Mensaje = "No ha sido posible publicar la partida debido a un error del servidor.",
+            CodigoError = "ERROR_INTERNO",
+            Detalle = "Fallo al guardar los cambios en la base de datos."
+          };
+          throw new FaultException<ServiceFault>(fault, "Error interno.");
+        }
+
+        return true;
+      } catch (FaultException<ServiceFault>) {
+        throw;
+      } catch (Exception ex) {
+        var fault = new ServiceFault {
+          Mensaje = "No ha sido posible cambiar la privacidad de la partida debido a un error en el sistema. Intente de nuevo más tarde.",
+          CodigoError = "ERROR_INTERNO",
+          Detalle = ex.Message
+        };
+        throw new FaultException<ServiceFault>(fault, "Error interno.");
+      }
+    }
   }
 }

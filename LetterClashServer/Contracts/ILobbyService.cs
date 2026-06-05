@@ -20,5 +20,9 @@ namespace LetterClashServer.Contracts {
     [OperationContract]
     [FaultContract(typeof(ServiceFault))]
     PartidaDTO UnirseAPartidaPrivada(int jugadorID, string codigoAcceso);
+
+    [OperationContract]
+    [FaultContract(typeof(ServiceFault))]
+    bool PublicarPartida(string codigoAcceso, int anfitrionID);
   }
 }
