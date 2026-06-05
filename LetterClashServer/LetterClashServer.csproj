@@ -91,6 +91,7 @@
     <Content Include="Services\LobbyService.svc" />
     <Content Include="Services\GameService.svc" />
     <Content Include="Services\PalabraService.svc" />
+    <Content Include="Services\AutenticacionService.svc" />
     <Content Include="Web.config" />
     <Content Include="DataAccess\Context\LetterClashModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -105,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IJugadorService.cs" />
+    <Compile Include="Contracts\IAutenticacionService.cs" />
     <Compile Include="Contracts\ILobbyService.cs" />
     <Compile Include="Contracts\IGameService.cs" />
     <Compile Include="Contracts\IPalabraService.cs" />
@@ -118,6 +120,9 @@
     <Compile Include="Domain\Security\CryptographyHelper.cs" />
     <Compile Include="Services\JugadorService.svc.cs">
       <DependentUpon>JugadorService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AutenticacionService.svc.cs">
+      <DependentUpon>AutenticacionService.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\LobbyService.svc.cs">
       <DependentUpon>LobbyService.svc</DependentUpon>

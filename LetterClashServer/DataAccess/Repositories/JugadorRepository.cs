@@ -81,5 +81,38 @@ namespace LetterClashServer.DataAccess.Repositories {
         return true;
       }
     }
+
+    public virtual bool ExisteCorreo(string correo) {
+      using (var context = new LetterClashDBEntities()) {
+        return context.Jugadores
+                      .AsNoTracking()
+                      .Any(j => j.Correo.ToLower() == correo.ToLower());
+      }
+    }
+
+    public virtual bool ExisteNombreDeUsuario(string nombreUsuario) {
+      using (var context = new LetterClashDBEntities()) {
+        return context.Jugadores
+                      .AsNoTracking()
+                      .Any(j => j.NombreDeUsuario.ToLower() == nombreUsuario.ToLower());
+      }
+    }
+
+    public virtual Jugador ObtenerJugadorPorCredenciales(string correoONombreUsuario) {
+      using (var context = new LetterClashDBEntities()) {
+        string credencialLower = correoONombreUsuario.ToLower();
+        return context.Jugadores
+                      .AsNoTracking()
+                      .SingleOrDefault(j => j.Correo.ToLower() == credencialLower || j.NombreDeUsuario.ToLower() == credencialLower);
+      }
+    }
+
+    public virtual bool RegistrarJugador(Jugador jugador) {
+      using (var context = new LetterClashDBEntities()) {
+        context.Jugadores.Add(jugador);
+        context.SaveChanges();
+        return true;
+      }
+    }
   }
 }
