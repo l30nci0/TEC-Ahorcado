@@ -94,5 +94,143 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+	<ItemGroup>
+		<Page Include="Views\BattleHistoryDetail.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\CreateRoom.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\DifferentUser.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\EditProfile.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\EntryMenu.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\GameGuesser.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\GameHost.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\History.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\Login.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\MainMenu.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\PrivateLobby.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\Profile.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\PublicLobby.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\RegisterAccount.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\Scoreboard.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\SelectWord.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Views\Settings.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="Views\BattleHistoryDetail.xaml.cs">
+			<DependentUpon>BattleHistoryDetail.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\CreateRoom.xaml.cs">
+			<DependentUpon>CreateRoom.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\DifferentUser.xaml.cs">
+			<DependentUpon>DifferentUser.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\EditProfile.xaml.cs">
+			<DependentUpon>EditProfile.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\EntryMenu.xaml.cs">
+			<DependentUpon>EntryMenu.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\GameGuesser.xaml.cs">
+			<DependentUpon>GameGuesser.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\GameHost.xaml.cs">
+			<DependentUpon>GameHost.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\History.xaml.cs">
+			<DependentUpon>History.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\Login.xaml.cs">
+			<DependentUpon>Login.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\MainMenu.xaml.cs">
+			<DependentUpon>MainMenu.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\PrivateLobby.xaml.cs">
+			<DependentUpon>PrivateLobby.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\Profile.xaml.cs">
+			<DependentUpon>Profile.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\PublicLobby.xaml.cs">
+			<DependentUpon>PublicLobby.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\RegisterAccount.xaml.cs">
+			<DependentUpon>RegisterAccount.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\Scoreboard.xaml.cs">
+			<DependentUpon>Scoreboard.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\SelectWord.xaml.cs">
+			<DependentUpon>SelectWord.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="Views\Settings.xaml.cs">
+			<DependentUpon>Settings.xaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Assets\Images\Hangedman1.jpg" />
+		<Resource Include="Assets\Images\Hangedman2.jpg" />
+		<Resource Include="Assets\Images\Hangedman3.jpg" />
+		<Resource Include="Assets\Images\Hangedman4.jpg" />
+		<Resource Include="Assets\Images\Hangedman5.jpg" />
+		<Resource Include="Assets\Images\Hangman.jpg" />
+		<Resource Include="Assets\Images\LogoLetterClash.jpeg" />
+		<Resource Include="Assets\Images\Stadistics.png" />
+		<Resource Include="Assets\Images\star.png" />
+		<Resource Include="Assets\Images\UserAvatar.png" />
+	</ItemGroup>	
+	
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
