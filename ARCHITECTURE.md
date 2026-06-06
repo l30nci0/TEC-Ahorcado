@@ -50,6 +50,81 @@ En este proyecto de WPF + WCF + SQL Server, el desarrollo y pruebas se dividen e
 
 ---
 
+## 2.3 Diagrama de Componentes del Sistema
+
+A continuación se presenta el diagrama de componentes que ilustra la relación entre el cliente WPF, los contratos WCF compartidos lógicamente, los servicios del servidor, el motor de juego en memoria y la capa de acceso a datos:
+
+```mermaid
+graph TD
+    %% Styling
+    classDef client fill:#eef2f7,stroke:#3182ce,stroke-width:2px,color:#2d3748;
+    classDef contract fill:#fffaf0,stroke:#dd6b20,stroke-width:2px,color:#2d3748;
+    classDef server fill:#f0fff4,stroke:#38a169,stroke-width:2px,color:#2d3748;
+    classDef db fill:#faf5ff,stroke:#805ad5,stroke-width:2px,color:#2d3748;
+
+    subgraph Cliente ["Cliente (LetterClashClient)"]
+        direction TB
+        V["Views<br/>(Interfaz XAML)"]:::client --> VM["ViewModels<br/>(Lógica de Presentación)"]:::client
+        VM --> M_Client["Models<br/>(Estado de Sesión / Juego)"]:::client
+        VM --> P_Manager["ServiceProxyManager<br/>(Proxies de WCF)"]:::client
+        P_Manager --> C_Callback["GameCallbackHandler<br/>(Manejo de Callback Dúplex)"]:::client
+    end
+
+    subgraph Contratos ["Contratos WCF (Compartido)"]
+        direction TB
+        CI["IJugadorService<br/>ILobbyService<br/>IPalabraService<br/>IAutenticacionService"]:::contract
+        CG["IGameService<br/>(Duplex)"]:::contract
+        CC["IGameServiceCallback<br/>(Interface Callback)"]:::contract
+    end
+
+    subgraph Servidor ["Servidor (LetterClashServer)"]
+        direction TB
+        subgraph WCF_Services ["Servicios WCF"]
+            JS["JugadorService<br/>LobbyService<br/>PalabraService<br/>AutenticacionService<br/>(PerCall)"]:::server
+            GS["GameService<br/>(Single / Singleton)"]:::server
+        end
+        
+        subgraph Motor ["Motor del Juego"]
+            GE["GameSessionManager<br/>(Singleton)"]:::server
+            AG["ActiveGame<br/>(Partida en Memoria)"]:::server
+        end
+        
+        subgraph AccesoDatos ["Acceso a Datos (EF 6)"]
+            Rep["Repositories<br/>(Jugador, Partida, Palabra)"]:::server
+            Ctx["LetterClashContext<br/>(DbContext)"]:::server
+        end
+        
+        GS --> GE
+        GE --> AG
+        JS --> Rep
+        GS --> Rep
+        Rep --> Ctx
+    end
+
+    subgraph DB_Layer ["Base de Datos"]
+        DB[("SQL Server<br/>(Tablas: Jugador, Partida, Palabra)")]:::db
+    end
+
+    %% Relaciones inter-capa
+    VM -.-> CI
+    VM -.-> CG
+    CC -.-> C_Callback
+    
+    P_Manager ==>|Llamadas SOAP / HTTP| CI
+    P_Manager ==>|Conexión Dúplex SOAP / HTTP| CG
+    GS ==>|Callbacks de Servidor| CC
+    
+    Ctx ==>|ADO.NET / TDS| DB
+
+    %% Apply Classes
+    class V,VM,M_Client,P_Manager,C_Callback client;
+    class CI,CG,CC contract;
+    class JS,GS,GE,AG,Rep,Ctx server;
+    class DB db;
+```
+
+---
+
 ## 3. Arquitectura del Servidor (`LetterClashServer`)
 
 El servidor gestiona la lógica de negocio central, la persistencia y la coordinación de las partidas multijugador.
@@ -233,4 +308,56 @@ sequenceDiagram
     S->>DB: UPDATE Jugador SET Puntuacion = Puntuacion + 10 / -5
     S-->>C1: Callback.OnPartidaFinalizada(ganador, puntuacion)
     S-->>C2: Callback.OnPartidaFinalizada(ganador, puntuacion)
+```
+
+---
+
+## 6. Diagrama de Despliegue
+
+El siguiente diagrama detalla la arquitectura física y de red de la aplicación, mostrando cómo se distribuyen los componentes en los nodos cliente, servidor de aplicaciones y servidor de bases de datos, así como los puertos y protocolos utilizados para la intercomunicación:
+
+```mermaid
+graph TB
+    %% Styling
+    classDef client fill:#eef2f7,stroke:#3182ce,stroke-width:2px,color:#2d3748;
+    classDef server fill:#f0fff4,stroke:#38a169,stroke-width:2px,color:#2d3748;
+    classDef db fill:#faf5ff,stroke:#805ad5,stroke-width:2px,color:#2d3748;
+
+    subgraph ClientNode ["Nodo Cliente: PC de Usuario"]
+        direction TB
+        ClientOS["Sistema Operativo Windows"]:::client
+        NETClient[".NET Framework 4.7.2 Runtime"]:::client
+        ClientApp["LetterClashClient.exe<br/>(Aplicación de Escritorio WPF)"]:::client
+        
+        ClientOS --- NETClient
+        NETClient --- ClientApp
+    end
+
+    subgraph AppServerNode ["Nodo Servidor: Servidor de Aplicaciones Web"]
+        direction TB
+        IISServer["Internet Information Services (IIS / IIS Express)"]:::server
+        WCFRuntime["Entorno de Ejecución WCF (.NET 4.7.2)"]:::server
+        ServerApp["LetterClashServer (WCF Services)<br/>- Autenticacion, Jugador, Lobby, Palabra, Game"]:::server
+        
+        IISServer --- WCFRuntime
+        WCFRuntime --- ServerApp
+    end
+
+    subgraph DBNode ["Nodo Base de Datos"]
+        direction TB
+        SQLServer["Motor de Base de Datos SQL Server"]:::db
+        Database["Base de Datos Relacional: LetterClashDB"]:::db
+        
+        SQLServer --- Database
+    end
+
+    %% Communication paths with ports and protocols
+    ClientApp ==>|Puerto 80/443: basicHttpBinding<br/>(Servicios síncronos / SOAP over HTTP)| IISServer
+    ClientApp <=>|Puerto 80/443: wsDualHttpBinding<br/>(Canal de comunicación dúplex / SOAP over HTTP)| IISServer
+    ServerApp ==>|Puerto 1433: Protocolo TDS<br/>(Entity Framework 6 / ADO.NET)| SQLServer
+
+    %% Apply Classes
+    class ClientOS,NETClient,ClientApp client;
+    class IISServer,WCFRuntime,ServerApp server;
+    class SQLServer,Database db;
 ```
