@@ -1,0 +1,151 @@
+﻿<Page x:Class="LetterClashClient.Views.SelectWord"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="720"
+      d:DesignWidth="1280"
+      Title="SelectWord"
+      Loaded="Page_Loaded">
+
+    <Grid Background="#F4F4F4">
+        <Border Margin="20"
+            BorderBrush="#2B2B2B"
+            BorderThickness="2"
+            Background="White">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0"
+              Margin="30,20,30,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                  Width="430"
+                  Height="70"
+                  BorderBrush="#2B2B2B"
+                  BorderThickness="1"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                         Text="📖"
+                         FontSize="42"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
+
+                            <TextBlock x:Name="TextBlockHeader"
+                         Grid.Column="1"
+                         Text="Palabras Español/Ingles"
+                         FontSize="22"
+                         FontWeight="SemiBold"
+                         Foreground="#111111"
+                         VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Image x:Name="ImageLogo"
+                 Grid.Column="1"
+                 Source="/Assets/Images/LogoLetterClash.jpeg"
+                 Width="330"
+                 Height="95"
+                 Stretch="Uniform"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid Grid.Row="1"
+              Margin="65,10,65,0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock x:Name="TextBlockTitle"
+                     Grid.Row="0"
+                     Text="Palabras disponibles"
+                     FontSize="24"
+                     FontWeight="SemiBold"
+                     Foreground="#1E1E2F"
+                     VerticalAlignment="Center"/>
+
+                    <DataGrid x:Name="DataGridWords"
+                    Grid.Row="1"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    CanUserDeleteRows="False"
+                    IsReadOnly="True"
+                    HeadersVisibility="Column"
+                    GridLinesVisibility="All"
+                    FontSize="16"
+                    RowHeight="40"
+                    ColumnHeaderHeight="38"
+                    Margin="0,0,0,10">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Palabra"
+                                  Binding="{Binding Palabra}"
+                                  Width="170"/>
+
+                            <DataGridTextColumn Header="Descripción"
+                                  Binding="{Binding Descripcion}"
+                                  Width="*"/>
+
+                            <DataGridTemplateColumn Header=""
+                                      Width="130">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Usar"
+                            Width="100"
+                            Height="30"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Cursor="Hand"
+                            Click="ButtonUseWord_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+                <Border Grid.Row="2"
+                BorderBrush="#2B2B2B"
+                BorderThickness="0,2,0,0"
+                Background="#F7F7F7">
+
+                    <Grid>
+                        <Button x:Name="ButtonBack"
+                    Content="Regresar  ↩"
+                    Width="190"
+                    Height="38"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="35,0,0,0"
+                    Cursor="Hand"
+                    Click="ButtonBack_Click"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

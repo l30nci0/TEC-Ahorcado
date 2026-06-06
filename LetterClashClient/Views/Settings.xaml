@@ -1,0 +1,252 @@
+﻿<Page x:Class="LetterClashClient.Views.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="720"
+      d:DesignWidth="1280"
+      Title="Settings"
+      Loaded="Page_Loaded">
+
+    <Grid Background="#F4F4F4">
+        <Border Margin="20"
+            BorderBrush="#2B2B2B"
+            BorderThickness="2"
+            Background="White">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0"
+              Margin="30,25,30,20">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0"
+                    Width="250"
+                    Height="58"
+                    BorderBrush="#2B2B2B"
+                    BorderThickness="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                           Text="."
+                           FontSize="32"
+                           Foreground="#333333"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+                                <TextBlock Grid.Column="1"
+                           Text="Ajustes"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="#111111"
+                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="1"
+                    Width="480"
+                    Height="430"
+                    BorderBrush="#2B2B2B"
+                    BorderThickness="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="65,10,0,0">
+
+                            <Grid Margin="35">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="65"/>
+                                    <RowDefinition Height="65"/>
+                                    <RowDefinition Height="65"/>
+                                    <RowDefinition Height="85"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="65"/>
+                                </Grid.RowDefinitions>
+
+                                <Button x:Name="ButtonPrivacy"
+                        Grid.Row="0"
+                        Content="Perfil: Publico          🔒"
+                        Width="350"
+                        Height="45"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Cursor="Hand"
+                        Click="ButtonPrivacy_Click"/>
+
+                                <Button x:Name="ButtonSound"
+                        Grid.Row="1"
+                        Content="Sonido                 ≋"
+                        Width="350"
+                        Height="45"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Cursor="Hand"
+                        Click="ButtonSound_Click"/>
+
+                                <Button x:Name="ButtonHowToPlay"
+                        Grid.Row="2"
+                        Content="Como Jugar??          ?"
+                        Width="350"
+                        Height="45"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Cursor="Hand"
+                        Click="ButtonHowToPlay_Click"/>
+
+                                <StackPanel Grid.Row="3"
+                            Width="350"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+
+                                    <TextBlock Text="Idioma Preferido"
+                             FontSize="15"
+                             Foreground="#222222"
+                             Margin="0,0,0,5"/>
+
+                                    <ComboBox x:Name="ComboBoxPreferredLanguage"
+                            Height="35"
+                            FontSize="15"
+                            SelectedIndex="0">
+                                        <ComboBoxItem Content="Español"/>
+                                        <ComboBoxItem Content="Ingles"/>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <Button x:Name="ButtonLogout"
+                        Grid.Row="5"
+                        Content="Cerrar Sesion          ↩"
+                        Width="350"
+                        Height="45"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Cursor="Hand"
+                        Click="ButtonLogout_Click"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="120"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Image x:Name="ImageLogo"
+                   Grid.Row="0"
+                   Source="/Assets/Images/LogoLetterClash.jpeg"
+                   Width="330"
+                   Height="100"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+                        <Image x:Name="ImageHangman"
+                   Grid.Row="1"
+                   Source="/Assets/Images/Hangman.jpg"
+                   Width="300"
+                   Height="360"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,40,0,0"/>
+                    </Grid>
+                </Grid>
+
+                <Border Grid.Row="1"
+                BorderBrush="#2B2B2B"
+                BorderThickness="0,2,0,0"
+                Background="#F7F7F7">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="ButtonMainMenu"
+                    Grid.Column="0"
+                    Content="Menu Principal  ⚔"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    Cursor="Hand"
+                    Click="ButtonMainMenu_Click"/>
+
+                        <Button x:Name="ButtonProfile"
+                    Grid.Column="1"
+                    Content="Perfil  👤"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    Cursor="Hand"
+                    Click="ButtonProfile_Click"/>
+
+                        <Button x:Name="ButtonHistory"
+                    Grid.Column="2"
+                    Content="Historial  ◴"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    Cursor="Hand"
+                    Click="ButtonHistory_Click"/>
+
+                        <Button x:Name="ButtonScoreboard"
+                    Grid.Column="3"
+                    Content="Marcadores  🏆"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    Cursor="Hand"
+                    Click="ButtonScoreboard_Click"/>
+
+                        <Button x:Name="ButtonSettings"
+                    Grid.Column="4"
+                    Content="Ajustes  ⚙"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    Cursor="Hand"
+                    Click="ButtonSettings_Click"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
