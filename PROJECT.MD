@@ -4,6 +4,58 @@ Este documento contiene las reglas de negocio y los casos de uso para el sistema
 
 ---
 
+## Planteamiento del Problema
+
+En el ámbito de la ingeniería de software y el desarrollo de sistemas distribuidos, la construcción de aplicaciones interactivas en tiempo real representa un reto técnico significativo. El juego clásico de "El Ahorcado" es ampliamente conocido, pero sus implementaciones convencionales suelen ser locales, de un solo jugador o limitadas a arquitecturas de petición-respuesta síncronas tradicionales. 
+
+El desarrollo de una plataforma interactiva, distribuida y multijugador como **TEC-Ahorcado (LetterClash)** plantea diversos problemas y desafíos de ingeniería:
+
+1. **Sincronización Bidireccional en Tiempo Real:** Establecer canales de comunicación dúplex estables donde el servidor pueda notificar de forma asíncrona a los clientes conectados sobre eventos clave (entrada de jugadores, envío de mensajes por chat, propuesta de letras y decremento de turnos) sin depender de esquemas ineficientes de consulta continua (*polling*).
+2. **Desacoplamiento Arquitectónico:** Diseñar y enlazar una interfaz gráfica responsiva en el cliente mediante el patrón MVVM (Model-View-ViewModel) en WPF, comunicándose con un servidor basado en servicios WCF (.NET Framework 4.7.2), protegiendo la lógica de negocio y encapsulando las consultas de datos.
+3. **Gestión de Concurrencia y Estado en Memoria:** Mantener de forma consistente el estado de las salas de juego y las partidas en curso mediante un administrador de sesiones en memoria en el servidor (`GameSessionManager` de tipo *Singleton*), coordinando la concurrencia de múltiples hilos de ejecución de clientes y actualizando la base de datos de manera atómica con Entity Framework 6.
+4. **Resiliencia y Manejo Estandarizado de Fallos:** Implementar un esquema uniforme de propagación de excepciones en red que traduzca fallos internos o de validación de negocio del backend a códigos de error comprensibles (`CodigoError`) estructurados en objetos genéricos (`ServiceResult`), permitiendo al cliente WPF reaccionar de forma amigable ante fallos de conectividad, base de datos o lógica de juego.
+
+Este proyecto universitario de ingeniería de software aborda de forma integral estos desafíos, integrando prácticas y patrones recomendados para el desarrollo de software seguro, escalable y con una experiencia de usuario fluida.
+
+---
+
+## Decisiones de Diseño y Justificación
+
+Para dar solución a los problemas planteados, se tomaron decisiones tecnológicas y de diseño fundamentales, justificadas bajo criterios de modularidad, mantenibilidad, rendimiento y seguridad:
+
+### 1. Arquitectura de Comunicación: WCF con Binding Dúplex (`wsDualHttpBinding`)
+*   **Decisión:** Utilizar Windows Communication Foundation (WCF) configurando `wsDualHttpBinding` para la comunicación del servicio de partidas (`GameService`).
+*   **Justificación:** El juego requiere sincronización en tiempo real y flujo bidireccional de datos (por ejemplo, notificar al Anfitrión del daño recibido o al Adivinador del cambio de turno). Un binding convencional (como `basicHttpBinding`) forzaría al cliente a realizar solicitudes continuas (*polling*), saturando el canal de red y aumentando la latencia. `wsDualHttpBinding` establece un canal de retorno (*callback*) que permite al servidor empujar eventos al cliente instantáneamente bajo demanda.
+
+### 2. Estructuración del Cliente: Patrón MVVM (Model-View-ViewModel) en WPF
+*   **Decisión:** Desarrollar la aplicación de escritorio en C#/WPF separando estrictamente la presentación usando el patrón de diseño arquitectónico MVVM.
+*   **Justificación:** Al desacoplar la interfaz gráfica (XAML Views) de la lógica de presentación (ViewModels) y del estado local/red (Models), facilitamos el mantenimiento independiente de la UI. Esto permite realizar pruebas unitarias sobre los ViewModels utilizando *mocks* o datos de prueba fijos, sin necesidad de estar conectados a la red durante las primeras fases de desarrollo.
+
+### 3. Gestión de Ciclo de Vida: Servicios Stateless (`PerCall`) vs. Stateful (`Single`)
+*   **Decisión:** Asignar `InstanceContextMode.PerCall` a los servicios de perfil e historial (`JugadorService`, `LobbyService`, `PalabraService`), y `InstanceContextMode.Single` al servicio de juego (`GameService`).
+*   **Justificación:** 
+    *   Los servicios estándar son sin estado (`PerCall`), lo que libera memoria inmediatamente tras resolver la llamada SOAP, optimizando los recursos del servidor IIS y garantizando la escalabilidad de la base de usuarios.
+    *   El servicio de juego requiere un estado persistente en memoria (`Single`) porque debe coordinar las conexiones concurrentes de jugadores en las mismas salas de juego y enviar callbacks de red a los clientes correctos en tiempo real mediante el objeto singleton `GameSessionManager`.
+
+### 4. Capa de Acceso a Datos: ORM Entity Framework 6 (EF6)
+*   **Decisión:** Utilizar Entity Framework 6 para la gestión y mapeo de tablas relacionales (Jugador, Partida, Palabra) a objetos C#.
+*   **Justificación:** El uso de un mapeador objeto-relacional reduce drásticamente el código boilerplate de consultas SQL tradicionales (evitando sentencias propensas a inyección SQL). Asimismo, asegura la validación en tiempo de compilación de los tipos de datos y simplifica la lógica de transacciones complejas en la base de datos relacional SQL Server.
+
+### 5. Control de Fallos en Sistemas Distribuidos: Serializable `ServiceResult` y `CodigoError` Enum
+*   **Decisión:** Retornar un objeto envoltorio genérico `ServiceResult<T>` que contiene un enum tipado `CodigoError` (en lugar de lanzar SOAP Faults directos).
+*   **Justificación:** 
+    *   **Seguridad:** Impedir que excepciones crudas del servidor (como fallos de base de datos o referencias nulas) se expongan en el protocolo SOAP, mitigando la divulgación de información sensible sobre la infraestructura del backend.
+    *   **Resiliencia:** Al estandarizar los códigos de error mediante un enum serializable de WCF (`PARAMETRO_INVALIDO`, `RECURSO_NO_ENCONTRADO`, etc.), el cliente WPF puede capturar y procesar de manera segura y controlada las fallos de red o de negocio, permitiendo mostrar avisos amigables localizados al usuario sin interrumpir el flujo o provocar el cierre inesperado de la aplicación.
+
+### 6. Persistencia Selectiva y Estado Efímero en Memoria (Chat y Progreso de Partida)
+*   **Decisión:** Manejar el chat en tiempo real y el progreso intermedio de la partida (letras propuestas, fallos y vida) estrictamente en la memoria RAM del servidor (a través de `GameSessionManager`), persistiendo en la base de datos únicamente el resultado final consolidado de la partida y penalizaciones.
+*   **Justificación:** 
+    *   **Rendimiento y Reducción de E/S (I/O):** El envío de mensajes de chat y el tecleo de letras ocurren con una frecuencia y velocidad altas durante una partida activa. Escribir cada mensaje o letra propuesta en la base de datos relacional SQL Server generaría una sobrecarga masiva de operaciones de entrada/salida y bloqueos concurrentes innecesarios, degradando el rendimiento general del sistema.
+    *   **Naturaleza Efímera:** El historial del chat y el estado visual del ahorcado son datos transitorios relevantes únicamente mientras la partida está en curso. Una vez que la partida concluye, esta información pierde valor operativo.
+    *   **Optimización del Almacenamiento:** Al persistir solo los datos críticos finales (ganador, perdedor, variaciones de puntuación, fecha de juego y estado final), optimizamos significativamente el espacio en disco del servidor SQL Server y simplificamos el modelo relacional del sistema.
+
+---
+
 ## Reglas de Negocio (RN)
 
 | ID | Descripción |
