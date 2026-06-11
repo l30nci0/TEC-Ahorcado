@@ -11,10 +11,10 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class EditProfile : Page {
+  public partial class GUIProfileView : Page {
     private byte[] selectedAvatarBytes;
 
-    public EditProfile() {
+    public GUIProfileView() {
       InitializeComponent();
     }
 
@@ -22,29 +22,26 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Editar Perfil";
+        window.Title = "Perfil de Usuario";
       }
 
+      LoadViewData();
+      SwitchMode(false);
+    }
+
+    private void LoadViewData() {
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario != null) {
-        TextBoxUsername.Text = usuario.NombreDeUsuario;
-        TextBoxFullName.Text = usuario.Nombre;
-        TextBoxEmail.Text = usuario.Correo;
-        TextBoxPhone.Text = usuario.Telefono;
-        DatePickerBirthDate.SelectedDate = usuario.FechaDeNacimiento;
+        TextBlockUsernameHeader.Text = $"\"{usuario.NombreDeUsuario}\"";
+        TextBlockFullName.Text = usuario.Nombre;
+        TextBlockAge.Text = CalculateAge(usuario.FechaDeNacimiento).ToString() + " Años";
+        TextBlockBirthDate.Text = usuario.FechaDeNacimiento.ToString("dd/MM/yyyy");
+        TextBlockEmail.Text = usuario.Correo;
+        TextBlockPhone.Text = !string.IsNullOrWhiteSpace(usuario.Telefono) ? usuario.Telefono : "No Registrado";
 
-        if (usuario.IdiomaPreferido == Idiomas.INGLES) {
-          ComboBoxPreferredLanguage.SelectedIndex = 1;
-        } else if (usuario.IdiomaPreferido == Idiomas.ESPANOL) {
-          ComboBoxPreferredLanguage.SelectedIndex = 2;
-        } else {
-          ComboBoxPreferredLanguage.SelectedIndex = 0;
-        }
-
-        selectedAvatarBytes = usuario.Avatar;
-        if (selectedAvatarBytes != null && selectedAvatarBytes.Length > 0) {
+        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
           try {
-            using (var stream = new MemoryStream(selectedAvatarBytes)) {
+            using (var stream = new MemoryStream(usuario.Avatar)) {
               var bitmap = new BitmapImage();
               bitmap.BeginInit();
               bitmap.StreamSource = stream;
@@ -57,6 +54,68 @@ namespace LetterClashClient.Views {
           }
         }
       }
+    }
+
+    private void SwitchMode(bool isEdit) {
+      if (isEdit) {
+        GridProfileView.Visibility = Visibility.Collapsed;
+        GridProfileEdit.Visibility = Visibility.Visible;
+        GridFooterNavigation.Visibility = Visibility.Collapsed;
+        GridFooterEdit.Visibility = Visibility.Visible;
+
+        var usuario = SessionContext.UsuarioLogueado;
+        if (usuario != null) {
+          TextBoxUsername.Text = usuario.NombreDeUsuario;
+          TextBoxFullName.Text = usuario.Nombre;
+          TextBoxEmail.Text = usuario.Correo;
+          TextBoxPhone.Text = usuario.Telefono;
+          DatePickerBirthDate.SelectedDate = usuario.FechaDeNacimiento;
+
+          if (usuario.IdiomaPreferido == Idiomas.INGLES) {
+            ComboBoxPreferredLanguage.SelectedIndex = 1;
+          } else if (usuario.IdiomaPreferido == Idiomas.ESPANOL) {
+            ComboBoxPreferredLanguage.SelectedIndex = 2;
+          } else {
+            ComboBoxPreferredLanguage.SelectedIndex = 0;
+          }
+
+          selectedAvatarBytes = usuario.Avatar;
+          if (selectedAvatarBytes != null && selectedAvatarBytes.Length > 0) {
+            try {
+              using (var stream = new MemoryStream(selectedAvatarBytes)) {
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = stream;
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                ImageEditUserAvatar.Source = bitmap;
+              }
+            } catch { }
+          } else {
+            ImageEditUserAvatar.Source = new BitmapImage(new Uri("/Assets/Images/UserAvatar.png", UriKind.RelativeOrAbsolute));
+          }
+        }
+      } else {
+        GridProfileView.Visibility = Visibility.Visible;
+        GridProfileEdit.Visibility = Visibility.Collapsed;
+        GridFooterNavigation.Visibility = Visibility.Visible;
+        GridFooterEdit.Visibility = Visibility.Collapsed;
+      }
+    }
+
+    private int CalculateAge(DateTime birthDate) {
+      DateTime today = DateTime.Today;
+      int age = today.Year - birthDate.Year;
+
+      if (birthDate.Date > today.AddYears(-age)) {
+        age--;
+      }
+
+      return age;
+    }
+
+    private void ButtonEdit_Click(object sender, RoutedEventArgs e) {
+      SwitchMode(true);
     }
 
     private void ButtonSave_Click(object sender, RoutedEventArgs e) {
@@ -176,7 +235,13 @@ namespace LetterClashClient.Views {
                           MessageBoxButton.OK,
                           MessageBoxImage.Information);
 
-          NavigationService.Navigate(new Profile());
+          // Limpiar campos de contraseña
+          PasswordBoxCurrentPassword.Password = "";
+          PasswordBoxPassword.Password = "";
+          PasswordBoxConfirmPassword.Password = "";
+
+          LoadViewData();
+          SwitchMode(false);
         } else {
           if (profileResult?.Error != null) {
             MessageBox.Show(profileResult.Error.Mensaje, "Error de Perfil", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -192,7 +257,10 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonCancel_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      PasswordBoxCurrentPassword.Password = "";
+      PasswordBoxPassword.Password = "";
+      PasswordBoxConfirmPassword.Password = "";
+      SwitchMode(false);
     }
 
     private void ButtonAddAvatar_Click(object sender, RoutedEventArgs e) {
@@ -218,7 +286,7 @@ namespace LetterClashClient.Views {
             bitmap.StreamSource = stream;
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.EndInit();
-            ImageUserAvatar.Source = bitmap;
+            ImageEditUserAvatar.Source = bitmap;
           }
 
           selectedAvatarBytes = avatarBytes;
@@ -229,15 +297,41 @@ namespace LetterClashClient.Views {
     }
 
     private void PasswordBoxCurrentPassword_PasswordChanged(object sender, RoutedEventArgs e) {
-      TextBlockCurrentPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxCurrentPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+      if (TextBlockCurrentPasswordPlaceholder != null) {
+        TextBlockCurrentPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxCurrentPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+      }
     }
 
     private void PasswordBoxPassword_PasswordChanged(object sender, RoutedEventArgs e) {
-      TextBlockPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+      if (TextBlockPasswordPlaceholder != null) {
+        TextBlockPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+      }
     }
 
     private void PasswordBoxConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e) {
-      TextBlockConfirmPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxConfirmPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+      if (TextBlockConfirmPasswordPlaceholder != null) {
+        TextBlockConfirmPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxConfirmPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+      }
+    }
+
+    private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new GUIMainMenuView());
+    }
+
+    private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new GUIProfileView());
+    }
+
+    private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new GUIHistoryView());
+    }
+
+    private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new GUILeaderboardView());
+    }
+
+    private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 }

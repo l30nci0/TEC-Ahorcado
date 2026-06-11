@@ -9,8 +9,8 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class Scoreboard : Page {
-    public Scoreboard() {
+  public partial class GUILeaderboardView : Page {
+    public GUILeaderboardView() {
       InitializeComponent();
     }
 
@@ -106,32 +106,33 @@ namespace LetterClashClient.Views {
         return null;
       }
     }
+
     private void DataGridScoreboard_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
       ScoreboardItem selectedUser = DataGridScoreboard.SelectedItem as ScoreboardItem;
 
       if (selectedUser != null) {
-        NavigationService.Navigate(new DifferentUser(selectedUser.Nombre));
+        NavigationService.Navigate(new GUIDifferentUserView(selectedUser.Nombre));
       }
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      NavigationService.Navigate(new GUIProfileView());
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Scoreboard());
+      NavigationService.Navigate(new GUILeaderboardView());
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Settings());
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 

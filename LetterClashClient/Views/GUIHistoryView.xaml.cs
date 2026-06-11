@@ -10,8 +10,8 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class History : Page {
-    public History() {
+  public partial class GUIHistoryView : Page {
+    public GUIHistoryView() {
       InitializeComponent();
     }
 
@@ -25,7 +25,7 @@ namespace LetterClashClient.Views {
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario == null) {
         MessageBox.Show("Sesión de usuario inválida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new MainMenu());
+        NavigationService.Navigate(new GUIMainMenuView());
         return;
       }
 
@@ -163,28 +163,28 @@ namespace LetterClashClient.Views {
       BattleHistoryItem selectedBattle = DataGridHistory.SelectedItem as BattleHistoryItem;
 
       if (selectedBattle != null) {
-        NavigationService.Navigate(new BattleHistoryDetail(selectedBattle));
+        NavigationService.Navigate(new GUIBattleHistoryDetailView(selectedBattle));
       }
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      NavigationService.Navigate(new GUIProfileView());
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Scoreboard());
+      NavigationService.Navigate(new GUILeaderboardView());
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Settings());
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 

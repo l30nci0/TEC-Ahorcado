@@ -1,4 +1,4 @@
-<Page x:Class="LetterClashClient.Views.Scoreboard"
+<Page x:Class="LetterClashClient.Views.GUILeaderboardView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       d:DesignHeight="720"
       d:DesignWidth="1280"
-      Title="Scoreboard"
+      Title="GUILeaderboardView"
       Loaded="Page_Loaded">
 
     <Grid Background="#F4F4F4">
@@ -52,38 +52,38 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Image x:Name="ImageStarHeader"
-                       Grid.Column="0"
-                       Source="/Assets/Images/star.png"
-                       Width="56"
-                       Height="56"
-                       Stretch="Uniform"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
+                        Grid.Column="0"
+                        Source="/Assets/Images/star.png"
+                        Width="56"
+                        Height="56"
+                        Stretch="Uniform"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
 
                                 <TextBlock Grid.Column="1"
-                           Text="Mejores Puntajes"
-                           FontSize="20"
-                           FontWeight="SemiBold"
-                           Foreground="#111111"
-                           VerticalAlignment="Center"/>
+                            Text="Mejores Puntajes"
+                            FontSize="20"
+                            FontWeight="SemiBold"
+                            Foreground="#111111"
+                            VerticalAlignment="Center"/>
 
                                 <TextBlock Grid.Column="2"
-                           Text="◔"
-                           FontSize="44"
-                           Foreground="#333333"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                            Text="◔"
+                            FontSize="44"
+                            Foreground="#333333"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
 
                         <Image x:Name="ImageLogo"
-                   Grid.Column="1"
-                   Source="/Assets/Images/LogoLetterClash.jpeg"
-                   Width="330"
-                   Height="95"
-                   Stretch="Uniform"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+                    Grid.Column="1"
+                    Source="/Assets/Images/LogoLetterClash.jpeg"
+                    Width="330"
+                    Height="95"
+                    Stretch="Uniform"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
                     </Grid>
 
                     <Grid Grid.Row="1">
@@ -96,183 +96,183 @@
                         </Grid.ColumnDefinitions>
 
                         <Image x:Name="ImageStarLeft"
-                   Grid.Column="0"
-                   Source="/Assets/Images/star.png"
-                   Width="62"
-                   Height="62"
-                   Stretch="Uniform"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom"
-                   Margin="10,0,0,25"/>
+                    Grid.Column="0"
+                    Source="/Assets/Images/star.png"
+                    Width="62"
+                    Height="62"
+                    Stretch="Uniform"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="10,0,0,25"/>
 
                         <StackPanel Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Margin="0,0,0,50">
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Bottom"
+                         Margin="0,0,0,50">
 
                             <TextBlock x:Name="TextBlockTopName3"
-                         Text="Usuario 3"
-                         FontSize="21"
-                         FontWeight="SemiBold"
-                         HorizontalAlignment="Center"
-                         Margin="0,0,0,8"/>
+                          Text="Usuario 3"
+                          FontSize="21"
+                          FontWeight="SemiBold"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,8"/>
 
                             <Border Width="130"
-                      Height="125"
-                      BorderBrush="#2B2B2B"
-                      BorderThickness="1">
+                       Height="125"
+                       BorderBrush="#2B2B2B"
+                       BorderThickness="1">
 
                                 <Grid>
                                     <TextBlock Text="3"
-                             FontSize="24"
-                             FontWeight="SemiBold"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Top"
-                             Margin="0,12,0,0"/>
+                              FontSize="24"
+                              FontWeight="SemiBold"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Margin="0,12,0,0"/>
 
                                     <Image x:Name="ImageTopAvatar3"
-                         Source="/Assets/Images/UserAvatar.png"
-                         Width="62"
-                         Height="62"
-                         Stretch="Uniform"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Bottom"
-                         Margin="0,0,0,15"/>
+                          Source="/Assets/Images/UserAvatar.png"
+                          Width="62"
+                          Height="62"
+                          Stretch="Uniform"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Bottom"
+                          Margin="0,0,0,15"/>
                                 </Grid>
                             </Border>
                         </StackPanel>
 
                         <StackPanel Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        Margin="0,5,0,0">
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Margin="0,5,0,0">
 
                             <TextBlock x:Name="TextBlockTopName1"
-                         Text="Usuario 1"
-                         FontSize="21"
-                         FontWeight="SemiBold"
-                         HorizontalAlignment="Center"
-                         Margin="0,0,0,8"/>
+                          Text="Usuario 1"
+                          FontSize="21"
+                          FontWeight="SemiBold"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,8"/>
 
                             <Border Width="130"
-                      Height="150"
-                      BorderBrush="#2B2B2B"
-                      BorderThickness="1">
+                       Height="150"
+                       BorderBrush="#2B2B2B"
+                       BorderThickness="1">
 
                                 <Grid>
                                     <TextBlock Text="1"
-                             FontSize="24"
-                             FontWeight="SemiBold"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Top"
-                             Margin="0,18,0,0"/>
+                              FontSize="24"
+                              FontWeight="SemiBold"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Margin="0,18,0,0"/>
 
                                     <Image x:Name="ImageTopAvatar1"
-                         Source="/Assets/Images/UserAvatar.png"
-                         Width="66"
-                         Height="66"
-                         Stretch="Uniform"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Bottom"
-                         Margin="0,0,0,18"/>
+                          Source="/Assets/Images/UserAvatar.png"
+                          Width="66"
+                          Height="66"
+                          Stretch="Uniform"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Bottom"
+                          Margin="0,0,0,18"/>
                                 </Grid>
                             </Border>
                         </StackPanel>
 
                         <StackPanel Grid.Column="3"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Margin="0,0,0,55">
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Bottom"
+                         Margin="0,0,0,55">
 
                             <TextBlock x:Name="TextBlockTopName2"
-                         Text="Usuario 2"
-                         FontSize="21"
-                         FontWeight="SemiBold"
-                         HorizontalAlignment="Center"
-                         Margin="0,0,0,8"/>
+                          Text="Usuario 2"
+                          FontSize="21"
+                          FontWeight="SemiBold"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,8"/>
 
                             <Border Width="130"
-                      Height="135"
-                      BorderBrush="#2B2B2B"
-                      BorderThickness="1">
+                       Height="135"
+                       BorderBrush="#2B2B2B"
+                       BorderThickness="1">
 
                                 <Grid>
                                     <TextBlock Text="2"
-                             FontSize="24"
-                             FontWeight="SemiBold"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Top"
-                             Margin="0,14,0,0"/>
+                              FontSize="24"
+                              FontWeight="SemiBold"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Margin="0,14,0,0"/>
 
                                     <Image x:Name="ImageTopAvatar2"
-                         Source="/Assets/Images/UserAvatar.png"
-                         Width="64"
-                         Height="64"
-                         Stretch="Uniform"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Bottom"
-                         Margin="0,0,0,16"/>
+                          Source="/Assets/Images/UserAvatar.png"
+                          Width="64"
+                          Height="64"
+                          Stretch="Uniform"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Bottom"
+                          Margin="0,0,0,16"/>
                                 </Grid>
                             </Border>
                         </StackPanel>
 
                         <Image x:Name="ImageStarRight"
-                   Grid.Column="4"
-                   Source="/Assets/Images/star.png"
-                   Width="62"
-                   Height="62"
-                   Stretch="Uniform"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Bottom"
-                   Margin="0,0,10,25"/>
+                    Grid.Column="4"
+                    Source="/Assets/Images/star.png"
+                    Width="62"
+                    Height="62"
+                    Stretch="Uniform"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,10,25"/>
 
                         <TextBlock Grid.Column="1"
-                       Grid.ColumnSpan="3"
-                       Text="Mejores 50 Posiciones"
-                       FontSize="23"
-                       FontWeight="SemiBold"
-                       Foreground="#1E1E2F"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Bottom"
-                       Margin="0,0,0,5"/>
+                        Grid.ColumnSpan="3"
+                        Text="Mejores 50 Posiciones"
+                        FontSize="23"
+                        FontWeight="SemiBold"
+                        Foreground="#1E1E2F"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,0,5"/>
                     </Grid>
 
                     <DataGrid x:Name="DataGridScoreboard"
-                      Grid.Row="2"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      IsReadOnly="True"
-                      HeadersVisibility="Column"
-                      GridLinesVisibility="All"
-                      FontSize="15"
-                      RowHeight="32"
-                      ColumnHeaderHeight="36"
-                      Margin="55,5,55,0"
-                      SelectionMode="Single"
-                      SelectionUnit="FullRow"
-                      MouseDoubleClick="DataGridScoreboard_MouseDoubleClick">
+                       Grid.Row="2"
+                       AutoGenerateColumns="False"
+                       CanUserAddRows="False"
+                       CanUserDeleteRows="False"
+                       IsReadOnly="True"
+                       HeadersVisibility="Column"
+                       GridLinesVisibility="All"
+                       FontSize="15"
+                       RowHeight="32"
+                       ColumnHeaderHeight="36"
+                       Margin="55,5,55,0"
+                       SelectionMode="Single"
+                       SelectionUnit="FullRow"
+                       MouseDoubleClick="DataGridScoreboard_MouseDoubleClick">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Nombre"
-                                  Binding="{Binding Nombre}"
-                                  Width="*"/>
+                                   Binding="{Binding Nombre}"
+                                   Width="*"/>
 
                             <DataGridTextColumn Header="Partidas Ganadas"
-                                  Binding="{Binding PartidasGanadas}"
-                                  Width="*"/>
+                                   Binding="{Binding PartidasGanadas}"
+                                   Width="*"/>
 
                             <DataGridTextColumn Header="Porcentaje"
-                                  Binding="{Binding Porcentaje}"
-                                  Width="*"/>
+                                   Binding="{Binding Porcentaje}"
+                                   Width="*"/>
 
                             <DataGridTextColumn Header="Puntuación"
-                                  Binding="{Binding Puntuacion}"
-                                  Width="*"/>
+                                   Binding="{Binding Puntuacion}"
+                                   Width="*"/>
 
                             <DataGridTextColumn Header="Puesto"
-                                  Binding="{Binding Puesto}"
-                                  Width="*"/>
+                                   Binding="{Binding Puesto}"
+                                   Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

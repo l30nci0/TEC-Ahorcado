@@ -7,13 +7,13 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class SelectWord : Page {
+  public partial class GUISelectWordView : Page {
     private string selectedLanguage;
     private int privacyIndex;
 
-    public SelectWord() : this(Idiomas.ESPANOL, 1) { }
+    public GUISelectWordView() : this(Idiomas.ESPANOL, 1) { }
 
-    public SelectWord(string selectedLanguage, int privacyIndex) {
+    public GUISelectWordView(string selectedLanguage, int privacyIndex) {
       InitializeComponent();
       this.selectedLanguage = selectedLanguage;
       this.privacyIndex = privacyIndex;
@@ -51,13 +51,13 @@ namespace LetterClashClient.Views {
         var selectedWord = button.DataContext as PalabraDTO;
 
         if (selectedWord != null) {
-          NavigationService.Navigate(new CreateRoom(selectedWord, selectedLanguage, privacyIndex));
+          NavigationService.Navigate(new GUICreateRoomView(selectedWord, selectedLanguage, privacyIndex));
         }
       }
     }
 
     private void ButtonBack_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new CreateRoom(null, selectedLanguage, privacyIndex));
+      NavigationService.Navigate(new GUICreateRoomView(null, selectedLanguage, privacyIndex));
     }
   }
 }

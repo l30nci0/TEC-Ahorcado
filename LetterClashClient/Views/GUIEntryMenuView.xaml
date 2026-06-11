@@ -1,4 +1,4 @@
-﻿<Page x:Class="LetterClashClient.Views.EntryMenu"
+<Page x:Class="LetterClashClient.Views.GUIEntryMenuView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       d:DesignHeight="720"
       d:DesignWidth="1280"
-      Title="EntryMenu"
+      Title="GUIEntryMenuView"
       Loaded="Page_Loaded">
    
     <Grid Background="#F4F4F4">
@@ -27,15 +27,15 @@
                     VerticalAlignment="Center">
 
                     <TextBlock Text="J U E G O   D E L   A H O R C A D O"
-                     FontSize="42"
-                     FontWeight="SemiBold"
-                     Foreground="#1E1E2F"
-                     HorizontalAlignment="Center"/>
+                      FontSize="42"
+                      FontWeight="SemiBold"
+                      Foreground="#1E1E2F"
+                      HorizontalAlignment="Center"/>
 
                     <Rectangle Height="3"
-                     Fill="#1E1E2F"
-                     Margin="0,12,0,0"
-                     Width="850"/>
+                      Fill="#1E1E2F"
+                      Margin="0,12,0,0"
+                      Width="850"/>
                 </StackPanel>
 
                 <Grid Grid.Row="1">
@@ -45,22 +45,22 @@
                     </Grid.ColumnDefinitions>
 
                     <Image x:Name="ImageHangman"
-                 Grid.Column="0"
-                 Source="/Assets/Images/Hangman.jpg"
-                 Width="320"
-                 Height="360"
-                 Stretch="Uniform"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center"/>
+                  Grid.Column="0"
+                  Source="/Assets/Images/Hangman.jpg"
+                  Width="320"
+                  Height="360"
+                  Stretch="Uniform"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
 
                     <Image x:Name="ImageLogo"
-                 Grid.Column="1"
-                 Source="/Assets/Images/LogoLetterClash.jpeg"
-                 Width="620"
-                 Height="300"
-                 Stretch="Uniform"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center"/>
+                  Grid.Column="1"
+                  Source="/Assets/Images/LogoLetterClash.jpeg"
+                  Width="620"
+                  Height="300"
+                  Stretch="Uniform"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
                 </Grid>
 
                 <Button x:Name="ButtonStart"

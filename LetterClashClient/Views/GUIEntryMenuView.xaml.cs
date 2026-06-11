@@ -2,8 +2,8 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace LetterClashClient.Views {
-  public partial class EntryMenu : Page {
-    public EntryMenu() {
+  public partial class GUIEntryMenuView : Page {
+    public GUIEntryMenuView() {
       InitializeComponent();
     }
 
@@ -12,7 +12,7 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonStart_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Login());
+      NavigationService.Navigate(new GUILoginView());
     }
   }
 }

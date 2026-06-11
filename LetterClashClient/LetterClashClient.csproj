@@ -98,127 +98,106 @@
     <None Include="App.config" />
   </ItemGroup>
 	<ItemGroup>
-		<Page Include="Views\BattleHistoryDetail.xaml">
+		<Page Include="Views\GUIBattleHistoryDetailView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\CreateRoom.xaml">
+		<Page Include="Views\GUICreateRoomView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\DifferentUser.xaml">
+		<Page Include="Views\GUIDifferentUserView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\EditProfile.xaml">
+		<Page Include="Views\GUIEntryMenuView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\EntryMenu.xaml">
+		<Page Include="Views\GUIGameView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\GameGuesser.xaml">
+		<Page Include="Views\GUIHistoryView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\GameHost.xaml">
+		<Page Include="Views\GUILeaderboardView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\History.xaml">
+		<Page Include="Views\GUILobbyView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\Login.xaml">
+		<Page Include="Views\GUILoginView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\MainMenu.xaml">
+		<Page Include="Views\GUIMainMenuView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\PrivateLobby.xaml">
+		<Page Include="Views\GUIProfileView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\Profile.xaml">
+		<Page Include="Views\GUIRegisterView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\PublicLobby.xaml">
+		<Page Include="Views\GUISelectWordView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
-		<Page Include="Views\RegisterAccount.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\Scoreboard.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\SelectWord.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\Settings.xaml">
+		<Page Include="Views\GUISettingsView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Include="Views\BattleHistoryDetail.xaml.cs">
-			<DependentUpon>BattleHistoryDetail.xaml</DependentUpon>
+		<Compile Include="Views\GUIBattleHistoryDetailView.xaml.cs">
+			<DependentUpon>GUIBattleHistoryDetailView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\CreateRoom.xaml.cs">
-			<DependentUpon>CreateRoom.xaml</DependentUpon>
+		<Compile Include="Views\GUICreateRoomView.xaml.cs">
+			<DependentUpon>GUICreateRoomView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\DifferentUser.xaml.cs">
-			<DependentUpon>DifferentUser.xaml</DependentUpon>
+		<Compile Include="Views\GUIDifferentUserView.xaml.cs">
+			<DependentUpon>GUIDifferentUserView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\EditProfile.xaml.cs">
-			<DependentUpon>EditProfile.xaml</DependentUpon>
+		<Compile Include="Views\GUIEntryMenuView.xaml.cs">
+			<DependentUpon>GUIEntryMenuView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\EntryMenu.xaml.cs">
-			<DependentUpon>EntryMenu.xaml</DependentUpon>
+		<Compile Include="Views\GUIGameView.xaml.cs">
+			<DependentUpon>GUIGameView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\GameGuesser.xaml.cs">
-			<DependentUpon>GameGuesser.xaml</DependentUpon>
+		<Compile Include="Views\GUIHistoryView.xaml.cs">
+			<DependentUpon>GUIHistoryView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\GameHost.xaml.cs">
-			<DependentUpon>GameHost.xaml</DependentUpon>
+		<Compile Include="Views\GUILeaderboardView.xaml.cs">
+			<DependentUpon>GUILeaderboardView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\History.xaml.cs">
-			<DependentUpon>History.xaml</DependentUpon>
+		<Compile Include="Views\GUILobbyView.xaml.cs">
+			<DependentUpon>GUILobbyView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\Login.xaml.cs">
-			<DependentUpon>Login.xaml</DependentUpon>
+		<Compile Include="Views\GUILoginView.xaml.cs">
+			<DependentUpon>GUILoginView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\MainMenu.xaml.cs">
-			<DependentUpon>MainMenu.xaml</DependentUpon>
+		<Compile Include="Views\GUIMainMenuView.xaml.cs">
+			<DependentUpon>GUIMainMenuView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\PrivateLobby.xaml.cs">
-			<DependentUpon>PrivateLobby.xaml</DependentUpon>
+		<Compile Include="Views\GUIProfileView.xaml.cs">
+			<DependentUpon>GUIProfileView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\Profile.xaml.cs">
-			<DependentUpon>Profile.xaml</DependentUpon>
+		<Compile Include="Views\GUIRegisterView.xaml.cs">
+			<DependentUpon>GUIRegisterView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\PublicLobby.xaml.cs">
-			<DependentUpon>PublicLobby.xaml</DependentUpon>
+		<Compile Include="Views\GUISelectWordView.xaml.cs">
+			<DependentUpon>GUISelectWordView.xaml</DependentUpon>
 		</Compile>
-		<Compile Include="Views\RegisterAccount.xaml.cs">
-			<DependentUpon>RegisterAccount.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\Scoreboard.xaml.cs">
-			<DependentUpon>Scoreboard.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\SelectWord.xaml.cs">
-			<DependentUpon>SelectWord.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\Settings.xaml.cs">
-			<DependentUpon>Settings.xaml</DependentUpon>
+		<Compile Include="Views\GUISettingsView.xaml.cs">
+			<DependentUpon>GUISettingsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Include="Services\ServiceProxyManager.cs" />
 		<Compile Include="Services\GameCallbackHandler.cs" />

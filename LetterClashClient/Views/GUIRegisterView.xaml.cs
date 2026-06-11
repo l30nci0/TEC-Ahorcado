@@ -8,8 +8,8 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class RegisterAccount : Page {
-    public RegisterAccount() {
+  public partial class GUIRegisterView : Page {
+    public GUIRegisterView() {
       InitializeComponent();
     }
 
@@ -95,10 +95,10 @@ namespace LetterClashClient.Views {
           if (loginResult != null && loginResult.IsSuccess) {
             SessionContext.UsuarioLogueado = loginResult.Value;
             MessageBox.Show("Cuenta creada e inicio de sesión correcto.", "TecnoHorcado", MessageBoxButton.OK, MessageBoxImage.Information);
-            NavigationService.Navigate(new MainMenu());
+            NavigationService.Navigate(new GUIMainMenuView());
           } else {
             MessageBox.Show("Cuenta creada con éxito. Inicie sesión para comenzar.", "TecnoHorcado", MessageBoxButton.OK, MessageBoxImage.Information);
-            NavigationService.Navigate(new Login());
+            NavigationService.Navigate(new GUILoginView());
           }
         } else {
           if (registerResult?.Error != null) {
@@ -138,7 +138,7 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonCancel_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Login());
+      NavigationService.Navigate(new GUILoginView());
     }
 
     private void ButtonAddAvatar_Click(object sender, RoutedEventArgs e) {

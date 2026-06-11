@@ -1,4 +1,4 @@
-﻿<Page x:Class="LetterClashClient.Views.CreateRoom"
+<Page x:Class="LetterClashClient.Views.GUICreateRoomView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       d:DesignHeight="720"
       d:DesignWidth="1280"
-      Title="CreateRoom"
+      Title="GUICreateRoomView"
       Loaded="Page_Loaded">
 
     <Grid Background="#F4F4F4">
@@ -50,41 +50,41 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Image x:Name="ImageUserAvatar"
-                       Grid.Column="0"
-                       Source="/Assets/Images/UserAvatar.png"
-                       Width="58"
-                       Height="58"
-                       Stretch="Uniform"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
+                        Grid.Column="0"
+                        Source="/Assets/Images/UserAvatar.png"
+                        Width="58"
+                        Height="58"
+                        Stretch="Uniform"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
 
                                 <StackPanel Grid.Column="1"
-                            VerticalAlignment="Center">
+                             VerticalAlignment="Center">
 
                                     <TextBlock x:Name="TextBlockUsername"
-                             Text="&quot;NOMBRE DE USUARIO&quot;"
-                             FontSize="16"
-                             FontWeight="SemiBold"
-                             Foreground="#111111"
-                             Margin="0,0,0,8"/>
+                              Text="&quot;NOMBRE DE USUARIO&quot;"
+                              FontSize="16"
+                              FontWeight="SemiBold"
+                              Foreground="#111111"
+                              Margin="0,0,0,8"/>
 
                                     <TextBlock x:Name="TextBlockAge"
-                             Text="&quot;EDAD&quot;"
-                             FontSize="15"
-                             FontWeight="SemiBold"
-                             Foreground="#111111"/>
+                              Text="&quot;EDAD&quot;"
+                              FontSize="15"
+                              FontWeight="SemiBold"
+                              Foreground="#111111"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
 
                         <Image x:Name="ImageLogo"
-                   Grid.Column="1"
-                   Source="/Assets/Images/LogoLetterClash.jpeg"
-                   Width="330"
-                   Height="95"
-                   Stretch="Uniform"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+                    Grid.Column="1"
+                    Source="/Assets/Images/LogoLetterClash.jpeg"
+                    Width="330"
+                    Height="95"
+                    Stretch="Uniform"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
                     </Grid>
 
                     <Grid Grid.Row="1">
@@ -114,14 +114,14 @@
                         BorderThickness="0,0,0,1">
 
                                     <TextBlock Text="Crear Sala"
-                             FontSize="16"
-                             FontWeight="SemiBold"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"/>
+                              FontSize="16"
+                              FontWeight="SemiBold"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"/>
                                 </Border>
 
                                 <Grid Grid.Row="1"
-                      Margin="25">
+                       Margin="25">
 
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="32"/>
@@ -137,32 +137,32 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Grid.Row="0"
-                             Text="Cambiar Idioma"
-                             FontSize="15"
-                             Foreground="#111111"
-                             VerticalAlignment="Center"/>
+                              Text="Cambiar Idioma"
+                              FontSize="15"
+                              Foreground="#111111"
+                              VerticalAlignment="Center"/>
 
                                     <ComboBox x:Name="ComboBoxLanguage"
-                            Grid.Row="1"
-                            Height="35"
-                            FontSize="15"
-                            SelectedIndex="0">
+                                    Grid.Row="1"
+                                    Height="35"
+                                    FontSize="15"
+                                    SelectedIndex="0">
                                         <ComboBoxItem Content="Seleccione Idioma"/>
                                         <ComboBoxItem Content="Ingles"/>
                                         <ComboBoxItem Content="Español"/>
                                     </ComboBox>
 
                                     <Button x:Name="ButtonSelectWord"
-                          Grid.Row="2"
-                          Content="Seleccionar Palabra     ⌕"
-                          Width="290"
-                          Height="42"
-                          FontSize="15"
-                          FontWeight="SemiBold"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Center"
-                          Cursor="Hand"
-                          Click="ButtonSelectWord_Click"/>
+                           Grid.Row="2"
+                           Content="Seleccionar Palabra     ⌕"
+                           Width="290"
+                           Height="42"
+                           FontSize="15"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Cursor="Hand"
+                           Click="ButtonSelectWord_Click"/>
 
                                     <Grid Grid.Row="3">
                                         <Grid.ColumnDefinitions>
@@ -185,10 +185,10 @@
                                     </Grid>
 
                                     <TextBlock Grid.Row="5"
-                             Text="Tipo de Partida"
-                             FontSize="15"
-                             Foreground="#111111"
-                             VerticalAlignment="Center"/>
+                              Text="Tipo de Partida"
+                              FontSize="15"
+                              Foreground="#111111"
+                              VerticalAlignment="Center"/>
 
                                     <ComboBox x:Name="ComboBoxGameType"
                             Grid.Row="6"
@@ -201,20 +201,20 @@
                                     </ComboBox>
 
                                     <TextBlock Grid.Row="8"
-                             Text="Clave de Ingreso"
-                             FontSize="15"
-                             Foreground="#111111"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"/>
+                              Text="Clave de Ingreso"
+                              FontSize="15"
+                              Foreground="#111111"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"/>
 
                                     <TextBlock x:Name="TextBlockAccessKey"
-                             Grid.Row="9"
-                             Text="# 4233232"
-                             FontSize="20"
-                             FontWeight="SemiBold"
-                             Foreground="#111111"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Top"/>
+                              Grid.Row="9"
+                              Text="# 4233232"
+                              FontSize="20"
+                              FontWeight="SemiBold"
+                              Foreground="#111111"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"/>
                                 </Grid>
                             </Grid>
                         </Border>
@@ -229,7 +229,7 @@
                     Margin="20,150,0,0">
 
                             <StackPanel HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
+                           VerticalAlignment="Center">
 
                                 <Button x:Name="ButtonCreateRoom"
                         Content="Crear Sala   ↑"

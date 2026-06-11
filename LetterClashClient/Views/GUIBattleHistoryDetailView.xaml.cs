@@ -5,10 +5,10 @@ using System.Windows.Media.Imaging;
 using LetterClashClient.Models;
 
 namespace LetterClashClient.Views {
-  public partial class BattleHistoryDetail : Page {
+  public partial class GUIBattleHistoryDetailView : Page {
     private BattleHistoryItem selectedBattle;
 
-    public BattleHistoryDetail(BattleHistoryItem battle) {
+    public GUIBattleHistoryDetailView(BattleHistoryItem battle) {
       InitializeComponent();
       selectedBattle = battle;
     }
@@ -48,31 +48,31 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonViewProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new DifferentUser(selectedBattle.Rival));
+      NavigationService.Navigate(new GUIDifferentUserView(selectedBattle.Rival));
     }
 
     private void ButtonBack_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      NavigationService.Navigate(new GUIProfileView());
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Scoreboard());
+      NavigationService.Navigate(new GUILeaderboardView());
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Settings());
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 }

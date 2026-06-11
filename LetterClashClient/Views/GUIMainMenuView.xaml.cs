@@ -7,10 +7,10 @@ using System.Windows.Media.Imaging;
 using LetterClashClient.Models;
 
 namespace LetterClashClient.Views {
-  public partial class MainMenu : Page {
+  public partial class GUIMainMenuView : Page {
     private int currentHangmanState = 5;
 
-    public MainMenu() {
+    public GUIMainMenuView() {
       InitializeComponent();
     }
 
@@ -57,15 +57,15 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonCreateRoom_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new CreateRoom());
+      NavigationService.Navigate(new GUICreateRoomView());
     }
 
     private void ButtonPublicLobby_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new PublicLobby());
+      NavigationService.Navigate(new GUILobbyView(false));
     }
 
     private void ButtonPrivateLobby_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new PrivateLobby());
+      NavigationService.Navigate(new GUILobbyView(true));
     }
 
     private void ButtonRemovePart_Click(object sender, RoutedEventArgs e) {
@@ -87,23 +87,23 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      NavigationService.Navigate(new GUIProfileView());
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Scoreboard());
+      NavigationService.Navigate(new GUILeaderboardView());
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Settings());
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 }

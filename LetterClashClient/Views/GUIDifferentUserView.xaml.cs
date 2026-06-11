@@ -10,15 +10,15 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class DifferentUser : Page {
+  public partial class GUIDifferentUserView : Page {
     private string username;
 
-    public DifferentUser() {
+    public GUIDifferentUserView() {
       InitializeComponent();
       username = "Usuario 1";
     }
 
-    public DifferentUser(string username) {
+    public GUIDifferentUserView(string username) {
       InitializeComponent();
       this.username = string.IsNullOrWhiteSpace(username) ? "Usuario 1" : username;
     }
@@ -138,28 +138,28 @@ namespace LetterClashClient.Views {
       if (NavigationService != null && NavigationService.CanGoBack) {
         NavigationService.GoBack();
       } else {
-        NavigationService.Navigate(new Scoreboard());
+        NavigationService.Navigate(new GUILeaderboardView());
       }
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      NavigationService.Navigate(new GUIProfileView());
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Scoreboard());
+      NavigationService.Navigate(new GUILeaderboardView());
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Settings());
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 }

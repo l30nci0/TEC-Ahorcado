@@ -2,8 +2,8 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace LetterClashClient.Views {
-  public partial class Settings : Page {
-    public Settings() {
+  public partial class GUISettingsView : Page {
+    public GUISettingsView() {
       InitializeComponent();
     }
 
@@ -37,27 +37,27 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonLogout_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Login());
+      NavigationService.Navigate(new GUILoginView());
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      NavigationService.Navigate(new GUIProfileView());
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Scoreboard());
+      NavigationService.Navigate(new GUILeaderboardView());
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Settings());
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 }

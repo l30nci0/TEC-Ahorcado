@@ -8,8 +8,8 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class Login : Page {
-    public Login() {
+  public partial class GUILoginView : Page {
+    public GUILoginView() {
       InitializeComponent();
     }
 
@@ -60,7 +60,7 @@ namespace LetterClashClient.Views {
 
         if (result != null && result.IsSuccess) {
           SessionContext.UsuarioLogueado = result.Value;
-          NavigationService.Navigate(new MainMenu());
+          NavigationService.Navigate(new GUIMainMenuView());
         } else {
           string errorMsg = result?.Error?.Mensaje ?? "Credenciales incorrectas o error en el sistema.";
           if (result?.Error?.CodigoError == CodigoError.CREDENCIALES_INVALIDAS) {
@@ -78,11 +78,11 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonCreateAccount_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new RegisterAccount());
+      NavigationService.Navigate(new GUIRegisterView());
     }
 
     private void ButtonBackHome_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new EntryMenu());
+      NavigationService.Navigate(new GUIEntryMenuView());
     }
 
     private void TextBoxUsername_TextChanged(object sender, TextChangedEventArgs e) {

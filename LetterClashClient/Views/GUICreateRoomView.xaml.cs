@@ -9,17 +9,17 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class CreateRoom : Page {
+  public partial class GUICreateRoomView : Page {
     private PalabraDTO selectedWord;
     private string selectedLanguage;
     private int privacyIndex;
 
-    public CreateRoom() {
+    public GUICreateRoomView() {
       InitializeComponent();
       selectedWord = null;
     }
 
-    public CreateRoom(PalabraDTO word, string language, int privacyIndex) {
+    public GUICreateRoomView(PalabraDTO word, string language, int privacyIndex) {
       InitializeComponent();
       this.selectedWord = word;
       this.selectedLanguage = language;
@@ -94,7 +94,7 @@ namespace LetterClashClient.Views {
 
       string lang = ComboBoxLanguage.SelectedIndex == 1 ? Idiomas.INGLES : Idiomas.ESPANOL;
       int privacy = ComboBoxGameType.SelectedIndex;
-      NavigationService.Navigate(new SelectWord(lang, privacy));
+      NavigationService.Navigate(new GUISelectWordView(lang, privacy));
     }
 
     private void ButtonCreateRoom_Click(object sender, RoutedEventArgs e) {
@@ -125,7 +125,7 @@ namespace LetterClashClient.Views {
         if (result != null && result.IsSuccess) {
           string accessCode = result.Value;
           MessageBox.Show("Partida creada con éxito.", "Sala Creada", MessageBoxButton.OK, MessageBoxImage.Information);
-          NavigationService.Navigate(new GameHost(selectedWord.PalabraTexto, accessCode));
+          NavigationService.Navigate(new GUIGameView(selectedWord.PalabraTexto, accessCode));
         } else {
           MessageBox.Show(result?.Error?.Mensaje ?? "No se pudo crear la partida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -137,27 +137,27 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonBack_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      NavigationService.Navigate(new GUIProfileView());
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Scoreboard());
+      NavigationService.Navigate(new GUILeaderboardView());
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Settings());
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 }

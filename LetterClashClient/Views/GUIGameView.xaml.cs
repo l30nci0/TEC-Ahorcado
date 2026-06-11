@@ -10,7 +10,8 @@ using LetterClashServer.Contracts;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class GameGuesser : Page {
+  public partial class GUIGameView : Page {
+    private bool isHost;
     private string opponentName;
     private string selectedLanguage;
     private string targetWord;
@@ -20,33 +21,60 @@ namespace LetterClashClient.Views {
     private IGameService gameServiceProxy;
     private GameCallbackHandler callbackHandler;
 
-    public GameGuesser() : this("Usuario 1", "Español", "000000") { }
+    public GUIGameView() : this("SOFTWARE", "000000") { }
 
-    public GameGuesser(string opponentName, string selectedLanguage, string codigoAcceso) {
+    // Host constructor
+    public GUIGameView(string selectedWord, string codigoAcceso) {
       InitializeComponent();
+      this.isHost = true;
+      this.opponentName = "Usuario 1";
+      this.targetWord = string.IsNullOrWhiteSpace(selectedWord) ? "SOFTWARE" : selectedWord.ToUpper();
+      this.codigoAcceso = string.IsNullOrWhiteSpace(codigoAcceso) ? "------" : codigoAcceso;
+      this.mistakes = 0;
+    }
+
+    // Guesser constructor
+    public GUIGameView(string opponentName, string selectedLanguage, string codigoAcceso) {
+      InitializeComponent();
+      this.isHost = false;
       this.opponentName = opponentName;
       this.selectedLanguage = selectedLanguage;
       this.codigoAcceso = codigoAcceso;
-      targetWord = "SOFTWARE";
-      guessedWord = new char[targetWord.Length];
-      mistakes = 0;
+      this.targetWord = "SOFTWARE";
+      this.mistakes = 0;
     }
 
     private void Page_Loaded(object sender, RoutedEventArgs e) {
       Window window = Window.GetWindow(this);
 
-      if (window != null) {
-        window.Title = "Partida (Adivinador)";
-      }
+      if (isHost) {
+        if (window != null) {
+          window.Title = "Partida (Anfitrión)";
+        }
+        GridHostSection.Visibility = Visibility.Visible;
+        GridGuesserSection.Visibility = Visibility.Collapsed;
 
-      for (int index = 0; index < guessedWord.Length; index++) {
-        guessedWord[index] = '_';
+        TextBlockWord.Text = string.Join(" ", targetWord.ToCharArray());
+        TextBlockAccessCode.Text = codigoAcceso;
+        TextBlockSelectedLetter.Text = "-";
+      } else {
+        if (window != null) {
+          window.Title = "Partida (Adivinador)";
+        }
+        GridHostSection.Visibility = Visibility.Collapsed;
+        GridGuesserSection.Visibility = Visibility.Visible;
+
+        guessedWord = new char[targetWord.Length];
+        for (int index = 0; index < guessedWord.Length; index++) {
+          guessedWord[index] = '_';
+        }
+        UpdateHiddenWord();
       }
 
       TextBlockOpponent.Text = opponentName;
       TextBlockChatTitle.Text = $"Chat con {opponentName}";
       TextBoxChatMessages.Text = "";
-      UpdateHiddenWord();
+      UpdateHangmanImage();
       UpdateAttempts();
 
       // Cargar avatar local
@@ -66,7 +94,7 @@ namespace LetterClashClient.Views {
 
       if (usuario == null) {
         MessageBox.Show("Sesión de usuario inválida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new MainMenu());
+        NavigationService.Navigate(new GUIMainMenuView());
         return;
       }
 
@@ -84,7 +112,7 @@ namespace LetterClashClient.Views {
         gameServiceProxy.ConectarJuego(usuario.IDJugador, codigoAcceso);
       } catch (Exception ex) {
         MessageBox.Show($"Error al conectar al servidor: {ex.Message}", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new MainMenu());
+        NavigationService.Navigate(new GUIMainMenuView());
       }
     }
 
@@ -111,27 +139,37 @@ namespace LetterClashClient.Views {
     private void OnLetraPropuesta(char letra, bool esCorrecta, string palabraRevelada, int vidaRestante) {
       Dispatcher.Invoke(() => {
         targetWord = palabraRevelada;
-        guessedWord = palabraRevelada.ToCharArray();
         mistakes = 5 - vidaRestante;
 
-        UpdateHiddenWord();
-        UpdateAttempts();
-
-        if (letra != '\0') {
-          DeshabilitarBotonLetra(letra);
+        if (isHost) {
+          if (letra != '\0') {
+            TextBlockSelectedLetter.Text = letra.ToString().ToUpper();
+          } else {
+            TextBlockSelectedLetter.Text = "-";
+          }
+          TextBlockWord.Text = string.Join(" ", palabraRevelada.ToCharArray());
+        } else {
+          guessedWord = palabraRevelada.ToCharArray();
+          UpdateHiddenWord();
+          if (letra != '\0') {
+            DeshabilitarBotonLetra(letra);
+          }
         }
+
+        UpdateHangmanImage();
+        UpdateAttempts();
       });
     }
 
     private void OnPartidaFinalizada(string ganador, int puntuacionObtenida) {
       Dispatcher.Invoke(() => {
         DesconectarJuego();
-        string mensajeResult = (ganador == SessionContext.UsuarioLogueado?.NombreDeUsuario) 
-            ? $"¡Felicidades! Ganaste la partida y obtuviste {puntuacionObtenida} puntos." 
+        string mensajeResult = (ganador == SessionContext.UsuarioLogueado?.NombreDeUsuario)
+            ? $"¡Felicidades! Ganaste la partida y obtuviste {puntuacionObtenida} puntos."
             : $"El juego ha concluido. Ganador: {ganador}.";
 
         MessageBox.Show(mensajeResult, "Partida Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
-        NavigationService.Navigate(new MainMenu());
+        NavigationService.Navigate(new GUIMainMenuView());
       });
     }
 
@@ -145,9 +183,11 @@ namespace LetterClashClient.Views {
     private void OnOponenteAbandono(string oponenteNombre) {
       Dispatcher.Invoke(() => {
         DesconectarJuego();
-        MessageBox.Show($"El anfitrión ({oponenteNombre}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!", 
-                        "Partida Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
-        NavigationService.Navigate(new MainMenu());
+        string abandonMsg = isHost
+            ? $"El adivinador ({oponenteNombre}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!"
+            : $"El anfitrión ({oponenteNombre}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!";
+        MessageBox.Show(abandonMsg, "Partida Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
+        NavigationService.Navigate(new GUIMainMenuView());
       });
     }
 
@@ -155,14 +195,14 @@ namespace LetterClashClient.Views {
       Dispatcher.Invoke(() => {
         DesconectarJuego();
         MessageBox.Show($"Ocurrió un error en el servidor: {fault.Mensaje}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new MainMenu());
+        NavigationService.Navigate(new GUIMainMenuView());
       });
     }
 
     private void DesconectarJuego() {
       if (gameServiceProxy != null) {
         try {
-          var clientChannel = (System.ServiceModel.ICommunicationObject) gameServiceProxy;
+          var clientChannel = (System.ServiceModel.ICommunicationObject)gameServiceProxy;
           if (clientChannel.State == System.ServiceModel.CommunicationState.Opened) {
             clientChannel.Close();
           }
@@ -173,7 +213,7 @@ namespace LetterClashClient.Views {
 
     private void DeshabilitarBotonLetra(char letra) {
       string letraStr = letra.ToString().ToUpper();
-      BuscarYDeshabilitarBoton(GridLeftPanel, letraStr);
+      BuscarYDeshabilitarBoton(GridKeyboard, letraStr);
     }
 
     private bool BuscarYDeshabilitarBoton(DependencyObject parent, string letra) {
@@ -220,17 +260,17 @@ namespace LetterClashClient.Views {
       TextBlockHiddenWord.Text = string.Join(" ", guessedWord);
     }
 
-    private void UpdateAttempts() {
-      ProgressBarAttempts.Value = mistakes;
-      TextBlockAttempts.Text = $"{mistakes}/5";
-
+    private void UpdateHangmanImage() {
       int imageNumber = 5 - mistakes;
-
       if (imageNumber < 1) {
         imageNumber = 1;
       }
-
       ImageHangman.Source = new BitmapImage(new Uri($"/Assets/Images/Hangedman{imageNumber}.jpg", UriKind.Relative));
+    }
+
+    private void UpdateAttempts() {
+      ProgressBarAttempts.Value = mistakes;
+      TextBlockAttempts.Text = $"{mistakes}/5";
     }
 
     private void ButtonSendMessage_Click(object sender, RoutedEventArgs e) {
@@ -267,7 +307,7 @@ namespace LetterClashClient.Views {
           } catch { }
         }
         DesconectarJuego();
-        NavigationService.Navigate(new MainMenu());
+        NavigationService.Navigate(new GUIMainMenuView());
       }
     }
   }

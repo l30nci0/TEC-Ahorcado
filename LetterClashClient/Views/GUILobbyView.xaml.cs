@@ -10,16 +10,21 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class PublicLobby : Page {
-    public PublicLobby() {
+  public partial class GUILobbyView : Page {
+    private bool openPrivate;
+
+    public GUILobbyView() : this(false) { }
+
+    public GUILobbyView(bool openPrivate) {
       InitializeComponent();
+      this.openPrivate = openPrivate;
     }
 
     private void Page_Loaded(object sender, RoutedEventArgs e) {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Menu Principal (Entrar a Lobby Publico)";
+        window.Title = "Lobby de Partidas";
       }
 
       var usuario = SessionContext.UsuarioLogueado;
@@ -43,7 +48,22 @@ namespace LetterClashClient.Views {
         }
       }
 
-      CargarPartidasLobby();
+      SwitchTab(openPrivate);
+    }
+
+    private void SwitchTab(bool isPrivate) {
+      if (isPrivate) {
+        BorderPublicLobby.Visibility = Visibility.Collapsed;
+        BorderPrivateLobby.Visibility = Visibility.Visible;
+        ButtonTabPublic.FontWeight = FontWeights.Normal;
+        ButtonTabPrivate.FontWeight = FontWeights.Bold;
+      } else {
+        BorderPublicLobby.Visibility = Visibility.Visible;
+        BorderPrivateLobby.Visibility = Visibility.Collapsed;
+        ButtonTabPublic.FontWeight = FontWeights.Bold;
+        ButtonTabPrivate.FontWeight = FontWeights.Normal;
+        CargarPartidasLobby();
+      }
     }
 
     private void CargarPartidasLobby() {
@@ -74,6 +94,18 @@ namespace LetterClashClient.Views {
       return age;
     }
 
+    private void ButtonTabPublic_Click(object sender, RoutedEventArgs e) {
+      SwitchTab(false);
+    }
+
+    private void ButtonTabPrivate_Click(object sender, RoutedEventArgs e) {
+      SwitchTab(true);
+    }
+
+    private void ButtonRefreshLobby_Click(object sender, RoutedEventArgs e) {
+      CargarPartidasLobby();
+    }
+
     private void ButtonJoinMatch_Click(object sender, RoutedEventArgs e) {
       Button button = sender as Button;
 
@@ -96,10 +128,10 @@ namespace LetterClashClient.Views {
             var result = lobbyService.UnirseAPartidaDeLobby(usuario.IDJugador, selectedMatch.IDPartida);
 
             if (result != null && result.IsSuccess) {
-              NavigationService.Navigate(new GameGuesser(selectedMatch.NombreAnfitrion, selectedMatch.Idioma, selectedMatch.CodigoAcceso));
+              NavigationService.Navigate(new GUIGameView(selectedMatch.NombreAnfitrion, selectedMatch.Idioma, selectedMatch.CodigoAcceso));
             } else {
               MessageBox.Show(result?.Error?.Mensaje ?? "No se pudo unir a la partida.", "Error al unirse", MessageBoxButton.OK, MessageBoxImage.Error);
-              CargarPartidasLobby(); // Recargar por si el lobby ya no existe o cambió de estado
+              CargarPartidasLobby();
             }
           } catch (CommunicationException) {
             MessageBox.Show("No se pudo conectar con el servidor para unirse a la partida.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -110,24 +142,73 @@ namespace LetterClashClient.Views {
       }
     }
 
+    private void ButtonSearchLobby_Click(object sender, RoutedEventArgs e) {
+      TextBlockAccessCodeError.Visibility = Visibility.Hidden;
+
+      string accessCode = TextBoxAccessCode.Text.Trim().ToUpper().Replace("#", "");
+
+      if (string.IsNullOrWhiteSpace(accessCode)) {
+        TextBlockAccessCodeError.Text = "Ingrese un código de acceso";
+        TextBlockAccessCodeError.Visibility = Visibility.Visible;
+        return;
+      }
+
+      if (accessCode.Length != 6) {
+        TextBlockAccessCodeError.Text = "El código debe tener 6 caracteres";
+        TextBlockAccessCodeError.Visibility = Visibility.Visible;
+        return;
+      }
+
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario == null) {
+        return;
+      }
+
+      try {
+        var lobbyService = ServiceProxyManager.GetLobbyService();
+        var result = lobbyService.UnirseAPartidaPrivada(usuario.IDJugador, accessCode);
+
+        if (result != null && result.IsSuccess) {
+          var partida = result.Value;
+          NavigationService.Navigate(new GUIGameView(partida.NombreAnfitrion, partida.Idioma, accessCode));
+        } else {
+          TextBlockAccessCodeError.Text = result?.Error?.Mensaje ?? "No se pudo unir a la sala.";
+          TextBlockAccessCodeError.Visibility = Visibility.Visible;
+        }
+      } catch (CommunicationException) {
+        MessageBox.Show("No se pudo establecer conexión con el servidor.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+      } catch (Exception ex) {
+        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+      }
+    }
+
+    private void TextBoxAccessCode_TextChanged(object sender, TextChangedEventArgs e) {
+      if (TextBlockAccessCodePlaceholder != null) {
+        TextBlockAccessCodePlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxAccessCode.Text) ? Visibility.Visible : Visibility.Hidden;
+      }
+      if (TextBlockAccessCodeError != null) {
+        TextBlockAccessCodeError.Visibility = Visibility.Hidden;
+      }
+    }
+
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new MainMenu());
+      NavigationService.Navigate(new GUIMainMenuView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Profile());
+      NavigationService.Navigate(new GUIProfileView());
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new History());
+      NavigationService.Navigate(new GUIHistoryView());
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Scoreboard());
+      NavigationService.Navigate(new GUILeaderboardView());
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new Settings());
+      NavigationService.Navigate(new GUISettingsView());
     }
   }
 }
