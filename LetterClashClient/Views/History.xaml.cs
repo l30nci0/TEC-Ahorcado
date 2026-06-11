@@ -1,7 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+
+using LetterClashClient.Models;
+using LetterClashClient.Services;
+using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class History : Page {
@@ -16,25 +22,119 @@ namespace LetterClashClient.Views {
         window.Title = "Historial";
       }
 
-      TextBlockUsername.Text = "\"jugador1\"";
-      TextBlockAge.Text = "\"20\"";
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario == null) {
+        MessageBox.Show("Sesión de usuario inválida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        NavigationService.Navigate(new MainMenu());
+        return;
+      }
 
-      List<BattleHistoryItem> battles = new List<BattleHistoryItem>
-{
-        new BattleHistoryItem { Rival = "Usuario 1", Fecha = "27/03/2026", Palabra = "Software", Resultado = "Victoria", Puntuacion = "+10", Rol = "Adivino", Idioma = "Español", Tipo = "Privado", Progreso = 5 },
-        new BattleHistoryItem { Rival = "Usuario 2", Fecha = "27/03/2026", Palabra = "Servidor", Resultado = "Derrota", Puntuacion = "-5", Rol = "Verdugo", Idioma = "Español", Tipo = "Publico", Progreso = 3 },
-        new BattleHistoryItem { Rival = "Usuario 3", Fecha = "27/03/2026", Palabra = "Cliente", Resultado = "Desconectada", Puntuacion = "-3", Rol = "Adivino", Idioma = "Ingles", Tipo = "Privado", Progreso = 2 },
-        new BattleHistoryItem { Rival = "Usuario 4", Fecha = "28/03/2026", Palabra = "Ahorcado", Resultado = "Victoria", Puntuacion = "+10", Rol = "Verdugo", Idioma = "Español", Tipo = "Publico", Progreso = 5 },
-        new BattleHistoryItem { Rival = "Usuario 5", Fecha = "28/03/2026", Palabra = "Codigo", Resultado = "Victoria", Puntuacion = "+10", Rol = "Adivino", Idioma = "Español", Tipo = "Privado", Progreso = 4 },
-        new BattleHistoryItem { Rival = "Usuario 6", Fecha = "29/03/2026", Palabra = "Variable", Resultado = "Derrota", Puntuacion = "-5", Rol = "Verdugo", Idioma = "Ingles", Tipo = "Publico", Progreso = 3 },
-        new BattleHistoryItem { Rival = "Usuario 7", Fecha = "29/03/2026", Palabra = "Interfaz", Resultado = "Victoria", Puntuacion = "+10", Rol = "Adivino", Idioma = "Español", Tipo = "Privado", Progreso = 5 },
-        new BattleHistoryItem { Rival = "Usuario 8", Fecha = "30/03/2026", Palabra = "Partida", Resultado = "Desconectada", Puntuacion = "-3", Rol = "Verdugo", Idioma = "Español", Tipo = "Publico", Progreso = 1 },
-        new BattleHistoryItem { Rival = "Usuario 9", Fecha = "30/03/2026", Palabra = "Jugador", Resultado = "Victoria", Puntuacion = "+10", Rol = "Adivino", Idioma = "Ingles", Tipo = "Privado", Progreso = 5 },
-        new BattleHistoryItem { Rival = "Usuario 10", Fecha = "31/03/2026", Palabra = "Pantalla", Resultado = "Derrota", Puntuacion = "-5", Rol = "Verdugo", Idioma = "Español", Tipo = "Publico", Progreso = 2 }
-      };
+      TextBlockUsername.Text = usuario.NombreDeUsuario;
+      if (usuario.FechaDeNacimiento != null) {
+        TextBlockAge.Text = CalculateAge(usuario.FechaDeNacimiento).ToString();
+      } else {
+        TextBlockAge.Text = "N/D";
+      }
 
-      DataGridHistory.ItemsSource = battles;
-      LoadStatistics(battles);
+      // Cargar avatar local
+      if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
+        try {
+          var image = new BitmapImage();
+          using (var mem = new System.IO.MemoryStream(usuario.Avatar)) {
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.StreamSource = mem;
+            image.EndInit();
+          }
+          ImageUserAvatar.Source = image;
+        } catch { }
+      }
+
+      // Cargar historial de partidas
+      try {
+        var service = ServiceProxyManager.GetJugadorService();
+        var result = service.ConsultarHistorial(usuario.IDJugador);
+        if (result != null && result.IsSuccess && result.Value != null) {
+          List<BattleHistoryItem> battles = new List<BattleHistoryItem>();
+          foreach (var p in result.Value) {
+            bool isHost = p.IDAnfitrion == usuario.IDJugador;
+            string rol = isHost ? "Verdugo" : "Adivino";
+            string rival = isHost ? (p.NombreAdivinador ?? "Sin adivinador") : p.NombreAnfitrion;
+            string fecha = p.FechaDeJuego.ToString("dd/MM/yyyy");
+            string palabra = p.PalabraRevelada ?? "";
+
+            string resultado = "";
+            string puntuacion = "0";
+            int progreso = 0;
+
+            if (p.Resultado == "ADIVINADA") {
+              if (isHost) {
+                resultado = "Derrota";
+                puntuacion = "0";
+                progreso = 5;
+              } else {
+                resultado = "Victoria";
+                puntuacion = "+50";
+                progreso = 5;
+              }
+            } else if (p.Resultado == "SIN_ADIVINAR") {
+              if (isHost) {
+                resultado = "Victoria";
+                puntuacion = "+50";
+                progreso = 5;
+              } else {
+                resultado = "Derrota";
+                puntuacion = "0";
+                progreso = 0;
+              }
+            } else if (p.Resultado == "ABANDONADA") {
+              resultado = "Desconectada";
+              puntuacion = "0";
+              progreso = 0;
+            } else {
+              resultado = "Desconectada";
+              puntuacion = "0";
+              progreso = 0;
+            }
+
+            string tipo = (p.Privacidad == "PÚBLICA") ? "Publico" : "Privado";
+            string idioma = "Español";
+            if (p.Idioma != null && p.Idioma.ToUpper() == "INGLÉS") {
+              idioma = "Ingles";
+            }
+
+            battles.Add(new BattleHistoryItem {
+              Rival = rival,
+              Fecha = fecha,
+              Palabra = palabra,
+              Resultado = resultado,
+              Puntuacion = puntuacion,
+              Rol = rol,
+              Idioma = idioma,
+              Tipo = tipo,
+              Progreso = progreso
+            });
+          }
+
+          DataGridHistory.ItemsSource = battles;
+          LoadStatistics(battles);
+        } else {
+          MessageBox.Show(result?.Error?.Mensaje ?? "No se pudo obtener el historial de partidas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+      } catch (System.ServiceModel.CommunicationException) {
+        MessageBox.Show("No se pudo conectar con el servidor para obtener el historial.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+      } catch (Exception ex) {
+        MessageBox.Show($"Ocurrió un error inesperado al cargar el historial: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+      }
+    }
+
+    private int CalculateAge(DateTime birthDate) {
+      DateTime today = DateTime.Today;
+      int age = today.Year - birthDate.Year;
+      if (birthDate.Date > today.AddYears(-age)) {
+        age--;
+      }
+      return age;
     }
 
     private void LoadStatistics(List<BattleHistoryItem> battles) {

@@ -1,5 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+
+using LetterClashClient.Models;
 
 namespace LetterClashClient.Views {
   public partial class BattleHistoryDetail : Page {
@@ -27,6 +30,21 @@ namespace LetterClashClient.Views {
       TextBlockScore.Text = selectedBattle.Puntuacion;
       ProgressBarBattle.Value = selectedBattle.Progreso;
       TextBlockProgress.Text = $"{selectedBattle.Progreso}/5";
+
+      // Cargar avatar local
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario != null && usuario.Avatar != null && usuario.Avatar.Length > 0) {
+        try {
+          var image = new BitmapImage();
+          using (var mem = new System.IO.MemoryStream(usuario.Avatar)) {
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.StreamSource = mem;
+            image.EndInit();
+          }
+          ImageUserAvatar.Source = image;
+        } catch { }
+      }
     }
 
     private void ButtonViewProfile_Click(object sender, RoutedEventArgs e) {
