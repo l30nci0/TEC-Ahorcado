@@ -86,6 +86,20 @@ namespace LetterClashServer.DataAccess.Repositories {
       }
     }
 
+    public virtual bool ConcluirPartida(int partidaID, string resultado) {
+      using (var context = new LetterClashDBEntities()) {
+        var partida = context.Partidas.SingleOrDefault(p => p.IDPartida == partidaID);
+        if (partida == null) {
+          return false;
+        }
+
+        partida.Estado = "CONCLUIDA";
+        partida.Resultado = resultado;
+        context.SaveChanges();
+        return true;
+      }
+    }
+
     private string GenerarCodigoAccesoUnico(LetterClashDBEntities context) {
       var random = new Random();
       const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

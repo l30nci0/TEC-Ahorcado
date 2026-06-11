@@ -96,7 +96,7 @@ namespace LetterClashClient.Views {
             var result = lobbyService.UnirseAPartidaDeLobby(usuario.IDJugador, selectedMatch.IDPartida);
 
             if (result != null && result.IsSuccess) {
-              NavigationService.Navigate(new GameGuesser(selectedMatch.NombreAnfitrion, selectedMatch.Idioma));
+              NavigationService.Navigate(new GameGuesser(selectedMatch.NombreAnfitrion, selectedMatch.Idioma, selectedMatch.CodigoAcceso));
             } else {
               MessageBox.Show(result?.Error?.Mensaje ?? "No se pudo unir a la partida.", "Error al unirse", MessageBoxButton.OK, MessageBoxImage.Error);
               CargarPartidasLobby(); // Recargar por si el lobby ya no existe o cambió de estado

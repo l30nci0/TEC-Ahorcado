@@ -110,6 +110,19 @@ namespace LetterClashServer.DataAccess.Repositories {
       }
     }
 
+    public virtual bool IncrementarPuntuacion(int jugadorID, int puntos) {
+      using (var context = new LetterClashDBEntities()) {
+        var jugador = context.Jugadores.SingleOrDefault(j => j.IDJugador == jugadorID);
+        if (jugador == null) {
+          return false;
+        }
+
+        jugador.Puntuacion = jugador.Puntuacion + puntos;
+        context.SaveChanges();
+        return true;
+      }
+    }
+
     public virtual bool RegistrarJugador(Jugador jugador) {
       using (var context = new LetterClashDBEntities()) {
         context.Jugadores.Add(jugador);

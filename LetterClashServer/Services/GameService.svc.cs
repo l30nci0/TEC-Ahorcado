@@ -15,6 +15,17 @@ namespace LetterClashServer.Services {
     public IGameServiceCallback Callback { get; set; }
   }
 
+  public class PartidaEnCurso {
+    public string CodigoAcceso { get; set; }
+    public int IDPartida { get; set; }
+    public string PalabraObjetivo { get; set; }
+    public string PalabraRevelada { get; set; }
+    public int VidasRestantes { get; set; } = 5;
+    public HashSet<char> LetrasPropuestas { get; set; } = new HashSet<char>();
+    public int HostID { get; set; }
+    public int GuesserID { get; set; }
+  }
+
   [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
   public class GameService : IGameService {
     private readonly PartidaRepository partidaRepository;
@@ -23,6 +34,10 @@ namespace LetterClashServer.Services {
     // Diccionario de sesiones en memoria: CodigoAcceso -> Lista de jugadores en la sala
     private static readonly ConcurrentDictionary<string, List<JugadorSesion>> salasDeJuego =
         new ConcurrentDictionary<string, List<JugadorSesion>>();
+
+    // Diccionario de partidas activas en memoria
+    private static readonly ConcurrentDictionary<string, PartidaEnCurso> partidasActivas =
+        new ConcurrentDictionary<string, PartidaEnCurso>();
 
     public GameService() : this(new PartidaRepository(), new JugadorRepository()) { }
 
@@ -127,6 +142,30 @@ namespace LetterClashServer.Services {
                 // Falla en el callback de red propio
               }
             }
+
+            // 3. Inicializar partida activa en memoria si no existe
+            var partidaActiva = partidasActivas.GetOrAdd(codigoAcceso, _ => {
+              string palabraOriginal = partida.Palabra?.Palabra1 ?? "SOFTWARE";
+              palabraOriginal = palabraOriginal.ToUpper();
+              int guesserId = (partida.IDAnfitrion == jugadorID) ? oponente.JugadorID : jugadorID;
+              return new PartidaEnCurso {
+                CodigoAcceso = codigoAcceso,
+                IDPartida = partida.IDPartida,
+                PalabraObjetivo = palabraOriginal,
+                PalabraRevelada = new string('_', palabraOriginal.Length),
+                VidasRestantes = 5,
+                HostID = partida.IDAnfitrion,
+                GuesserID = guesserId
+              };
+            });
+
+            // 4. Enviar el estado de letras inicial a ambos
+            try {
+              oponente.Callback.OnLetraPropuesta('\0', true, partidaActiva.PalabraRevelada, partidaActiva.VidasRestantes);
+            } catch (CommunicationException) { }
+            try {
+              callback.OnLetraPropuesta('\0', true, partidaActiva.PalabraRevelada, partidaActiva.VidasRestantes);
+            } catch (CommunicationException) { }
           }
         }
       } catch (Exception ex) {
@@ -148,15 +187,152 @@ namespace LetterClashServer.Services {
           }
         }
       }
+
+      // Si la partida está activa en memoria, manejar como abandono automático
+      if (partidasActivas.ContainsKey(codigoAcceso)) {
+        AbandonarPartida(codigoAcceso, jugadorID);
+      }
     }
 
     public void EscribirLetra(string codigoAcceso, int jugadorID, char letra) {
+      if (string.IsNullOrEmpty(codigoAcceso) || jugadorID <= 0) {
+        return;
+      }
+
+      if (!partidasActivas.TryGetValue(codigoAcceso, out var partida)) {
+        return;
+      }
+
+      // Solo el adivinador puede proponer letras
+      if (jugadorID != partida.GuesserID) {
+        return;
+      }
+
+      char letraUpper = char.ToUpper(letra);
+      if (partida.LetrasPropuestas.Contains(letraUpper) || partida.VidasRestantes <= 0) {
+        return;
+      }
+
+      partida.LetrasPropuestas.Add(letraUpper);
+
+      bool esCorrecta = partida.PalabraObjetivo.Contains(letraUpper);
+      if (esCorrecta) {
+        char[] arrayRevelado = partida.PalabraRevelada.ToCharArray();
+        for (int i = 0; i < partida.PalabraObjetivo.Length; i++) {
+          if (partida.PalabraObjetivo[i] == letraUpper) {
+            arrayRevelado[i] = letraUpper;
+          }
+        }
+        partida.PalabraRevelada = new string(arrayRevelado);
+      } else {
+        partida.VidasRestantes--;
+      }
+
+      if (salasDeJuego.TryGetValue(codigoAcceso, out var jugadoresEnSala)) {
+        List<JugadorSesion> copiaJugadores;
+        lock (jugadoresEnSala) {
+          copiaJugadores = jugadoresEnSala.ToList();
+        }
+
+        foreach (var jugador in copiaJugadores) {
+          try {
+            jugador.Callback.OnLetraPropuesta(letraUpper, esCorrecta, partida.PalabraRevelada, partida.VidasRestantes);
+          } catch (CommunicationException) { }
+        }
+
+        bool juegoTerminado = false;
+        string resultado = "";
+        int ganadorID = 0;
+
+        if (partida.PalabraRevelada == partida.PalabraObjetivo) {
+          juegoTerminado = true;
+          resultado = "ADIVINADA";
+          ganadorID = partida.GuesserID;
+        } else if (partida.VidasRestantes <= 0) {
+          juegoTerminado = true;
+          resultado = "SIN_ADIVINAR";
+          ganadorID = partida.HostID;
+        }
+
+        if (juegoTerminado) {
+          TerminarPartida(codigoAcceso, partida, resultado, ganadorID, copiaJugadores);
+        }
+      }
+    }
+
+    private void TerminarPartida(string codigoAcceso, PartidaEnCurso partida, string resultado, int ganadorID, List<JugadorSesion> jugadoresEnSala) {
+      try {
+        partidaRepository.ConcluirPartida(partida.IDPartida, resultado);
+        if (ganadorID > 0) {
+          jugadorRepository.IncrementarPuntuacion(ganadorID, 50);
+        }
+      } catch (Exception ex) {
+        System.Diagnostics.Debug.WriteLine($"Error al guardar partida/puntuacion en DB: {ex.Message}");
+      }
+
+      string nombreGanador = "";
+      if (ganadorID > 0) {
+        var ganador = jugadorRepository.ObtenerJugadorPorID(ganadorID);
+        if (ganador != null) {
+          nombreGanador = ganador.NombreDeUsuario;
+        }
+      }
+
+      foreach (var jugador in jugadoresEnSala) {
+        try {
+          jugador.Callback.OnPartidaFinalizada(nombreGanador, 50);
+        } catch (CommunicationException) { }
+      }
+
+      partidasActivas.TryRemove(codigoAcceso, out _);
     }
 
     public void AbandonarPartida(string codigoAcceso, int jugadorID) {
+      if (string.IsNullOrEmpty(codigoAcceso) || jugadorID <= 0) {
+        return;
+      }
+
+      if (!partidasActivas.TryRemove(codigoAcceso, out var partida)) {
+        return;
+      }
+
+      int ganadorID = 0;
+      if (jugadorID == partida.HostID) {
+        ganadorID = partida.GuesserID;
+      } else if (jugadorID == partida.GuesserID) {
+        ganadorID = partida.HostID;
+      }
+
+      try {
+        partidaRepository.ConcluirPartida(partida.IDPartida, "ABANDONADA");
+        if (ganadorID > 0) {
+          jugadorRepository.IncrementarPuntuacion(ganadorID, 50);
+        }
+      } catch (Exception ex) {
+        System.Diagnostics.Debug.WriteLine($"Error al registrar abandono en DB: {ex.Message}");
+      }
+
+      if (salasDeJuego.TryGetValue(codigoAcceso, out var jugadoresEnSala)) {
+        List<JugadorSesion> copiaJugadores;
+        lock (jugadoresEnSala) {
+          copiaJugadores = jugadoresEnSala.ToList();
+        }
+
+        var abandonador = copiaJugadores.FirstOrDefault(j => j.JugadorID == jugadorID);
+        string nombreAbandonador = abandonador?.NombreUsuario ?? "El oponente";
+
+        foreach (var jugador in copiaJugadores) {
+          if (jugador.JugadorID != jugadorID) {
+            try {
+              jugador.Callback.OnOponenteAbandono(nombreAbandonador);
+            } catch (CommunicationException) { }
+          }
+        }
+      }
     }
 
     public void VerPista(string codigoAcceso, int jugadorID) {
+      // No implementado/requerido en la interfaz del cliente
     }
 
     public void EnviarMensaje(string codigoAcceso, int jugadorID, string mensaje) {

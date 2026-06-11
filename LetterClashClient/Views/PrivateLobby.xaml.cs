@@ -83,7 +83,7 @@ namespace LetterClashClient.Views {
 
         if (result != null && result.IsSuccess) {
           var partida = result.Value;
-          NavigationService.Navigate(new GameGuesser(partida.NombreAnfitrion, partida.Idioma));
+          NavigationService.Navigate(new GameGuesser(partida.NombreAnfitrion, partida.Idioma, accessCode));
         } else {
           TextBlockAccessCodeError.Text = result?.Error?.Mensaje ?? "No se pudo unir a la sala.";
           TextBlockAccessCodeError.Visibility = Visibility.Visible;
