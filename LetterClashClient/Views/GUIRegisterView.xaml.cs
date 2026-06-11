@@ -90,50 +90,55 @@ namespace LetterClashClient.Views {
         var authService = ServiceProxyManager.GetAutenticacionService();
         var registerResult = authService.RegistrarJugador(nuevoJugador, password);
 
-        if (registerResult != null && registerResult.IsSuccess) {
-          var loginResult = authService.IniciarSesion(nuevoJugador.NombreDeUsuario, password);
-          if (loginResult != null && loginResult.IsSuccess) {
-            SessionContext.UsuarioLogueado = loginResult.Value;
-            MessageBox.Show("Cuenta creada e inicio de sesión correcto.", "TecnoHorcado", MessageBoxButton.OK, MessageBoxImage.Information);
-            NavigationService.Navigate(new GUIMainMenuView());
-          } else {
-            MessageBox.Show("Cuenta creada con éxito. Inicie sesión para comenzar.", "TecnoHorcado", MessageBoxButton.OK, MessageBoxImage.Information);
-            NavigationService.Navigate(new GUILoginView());
-          }
+        if (registerResult == null || !registerResult.IsSuccess || registerResult.Error != null) {
+          ManejarErrorRegistro(registerResult?.Error);
+          return;
+        }
+
+        var loginResult = authService.IniciarSesion(nuevoJugador.NombreDeUsuario, password);
+        if (loginResult != null && loginResult.IsSuccess) {
+          SessionContext.UsuarioLogueado = loginResult.Value;
+          MessageBox.Show("Cuenta creada e inicio de sesión correcto.", "TecnoHorcado", MessageBoxButton.OK, MessageBoxImage.Information);
+          NavigationService.Navigate(new GUIMainMenuView());
         } else {
-          if (registerResult?.Error != null) {
-            var error = registerResult.Error;
-            if (error.CodigoError == CodigoError.RECURSO_DUPLICADO) {
-              if (error.Detalle != null && error.Detalle.Contains("Correo")) {
-                TextBlockEmailError.Text = error.Mensaje;
-                TextBlockEmailError.Visibility = Visibility.Visible;
-              } else if (error.Detalle != null && error.Detalle.Contains("Nombre de usuario")) {
-                TextBlockUsernameError.Text = error.Mensaje;
-                TextBlockUsernameError.Visibility = Visibility.Visible;
-              } else {
-                MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
-              }
-            } else if (error.CodigoError == CodigoError.PARAMETRO_INVALIDO) {
-              if (error.Mensaje != null && (error.Mensaje.Contains("usuario") || error.Mensaje.Contains("Nombre de usuario"))) {
-                TextBlockUsernameError.Text = error.Mensaje;
-                TextBlockUsernameError.Visibility = Visibility.Visible;
-              } else if (error.Mensaje != null && (error.Mensaje.Contains("correo") || error.Mensaje.Contains("Correo"))) {
-                TextBlockEmailError.Text = error.Mensaje;
-                TextBlockEmailError.Visibility = Visibility.Visible;
-              } else {
-                MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
-              }
-            } else {
-              MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-          } else {
-            MessageBox.Show("Error al registrar la cuenta.", "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
-          }
+          MessageBox.Show("Cuenta creada con éxito. Inicie sesión para comenzar.", "TecnoHorcado", MessageBoxButton.OK, MessageBoxImage.Information);
+          NavigationService.Navigate(new GUILoginView());
         }
       } catch (CommunicationException) {
         MessageBox.Show("No se pudo establecer conexión con el servidor. Compruebe que el servidor esté activo.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
         MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+      }
+    }
+
+    private void ManejarErrorRegistro(ServiceFault error) {
+      if (error == null) {
+        MessageBox.Show("Error al registrar la cuenta.", "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
+        return;
+      }
+
+      if (error.CodigoError == CodigoError.RECURSO_DUPLICADO) {
+        if (error.Detalle != null && error.Detalle.Contains("Correo")) {
+          TextBlockEmailError.Text = error.Mensaje;
+          TextBlockEmailError.Visibility = Visibility.Visible;
+        } else if (error.Detalle != null && error.Detalle.Contains("Nombre de usuario")) {
+          TextBlockUsernameError.Text = error.Mensaje;
+          TextBlockUsernameError.Visibility = Visibility.Visible;
+        } else {
+          MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+      } else if (error.CodigoError == CodigoError.PARAMETRO_INVALIDO) {
+        if (error.Mensaje != null && (error.Mensaje.Contains("usuario") || error.Mensaje.Contains("Nombre de usuario"))) {
+          TextBlockUsernameError.Text = error.Mensaje;
+          TextBlockUsernameError.Visibility = Visibility.Visible;
+        } else if (error.Mensaje != null && (error.Mensaje.Contains("correo") || error.Mensaje.Contains("Correo"))) {
+          TextBlockEmailError.Text = error.Mensaje;
+          TextBlockEmailError.Visibility = Visibility.Visible;
+        } else {
+          MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+      } else {
+        MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
