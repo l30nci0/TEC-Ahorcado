@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+
 using LetterClashServer.Contracts;
-using LetterClashServer.Domain.Models;
 using LetterClashServer.DataAccess.Repositories;
+using LetterClashServer.Domain.Models;
 
 namespace LetterClashServer.Services {
   public class PalabraService : IPalabraService {
     private readonly PalabraRepository palabraRepository;
 
-    public PalabraService() : this(new PalabraRepository()) {}
+    public PalabraService() : this(new PalabraRepository()) { }
 
     public PalabraService(PalabraRepository repository) {
       this.palabraRepository = repository;
@@ -27,7 +28,7 @@ namespace LetterClashServer.Services {
 
       try {
         var palabras = palabraRepository.ObtenerPalabrasPorIdioma(idioma);
-         
+
         // Nota: En C# la propiedad de la palabra se llama Palabra1 debido a la desambiguación de EF
         var dtos = palabras.Select(p => new PalabraDTO {
           IDPalabra = p.IDPalabra,

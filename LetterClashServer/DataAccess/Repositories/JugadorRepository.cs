@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using LetterClashServer.Domain.Models;
+
 using LetterClashServer.DataAccess.Context;
+using LetterClashServer.Domain.Models;
 
 namespace LetterClashServer.DataAccess.Repositories {
   public class JugadorRepository {
@@ -25,7 +26,7 @@ namespace LetterClashServer.DataAccess.Repositories {
                       .AsNoTracking()
                       .Any(j => j.IDJugador == jugadorID);
       }
-    } 
+    }
 
     public virtual List<Jugador> ObtenerMarcadores() {
       using (var context = new LetterClashDBEntities()) {

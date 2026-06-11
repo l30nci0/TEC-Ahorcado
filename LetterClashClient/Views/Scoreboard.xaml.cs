@@ -1,28 +1,23 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace LetterClashClient.Views
+namespace LetterClashClient.Views {
+  public partial class Scoreboard : Page {
+    public Scoreboard() {
+      InitializeComponent();
+    }
+
+    private void Page_Loaded(object sender, RoutedEventArgs e) {
+      Window window = Window.GetWindow(this);
+
+      if (window != null) {
+        window.Title = "Marcadores";
+      }
+
+      DataGridScoreboard.ItemsSource = new List<ScoreboardItem>
 {
-    public partial class Scoreboard : Page
-    {
-        public Scoreboard()
-        {
-            InitializeComponent();
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            Window window = Window.GetWindow(this);
-
-            if (window != null)
-            {
-                window.Title = "Marcadores";
-            }
-
-            DataGridScoreboard.ItemsSource = new List<ScoreboardItem>
-      {
         new ScoreboardItem { Nombre = "Usuario 1", PartidasGanadas = 324, Porcentaje = "%90", Puntuacion = 59033, Puesto = "1*" },
         new ScoreboardItem { Nombre = "Usuario 2", PartidasGanadas = 246, Porcentaje = "%89", Puntuacion = 42213, Puesto = "2*" },
         new ScoreboardItem { Nombre = "Usuario 3", PartidasGanadas = 150, Porcentaje = "%82", Puntuacion = 23244, Puesto = "3*" },
@@ -34,49 +29,41 @@ namespace LetterClashClient.Views
         new ScoreboardItem { Nombre = "Usuario 9", PartidasGanadas = 6, Porcentaje = "%48", Puntuacion = 2800, Puesto = "9*" },
         new ScoreboardItem { Nombre = "Usuario 10", PartidasGanadas = 5, Porcentaje = "%45", Puntuacion = 2500, Puesto = "10*" }
       };
-        }
-        private void DataGridScoreboard_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ScoreboardItem selectedUser = DataGridScoreboard.SelectedItem as ScoreboardItem;
+    }
+    private void DataGridScoreboard_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+      ScoreboardItem selectedUser = DataGridScoreboard.SelectedItem as ScoreboardItem;
 
-            if (selectedUser != null)
-            {
-                NavigationService.Navigate(new DifferentUser(selectedUser.Nombre));
-            }
-        }
-
-        private void ButtonMainMenu_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new MainMenu());
-        }
-
-        private void ButtonProfile_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Profile());
-        }
-
-        private void ButtonHistory_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new History());
-        }
-
-        private void ButtonScoreboard_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Scoreboard());
-        }
-
-        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Settings());
-        }
+      if (selectedUser != null) {
+        NavigationService.Navigate(new DifferentUser(selectedUser.Nombre));
+      }
     }
 
-    public class ScoreboardItem
-    {
-        public string Nombre { get; set; }
-        public int PartidasGanadas { get; set; }
-        public string Porcentaje { get; set; }
-        public int Puntuacion { get; set; }
-        public string Puesto { get; set; }
+    private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new MainMenu());
     }
+
+    private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new Profile());
+    }
+
+    private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new History());
+    }
+
+    private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new Scoreboard());
+    }
+
+    private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new Settings());
+    }
+  }
+
+  public class ScoreboardItem {
+    public string Nombre { get; set; }
+    public int PartidasGanadas { get; set; }
+    public string Porcentaje { get; set; }
+    public int Puntuacion { get; set; }
+    public string Puesto { get; set; }
+  }
 }

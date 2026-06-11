@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+
 using LetterClashServer.Contracts;
-using LetterClashServer.Domain.Models;
 using LetterClashServer.DataAccess.Repositories;
+using LetterClashServer.Domain.Models;
 
 namespace LetterClashServer.Services {
   public class LobbyService : ILobbyService {
@@ -12,9 +13,9 @@ namespace LetterClashServer.Services {
     private readonly JugadorRepository jugadorRepository;
     private readonly PalabraRepository palabraRepository;
 
-    public LobbyService() : this(new PartidaRepository(), new JugadorRepository(), new PalabraRepository()) {}
+    public LobbyService() : this(new PartidaRepository(), new JugadorRepository(), new PalabraRepository()) { }
 
-    public LobbyService(PartidaRepository repository) : this(repository, new JugadorRepository(), new PalabraRepository()) {}
+    public LobbyService(PartidaRepository repository) : this(repository, new JugadorRepository(), new PalabraRepository()) { }
 
     public LobbyService(PartidaRepository repository, JugadorRepository jugadorRepo, PalabraRepository palabraRepo) {
       this.partidaRepository = repository;

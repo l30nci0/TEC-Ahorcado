@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+
 using LetterClashServer.Contracts;
+using LetterClashServer.DataAccess.Repositories;
 using LetterClashServer.Domain.Models;
 using LetterClashServer.Domain.Security;
-using LetterClashServer.DataAccess.Repositories;
 
 namespace LetterClashServer.Services {
   public class JugadorService : IJugadorService {
     private readonly JugadorRepository jugadorRepository;
 
-    public JugadorService() : this(new JugadorRepository()) {}
+    public JugadorService() : this(new JugadorRepository()) { }
 
     public JugadorService(JugadorRepository repository) {
       this.jugadorRepository = repository;

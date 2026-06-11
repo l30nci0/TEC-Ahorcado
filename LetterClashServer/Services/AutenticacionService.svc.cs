@@ -1,17 +1,18 @@
 using System;
 using System.ServiceModel;
 using System.Text.RegularExpressions;
+
 using LetterClashServer.Contracts;
+using LetterClashServer.DataAccess.Context;
+using LetterClashServer.DataAccess.Repositories;
 using LetterClashServer.Domain.Models;
 using LetterClashServer.Domain.Security;
-using LetterClashServer.DataAccess.Repositories;
-using LetterClashServer.DataAccess.Context;
 
 namespace LetterClashServer.Services {
   public class AutenticacionService : IAutenticacionService {
     private readonly JugadorRepository jugadorRepository;
 
-    public AutenticacionService() : this(new JugadorRepository()) {}
+    public AutenticacionService() : this(new JugadorRepository()) { }
 
     public AutenticacionService(JugadorRepository repository) {
       this.jugadorRepository = repository;

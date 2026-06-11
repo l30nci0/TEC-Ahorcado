@@ -3,9 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+
 using LetterClashServer.Contracts;
-using LetterClashServer.Domain.Models;
 using LetterClashServer.DataAccess.Repositories;
+using LetterClashServer.Domain.Models;
 
 namespace LetterClashServer.Services {
   public class JugadorSesion {
@@ -20,10 +21,10 @@ namespace LetterClashServer.Services {
     private readonly JugadorRepository jugadorRepository;
 
     // Diccionario de sesiones en memoria: CodigoAcceso -> Lista de jugadores en la sala
-    private static readonly ConcurrentDictionary<string, List<JugadorSesion>> salasDeJuego = 
+    private static readonly ConcurrentDictionary<string, List<JugadorSesion>> salasDeJuego =
         new ConcurrentDictionary<string, List<JugadorSesion>>();
 
-    public GameService() : this(new PartidaRepository(), new JugadorRepository()) {}
+    public GameService() : this(new PartidaRepository(), new JugadorRepository()) { }
 
     public GameService(PartidaRepository repository, JugadorRepository jugadorRepo) {
       this.partidaRepository = repository;
