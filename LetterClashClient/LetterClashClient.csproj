@@ -49,6 +49,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -217,6 +220,9 @@
 		<Compile Include="Views\Settings.xaml.cs">
 			<DependentUpon>Settings.xaml</DependentUpon>
 		</Compile>
+		<Compile Include="Services\ServiceProxyManager.cs" />
+		<Compile Include="Services\GameCallbackHandler.cs" />
+		<Compile Include="Models\SessionContext.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -232,5 +238,12 @@
 		<Resource Include="Assets\Images\UserAvatar.png" />
 	</ItemGroup>	
 	
+  <ItemGroup>
+    <ProjectReference Include="..\LetterClashServer\LetterClashServer.csproj">
+      <Project>{7801DFFC-55E1-4E14-B3EF-A09331116E75}</Project>
+      <Name>LetterClashServer</Name>
+    </ProjectReference>
+  </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
