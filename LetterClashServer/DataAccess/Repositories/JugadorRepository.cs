@@ -54,6 +54,8 @@ namespace LetterClashServer.DataAccess.Repositories {
         jugador.Nombre = jugadorDTO.Nombre;
         jugador.Telefono = jugadorDTO.Telefono;
         jugador.Avatar = jugadorDTO.Avatar;
+        jugador.FechaDeNacimiento = jugadorDTO.FechaDeNacimiento;
+        jugador.IdiomaPreferido = jugadorDTO.IdiomaPreferido;
         context.SaveChanges();
         return true;
       }
