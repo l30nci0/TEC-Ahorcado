@@ -7,19 +7,16 @@ namespace LetterClashClient.Views {
   public partial class GameHost : Page {
     private string opponentName;
     private string selectedWord;
+    private string codigoAcceso;
     private int currentHangmanState;
 
-    public GameHost() {
-      InitializeComponent();
-      opponentName = "Usuario 1";
-      selectedWord = "SOFTWARE";
-      currentHangmanState = 5;
-    }
+    public GameHost() : this("SOFTWARE", "------") { }
 
-    public GameHost(string selectedWord) {
+    public GameHost(string selectedWord, string codigoAcceso) {
       InitializeComponent();
       opponentName = "Usuario 1";
       this.selectedWord = string.IsNullOrWhiteSpace(selectedWord) ? "SOFTWARE" : selectedWord.ToUpper();
+      this.codigoAcceso = string.IsNullOrWhiteSpace(codigoAcceso) ? "------" : codigoAcceso;
       currentHangmanState = 5;
     }
 
@@ -32,6 +29,7 @@ namespace LetterClashClient.Views {
 
       TextBlockOpponent.Text = opponentName;
       TextBlockWord.Text = selectedWord;
+      TextBlockAccessCode.Text = codigoAcceso;
       TextBlockChatTitle.Text = $"Chat con {opponentName}";
       UpdateHangmanImage();
       UpdateAttempts();

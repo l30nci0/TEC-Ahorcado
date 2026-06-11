@@ -42,5 +42,8 @@ namespace LetterClashServer.Domain.Models {
 
     [DataMember]
     public DateTime FechaDeJuego { get; set; }
+
+    [DataMember]
+    public string Idioma { get; set; }
   }
 }

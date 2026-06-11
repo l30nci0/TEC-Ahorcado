@@ -11,7 +11,7 @@ namespace LetterClashServer.DataAccess.Repositories {
       using (var context = new LetterClashDBEntities()) {
         return context.Partidas
                       .AsNoTracking()
-                      .Include(p => p.Jugador)
+                      .Include(p => p.Jugador1)
                       .Include(p => p.Palabra)
                       .Where(p => p.Estado == "PENDIENTE" && p.Privacidad == "PÚBLICA")
                       .ToList();
@@ -67,7 +67,7 @@ namespace LetterClashServer.DataAccess.Repositories {
       using (var context = new LetterClashDBEntities()) {
         return context.Partidas
                       .AsNoTracking()
-                      .Include(p => p.Jugador)
+                      .Include(p => p.Jugador1)
                       .Include(p => p.Palabra)
                       .SingleOrDefault(p => p.CodigoAcceso == codigoAcceso);
       }

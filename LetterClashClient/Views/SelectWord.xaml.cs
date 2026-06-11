@@ -1,11 +1,22 @@
-using System.Collections.Generic;
+using System;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 
+using LetterClashClient.Services;
+using LetterClashServer.Domain.Models;
+
 namespace LetterClashClient.Views {
   public partial class SelectWord : Page {
-    public SelectWord() {
+    private string selectedLanguage;
+    private int privacyIndex;
+
+    public SelectWord() : this(Idiomas.ESPANOL, 1) { }
+
+    public SelectWord(string selectedLanguage, int privacyIndex) {
       InitializeComponent();
+      this.selectedLanguage = selectedLanguage;
+      this.privacyIndex = privacyIndex;
     }
 
     private void Page_Loaded(object sender, RoutedEventArgs e) {
@@ -15,40 +26,38 @@ namespace LetterClashClient.Views {
         window.Title = "Crea Lobby (Escoger palabra)";
       }
 
-      DataGridWords.ItemsSource = new List<WordItem>
-{
-        new WordItem { Palabra = "Ahorcado", Descripcion = "Juego donde se adivina una palabra antes de completar el dibujo." },
-        new WordItem { Palabra = "Castillo", Descripcion = "Construcción grande protegida por muros y torres." },
-        new WordItem { Palabra = "Espada", Descripcion = "Arma larga usada por guerreros o caballeros." },
-        new WordItem { Palabra = "Dragón", Descripcion = "Criatura fantástica que puede volar y lanzar fuego." },
-        new WordItem { Palabra = "Escudo", Descripcion = "Objeto usado para protegerse en combate." },
-        new WordItem { Palabra = "Corona", Descripcion = "Objeto que representa a un rey o reina." },
-        new WordItem { Palabra = "Batalla", Descripcion = "Enfrentamiento entre dos o más oponentes." },
-        new WordItem { Palabra = "Guerrero", Descripcion = "Persona que participa en combates." },
-        new WordItem { Palabra = "Reino", Descripcion = "Territorio gobernado por un rey o reina." },
-        new WordItem { Palabra = "Victoria", Descripcion = "Resultado obtenido al ganar una partida." }
-      };
+      TextBlockHeader.Text = $"Palabras en {selectedLanguage.ToLower()}";
+
+      try {
+        var palabraService = ServiceProxyManager.GetPalabraService();
+        var result = palabraService.ObtenerPalabrasPorIdioma(selectedLanguage);
+
+        if (result != null && result.IsSuccess) {
+          DataGridWords.ItemsSource = result.Value;
+        } else {
+          MessageBox.Show(result?.Error?.Mensaje ?? "Error al recuperar palabras del catálogo.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+      } catch (CommunicationException) {
+        MessageBox.Show("No se pudo conectar con el servidor para obtener las palabras.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+      } catch (Exception ex) {
+        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+      }
     }
 
     private void ButtonUseWord_Click(object sender, RoutedEventArgs e) {
       Button button = sender as Button;
 
       if (button != null) {
-        WordItem selectedWord = button.DataContext as WordItem;
+        var selectedWord = button.DataContext as PalabraDTO;
 
         if (selectedWord != null) {
-          NavigationService.Navigate(new CreateRoom(selectedWord.Palabra));
+          NavigationService.Navigate(new CreateRoom(selectedWord, selectedLanguage, privacyIndex));
         }
       }
     }
 
     private void ButtonBack_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new CreateRoom());
+      NavigationService.Navigate(new CreateRoom(null, selectedLanguage, privacyIndex));
     }
-  }
-
-  public class WordItem {
-    public string Palabra { get; set; }
-    public string Descripcion { get; set; }
   }
 }

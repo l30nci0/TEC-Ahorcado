@@ -86,9 +86,9 @@ namespace LetterClashServer.Services {
         var dtos = partidas.Select(p => new PartidaDTO {
           IDPartida = p.IDPartida,
           IDAnfitrion = p.IDAnfitrion,
-          NombreAnfitrion = p.Jugador.NombreDeUsuario,
+          NombreAnfitrion = p.Jugador1.NombreDeUsuario,
           IDAdivinador = p.IDAdivinador,
-          NombreAdivinador = p.Jugador1 != null ? p.Jugador1.NombreDeUsuario : null,
+          NombreAdivinador = p.Jugador != null ? p.Jugador.NombreDeUsuario : null,
           IDPalabra = p.IDPalabra,
           PalabraRevelada = p.Palabra != null ? p.Palabra.Palabra1 : null,
           Estado = p.Estado,
@@ -96,7 +96,8 @@ namespace LetterClashServer.Services {
           Privacidad = p.Privacidad,
           Turno = p.Turno,
           CodigoAcceso = p.CodigoAcceso,
-          FechaDeJuego = p.FechaDeJuego
+          FechaDeJuego = p.FechaDeJuego,
+          Idioma = p.Palabra != null ? p.Palabra.Idioma : null
         }).ToList();
 
         return ServiceResult<List<PartidaDTO>>.Success(dtos);

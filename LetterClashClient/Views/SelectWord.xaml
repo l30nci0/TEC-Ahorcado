@@ -1,4 +1,4 @@
-﻿<Page x:Class="LetterClashClient.Views.SelectWord"
+<Page x:Class="LetterClashClient.Views.SelectWord"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -101,7 +101,7 @@
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Palabra"
-                                  Binding="{Binding Palabra}"
+                                  Binding="{Binding PalabraTexto}"
                                   Width="170"/>
 
                             <DataGridTextColumn Header="Descripción"

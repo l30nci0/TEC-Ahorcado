@@ -1,4 +1,4 @@
-﻿<Page x:Class="LetterClashClient.Views.GameHost"
+<Page x:Class="LetterClashClient.Views.GameHost"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -133,6 +133,24 @@
                             <RowDefinition Height="150"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,15,0,0">
+                            <TextBlock Text="CÓDIGO DE ACCESO"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Foreground="#888888"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TextBlockAccessCode"
+                                       Text="------"
+                                       FontSize="30"
+                                       FontWeight="Bold"
+                                       Foreground="#1E1E2F"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,6,0,0"/>
+                        </StackPanel>
 
                         <TextBlock Grid.Row="1"
                        Text="Palabra seleccionada"
