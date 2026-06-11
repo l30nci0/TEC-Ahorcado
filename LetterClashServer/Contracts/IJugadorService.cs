@@ -20,5 +20,8 @@ namespace LetterClashServer.Contracts {
 
     [OperationContract]
     ServiceResult<bool> CambiarContrasena(int jugadorID, string contrasenaActual, string nuevaContrasena);
+
+    [OperationContract]
+    ServiceResult<JugadorDTO> ObtenerPerfilPorNombre(string nombreUsuario);
   }
 }

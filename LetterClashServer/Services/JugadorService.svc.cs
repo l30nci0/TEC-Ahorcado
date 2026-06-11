@@ -214,5 +214,46 @@ namespace LetterClashServer.Services {
         );
       }
     }
+
+    public ServiceResult<JugadorDTO> ObtenerPerfilPorNombre(string nombreUsuario) {
+      if (string.IsNullOrWhiteSpace(nombreUsuario)) {
+        return ServiceResult<JugadorDTO>.Failure(
+          CodigoError.PARAMETRO_INVALIDO,
+          "El nombre de usuario no puede estar vacío.",
+          "nombreUsuario es nulo o vacío"
+        );
+      }
+
+      try {
+        var jugador = jugadorRepository.ObtenerJugadorPorCredenciales(nombreUsuario);
+        if (jugador == null) {
+          return ServiceResult<JugadorDTO>.Failure(
+            CodigoError.RECURSO_NO_ENCONTRADO,
+            "El usuario especificado no existe.",
+            $"Usuario '{nombreUsuario}' no encontrado."
+          );
+        }
+
+        var dto = new JugadorDTO {
+          IDJugador = jugador.IDJugador,
+          Nombre = jugador.Nombre,
+          NombreDeUsuario = jugador.NombreDeUsuario,
+          Correo = jugador.Correo,
+          Telefono = jugador.Telefono,
+          Puntuacion = jugador.Puntuacion,
+          Avatar = jugador.Avatar,
+          IdiomaPreferido = jugador.IdiomaPreferido,
+          FechaDeNacimiento = jugador.FechaDeNacimiento
+        };
+
+        return ServiceResult<JugadorDTO>.Success(dto);
+      } catch (Exception ex) {
+        return ServiceResult<JugadorDTO>.Failure(
+          CodigoError.ERROR_INTERNO,
+          "Error al obtener el perfil del usuario.",
+          ex.Message
+        );
+      }
+    }
   }
 }
