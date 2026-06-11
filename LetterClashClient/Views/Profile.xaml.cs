@@ -2,6 +2,9 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
+
+using LetterClashClient.Models;
 
 namespace LetterClashClient.Views {
   public partial class Profile : Page {
@@ -16,17 +19,30 @@ namespace LetterClashClient.Views {
         window.Title = "Perfil de Usuario";
       }
 
-      string fullName = "Irving Alejandro Seguin Luna";
-      string username = "jugador1";
-      DateTime birthDate = new DateTime(2005, 5, 10);
-      int age = CalculateAge(birthDate);
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario != null) {
+        TextBlockUsernameHeader.Text = $"\"{usuario.NombreDeUsuario}\"";
+        TextBlockFullName.Text = usuario.Nombre;
+        TextBlockAge.Text = CalculateAge(usuario.FechaDeNacimiento).ToString() + " Años";
+        TextBlockBirthDate.Text = usuario.FechaDeNacimiento.ToString("dd/MM/yyyy");
+        TextBlockEmail.Text = usuario.Correo;
+        TextBlockPhone.Text = !string.IsNullOrWhiteSpace(usuario.Telefono) ? usuario.Telefono : "No Registrado";
 
-      TextBlockUsernameHeader.Text = $"\"{username}\"";
-      TextBlockFullName.Text = fullName;
-      TextBlockAge.Text = age.ToString();
-      TextBlockBirthDate.Text = birthDate.ToString("dd/MM/yyyy");
-      TextBlockEmail.Text = "jugador1@tecnohorcado.com";
-      TextBlockPhone.Text = "2281234567";
+        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
+          try {
+            using (var stream = new System.IO.MemoryStream(usuario.Avatar)) {
+              var bitmap = new BitmapImage();
+              bitmap.BeginInit();
+              bitmap.StreamSource = stream;
+              bitmap.CacheOption = BitmapCacheOption.OnLoad;
+              bitmap.EndInit();
+              ImageUserAvatar.Source = bitmap;
+            }
+          } catch {
+            // Mantiene el default en caso de error
+          }
+        }
+      }
     }
 
     private int CalculateAge(DateTime birthDate) {

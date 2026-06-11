@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
+using LetterClashClient.Models;
 
 namespace LetterClashClient.Views {
   public partial class MainMenu : Page {
@@ -20,9 +21,39 @@ namespace LetterClashClient.Views {
         window.Title = "Menu Principal";
       }
 
-      TextBlockUsername.Text = "\"jugador1\"";
-      TextBlockAge.Text = "\"20\"";
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario != null) {
+        TextBlockUsername.Text = $"\"{usuario.NombreDeUsuario}\"";
+        TextBlockAge.Text = $"\"{CalculateAge(usuario.FechaDeNacimiento)} Años\"";
+
+        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
+          try {
+            using (var stream = new System.IO.MemoryStream(usuario.Avatar)) {
+              var bitmap = new BitmapImage();
+              bitmap.BeginInit();
+              bitmap.StreamSource = stream;
+              bitmap.CacheOption = BitmapCacheOption.OnLoad;
+              bitmap.EndInit();
+              ImageUserAvatar.Source = bitmap;
+            }
+          } catch {
+            // Mantiene el default en caso de error
+          }
+        }
+      }
+
       UpdateHangmanImage();
+    }
+
+    private int CalculateAge(DateTime birthDate) {
+      DateTime today = DateTime.Today;
+      int age = today.Year - birthDate.Year;
+
+      if (birthDate.Date > today.AddYears(-age)) {
+        age--;
+      }
+
+      return age;
     }
 
     private void ButtonCreateRoom_Click(object sender, RoutedEventArgs e) {
