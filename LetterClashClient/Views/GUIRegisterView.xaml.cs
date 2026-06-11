@@ -95,15 +95,8 @@ namespace LetterClashClient.Views {
           return;
         }
 
-        var loginResult = authService.IniciarSesion(nuevoJugador.NombreDeUsuario, password);
-        if (loginResult != null && loginResult.IsSuccess) {
-          SessionContext.UsuarioLogueado = loginResult.Value;
-          MessageBox.Show("Cuenta creada e inicio de sesión correcto.", "TecnoHorcado", MessageBoxButton.OK, MessageBoxImage.Information);
-          NavigationService.Navigate(new GUIMainMenuView());
-        } else {
-          MessageBox.Show("Cuenta creada con éxito. Inicie sesión para comenzar.", "TecnoHorcado", MessageBoxButton.OK, MessageBoxImage.Information);
-          NavigationService.Navigate(new GUILoginView());
-        }
+        MessageBox.Show("Cuenta creada con éxito. Inicie sesión para comenzar.", "Registro Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
+        NavigationService.Navigate(new GUILoginView());
       } catch (CommunicationException) {
         MessageBox.Show("No se pudo establecer conexión con el servidor. Compruebe que el servidor esté activo.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
