@@ -11,8 +11,12 @@ namespace LetterClashClient.Views {
       Window.GetWindow(this).Title = "Menú de Entrada";
     }
 
-    private void ButtonStart_Click(object sender, RoutedEventArgs e) {
+    private void ButtonLogin_Click(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUILoginView());
+    }
+
+    private void ButtonRegister_Click(object sender, RoutedEventArgs e) {
+      NavigationService.Navigate(new GUIRegisterView());
     }
   }
 }
