@@ -212,9 +212,23 @@
 		<Resource Include="Assets\Images\Hangedman5.jpg" />
 		<Resource Include="Assets\Images\Hangman.jpg" />
 		<Resource Include="Assets\Images\LogoLetterClash.jpeg" />
+		<Resource Include="Assets\Images\LogoLetterClashRectangle.png" />
+		<Resource Include="Assets\Images\LogoLetterClashSquare.png" />
 		<Resource Include="Assets\Images\Stadistics.png" />
 		<Resource Include="Assets\Images\star.png" />
 		<Resource Include="Assets\Images\UserAvatar.png" />
+		<Resource Include="Assets\Fonts\GeistPixel-Circle.ttf" />
+		<Resource Include="Assets\Fonts\GeistPixel-Grid.ttf" />
+		<Resource Include="Assets\Fonts\GeistPixel-Line.ttf" />
+		<Resource Include="Assets\Fonts\GeistPixel-Square.ttf" />
+		<Resource Include="Assets\Fonts\GeistPixel-Triangle.ttf" />
+		<Resource Include="Assets\Fonts\GeistMono-Black.ttf" />
+		<Resource Include="Assets\Fonts\GeistMono-Bold.ttf" />
+		<Resource Include="Assets\Fonts\GeistMono-ExtraBold.ttf" />
+		<Resource Include="Assets\Fonts\GeistMono-Light.ttf" />
+		<Resource Include="Assets\Fonts\GeistMono-Medium.ttf" />
+		<Resource Include="Assets\Fonts\GeistMono-Regular.ttf" />
+		<Resource Include="Assets\Fonts\GeistMono-Thin.ttf" />
 	</ItemGroup>	
 	
   <ItemGroup>

@@ -23,21 +23,15 @@ namespace LetterClashClient.Views {
 
     private void ButtonLogin_Click(object sender, RoutedEventArgs e) {
       TextBlockUsernameError.Visibility = Visibility.Hidden;
-      TextBlockEmailError.Visibility = Visibility.Hidden;
       TextBlockPasswordError.Visibility = Visibility.Hidden;
 
       bool usernameEmpty = string.IsNullOrWhiteSpace(TextBoxUsername.Text);
-      bool emailEmpty = string.IsNullOrWhiteSpace(TextBoxEmail.Text);
       bool passwordEmpty = string.IsNullOrWhiteSpace(PasswordBoxPassword.Password);
-
-      bool identityValid = !usernameEmpty || !emailEmpty;
       bool hasError = false;
 
-      if (!identityValid) {
+      if (usernameEmpty) {
         TextBlockUsernameError.Text = "Ingrese su nombre de usuario o correo.";
         TextBlockUsernameError.Visibility = Visibility.Visible;
-        TextBlockEmailError.Text = "Ingrese su nombre de usuario o correo.";
-        TextBlockEmailError.Visibility = Visibility.Visible;
         hasError = true;
       }
 
@@ -51,7 +45,7 @@ namespace LetterClashClient.Views {
         return;
       }
 
-      string identityInput = !usernameEmpty ? TextBoxUsername.Text.Trim() : TextBoxEmail.Text.Trim();
+      string identityInput = TextBoxUsername.Text.Trim();
       string passwordInput = PasswordBoxPassword.Password;
 
       try {
@@ -87,10 +81,6 @@ namespace LetterClashClient.Views {
 
     private void TextBoxUsername_TextChanged(object sender, TextChangedEventArgs e) {
       TextBlockUsernamePlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxUsername.Text) ? Visibility.Visible : Visibility.Hidden;
-    }
-
-    private void TextBoxEmail_TextChanged(object sender, TextChangedEventArgs e) {
-      TextBlockEmailPlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxEmail.Text) ? Visibility.Visible : Visibility.Hidden;
     }
 
     private void PasswordBoxPassword_PasswordChanged(object sender, RoutedEventArgs e) {

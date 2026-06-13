@@ -6,233 +6,307 @@
       mc:Ignorable="d"
       d:DesignHeight="720"
       d:DesignWidth="1280"
-      Title="GUILoginView"
-      Loaded="Page_Loaded">
+      Title="Letter Clash - Iniciar Sesión"
+      Loaded="Page_Loaded"
+      Background="#09090B">
 
-    <Grid Background="#F4F4F4">
-        <Border Margin="20"
-            BorderBrush="#2B2B2B"
-            BorderThickness="2"
-            Background="White">
+    <Page.Resources>
+        <!-- Modern Dark Grayscale TextBox Style -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#09090B"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="CaretBrush" Value="#F4F4F5"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#3F3F46"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#E4E4E7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <Grid Margin="35">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="110"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="60"/>
-                </Grid.RowDefinitions>
+        <!-- Modern Dark Grayscale PasswordBox Style -->
+        <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
+            <Setter Property="Background" Value="#09090B"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="CaretBrush" Value="#F4F4F5"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#3F3F46"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#E4E4E7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <TextBlock Grid.Row="0"
-                   Text="I N G R E S O"
-                   FontSize="42"
-                   FontWeight="SemiBold"
-                   Foreground="#1E1E2F"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="45,0,0,0"/>
+        <!-- Retro Grayscale Primary Button Style -->
+        <Style x:Key="ModernPrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#E4E4E7"/>
+            <Setter Property="Foreground" Value="#09090B"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter Property="Foreground" Value="#71717A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <Rectangle Grid.Row="0"
-                   Height="3"
-                   Width="430"
-                   Fill="#1E1E2F"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom"
-                   Margin="35,0,0,10"/>
+        <!-- Retro Grayscale Secondary Button Style -->
+        <Style x:Key="ModernSecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#18181B"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#3F3F46"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter Property="Foreground" Value="#52525B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="64*"/>
-                        <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="36*"/>
-                    </Grid.ColumnDefinitions>
+    <Grid>
+        <!-- Modern Grid Line Background -->
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
 
-                    <Grid x:Name="GridLoginForm"
-                 Grid.Column="0"
-                 Width="540"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Margin="35,25,0,0">
+        <Border Width="450"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                BorderBrush="#2D2D30"
+                BorderThickness="1"
+                Background="#121214"
+                CornerRadius="0"
+                Padding="35">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="25" ShadowDepth="0" Color="#000000" Opacity="0.5"/>
+            </Border.Effect>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="28"/>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="45"/>
-                            <RowDefinition Height="28"/>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="28"/>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="50"/>
-                        </Grid.RowDefinitions>
+            <StackPanel>
+                <!-- Logo -->
+                <Image x:Name="ImageLogo"
+                       Source="/Assets/Images/LogoLetterClashRectangle.png"
+                       Width="240"
+                       Height="80"
+                       Stretch="Uniform"
+                       HorizontalAlignment="Center"
+                       Margin="0,10,0,25"/>
 
-                        <TextBlock Grid.Row="0"
-                        Text="Nombre de Usuario"
-                        FontSize="15"
-                        Foreground="#222222"/>
+                <!-- Header Title -->
+                <TextBlock Text="INICIAR SESION"
+                           FontFamily="{StaticResource GeistPixelSquare}"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           Foreground="#FFFFFF"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,30"/>
 
-                        <Grid Grid.Row="1">
-                            <TextBox x:Name="TextBoxUsername"
-                        Height="35"
-                        FontSize="15"
-                        Padding="8,4"
-                        TextChanged="TextBoxUsername_TextChanged"/>
-
-                            <TextBlock x:Name="TextBlockUsernamePlaceholder"
-                          Text="Usuario"
-                          FontSize="15"
-                          Foreground="#999999"
-                          Margin="10,0,0,0"
-                          VerticalAlignment="Center"
-                          IsHitTestVisible="False"/>
-                        </Grid>
-
-                        <TextBlock x:Name="TextBlockUsernameError"
-                        Grid.Row="2"
-                        Text="Usuario No Valido / No encontrado"
-                        FontSize="14"
-                        Foreground="Red"
-                        VerticalAlignment="Center"
-                        Visibility="Hidden"/>
-
-                        <TextBlock Grid.Row="3"
-                        Text="O usa"
-                        FontSize="16"
-                        Foreground="#222222"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-
-                        <TextBlock Grid.Row="4"
-                        Text="Correo"
-                        FontSize="15"
-                        Foreground="#222222"/>
-
-                        <Grid Grid.Row="5">
-                            <TextBox x:Name="TextBoxEmail"
-                        Height="35"
-                        FontSize="15"
-                        Padding="8,4"
-                        TextChanged="TextBoxEmail_TextChanged"/>
-
-                            <TextBlock x:Name="TextBlockEmailPlaceholder"
-                          Text="Correo Electronico"
-                          FontSize="15"
-                          Foreground="#999999"
-                          Margin="10,0,0,0"
-                          VerticalAlignment="Center"
-                          IsHitTestVisible="False"/>
-                        </Grid>
-
-                        <TextBlock x:Name="TextBlockEmailError"
-                        Grid.Row="6"
-                        Text="Este Usuario no existe"
-                        FontSize="14"
-                        Foreground="Red"
-                        VerticalAlignment="Center"
-                        Visibility="Hidden"/>
-
-                        <TextBlock Grid.Row="7"
-                        Text="Contraseña"
-                        FontSize="15"
-                        Foreground="#222222"/>
-
-                        <Grid Grid.Row="8">
-                            <PasswordBox x:Name="PasswordBoxPassword"
-                            Height="35"
-                            FontSize="15"
-                            Padding="8,4"
-                            PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
-
-                            <TextBlock x:Name="TextBlockPasswordPlaceholder"
-                          Text="Contraseña"
-                          FontSize="15"
-                          Foreground="#999999"
-                          Margin="10,0,0,0"
-                          VerticalAlignment="Center"
-                          IsHitTestVisible="False"/>
-                        </Grid>
-
-                        <TextBlock x:Name="TextBlockPasswordError"
-                        Grid.Row="9"
-                        Text="Coloque su contraseña"
-                        FontSize="14"
-                        Foreground="Red"
-                        VerticalAlignment="Center"
-                        Visibility="Hidden"/>
-
-                        <Button x:Name="ButtonLogin"
-                     Grid.Row="10"
-                     Content="Iniciar Sesion"
-                     Width="230"
-                     Height="38"
-                     FontSize="15"
-                     FontWeight="SemiBold"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"
-                     Cursor="Hand"
-                     Click="ButtonLogin_Click"/>
-                    </Grid>
-
-                    <Border Grid.Column="1"
-                   Background="#2B2B2B"
-                   Width="2"
-                   VerticalAlignment="Stretch"/>
-
-                    <Grid Grid.Column="2">
-                        <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        Margin="0,15,0,0">
-
-                            <Image x:Name="ImageLogo"
-                      Source="/Assets/Images/LogoLetterClash.jpeg"
-                      Width="360"
-                      Height="140"
-                      Stretch="Uniform"
-                      HorizontalAlignment="Center"
-                      Margin="0,0,0,45"/>
-
-                            <TextBlock Text="O eres nuevo?? ☹"
-                          FontSize="17"
-                          Foreground="#222222"
-                          HorizontalAlignment="Center"
-                          Margin="0,0,0,15"/>
-
-                            <Button x:Name="ButtonCreateAccount"
-                       Content="Crear una Cuenta"
-                       Width="210"
-                       Height="38"
-                       FontSize="15"
-                       FontWeight="SemiBold"
-                       Cursor="Hand"
-                       Click="ButtonCreateAccount_Click"/>
-
-                            <TextBlock Text="N E W"
-                          FontSize="28"
-                          Foreground="#1E1E2F"
-                          HorizontalAlignment="Center"
-                          Margin="0,70,0,0"/>
-
-                            <Rectangle Height="2"
-                          Fill="#1E1E2F"
-                          Width="130"
-                          Margin="0,8,0,0"/>
-                        </StackPanel>
-                    </Grid>
+                <!-- Usuario Form Row -->
+                <TextBlock Text="USUARIO O CORREO"
+                           FontFamily="{StaticResource GeistMono}"
+                           FontSize="11"
+                           FontWeight="Bold"
+                           Foreground="#71717A"
+                           Margin="2,0,0,8"/>
+                
+                <Grid Margin="0,0,0,4">
+                    <TextBox x:Name="TextBoxUsername"
+                             Style="{StaticResource ModernTextBox}"
+                             Height="42"
+                             TextChanged="TextBoxUsername_TextChanged"/>
+                    <TextBlock x:Name="TextBlockUsernamePlaceholder"
+                               Text="Ingresa tu usuario o correo"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="14"
+                               Foreground="#52525B"
+                               Margin="14,0,0,0"
+                               VerticalAlignment="Center"
+                               IsHitTestVisible="False"/>
                 </Grid>
 
-                <Button x:Name="ButtonBackHome"
-                 Grid.Row="2"
-                 Content="Pagina Inicial  ↩"
-                 Width="190"
-                 Height="38"
-                 FontSize="15"
-                 FontWeight="SemiBold"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Center"
-                 Cursor="Hand"
-                 Click="ButtonBackHome_Click"/>
-            </Grid>
+                <TextBlock x:Name="TextBlockUsernameError"
+                           Text="Usuario o Correo no válido / no encontrado"
+                           FontFamily="{StaticResource GeistMono}"
+                           FontSize="11"
+                           Foreground="#F87171"
+                           Margin="2,0,0,16"
+                           Visibility="Hidden"/>
+
+                <!-- Contraseña Form Row -->
+                <TextBlock Text="CONTRASEÑA"
+                           FontFamily="{StaticResource GeistMono}"
+                           FontSize="11"
+                           FontWeight="Bold"
+                           Foreground="#71717A"
+                           Margin="2,0,0,8"/>
+
+                <Grid Margin="0,0,0,4">
+                    <PasswordBox x:Name="PasswordBoxPassword"
+                                 Style="{StaticResource ModernPasswordBox}"
+                                 Height="42"
+                                 PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
+                    <TextBlock x:Name="TextBlockPasswordPlaceholder"
+                               Text="Ingresa tu contraseña"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="14"
+                               Foreground="#52525B"
+                               Margin="14,0,0,0"
+                               VerticalAlignment="Center"
+                               IsHitTestVisible="False"/>
+                </Grid>
+
+                <TextBlock x:Name="TextBlockPasswordError"
+                           Text="Coloque su contraseña"
+                           FontFamily="{StaticResource GeistMono}"
+                           FontSize="11"
+                           Foreground="#F87171"
+                           Margin="2,0,0,24"
+                           Visibility="Hidden"/>
+
+                <!-- Iniciar Sesión button -->
+                <Button x:Name="ButtonLogin"
+                        Content="INICIAR SESION"
+                        Style="{StaticResource ModernPrimaryButton}"
+                        Height="44"
+                        Click="ButtonLogin_Click"
+                        Margin="0,5,0,25"/>
+
+                <!-- Divider line inside card -->
+                <Border BorderBrush="#2D2D30" 
+                        BorderThickness="0,1,0,0" 
+                        Margin="0,0,0,20"/>
+
+                <!-- Secondary Actions -->
+                <Grid>
+                    <Button x:Name="ButtonCreateAccount"
+                            Content="REGISTRARSE"
+                            Style="{StaticResource ModernSecondaryButton}"
+                            Height="36"
+                            Width="150"
+                            HorizontalAlignment="Left"
+                            Click="ButtonCreateAccount_Click"/>
+
+                    <Button x:Name="ButtonBackHome"
+                            Content="VOLVER ↩"
+                            Style="{StaticResource ModernSecondaryButton}"
+                            Height="36"
+                            Width="120"
+                            HorizontalAlignment="Right"
+                            Click="ButtonBackHome_Click"/>
+                </Grid>
+            </StackPanel>
         </Border>
     </Grid>
 </Page>
