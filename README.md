@@ -62,6 +62,17 @@ Para más detalles, consulta el documento completo de [Arquitectura y Componente
 1. Ejecuta los scripts de creación de la base de datos (puedes usar el script [DB-MODEL.sql](./DB-MODEL.sql) para la estructura del esquema y [DB-SEED.sql](./DB-SEED.sql) para poblar las palabras de juego).
 2. Copia el archivo `LetterClashServer/connections.config.template`, renómbralo como `connections.config` en la misma carpeta y configura allí las credenciales y nombre de tu servidor SQL Server local.
 
+   Ejemplo de la estructura de conexión en `connections.config`:
+   ```xml
+   <connectionStrings>
+     <add name="LetterClashDBEntities" connectionString="metadata=res://*/DataAccess.Context.LetterClashModel.csdl|res://*/DataAccess.Context.LetterClashModel.ssdl|res://*/DataAccess.Context.LetterClashModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=TU_SERVIDOR_SQL_AQUÍ;initial catalog=LetterClashDB;user id=LetterClashUser;password=TU_CONTRASEÑA_AQUÍ;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+   </connectionStrings>
+   ```
+
+   * **data source**: Cambia `TU_SERVIDOR_SQL_AQUÍ` por el nombre de tu instancia local de SQL Server (por ejemplo, `localhost\SQLEXPRESS` o `(localdb)\MSSQLLocalDB`).
+   * **password**: Cambia `TU_CONTRASEÑA_AQUÍ` por la contraseña del usuario `LetterClashUser` que configuraste para el acceso de base de datos.
+   * *Nota: El archivo `connections.config` está ignorado en Git para prevenir subir accidentalmente credenciales personales.*
+
 ### 3. Ejecución del Servidor
 1. Abre la solución `TEC-Ahorcado.slnx` en Visual Studio.
 2. Establece `LetterClashServer` como proyecto de inicio y ejecútalo (correrá en IIS Express u hospedado localmente).
