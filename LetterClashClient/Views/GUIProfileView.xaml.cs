@@ -78,6 +78,7 @@ namespace LetterClashClient.Views {
           } else {
             ComboBoxPreferredLanguage.SelectedIndex = 0;
           }
+          UpdateLanguageButtons();
 
           selectedAvatarBytes = usuario.Avatar;
           if (selectedAvatarBytes != null && selectedAvatarBytes.Length > 0) {
@@ -332,6 +333,29 @@ namespace LetterClashClient.Views {
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUISettingsView());
+    }
+
+    private void UpdateLanguageButtons() {
+      if (ComboBoxPreferredLanguage.SelectedIndex == 1) { // Ingles
+        ButtonLangEN.Style = (Style)FindResource("ModernPrimaryButton");
+        ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
+      } else if (ComboBoxPreferredLanguage.SelectedIndex == 2) { // Español
+        ButtonLangES.Style = (Style)FindResource("ModernPrimaryButton");
+        ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+      } else {
+        ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+      }
+    }
+
+    private void ButtonLangES_Click(object sender, RoutedEventArgs e) {
+      ComboBoxPreferredLanguage.SelectedIndex = 2;
+      UpdateLanguageButtons();
+    }
+
+    private void ButtonLangEN_Click(object sender, RoutedEventArgs e) {
+      ComboBoxPreferredLanguage.SelectedIndex = 1;
+      UpdateLanguageButtons();
     }
   }
 }
