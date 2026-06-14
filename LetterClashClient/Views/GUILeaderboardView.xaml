@@ -7,342 +7,371 @@
       d:DesignHeight="720"
       d:DesignWidth="1280"
       Title="GUILeaderboardView"
-      Loaded="Page_Loaded">
+      Loaded="Page_Loaded"
+      Background="#09090B">
 
-    <Grid Background="#F4F4F4">
-        <Border Margin="20"
-            BorderBrush="#2B2B2B"
-            BorderThickness="2"
-            Background="White">
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0"
-              Margin="30,25,30,15">
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="235"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45*"/>
-                            <ColumnDefinition Width="55*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Border Grid.Column="0"
-                    Width="450"
-                    Height="80"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="85"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="85"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Image x:Name="ImageStarHeader"
-                        Grid.Column="0"
-                        Source="/Assets/Images/star.png"
-                        Width="56"
-                        Height="56"
-                        Stretch="Uniform"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-
-                                <TextBlock Grid.Column="1"
-                            Text="Mejores Puntajes"
-                            FontSize="20"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            VerticalAlignment="Center"/>
-
-                                <TextBlock Grid.Column="2"
-                            Text="◔"
-                            FontSize="44"
-                            Foreground="#333333"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                            </Grid>
+    <Page.Resources>
+        <!-- Style for Bottom Navigation Bar Buttons -->
+        <Style x:Key="NavBarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="Transparent"
+                                BorderThickness="0" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#1E1E21"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                        <Image x:Name="ImageLogo"
-                    Grid.Column="1"
-                    Source="/Assets/Images/LogoLetterClash.jpeg"
-                    Width="330"
-                    Height="95"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
-                    </Grid>
+        <!-- DataGrid Dark Grayscale Styles -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="#09090B"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#1F1F23"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#1F1F23"/>
+            <Setter Property="RowBackground" Value="#0E0E10"/>
+            <Setter Property="AlternatingRowBackground" Value="#141417"/>
+        </Style>
 
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="18*"/>
-                            <ColumnDefinition Width="22*"/>
-                            <ColumnDefinition Width="22*"/>
-                            <ColumnDefinition Width="22*"/>
-                            <ColumnDefinition Width="18*"/>
-                        </Grid.ColumnDefinitions>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        </Style>
 
-                        <Image x:Name="ImageStarLeft"
-                    Grid.Column="0"
-                    Source="/Assets/Images/star.png"
-                    Width="62"
-                    Height="62"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
-                    Margin="10,0,0,25"/>
+        <Style TargetType="DataGridCell">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#27272A"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-                        <StackPanel Grid.Column="1"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Bottom"
-                         Margin="0,0,0,50">
+        <Style TargetType="DataGridRow">
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
 
-                            <TextBlock x:Name="TextBlockTopName3"
-                          Text="Usuario 3"
-                          FontSize="21"
-                          FontWeight="SemiBold"
-                          HorizontalAlignment="Center"
-                          Margin="0,0,0,8"/>
+        <!-- Form Elements Generic Styles -->
+        <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#71717A"/>
+            <Setter Property="Margin" Value="2,0,0,6"/>
+        </Style>
+    </Page.Resources>
 
-                            <Border Width="130"
-                       Height="125"
-                       BorderBrush="#2B2B2B"
-                       BorderThickness="1">
+    <Grid>
+        <!-- Modern Grid Line Background -->
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
 
-                                <Grid>
-                                    <TextBlock Text="3"
-                              FontSize="24"
-                              FontWeight="SemiBold"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Top"
-                              Margin="0,12,0,0"/>
+        <!-- Main Shell Grid -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
 
-                                    <Image x:Name="ImageTopAvatar3"
-                          Source="/Assets/Images/UserAvatar.png"
-                          Width="62"
-                          Height="62"
-                          Stretch="Uniform"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Bottom"
-                          Margin="0,0,0,15"/>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="2"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Top"
-                         Margin="0,5,0,0">
-
-                            <TextBlock x:Name="TextBlockTopName1"
-                          Text="Usuario 1"
-                          FontSize="21"
-                          FontWeight="SemiBold"
-                          HorizontalAlignment="Center"
-                          Margin="0,0,0,8"/>
-
-                            <Border Width="130"
-                       Height="150"
-                       BorderBrush="#2B2B2B"
-                       BorderThickness="1">
-
-                                <Grid>
-                                    <TextBlock Text="1"
-                              FontSize="24"
-                              FontWeight="SemiBold"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Top"
-                              Margin="0,18,0,0"/>
-
-                                    <Image x:Name="ImageTopAvatar1"
-                          Source="/Assets/Images/UserAvatar.png"
-                          Width="66"
-                          Height="66"
-                          Stretch="Uniform"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Bottom"
-                          Margin="0,0,0,18"/>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="3"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Bottom"
-                         Margin="0,0,0,55">
-
-                            <TextBlock x:Name="TextBlockTopName2"
-                          Text="Usuario 2"
-                          FontSize="21"
-                          FontWeight="SemiBold"
-                          HorizontalAlignment="Center"
-                          Margin="0,0,0,8"/>
-
-                            <Border Width="130"
-                       Height="135"
-                       BorderBrush="#2B2B2B"
-                       BorderThickness="1">
-
-                                <Grid>
-                                    <TextBlock Text="2"
-                              FontSize="24"
-                              FontWeight="SemiBold"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Top"
-                              Margin="0,14,0,0"/>
-
-                                    <Image x:Name="ImageTopAvatar2"
-                          Source="/Assets/Images/UserAvatar.png"
-                          Width="64"
-                          Height="64"
-                          Stretch="Uniform"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Bottom"
-                          Margin="0,0,0,16"/>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-
-                        <Image x:Name="ImageStarRight"
-                    Grid.Column="4"
-                    Source="/Assets/Images/star.png"
-                    Width="62"
-                    Height="62"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Margin="0,0,10,25"/>
-
-                        <TextBlock Grid.Column="1"
-                        Grid.ColumnSpan="3"
-                        Text="Mejores 50 Posiciones"
-                        FontSize="23"
-                        FontWeight="SemiBold"
-                        Foreground="#1E1E2F"
+            <!-- Row 0: Content Area -->
+            <Grid Grid.Row="0">
+                <!-- Main Card Container -->
+                <Border Width="980"
+                        Height="520"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Margin="0,0,0,5"/>
-                    </Grid>
-
-                    <DataGrid x:Name="DataGridScoreboard"
-                       Grid.Row="2"
-                       AutoGenerateColumns="False"
-                       CanUserAddRows="False"
-                       CanUserDeleteRows="False"
-                       IsReadOnly="True"
-                       HeadersVisibility="Column"
-                       GridLinesVisibility="All"
-                       FontSize="15"
-                       RowHeight="32"
-                       ColumnHeaderHeight="36"
-                       Margin="55,5,55,0"
-                       SelectionMode="Single"
-                       SelectionUnit="FullRow"
-                       MouseDoubleClick="DataGridScoreboard_MouseDoubleClick">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Nombre"
-                                   Binding="{Binding Nombre}"
-                                   Width="*"/>
-
-                            <DataGridTextColumn Header="Partidas Ganadas"
-                                   Binding="{Binding PartidasGanadas}"
-                                   Width="*"/>
-
-                            <DataGridTextColumn Header="Porcentaje"
-                                   Binding="{Binding Porcentaje}"
-                                   Width="*"/>
-
-                            <DataGridTextColumn Header="Puntuación"
-                                   Binding="{Binding Puntuacion}"
-                                   Width="*"/>
-
-                            <DataGridTextColumn Header="Puesto"
-                                   Binding="{Binding Puesto}"
-                                   Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-
-                <Border Grid.Row="1"
-                BorderBrush="#2B2B2B"
-                BorderThickness="0,2,0,0"
-                Background="#F7F7F7">
+                        BorderBrush="#2D2D30"
+                        BorderThickness="1.5"
+                        Background="#121214"
+                        CornerRadius="0"
+                        Padding="30">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="25" ShadowDepth="0" Color="#000000" Opacity="0.5"/>
+                    </Border.Effect>
 
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <!-- Header -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Content -->
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                        <Button x:Name="ButtonMainMenu"
-                    Grid.Column="0"
-                    Content="Menu Principal  ⚔"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonMainMenu_Click"/>
+                        <!-- Header Section -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                            <TextBlock Text="MARCADORES"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="#FFFFFF"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,4"/>
 
-                        <Button x:Name="ButtonProfile"
-                    Grid.Column="1"
-                    Content="Perfil  👤"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonProfile_Click"/>
+                            <TextBlock Text="Los 50 mejores jugadores globales y líderes de la temporada"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       FontSize="13"
+                                       Foreground="#A1A1AA"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
 
-                        <Button x:Name="ButtonHistory"
-                    Grid.Column="2"
-                    Content="Historial  ◴"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonHistory_Click"/>
+                        <!-- Main Content Grid -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <!-- Scoreboard Grid (Left) -->
+                                <ColumnDefinition Width="1.3*"/>
+                                <!-- Divider -->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- Podium (Right) -->
+                                <ColumnDefinition Width="0.7*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <Button x:Name="ButtonScoreboard"
-                    Grid.Column="3"
-                    Content="Marcadores  🏆"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonScoreboard_Click"/>
+                            <!-- Left Column: DataGrid -->
+                            <DataGrid x:Name="DataGridScoreboard"
+                                      Grid.Column="0"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      IsReadOnly="True"
+                                      HeadersVisibility="Column"
+                                      Background="#09090B"
+                                      Margin="0,0,25,0"
+                                      SelectionMode="Single"
+                                      SelectionUnit="FullRow"
+                                      MouseDoubleClick="DataGridScoreboard_MouseDoubleClick">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="PUESTO"
+                                                        Binding="{Binding Puesto}"
+                                                        Width="75"/>
 
-                        <Button x:Name="ButtonSettings"
-                    Grid.Column="4"
-                    Content="Ajustes  ⚙"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonSettings_Click"/>
+                                    <DataGridTextColumn Header="JUGADOR"
+                                                        Binding="{Binding Nombre}"
+                                                        Width="*"/>
+
+                                    <DataGridTextColumn Header="VICTORIAS"
+                                                        Binding="{Binding PartidasGanadas}"
+                                                        Width="95"/>
+
+                                    <DataGridTextColumn Header="PUNTUACIÓN"
+                                                        Binding="{Binding Puntuacion}"
+                                                        Width="105"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <!-- Vertical Divider -->
+                            <Border Grid.Column="1" Width="1.5" Background="#2D2D30" VerticalAlignment="Stretch" Margin="0,5"/>
+
+                            <!-- Right Column: Podium -->
+                            <StackPanel Grid.Column="2" Margin="25,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="PODIO DE LÍDERES" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+                                <!-- First Place Card -->
+                                <Border BorderBrush="#E4E4E7" BorderThickness="1.5" Background="#18181B" Padding="12,10" Margin="0,0,0,12">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="1"
+                                                   FontFamily="{StaticResource GeistPixelSquare}"
+                                                   FontSize="24"
+                                                   FontWeight="Bold"
+                                                   Foreground="#FFFFFF"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+
+                                        <Border Grid.Column="1" Width="40" Height="40" BorderBrush="#2D2D30" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Image x:Name="ImageTopAvatar1" Stretch="UniformToFill"/>
+                                        </Border>
+
+                                        <TextBlock x:Name="TextBlockTopName1"
+                                                   Grid.Column="2"
+                                                   Text="-"
+                                                   FontFamily="{StaticResource GeistMono}"
+                                                   FontSize="14"
+                                                   FontWeight="Bold"
+                                                   Foreground="#FFFFFF"
+                                                   VerticalAlignment="Center"
+                                                   Margin="15,0,0,0"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Second Place Card -->
+                                <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#0E0E10" Padding="12,8" Margin="0,0,0,12">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="2"
+                                                   FontFamily="{StaticResource GeistPixelSquare}"
+                                                   FontSize="20"
+                                                   Foreground="#A1A1AA"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+
+                                        <Border Grid.Column="1" Width="36" Height="36" BorderBrush="#2D2D30" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Image x:Name="ImageTopAvatar2" Stretch="UniformToFill"/>
+                                        </Border>
+
+                                        <TextBlock x:Name="TextBlockTopName2"
+                                                   Grid.Column="2"
+                                                   Text="-"
+                                                   FontFamily="{StaticResource GeistMono}"
+                                                   FontSize="13"
+                                                   FontWeight="Bold"
+                                                   Foreground="#E4E4E7"
+                                                   VerticalAlignment="Center"
+                                                   Margin="15,0,0,0"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Third Place Card -->
+                                <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#0E0E10" Padding="12,8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="3"
+                                                   FontFamily="{StaticResource GeistPixelSquare}"
+                                                   FontSize="20"
+                                                   Foreground="#71717A"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+
+                                        <Border Grid.Column="1" Width="36" Height="36" BorderBrush="#2D2D30" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Image x:Name="ImageTopAvatar3" Stretch="UniformToFill"/>
+                                        </Border>
+
+                                        <TextBlock x:Name="TextBlockTopName3"
+                                                   Grid.Column="2"
+                                                   Text="-"
+                                                   FontFamily="{StaticResource GeistMono}"
+                                                   FontSize="13"
+                                                   FontWeight="Bold"
+                                                   Foreground="#E4E4E7"
+                                                   VerticalAlignment="Center"
+                                                   Margin="15,0,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </Border>
             </Grid>
-        </Border>
+
+            <!-- Row 1: Bottom Navigation Bar Tray -->
+            <Border Grid.Row="1"
+                    BorderBrush="#2D2D30"
+                    BorderThickness="0,1,0,0"
+                    Background="#121214">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="ButtonMainMenu"
+                            Grid.Column="0"
+                            Content="Menu Principal  ⚔"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonMainMenu_Click"/>
+
+                    <Button x:Name="ButtonProfile"
+                            Grid.Column="1"
+                            Content="Perfil  👤"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonProfile_Click"/>
+
+                    <Button x:Name="ButtonHistory"
+                            Grid.Column="2"
+                            Content="Historial  ◴"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonHistory_Click"/>
+
+                    <Button x:Name="ButtonScoreboard"
+                            Grid.Column="3"
+                            Content="Marcadores  🏆"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonScoreboard_Click"/>
+
+                    <Button x:Name="ButtonSettings"
+                            Grid.Column="4"
+                            Content="Ajustes  ⚙"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonSettings_Click"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Hidden elements to preserve code-behind field references -->
+        <Grid Visibility="Collapsed">
+            <Image x:Name="ImageStarHeader"/>
+            <Image x:Name="ImageStarLeft"/>
+            <Image x:Name="ImageStarRight"/>
+            <Image x:Name="ImageLogo"/>
+        </Grid>
     </Grid>
 </Page>
