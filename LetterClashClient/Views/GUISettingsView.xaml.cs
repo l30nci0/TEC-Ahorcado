@@ -13,6 +13,28 @@ namespace LetterClashClient.Views {
       if (window != null) {
         window.Title = "Ajustes";
       }
+
+      UpdateLanguageButtons();
+    }
+
+    private void UpdateLanguageButtons() {
+      if (ComboBoxPreferredLanguage.SelectedIndex == 1) { // Ingles
+        ButtonLangEN.Style = (Style)FindResource("ModernPrimaryButton");
+        ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
+      } else { // Español
+        ButtonLangES.Style = (Style)FindResource("ModernPrimaryButton");
+        ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+      }
+    }
+
+    private void ButtonLangES_Click(object sender, RoutedEventArgs e) {
+      ComboBoxPreferredLanguage.SelectedIndex = 0;
+      UpdateLanguageButtons();
+    }
+
+    private void ButtonLangEN_Click(object sender, RoutedEventArgs e) {
+      ComboBoxPreferredLanguage.SelectedIndex = 1;
+      UpdateLanguageButtons();
     }
 
     private void ButtonPrivacy_Click(object sender, RoutedEventArgs e) {

@@ -7,246 +7,318 @@
       d:DesignHeight="720"
       d:DesignWidth="1280"
       Title="GUISettingsView"
-      Loaded="Page_Loaded">
+      Loaded="Page_Loaded"
+      Background="#09090B">
 
-    <Grid Background="#F4F4F4">
-        <Border Margin="20"
-            BorderBrush="#2B2B2B"
-            BorderThickness="2"
-            Background="White">
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0"
-              Margin="30,25,30,20">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="50*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Border Grid.Row="0"
-                    Width="250"
-                    Height="58"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Column="0"
-                            Text="."
-                            FontSize="32"
-                            Foreground="#333333"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-
-                                <TextBlock Grid.Column="1"
-                            Text="Ajustes"
-                            FontSize="20"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            VerticalAlignment="Center"/>
-                            </Grid>
+    <Page.Resources>
+        <!-- Retro Grayscale Primary Button Style -->
+        <Style x:Key="ModernPrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#E4E4E7"/>
+            <Setter Property="Foreground" Value="#09090B"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter Property="Foreground" Value="#71717A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                        <Border Grid.Row="1"
-                    Width="480"
-                    Height="430"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Margin="65,10,0,0">
-
-                            <Grid Margin="35">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="65"/>
-                                    <RowDefinition Height="65"/>
-                                    <RowDefinition Height="65"/>
-                                    <RowDefinition Height="85"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="65"/>
-                                </Grid.RowDefinitions>
-
-                                <Button x:Name="ButtonPrivacy"
-                        Grid.Row="0"
-                        Content="Perfil: Publico          🔒"
-                        Width="350"
-                        Height="45"
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Cursor="Hand"
-                        Click="ButtonPrivacy_Click"/>
-
-                                <Button x:Name="ButtonSound"
-                        Grid.Row="1"
-                        Content="Sonido                 ≋"
-                        Width="350"
-                        Height="45"
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Cursor="Hand"
-                        Click="ButtonSound_Click"/>
-
-                                <Button x:Name="ButtonHowToPlay"
-                        Grid.Row="2"
-                        Content="Como Jugar??          ?"
-                        Width="350"
-                        Height="45"
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Cursor="Hand"
-                        Click="ButtonHowToPlay_Click"/>
-
-                                <StackPanel Grid.Row="3"
-                             Width="350"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center">
-
-                                    <TextBlock Text="Idioma Preferido"
-                              FontSize="15"
-                              Foreground="#222222"
-                              Margin="0,0,0,5"/>
-
-                                    <ComboBox x:Name="ComboBoxPreferredLanguage"
-                             Height="35"
-                             FontSize="15"
-                             SelectedIndex="0">
-                                        <ComboBoxItem Content="Español"/>
-                                        <ComboBoxItem Content="Ingles"/>
-                                    </ComboBox>
-                                </StackPanel>
-
-                                <Button x:Name="ButtonLogout"
-                        Grid.Row="5"
-                        Content="Cerrar Sesion          ↩"
-                        Width="350"
-                        Height="45"
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Cursor="Hand"
-                        Click="ButtonLogout_Click"/>
-                            </Grid>
+        <!-- Retro Grayscale Secondary Button Style -->
+        <Style x:Key="ModernSecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
-                    </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter Property="Foreground" Value="#52525B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="120"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+        <!-- Style for Bottom Navigation Bar Buttons -->
+        <Style x:Key="NavBarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="Transparent"
+                                BorderThickness="0" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#1E1E21"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                        <Image x:Name="ImageLogo"
-                    Grid.Row="0"
-                    Source="/Assets/Images/LogoLetterClash.jpeg"
-                    Width="330"
-                    Height="100"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
+        <!-- Form Elements Generic Styles -->
+        <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#71717A"/>
+            <Setter Property="Margin" Value="2,0,0,6"/>
+        </Style>
+    </Page.Resources>
 
-                        <Image x:Name="ImageHangman"
-                    Grid.Row="1"
-                    Source="/Assets/Images/Hangman.jpg"
-                    Width="300"
-                    Height="360"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    Margin="0,40,0,0"/>
-                    </Grid>
-                </Grid>
+    <Grid>
+        <!-- Modern Grid Line Background -->
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
 
-                <Border Grid.Row="1"
-                BorderBrush="#2B2B2B"
-                BorderThickness="0,2,0,0"
-                Background="#F7F7F7">
+        <!-- Main Shell Grid -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+
+            <!-- Row 0: Content Area -->
+            <Grid Grid.Row="0">
+                <!-- Main Card Container -->
+                <Border Width="550"
+                        Height="480"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        BorderBrush="#2D2D30"
+                        BorderThickness="1.5"
+                        Background="#121214"
+                        CornerRadius="0"
+                        Padding="35">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="25" ShadowDepth="0" Color="#000000" Opacity="0.5"/>
+                    </Border.Effect>
 
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <!-- Header -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Options stack -->
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                        <Button x:Name="ButtonMainMenu"
-                    Grid.Column="0"
-                    Content="Menu Principal  ⚔"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonMainMenu_Click"/>
+                        <!-- Header Section -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,25">
+                            <TextBlock Text="AJUSTES"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="#FFFFFF"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,6"/>
 
-                        <Button x:Name="ButtonProfile"
-                    Grid.Column="1"
-                    Content="Perfil  👤"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonProfile_Click"/>
+                            <TextBlock Text="Configura las preferencias de tu perfil y juego"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       FontSize="13"
+                                       Foreground="#A1A1AA"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
 
-                        <Button x:Name="ButtonHistory"
-                    Grid.Column="2"
-                    Content="Historial  ◴"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonHistory_Click"/>
+                        <!-- Settings Panel Stack -->
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                            <!-- Privacy settings -->
+                            <Button x:Name="ButtonPrivacy"
+                                    Content="Perfil: Publico          🔒"
+                                    Height="45"
+                                    Style="{StaticResource ModernSecondaryButton}"
+                                    Margin="0,0,0,15"
+                                    Click="ButtonPrivacy_Click"/>
 
-                        <Button x:Name="ButtonScoreboard"
-                    Grid.Column="3"
-                    Content="Marcadores  🏆"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonScoreboard_Click"/>
+                            <!-- Sound settings -->
+                            <Button x:Name="ButtonSound"
+                                    Content="Sonido                 ≋"
+                                    Height="45"
+                                    Style="{StaticResource ModernSecondaryButton}"
+                                    Margin="0,0,0,15"
+                                    Click="ButtonSound_Click"/>
 
-                        <Button x:Name="ButtonSettings"
-                    Grid.Column="4"
-                    Content="Ajustes  ⚙"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonSettings_Click"/>
+                            <!-- How to play instructions -->
+                            <Button x:Name="ButtonHowToPlay"
+                                    Content="Como Jugar??          ?"
+                                    Height="45"
+                                    Style="{StaticResource ModernSecondaryButton}"
+                                    Margin="0,0,0,15"
+                                    Click="ButtonHowToPlay_Click"/>
+
+                            <!-- Segmented Language selector -->
+                            <StackPanel Margin="0,5,0,20">
+                                <TextBlock Text="IDIOMA PREFERIDO" Style="{StaticResource FormLabelStyle}"/>
+                                <Grid Height="40">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Button x:Name="ButtonLangES"
+                                            Grid.Column="0"
+                                            Content="ESPAÑOL"
+                                            Style="{StaticResource ModernPrimaryButton}"
+                                            Margin="0,0,5,0"
+                                            Click="ButtonLangES_Click"/>
+                                            
+                                    <Button x:Name="ButtonLangEN"
+                                            Grid.Column="1"
+                                            Content="ENGLISH"
+                                            Style="{StaticResource ModernSecondaryButton}"
+                                            Margin="5,0,0,0"
+                                            Click="ButtonLangEN_Click"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- Logout button -->
+                            <Button x:Name="ButtonLogout"
+                                    Content="Cerrar Sesion          ↩"
+                                    Height="45"
+                                    Style="{StaticResource ModernSecondaryButton}"
+                                    Click="ButtonLogout_Click"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
             </Grid>
-        </Border>
+
+            <!-- Row 1: Bottom Navigation Bar Tray -->
+            <Border Grid.Row="1"
+                    BorderBrush="#2D2D30"
+                    BorderThickness="0,1,0,0"
+                    Background="#121214">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="ButtonMainMenu"
+                            Grid.Column="0"
+                            Content="Menu Principal  ⚔"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonMainMenu_Click"/>
+
+                    <Button x:Name="ButtonProfile"
+                            Grid.Column="1"
+                            Content="Perfil  👤"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonProfile_Click"/>
+
+                    <Button x:Name="ButtonHistory"
+                            Grid.Column="2"
+                            Content="Historial  ◴"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonHistory_Click"/>
+
+                    <Button x:Name="ButtonScoreboard"
+                            Grid.Column="3"
+                            Content="Marcadores  🏆"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonScoreboard_Click"/>
+
+                    <Button x:Name="ButtonSettings"
+                            Grid.Column="4"
+                            Content="Ajustes  ⚙"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonSettings_Click"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Hidden elements to preserve code-behind field references -->
+        <Grid Visibility="Collapsed">
+            <ComboBox x:Name="ComboBoxPreferredLanguage">
+                <ComboBoxItem Content="Español"/>
+                <ComboBoxItem Content="Ingles"/>
+            </ComboBox>
+            <Image x:Name="ImageLogo"/>
+            <Image x:Name="ImageHangman"/>
+        </Grid>
     </Grid>
 </Page>
