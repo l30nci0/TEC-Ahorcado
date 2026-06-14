@@ -7,263 +7,245 @@
       d:DesignHeight="720"
       d:DesignWidth="1280"
       Title="GUIMainMenuView"
-      Loaded="Page_Loaded">
+      Loaded="Page_Loaded"
+      Background="#09090B">
 
-    <Grid Background="#F4F4F4">
-        <Border Margin="20"
-            BorderBrush="#2B2B2B"
-            BorderThickness="2"
-            Background="White">
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0"
-              Margin="30,25,30,20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="42*"/>
-                        <ColumnDefinition Width="58*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="95"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Border Grid.Row="0"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    Width="390"
-                    Height="85"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top">
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="90"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Image x:Name="ImageUserAvatar"
-                        Grid.Column="0"
-                        Source="/Assets/Images/UserAvatar.png"
-                        Width="58"
-                        Height="58"
-                        Stretch="Uniform"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-
-                                <StackPanel Grid.Column="1"
-                             VerticalAlignment="Center">
-
-                                    <TextBlock x:Name="TextBlockUsername"
-                              Text="&quot;NOMBRE DE USUARIO&quot;"
-                              FontSize="16"
-                              FontWeight="SemiBold"
-                              Foreground="#111111"
-                              Margin="0,0,0,8"/>
-
-                                    <TextBlock x:Name="TextBlockAge"
-                              Text="&quot;EDAD&quot;"
-                              FontSize="15"
-                              FontWeight="SemiBold"
-                              Foreground="#111111"/>
-                                </StackPanel>
-                            </Grid>
+    <Page.Resources>
+        <!-- Retro Grayscale Primary Button Style -->
+        <Style x:Key="ModernPrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#E4E4E7"/>
+            <Setter Property="Foreground" Value="#09090B"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter Property="Foreground" Value="#71717A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                        <Border Grid.Row="1"
-                    Width="520"
-                    Height="350"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+        <!-- Retro Grayscale Secondary Button Style -->
+        <Style x:Key="ModernSecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter Property="Foreground" Value="#52525B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                            <Grid Margin="25">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+        <!-- Style for Bottom Navigation Bar Buttons -->
+        <Style x:Key="NavBarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="Transparent"
+                                BorderThickness="0" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#1E1E21"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-                                <Button x:Name="ButtonCreateRoom"
-                        Grid.Row="0"
-                        Content="Crear Sala        ✎"
-                        Width="370"
-                        Height="55"
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Cursor="Hand"
+    <Grid>
+        <!-- Modern Grid Line Background -->
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
+
+        <!-- Main Shell Grid -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+
+            <!-- Row 0: Content Area (Minecraft style) -->
+            <StackPanel Grid.Row="0" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" 
+                        Width="400">
+
+                <!-- Large Rectangular Logo at the very top -->
+                <Image x:Name="ImageLogo"
+                       Source="/Assets/Images/LogoLetterClashRectangle.png"
+                       Width="380"
+                       Height="180"
+                       Stretch="Uniform"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30">
+                    <Image.Effect>
+                        <DropShadowEffect BlurRadius="15" ShadowDepth="4" Color="#000000" Opacity="0.6"/>
+                    </Image.Effect>
+                </Image>
+
+                <!-- Vertical Buttons Stack -->
+                <Button x:Name="ButtonCreateRoom"
+                        Content="CREAR SALA ✎"
+                        Style="{StaticResource ModernPrimaryButton}"
+                        Height="48"
+                        Margin="0,0,0,16"
                         Click="ButtonCreateRoom_Click"/>
 
-                                <Border Grid.Row="1"
-                        BorderBrush="#2B2B2B"
-                        BorderThickness="1"
-                        Margin="0,10,0,0">
+                <Button x:Name="ButtonPublicLobby"
+                        Content="ENTRAR A LOBBY PÚBLICO ◔"
+                        Style="{StaticResource ModernSecondaryButton}"
+                        Height="48"
+                        Margin="0,0,0,16"
+                        Click="ButtonPublicLobby_Click"/>
 
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="70"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                <Button x:Name="ButtonPrivateLobby"
+                        Content="ENTRAR A LOBBY PRIVADO 🔒"
+                        Style="{StaticResource ModernSecondaryButton}"
+                        Height="48"
+                        Click="ButtonPrivateLobby_Click"/>
+            </StackPanel>
 
-                                        <TextBlock Grid.Column="0"
-                               Text="⌕"
-                               FontSize="46"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Foreground="#1E1E2F"/>
+            <!-- Row 1: Bottom Navigation Bar Tray -->
+            <Border Grid.Row="1"
+                    BorderBrush="#2D2D30"
+                    BorderThickness="0,1,0,0"
+                    Background="#121214">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                                        <StackPanel Grid.Column="1"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
+                    <Button x:Name="ButtonMainMenu"
+                            Grid.Column="0"
+                            Content="Menu Principal  ⚔"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonMainMenu_Click"/>
 
-                                            <Button x:Name="ButtonPublicLobby"
-                               Content="Entrar a Lobby Publico     ◔"
-                               Width="370"
-                               Height="52"
-                               FontSize="16"
-                               FontWeight="SemiBold"
-                               Margin="0,0,0,20"
-                               Cursor="Hand"
-                               Click="ButtonPublicLobby_Click"/>
+                    <Button x:Name="ButtonProfile"
+                            Grid.Column="1"
+                            Content="Perfil  👤"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonProfile_Click"/>
 
-                                            <Button x:Name="ButtonPrivateLobby"
-                               Content="Entrar a Lobby Privado     🔒"
-                               Width="370"
-                               Height="52"
-                               FontSize="16"
-                               FontWeight="SemiBold"
-                               Cursor="Hand"
-                               Click="ButtonPrivateLobby_Click"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </Border>
-                    </Grid>
+                    <Button x:Name="ButtonHistory"
+                            Grid.Column="2"
+                            Content="Historial  ◴"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonHistory_Click"/>
 
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="110"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="70"/>
-                        </Grid.RowDefinitions>
+                    <Button x:Name="ButtonScoreboard"
+                            Grid.Column="3"
+                            Content="Marcadores  🏆"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonScoreboard_Click"/>
 
-                        <Image x:Name="ImageLogo"
-                    Grid.Row="0"
-                    Source="/Assets/Images/LogoLetterClash.jpeg"
-                    Width="330"
-                    Height="95"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
-
-                        <Image x:Name="ImageHangman"
-                    Grid.Row="1"
-                    Width="280"
-                    Height="320"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
-
-                        <StackPanel Grid.Row="2"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-
-                            <Button x:Name="ButtonRemovePart"
-                       Content="Quitar"
-                       Width="90"
-                       Height="35"
-                       FontSize="15"
-                       Margin="0,0,20,0"
-                       Cursor="Hand"
-                       Click="ButtonRemovePart_Click"/>
-
-                            <Button x:Name="ButtonAddPart"
-                       Content="Agregar"
-                       Width="90"
-                       Height="35"
-                       FontSize="15"
-                       Cursor="Hand"
-                       Click="ButtonAddPart_Click"/>
-                        </StackPanel>
-                    </Grid>
+                    <Button x:Name="ButtonSettings"
+                            Grid.Column="4"
+                            Content="Ajustes  ⚙"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonSettings_Click"/>
                 </Grid>
+            </Border>
+        </Grid>
 
-                <Border Grid.Row="1"
-                BorderBrush="#2B2B2B"
-                BorderThickness="0,2,0,0"
-                Background="#F7F7F7">
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Button x:Name="ButtonMainMenu"
-                    Grid.Column="0"
-                    Content="Menu Principal  ⚔"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonMainMenu_Click"/>
-
-                        <Button x:Name="ButtonProfile"
-                    Grid.Column="1"
-                    Content="Perfil  👤"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonProfile_Click"/>
-
-                        <Button x:Name="ButtonHistory"
-                    Grid.Column="2"
-                    Content="Historial  ◴"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonHistory_Click"/>
-
-                        <Button x:Name="ButtonScoreboard"
-                    Grid.Column="3"
-                    Content="Marcadores  🏆"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonScoreboard_Click"/>
-
-                        <Button x:Name="ButtonSettings"
-                    Grid.Column="4"
-                    Content="Ajustes  ⚙"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonSettings_Click"/>
-                    </Grid>
-                </Border>
-            </Grid>
-        </Border>
+        <!-- Hidden elements to preserve code-behind field references -->
+        <Grid Visibility="Collapsed">
+            <TextBlock x:Name="TextBlockUsername"/>
+            <TextBlock x:Name="TextBlockAge"/>
+            <Image x:Name="ImageUserAvatar"/>
+            <Image x:Name="ImageHangman"/>
+        </Grid>
     </Grid>
 </Page>
