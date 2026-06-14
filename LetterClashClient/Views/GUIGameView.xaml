@@ -9,11 +9,173 @@
       Title="GUIGameView"
       Loaded="Page_Loaded">
 
-    <Grid Background="#F4F4F4">
+    <Page.Resources>
+        <!-- Style for Bottom Navigation Bar Buttons -->
+        <Style x:Key="NavBarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="Transparent"
+                                BorderThickness="0" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#1E1E21"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Retro Grayscale Primary Button Style -->
+        <Style x:Key="ModernPrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#E4E4E7"/>
+            <Setter Property="Foreground" Value="#09090B"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter Property="Foreground" Value="#71717A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Retro Grayscale Secondary Button Style -->
+        <Style x:Key="ModernSecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter Property="Foreground" Value="#52525B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Flat ProgressBar style -->
+        <Style x:Key="FlatProgressBar" TargetType="ProgressBar">
+            <Setter Property="Background" Value="#09090B"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#E4E4E7"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="0">
+                            <Grid x:Name="TemplateRoot">
+                                <Rectangle x:Name="PART_Track" />
+                                <Decorator x:Name="PART_Indicator" HorizontalAlignment="Left">
+                                    <Grid x:Name="IndicatorGrid">
+                                        <Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}" />
+                                    </Grid>
+                                </Decorator>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <!-- Modern Grid Line Background -->
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0" />
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40" />
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
+
         <Border Margin="20"
-            BorderBrush="#2B2B2B"
-            BorderThickness="2"
-            Background="White">
+                BorderBrush="#2D2D30"
+                BorderThickness="2"
+                Background="#121214"
+                CornerRadius="0">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -22,47 +184,52 @@
                 </Grid.RowDefinitions>
 
                 <!-- Header Grid -->
-                <Grid Grid.Row="0"
-              Margin="30,10,30,0">
+                <Grid Grid.Row="0" Margin="30,10,30,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="220"/>
                         <ColumnDefinition Width="320"/>
-                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="160"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <Border Grid.Column="0"
-                    Width="200"
-                    Height="50"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
+                            Width="200"
+                            Height="50"
+                            BorderBrush="#2D2D30"
+                            BorderThickness="1.5"
+                            Background="#18181B"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            CornerRadius="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="55"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
-                          Text="⚔"
-                          FontSize="30"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"/>
+                                       Text="⚔"
+                                       FontSize="24"
+                                       Foreground="#E4E4E7"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1"
-                          Text="Partida"
-                          FontSize="20"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"/>
+                                       Text="Partida"
+                                       FontSize="16"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       Foreground="#E4E4E7"
+                                       VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
 
                     <Border Grid.Column="1"
-                    Width="300"
-                    Height="50"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
+                            Width="300"
+                            Height="50"
+                            BorderBrush="#2D2D30"
+                            BorderThickness="1.5"
+                            Background="#18181B"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            CornerRadius="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="55"/>
@@ -70,53 +237,52 @@
                                 <ColumnDefinition Width="65"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
-                          Text="Vs"
-                          FontSize="17"
-                          FontWeight="SemiBold"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"/>
+                                       Text="Vs"
+                                       FontSize="15"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       Foreground="#A1A1AA"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                             <TextBlock x:Name="TextBlockOpponent"
-                          Grid.Column="1"
-                          Text="Usuario 1"
-                          FontSize="16"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"/>
+                                       Grid.Column="1"
+                                       Text="Usuario 1"
+                                       FontSize="14"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       Foreground="#E4E4E7"
+                                       VerticalAlignment="Center"/>
                             <Image x:Name="ImageOpponentAvatar"
-                      Grid.Column="2"
-                      Source="/Assets/Images/UserAvatar.png"
-                      Width="48"
-                      Height="48"
-                      Stretch="Uniform"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"/>
+                                   Grid.Column="2"
+                                   Source="/Assets/Images/UserAvatar.png"
+                                   Width="38"
+                                   Height="38"
+                                   Stretch="Uniform"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
 
                     <Button x:Name="ButtonAbandon"
-                  Grid.Column="2"
-                  Content="Abandonar  ⚑"
-                  Width="130"
-                  Height="34"
-                  FontSize="13"
-                  FontWeight="SemiBold"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Cursor="Hand"
-                  Click="ButtonAbandon_Click"/>
+                            Grid.Column="2"
+                            Content="Abandonar  ⚑"
+                            Width="140"
+                            Height="38"
+                            Style="{StaticResource ModernSecondaryButton}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Click="ButtonAbandon_Click"/>
 
                     <Image x:Name="ImageLogo"
-                  Grid.Column="3"
-                  Source="/Assets/Images/LogoLetterClash.jpeg"
-                  Width="250"
-                  Height="70"
-                  Stretch="Uniform"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"/>
+                           Grid.Column="3"
+                           Source="/Assets/Images/LogoLetterClashRectangle.png"
+                           Width="240"
+                           Height="65"
+                           Stretch="Uniform"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"/>
                 </Grid>
 
                 <!-- Main Content Grid -->
-                <Grid Grid.Row="1"
-              Margin="0,5,0,0">
+                <Grid Grid.Row="1" Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60*"/>
                         <ColumnDefinition Width="40*"/>
@@ -128,27 +294,72 @@
                         <!-- Guesser View Panel -->
                         <Grid x:Name="GridGuesserSection" Visibility="Visible">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="170"/>
+                                <RowDefinition Height="120"/>
                                 <RowDefinition Height="75"/>
-                                <RowDefinition Height="170"/>
+                                <RowDefinition Height="180"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
                             <TextBlock x:Name="TextBlockHiddenWord"
                                        Grid.Row="1"
                                        Text="_ _ _ _ _ _ _ _"
-                                       FontSize="34"
-                                       FontWeight="SemiBold"
-                                       Foreground="#1E1E2F"
+                                       FontSize="38"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       FontWeight="Bold"
+                                       Foreground="#FFFFFF"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
 
                             <Grid Grid.Row="2"
                                   Width="560"
-                                  Height="150"
+                                  Height="155"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   x:Name="GridKeyboard">
+                                <Grid.Resources>
+                                    <!-- Keyboard specific flat keys style -->
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="#18181B"/>
+                                        <Setter Property="Foreground" Value="#E4E4E7"/>
+                                        <Setter Property="BorderBrush" Value="#2D2D30"/>
+                                        <Setter Property="BorderThickness" Value="1.5"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="Margin" Value="2"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="border" 
+                                                            Background="{TemplateBinding Background}" 
+                                                            BorderBrush="{TemplateBinding BorderBrush}" 
+                                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                                            CornerRadius="0" 
+                                                            SnapsToDevicePixels="True">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                            <Setter TargetName="border" Property="Background" Value="#E4E4E7"/>
+                                                            <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                                                            <Setter Property="Foreground" Value="#09090B"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsPressed" Value="true">
+                                                            <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                                                            <Setter Property="Foreground" Value="#09090B"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsEnabled" Value="false">
+                                                            <Setter TargetName="border" Property="Background" Value="#0E0E10"/>
+                                                            <Setter TargetName="border" Property="BorderBrush" Value="#1F1F23"/>
+                                                            <Setter Property="Foreground" Value="#52525B"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Grid.Resources>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="50"/>
                                     <RowDefinition Height="50"/>
@@ -156,38 +367,38 @@
                                 </Grid.RowDefinitions>
 
                                 <UniformGrid Grid.Row="0" Columns="10">
-                                    <Button Content="Q" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="W" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="E" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="R" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="T" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="Y" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="U" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="I" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="O" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="P" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
+                                    <Button Content="Q" Click="ButtonLetter_Click"/>
+                                    <Button Content="W" Click="ButtonLetter_Click"/>
+                                    <Button Content="E" Click="ButtonLetter_Click"/>
+                                    <Button Content="R" Click="ButtonLetter_Click"/>
+                                    <Button Content="T" Click="ButtonLetter_Click"/>
+                                    <Button Content="Y" Click="ButtonLetter_Click"/>
+                                    <Button Content="U" Click="ButtonLetter_Click"/>
+                                    <Button Content="I" Click="ButtonLetter_Click"/>
+                                    <Button Content="O" Click="ButtonLetter_Click"/>
+                                    <Button Content="P" Click="ButtonLetter_Click"/>
                                 </UniformGrid>
 
                                 <UniformGrid Grid.Row="1" Columns="9" Margin="24,0,24,0">
-                                    <Button Content="A" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="S" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="D" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="F" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="G" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="H" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="J" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="K" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="L" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
+                                    <Button Content="A" Click="ButtonLetter_Click"/>
+                                    <Button Content="S" Click="ButtonLetter_Click"/>
+                                    <Button Content="D" Click="ButtonLetter_Click"/>
+                                    <Button Content="F" Click="ButtonLetter_Click"/>
+                                    <Button Content="G" Click="ButtonLetter_Click"/>
+                                    <Button Content="H" Click="ButtonLetter_Click"/>
+                                    <Button Content="J" Click="ButtonLetter_Click"/>
+                                    <Button Content="K" Click="ButtonLetter_Click"/>
+                                    <Button Content="L" Click="ButtonLetter_Click"/>
                                 </UniformGrid>
 
                                 <UniformGrid Grid.Row="2" Columns="7" Margin="70,0,70,0">
-                                    <Button Content="Z" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="X" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="C" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="V" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="B" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="N" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
-                                    <Button Content="M" Click="ButtonLetter_Click" FontSize="16" FontWeight="SemiBold" Margin="2"/>
+                                    <Button Content="Z" Click="ButtonLetter_Click"/>
+                                    <Button Content="X" Click="ButtonLetter_Click"/>
+                                    <Button Content="C" Click="ButtonLetter_Click"/>
+                                    <Button Content="V" Click="ButtonLetter_Click"/>
+                                    <Button Content="B" Click="ButtonLetter_Click"/>
+                                    <Button Content="N" Click="ButtonLetter_Click"/>
+                                    <Button Content="M" Click="ButtonLetter_Click"/>
                                 </UniformGrid>
                             </Grid>
                         </Grid>
@@ -207,42 +418,47 @@
                                         HorizontalAlignment="Center"
                                         Margin="0,15,0,0">
                                 <TextBlock Text="CÓDIGO DE ACCESO"
-                                           FontSize="14"
-                                           FontWeight="SemiBold"
-                                           Foreground="#888888"
+                                           FontSize="13"
+                                           FontFamily="{StaticResource GeistPixelSquare}"
+                                           Foreground="#71717A"
                                            HorizontalAlignment="Center"/>
                                 <TextBlock x:Name="TextBlockAccessCode"
                                            Text="------"
-                                           FontSize="30"
+                                           FontSize="32"
+                                           FontFamily="{StaticResource GeistMono}"
                                            FontWeight="Bold"
-                                           Foreground="#1E1E2F"
+                                           Foreground="#FFFFFF"
                                            HorizontalAlignment="Center"
                                            Margin="0,6,0,0"/>
                             </StackPanel>
 
                             <TextBlock Grid.Row="1"
-                                       Text="Palabra seleccionada"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"
+                                       Text="PALABRA SELECCIONADA"
+                                       FontSize="13"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       Foreground="#71717A"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
 
                             <TextBlock x:Name="TextBlockWord"
                                        Grid.Row="2"
                                        Text="SOFTWARE"
-                                       FontSize="38"
-                                       FontWeight="SemiBold"
-                                       Foreground="#1E1E2F"
+                                       FontSize="36"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       FontWeight="Bold"
+                                       Foreground="#FFFFFF"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
 
                             <Border Grid.Row="3"
                                     Width="520"
                                     Height="120"
-                                    BorderBrush="#2B2B2B"
-                                    BorderThickness="1"
+                                    BorderBrush="#2D2D30"
+                                    BorderThickness="1.5"
+                                    Background="#18181B"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
+                                    VerticalAlignment="Center"
+                                    CornerRadius="0">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="45"/>
@@ -250,18 +466,20 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Grid.Row="0"
-                                               Text="Letra seleccionada por el adivinador"
-                                               FontSize="17"
-                                               FontWeight="SemiBold"
+                                               Text="LETRA PROPUESTA POR EL ADIVINADOR"
+                                               FontSize="12"
+                                               FontFamily="{StaticResource GeistPixelSquare}"
+                                               Foreground="#A1A1AA"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
 
                                     <TextBlock x:Name="TextBlockSelectedLetter"
                                                Grid.Row="1"
                                                Text="A"
-                                               FontSize="38"
-                                               FontWeight="SemiBold"
-                                               Foreground="#1E1E2F"
+                                               FontSize="36"
+                                               FontFamily="{StaticResource GeistMono}"
+                                               FontWeight="Bold"
+                                               Foreground="#FFFFFF"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
                                 </Grid>
@@ -295,10 +513,10 @@
                             <Border x:Name="BorderUserAvatar"
                                     Width="58"
                                     Height="58"
-                                    CornerRadius="29"
-                                    BorderBrush="#2B2B2B"
+                                    CornerRadius="0"
+                                    BorderBrush="#2D2D30"
                                     BorderThickness="2"
-                                    Background="White"
+                                    Background="#18181B"
                                     Canvas.Left="173"
                                     Canvas.Top="47">
                                 <Image x:Name="ImageUserAvatar"
@@ -322,14 +540,16 @@
                             <ProgressBar x:Name="ProgressBarAttempts"
                                          Grid.Column="0"
                                          Height="20"
+                                         Style="{StaticResource FlatProgressBar}"
                                          Minimum="0"
                                          Maximum="5"
                                          Value="0"/>
                             <TextBlock x:Name="TextBlockAttempts"
                                        Grid.Column="1"
                                        Text="0/5"
-                                       FontSize="16"
-                                       FontWeight="SemiBold"
+                                       FontSize="15"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       Foreground="#FFFFFF"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Grid>
@@ -343,14 +563,19 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="28"/>
                                 <RowDefinition Height="*"/>
-                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="36"/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Row="0" BorderBrush="#2B2B2B" BorderThickness="1">
+                            <Border Grid.Row="0" 
+                                    BorderBrush="#2D2D30" 
+                                    BorderThickness="1.5"
+                                    Background="#18181B"
+                                    CornerRadius="0">
                                 <TextBlock x:Name="TextBlockChatTitle"
                                            Text="Chat con Oponente"
-                                           FontSize="13"
-                                           FontWeight="SemiBold"
+                                           FontSize="12"
+                                           FontFamily="{StaticResource GeistPixelSquare}"
+                                           Foreground="#A1A1AA"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"/>
                             </Border>
@@ -358,26 +583,38 @@
                             <TextBox x:Name="TextBoxChatMessages"
                                      Grid.Row="1"
                                      FontSize="13"
+                                     FontFamily="{StaticResource GeistMono}"
                                      IsReadOnly="True"
                                      TextWrapping="Wrap"
                                      VerticalScrollBarVisibility="Auto"
-                                     BorderBrush="#2B2B2B"
-                                     BorderThickness="1"/>
+                                     Background="#09090B"
+                                     Foreground="#F4F4F5"
+                                     BorderBrush="#2D2D30"
+                                     BorderThickness="1.5,0,1.5,1.5"
+                                     Padding="8"/>
 
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBox x:Name="TextBoxChatInput"
                                          Grid.Column="0"
                                          FontSize="13"
-                                         Padding="6,3"/>
+                                         FontFamily="{StaticResource GeistMono}"
+                                         Background="#09090B"
+                                         Foreground="#F4F4F5"
+                                         BorderBrush="#2D2D30"
+                                         BorderThickness="1.5,0,1.5,1.5"
+                                         CaretBrush="#F4F4F5"
+                                         Padding="8,6"
+                                         VerticalContentAlignment="Center"/>
                                 <Button x:Name="ButtonSendMessage"
                                         Grid.Column="1"
                                         Content="Enviar"
-                                        FontSize="13"
-                                        FontWeight="SemiBold"
+                                        Style="{StaticResource ModernPrimaryButton}"
+                                        FontSize="12"
+                                        Height="36"
                                         Cursor="Hand"
                                         Click="ButtonSendMessage_Click"/>
                             </Grid>
