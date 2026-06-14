@@ -7,144 +7,276 @@
       d:DesignHeight="720"
       d:DesignWidth="1280"
       Title="GUISelectWordView"
-      Loaded="Page_Loaded">
+      Loaded="Page_Loaded"
+      Background="#09090B">
 
-    <Grid Background="#F4F4F4">
-        <Border Margin="20"
-            BorderBrush="#2B2B2B"
-            BorderThickness="2"
-            Background="White">
+    <Page.Resources>
+        <!-- Retro Grayscale Primary Button Style -->
+        <Style x:Key="ModernPrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#E4E4E7"/>
+            <Setter Property="Foreground" Value="#09090B"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter Property="Foreground" Value="#71717A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Retro Grayscale Secondary Button Style -->
+        <Style x:Key="ModernSecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter Property="Foreground" Value="#52525B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Form Elements Generic Styles -->
+        <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#71717A"/>
+            <Setter Property="Margin" Value="2,0,0,6"/>
+        </Style>
+
+        <!-- DataGrid Dark Grayscale Styles -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="#09090B"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#1F1F23"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#1F1F23"/>
+            <Setter Property="RowBackground" Value="#0E0E10"/>
+            <Setter Property="AlternatingRowBackground" Value="#141417"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#27272A"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <!-- Modern Grid Line Background -->
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
+
+        <!-- Main Card Container -->
+        <Border Width="950"
+                Height="540"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                BorderBrush="#2D2D30"
+                BorderThickness="1.5"
+                Background="#121214"
+                CornerRadius="0"
+                Padding="35">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="25" ShadowDepth="0" Color="#000000" Opacity="0.5"/>
+            </Border.Effect>
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="120"/>
+                    <!-- Header -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- DataGrid Content -->
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="70"/>
+                    <!-- Bottom Action -->
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0"
-              Margin="30,20,30,0">
+                <!-- Header Section -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="CATÁLOGO DE PALABRAS"
+                               FontFamily="{StaticResource GeistPixelSquare}"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="#FFFFFF"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,6"/>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="50*"/>
-                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="TextBlockHeader"
+                               Text="Palabras disponibles"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="13"
+                               Foreground="#A1A1AA"
+                               HorizontalAlignment="Center"/>
 
-                    <Border Grid.Column="0"
-                  Width="430"
-                  Height="70"
-                  BorderBrush="#2B2B2B"
-                  BorderThickness="1"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Center">
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="90"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0"
-                          Text="📖"
-                          FontSize="42"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"/>
-
-                            <TextBlock x:Name="TextBlockHeader"
-                          Grid.Column="1"
-                          Text="Palabras Español/Ingles"
-                          FontSize="22"
-                          FontWeight="SemiBold"
-                          Foreground="#111111"
-                          VerticalAlignment="Center"/>
-                        </Grid>
-                    </Border>
-
-                    <Image x:Name="ImageLogo"
-                  Grid.Column="1"
-                  Source="/Assets/Images/LogoLetterClash.jpeg"
-                  Width="330"
-                  Height="95"
-                  Stretch="Uniform"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"/>
-                </Grid>
-
-                <Grid Grid.Row="1"
-              Margin="65,10,65,0">
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="65"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock x:Name="TextBlockTitle"
-                      Grid.Row="0"
-                      Text="Palabras disponibles"
-                      FontSize="24"
-                      FontWeight="SemiBold"
-                      Foreground="#1E1E2F"
-                      VerticalAlignment="Center"/>
-
-                    <DataGrid x:Name="DataGridWords"
-                     Grid.Row="1"
-                     AutoGenerateColumns="False"
-                     CanUserAddRows="False"
-                     CanUserDeleteRows="False"
-                     IsReadOnly="True"
-                     HeadersVisibility="Column"
-                     GridLinesVisibility="All"
-                     FontSize="16"
-                     RowHeight="40"
-                     ColumnHeaderHeight="38"
-                     Margin="0,0,0,10">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Palabra"
-                                   Binding="{Binding PalabraTexto}"
-                                   Width="170"/>
-
-                            <DataGridTextColumn Header="Descripción"
-                                   Binding="{Binding Descripcion}"
-                                   Width="*"/>
-
-                            <DataGridTemplateColumn Header=""
-                                       Width="130">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Usar"
-                             Width="100"
-                             Height="30"
-                             FontSize="14"
-                             FontWeight="SemiBold"
-                             Cursor="Hand"
-                             Click="ButtonUseWord_Click"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-
-                <Border Grid.Row="2"
-                BorderBrush="#2B2B2B"
-                BorderThickness="0,2,0,0"
-                Background="#F7F7F7">
-
-                    <Grid>
-                        <Button x:Name="ButtonBack"
-                    Content="Regresar  ↩"
-                    Width="190"
-                    Height="38"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Margin="35,0,0,0"
-                    Cursor="Hand"
-                    Click="ButtonBack_Click"/>
+                    <!-- Segmented Buttons for Language Selection -->
+                    <Grid Width="300" Height="36" Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button x:Name="ButtonLangES"
+                                Grid.Column="0"
+                                Content="ESPAÑOL"
+                                Style="{StaticResource ModernPrimaryButton}"
+                                Margin="0,0,5,0"
+                                FontSize="12"
+                                Click="ButtonLangES_Click"/>
+                                
+                        <Button x:Name="ButtonLangEN"
+                                Grid.Column="1"
+                                Content="ENGLISH"
+                                Style="{StaticResource ModernSecondaryButton}"
+                                Margin="5,0,0,0"
+                                FontSize="12"
+                                Click="ButtonLangEN_Click"/>
                     </Grid>
-                </Border>
+                </StackPanel>
+
+                <!-- Words DataGrid Content Area -->
+                <DataGrid x:Name="DataGridWords"
+                          Grid.Row="1"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          IsReadOnly="True"
+                          HeadersVisibility="Column"
+                          Background="#09090B"
+                          Margin="0,10,0,20">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="PALABRA"
+                                            Binding="{Binding PalabraTexto}"
+                                            Width="110"/>
+
+                        <DataGridTextColumn Header="DESCRIPCIÓN"
+                                            Binding="{Binding Descripcion}"
+                                            Width="*"/>
+
+                        <DataGridTemplateColumn Header="ACCIÓN"
+                                                Width="130">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="USAR  ➔"
+                                            Width="105"
+                                            Height="26"
+                                            Style="{StaticResource ModernPrimaryButton}"
+                                            FontSize="11"
+                                            Click="ButtonUseWord_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Bottom Action Row -->
+                <Grid Grid.Row="2">
+                    <Button x:Name="ButtonBack"
+                            Content="REGRESAR  ↩"
+                            Width="150"
+                            Height="40"
+                            Style="{StaticResource ModernSecondaryButton}"
+                            HorizontalAlignment="Left"
+                            Click="ButtonBack_Click"/>
+                </Grid>
             </Grid>
         </Border>
     </Grid>

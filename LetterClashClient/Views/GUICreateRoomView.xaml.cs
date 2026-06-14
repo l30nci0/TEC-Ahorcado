@@ -62,8 +62,10 @@ namespace LetterClashClient.Views {
 
       if (!string.IsNullOrEmpty(selectedLanguage)) {
         ComboBoxLanguage.SelectedIndex = selectedLanguage == Idiomas.INGLES ? 1 : 2;
+        TextBlockSelectedLanguageLabel.Text = selectedLanguage;
       } else {
         ComboBoxLanguage.SelectedIndex = 0;
+        TextBlockSelectedLanguageLabel.Text = "NINGUNO SELECCIONADO";
       }
 
       if (privacyIndex > 0) {
@@ -72,6 +74,7 @@ namespace LetterClashClient.Views {
         ComboBoxGameType.SelectedIndex = 0;
       }
 
+      UpdateGameTypeButtons();
       TextBlockAccessKey.Text = "------";
     }
 
@@ -86,13 +89,41 @@ namespace LetterClashClient.Views {
       return age;
     }
 
-    private void ButtonSelectWord_Click(object sender, RoutedEventArgs e) {
-      if (ComboBoxLanguage.SelectedIndex <= 0) {
-        MessageBox.Show("Por favor, seleccione un idioma antes de escoger la palabra.", "Idioma Requerido", MessageBoxButton.OK, MessageBoxImage.Warning);
-        return;
+    private void UpdateGameTypeButtons() {
+      if (ComboBoxGameType.SelectedIndex == 1) { // Publica
+        ButtonTypePublic.Style = (Style)FindResource("ModernPrimaryButton");
+        ButtonTypePrivate.Style = (Style)FindResource("ModernSecondaryButton");
+      } else if (ComboBoxGameType.SelectedIndex == 2) { // Privada
+        ButtonTypePrivate.Style = (Style)FindResource("ModernPrimaryButton");
+        ButtonTypePublic.Style = (Style)FindResource("ModernSecondaryButton");
+      } else { // Ninguno
+        ButtonTypePublic.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonTypePrivate.Style = (Style)FindResource("ModernSecondaryButton");
       }
+    }
 
-      string lang = ComboBoxLanguage.SelectedIndex == 1 ? Idiomas.INGLES : Idiomas.ESPANOL;
+    private void ButtonTypePublic_Click(object sender, RoutedEventArgs e) {
+      ComboBoxGameType.SelectedIndex = 1;
+      UpdateGameTypeButtons();
+    }
+
+    private void ButtonTypePrivate_Click(object sender, RoutedEventArgs e) {
+      ComboBoxGameType.SelectedIndex = 2;
+      UpdateGameTypeButtons();
+    }
+
+    private void ButtonSelectWord_Click(object sender, RoutedEventArgs e) {
+      string lang = null;
+      if (ComboBoxLanguage.SelectedIndex == 1) {
+        lang = Idiomas.INGLES;
+      } else if (ComboBoxLanguage.SelectedIndex == 2) {
+        lang = Idiomas.ESPANOL;
+      } else if (!string.IsNullOrEmpty(selectedLanguage)) {
+        lang = selectedLanguage;
+      } else {
+        lang = Idiomas.ESPANOL; // default to ESPANOL
+      }
+      
       int privacy = ComboBoxGameType.SelectedIndex;
       NavigationService.Navigate(new GUISelectWordView(lang, privacy));
     }

@@ -26,7 +26,21 @@ namespace LetterClashClient.Views {
         window.Title = "Crea Lobby (Escoger palabra)";
       }
 
+      LoadWords();
+    }
+
+    private void LoadWords() {
+      // Update header text based on selected language
       TextBlockHeader.Text = $"Palabras en {selectedLanguage.ToLower()}";
+
+      // Dynamically toggle styles of the segmented buttons
+      if (selectedLanguage == Idiomas.INGLES) {
+        ButtonLangEN.Style = (Style)FindResource("ModernPrimaryButton");
+        ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
+      } else {
+        ButtonLangES.Style = (Style)FindResource("ModernPrimaryButton");
+        ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+      }
 
       try {
         var palabraService = ServiceProxyManager.GetPalabraService();
@@ -41,6 +55,20 @@ namespace LetterClashClient.Views {
         MessageBox.Show("No se pudo conectar con el servidor para obtener las palabras.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
         MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+      }
+    }
+
+    private void ButtonLangES_Click(object sender, RoutedEventArgs e) {
+      if (selectedLanguage != Idiomas.ESPANOL) {
+        selectedLanguage = Idiomas.ESPANOL;
+        LoadWords();
+      }
+    }
+
+    private void ButtonLangEN_Click(object sender, RoutedEventArgs e) {
+      if (selectedLanguage != Idiomas.INGLES) {
+        selectedLanguage = Idiomas.INGLES;
+        LoadWords();
       }
     }
 
