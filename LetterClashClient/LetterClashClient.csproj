@@ -98,6 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
 	<ItemGroup>
+		<Page Include="Controls\StarfieldBackground.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
 		<Page Include="Views\GUIBattleHistoryDetailView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
@@ -202,6 +206,9 @@
 		<Compile Include="Services\ServiceProxyManager.cs" />
 		<Compile Include="Services\GameCallbackHandler.cs" />
 		<Compile Include="Models\SessionContext.cs" />
+		<Compile Include="Controls\StarfieldBackground.xaml.cs">
+			<DependentUpon>StarfieldBackground.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>

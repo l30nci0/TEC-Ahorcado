@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:controls="clr-namespace:LetterClashClient.Controls"
       mc:Ignorable="d"
       d:DesignHeight="720"
       d:DesignWidth="1280"
@@ -142,24 +143,8 @@
     </Page.Resources>
 
     <Grid>
-        <!-- Modern Grid Line Background -->
-        <Grid.Background>
-            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
-                <DrawingBrush.Drawing>
-                    <GeometryDrawing>
-                        <GeometryDrawing.Pen>
-                            <Pen Brush="#15151A" Thickness="1"/>
-                        </GeometryDrawing.Pen>
-                        <GeometryDrawing.Geometry>
-                            <GeometryGroup>
-                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
-                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
-                            </GeometryGroup>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                </DrawingBrush.Drawing>
-            </DrawingBrush>
-        </Grid.Background>
+        <!-- Animated Pixel Starfield Background -->
+        <controls:StarfieldBackground Panel.ZIndex="0"/>
 
         <!-- Main Shell Grid -->
         <Grid>
