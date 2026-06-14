@@ -7,269 +7,396 @@
       d:DesignHeight="720"
       d:DesignWidth="1280"
       Title="GUIHistoryView"
-      Loaded="Page_Loaded">
+      Loaded="Page_Loaded"
+      Background="#09090B">
 
-    <Grid Background="#F4F4F4">
-        <Border Margin="20"
-            BorderBrush="#2B2B2B"
-            BorderThickness="2"
-            Background="White">
+    <Page.Resources>
+        <!-- Retro Grayscale Primary Button Style -->
+        <Style x:Key="ModernPrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#E4E4E7"/>
+            <Setter Property="Foreground" Value="#09090B"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter Property="Foreground" Value="#71717A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
+        <!-- Retro Grayscale Secondary Button Style -->
+        <Style x:Key="ModernSecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter Property="Foreground" Value="#52525B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <Grid Grid.Row="0"
-              Margin="30,25,30,20">
+        <!-- Style for Bottom Navigation Bar Buttons -->
+        <Style x:Key="NavBarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="Transparent"
+                                BorderThickness="0" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#1E1E21"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="120"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="45"/>
-                    </Grid.RowDefinitions>
+        <!-- DataGrid Dark Grayscale Styles -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="#09090B"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#1F1F23"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#1F1F23"/>
+            <Setter Property="RowBackground" Value="#0E0E10"/>
+            <Setter Property="AlternatingRowBackground" Value="#141417"/>
+        </Style>
 
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="58*"/>
-                            <ColumnDefinition Width="42*"/>
-                        </Grid.ColumnDefinitions>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        </Style>
 
-                        <Border Grid.Column="0"
-                    Width="620"
-                    Height="90"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
+        <Style TargetType="DataGridCell">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#27272A"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
+        <Style TargetType="DataGridRow">
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <!-- Modern Grid Line Background -->
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
+
+        <!-- Main Shell Grid -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+
+            <!-- Row 0: Content Area -->
+            <Grid Grid.Row="0">
+                <!-- Main Card Container -->
+                <Border Width="950"
+                        Height="520"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        BorderBrush="#2D2D30"
+                        BorderThickness="1.5"
+                        Background="#121214"
+                        CornerRadius="0"
+                        Padding="30">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="25" ShadowDepth="0" Color="#000000" Opacity="0.5"/>
+                    </Border.Effect>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <!-- Header -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- History DataGrid -->
+                            <RowDefinition Height="*"/>
+                            <!-- Summary Statistics -->
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Header Section -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                            <TextBlock Text="HISTORIAL DE PARTIDAS"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="#FFFFFF"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,4"/>
+
+                            <TextBlock Text="Registro completo de tus victorias, derrotas y estadísticas globales"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       FontSize="13"
+                                       Foreground="#A1A1AA"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- History DataGrid Area -->
+                        <DataGrid x:Name="DataGridHistory"
+                                  Grid.Row="1"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  Background="#09090B"
+                                  Margin="0,5,0,15"
+                                  SelectionChanged="DataGridHistory_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="RIVAL"
+                                                    Binding="{Binding Rival}"
+                                                    Width="1.2*"/>
+
+                                <DataGridTextColumn Header="FECHA"
+                                                    Binding="{Binding Fecha}"
+                                                    Width="*"/>
+
+                                <DataGridTextColumn Header="PALABRA"
+                                                    Binding="{Binding Palabra}"
+                                                    Width="*"/>
+
+                                <DataGridTextColumn Header="RESULTADO"
+                                                    Binding="{Binding Resultado}"
+                                                    Width="*"/>
+
+                                <DataGridTextColumn Header="PUNTUACIÓN"
+                                                    Binding="{Binding Puntuacion}"
+                                                    Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- Summary Statistics Panel -->
+                        <Border Grid.Row="2"
+                                BorderBrush="#2D2D30"
+                                BorderThickness="1"
+                                Background="#09090B"
+                                Padding="15,10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="90"/>
-                                    <ColumnDefinition Width="190"/>
-                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image x:Name="ImageStatistics"
-                        Grid.Column="0"
-                        Source="/Assets/Images/Stadistics.png"
-                        Width="58"
-                        Height="58"
-                        Stretch="Uniform"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextBlockTotalWins"
+                                           Grid.Column="0"
+                                           FontFamily="{StaticResource GeistMono}"
+                                           FontSize="12"
+                                           Foreground="#E4E4E7"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
 
-                                <TextBlock Text="Estadísticas"
-                            Grid.Column="1"
-                            FontSize="19"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextBlockPercentWins"
+                                           Grid.Column="1"
+                                           FontFamily="{StaticResource GeistMono}"
+                                           FontSize="12"
+                                           Foreground="#A1A1AA"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
 
-                                <Image x:Name="ImageUserAvatar"
-                        Grid.Column="2"
-                        Source="/Assets/Images/UserAvatar.png"
-                        Width="58"
-                        Height="58"
-                        Stretch="Uniform"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextBlockTotalLosses"
+                                           Grid.Column="2"
+                                           FontFamily="{StaticResource GeistMono}"
+                                           FontSize="12"
+                                           Foreground="#E4E4E7"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
 
-                                <StackPanel Grid.Column="3"
-                             VerticalAlignment="Center">
+                                <TextBlock x:Name="TextBlockPercentLosses"
+                                           Grid.Column="3"
+                                           FontFamily="{StaticResource GeistMono}"
+                                           FontSize="12"
+                                           Foreground="#A1A1AA"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
 
-                                    <TextBlock x:Name="TextBlockUsername"
-                              Text="&quot;NOMBRE DE USUARIO&quot;"
-                              FontSize="16"
-                              FontWeight="SemiBold"
-                              Foreground="#111111"
-                              Margin="0,0,0,8"/>
+                                <TextBlock x:Name="TextBlockTotalDisconnected"
+                                           Grid.Column="4"
+                                           FontFamily="{StaticResource GeistMono}"
+                                           FontSize="12"
+                                           Foreground="#E4E4E7"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
 
-                                    <TextBlock x:Name="TextBlockAge"
-                              Text="&quot;EDAD&quot;"
-                              FontSize="15"
-                              FontWeight="SemiBold"
-                              Foreground="#111111"/>
-                                </StackPanel>
+                                <TextBlock x:Name="TextBlockPercentDisconnected"
+                                           Grid.Column="5"
+                                           FontFamily="{StaticResource GeistMono}"
+                                           FontSize="12"
+                                           Foreground="#A1A1AA"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
                             </Grid>
                         </Border>
-
-                        <Image x:Name="ImageLogo"
-                    Grid.Column="1"
-                    Source="/Assets/Images/LogoLetterClash.jpeg"
-                    Width="330"
-                    Height="95"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
-                    </Grid>
-
-                    <DataGrid x:Name="DataGridHistory"
-                     Grid.Row="1"
-                     AutoGenerateColumns="False"
-                     CanUserAddRows="False"
-                     CanUserDeleteRows="False"
-                     IsReadOnly="True"
-                     HeadersVisibility="Column"
-                     GridLinesVisibility="All"
-                     FontSize="16"
-                     RowHeight="34"
-                     ColumnHeaderHeight="35"
-                     Margin="25,10,25,10"
-                     SelectionChanged="DataGridHistory_SelectionChanged">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Rival"
-                                   Binding="{Binding Rival}"
-                                   Width="*"/>
-
-                            <DataGridTextColumn Header="Fecha"
-                                   Binding="{Binding Fecha}"
-                                   Width="*"/>
-
-                            <DataGridTextColumn Header="Palabra"
-                                   Binding="{Binding Palabra}"
-                                   Width="*"/>
-
-                            <DataGridTextColumn Header="Resultado"
-                                   Binding="{Binding Resultado}"
-                                   Width="*"/>
-
-                            <DataGridTextColumn Header="Puntuación"
-                                   Binding="{Binding Puntuacion}"
-                                   Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-                    <Border Grid.Row="2"
-                   BorderBrush="#2B2B2B"
-                   BorderThickness="1"
-                   Background="#D9D9D9"
-                   Margin="25,0,25,0">
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock x:Name="TextBlockTotalWins"
-                          Grid.Column="0"
-                          FontSize="14"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Center"/>
-
-                            <TextBlock x:Name="TextBlockPercentWins"
-                          Grid.Column="1"
-                          FontSize="14"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Center"/>
-
-                            <TextBlock x:Name="TextBlockTotalLosses"
-                          Grid.Column="2"
-                          FontSize="14"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Center"/>
-
-                            <TextBlock x:Name="TextBlockPercentLosses"
-                          Grid.Column="3"
-                          FontSize="14"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Center"/>
-
-                            <TextBlock x:Name="TextBlockTotalDisconnected"
-                          Grid.Column="4"
-                          FontSize="14"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Center"/>
-
-                            <TextBlock x:Name="TextBlockPercentDisconnected"
-                          Grid.Column="5"
-                          FontSize="14"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Center"/>
-                        </Grid>
-                    </Border>
-                </Grid>
-
-                <Border Grid.Row="1"
-                BorderBrush="#2B2B2B"
-                BorderThickness="0,2,0,0"
-                Background="#F7F7F7">
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Button x:Name="ButtonMainMenu"
-                    Grid.Column="0"
-                    Content="Menu Principal  ⚔"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonMainMenu_Click"/>
-
-                        <Button x:Name="ButtonProfile"
-                    Grid.Column="1"
-                    Content="Perfil  👤"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonProfile_Click"/>
-
-                        <Button x:Name="ButtonHistory"
-                    Grid.Column="2"
-                    Content="Historial  ◴"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonHistory_Click"/>
-
-                        <Button x:Name="ButtonScoreboard"
-                    Grid.Column="3"
-                    Content="Marcadores  🏆"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonScoreboard_Click"/>
-
-                        <Button x:Name="ButtonSettings"
-                    Grid.Column="4"
-                    Content="Ajustes  ⚙"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonSettings_Click"/>
                     </Grid>
                 </Border>
             </Grid>
-        </Border>
+
+            <!-- Row 1: Bottom Navigation Bar Tray -->
+            <Border Grid.Row="1"
+                    BorderBrush="#2D2D30"
+                    BorderThickness="0,1,0,0"
+                    Background="#121214">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="ButtonMainMenu"
+                            Grid.Column="0"
+                            Content="Menu Principal  ⚔"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonMainMenu_Click"/>
+
+                    <Button x:Name="ButtonProfile"
+                            Grid.Column="1"
+                            Content="Perfil  👤"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonProfile_Click"/>
+
+                    <Button x:Name="ButtonHistory"
+                            Grid.Column="2"
+                            Content="Historial  ◴"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonHistory_Click"/>
+
+                    <Button x:Name="ButtonScoreboard"
+                            Grid.Column="3"
+                            Content="Marcadores  🏆"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonScoreboard_Click"/>
+
+                    <Button x:Name="ButtonSettings"
+                            Grid.Column="4"
+                            Content="Ajustes  ⚙"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonSettings_Click"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Hidden elements to preserve code-behind field references -->
+        <Grid Visibility="Collapsed">
+            <Image x:Name="ImageStatistics"/>
+            <Image x:Name="ImageUserAvatar"/>
+            <Image x:Name="ImageLogo"/>
+            <TextBlock x:Name="TextBlockUsername"/>
+            <TextBlock x:Name="TextBlockAge"/>
+        </Grid>
     </Grid>
 </Page>
