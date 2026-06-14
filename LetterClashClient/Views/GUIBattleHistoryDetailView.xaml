@@ -7,387 +7,451 @@
       d:DesignHeight="720"
       d:DesignWidth="1280"
       Title="GUIBattleHistoryDetailView"
-      Loaded="Page_Loaded">
+      Loaded="Page_Loaded"
+      Background="#09090B">
 
-    <Grid Background="#F4F4F4">
-        <Border Margin="20"
-            BorderBrush="#2B2B2B"
-            BorderThickness="2"
-            Background="White">
+    <Page.Resources>
+        <!-- Style for Bottom Navigation Bar Buttons -->
+        <Style x:Key="NavBarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="Transparent"
+                                BorderThickness="0" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#1E1E21"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
+        <!-- Retro Grayscale Primary Button Style -->
+        <Style x:Key="ModernPrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#E4E4E7"/>
+            <Setter Property="Foreground" Value="#09090B"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter Property="Foreground" Value="#71717A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <Grid Grid.Row="0"
-              Margin="30,25,30,15">
+        <!-- Retro Grayscale Secondary Button Style -->
+        <Style x:Key="ModernSecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#18181B"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter Property="Foreground" Value="#52525B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="52*"/>
-                        <ColumnDefinition Width="48*"/>
-                    </Grid.ColumnDefinitions>
+        <!-- Form Elements Generic Styles -->
+        <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#71717A"/>
+            <Setter Property="Margin" Value="2,0,0,6"/>
+        </Style>
 
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="85"/>
-                            <RowDefinition Height="360"/>
-                            <RowDefinition Height="60"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+        <!-- Value Text block style -->
+        <Style x:Key="ValueTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
 
-                        <Border x:Name="BorderHeaderMatch"
-                    Grid.Row="0"
-                    Width="300"
-                    Height="65"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Column="0"
-                            Text="."
-                            FontSize="42"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-
-                                <TextBlock Grid.Column="1"
-                            Text="Partida"
-                            FontSize="24"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            VerticalAlignment="Center"/>
+        <!-- Flat ProgressBar style -->
+        <Style x:Key="FlatProgressBar" TargetType="ProgressBar">
+            <Setter Property="Background" Value="#09090B"/>
+            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#E4E4E7"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="0">
+                            <Grid x:Name="TemplateRoot">
+                                <Rectangle x:Name="PART_Track" />
+                                <Decorator x:Name="PART_Indicator" HorizontalAlignment="Left">
+                                    <Grid x:Name="IndicatorGrid">
+                                        <Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}" />
+                                    </Grid>
+                                </Decorator>
                             </Grid>
                         </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-                        <Border x:Name="BorderBattleInfo"
-                    Grid.Row="1"
-                    Width="600"
-                    Height="340"
-                    BorderBrush="#2B2B2B"
-                    BorderThickness="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top">
+    <Grid>
+        <!-- Modern Grid Line Background -->
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
 
-                            <Grid Margin="25">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="55"/>
-                                    <RowDefinition Height="60"/>
-                                    <RowDefinition Height="50"/>
-                                    <RowDefinition Height="50"/>
-                                    <RowDefinition Height="50"/>
-                                    <RowDefinition Height="50"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+        <!-- Main Shell Grid -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
 
-                                <Border Grid.Row="0"
-                        Width="380"
-                        Height="45"
-                        BorderBrush="#2B2B2B"
-                        BorderThickness="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center">
-
-                                    <TextBlock x:Name="TextBlockRole"
-                              Text="Tu Rol fue:"
-                              FontSize="19"
-                              FontWeight="SemiBold"
-                              Foreground="#111111"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"/>
-                                </Border>
-
-                                <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="120"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Image x:Name="ImageEnemyAvatar"
-                          Grid.Column="0"
-                          Source="/Assets/Images/UserAvatar.png"
-                          Width="58"
-                          Height="58"
-                          Stretch="Uniform"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"/>
-
-                                    <TextBlock x:Name="TextBlockRival"
-                              Grid.Column="1"
-                              FontSize="19"
-                              FontWeight="SemiBold"
-                              Foreground="#111111"
-                              VerticalAlignment="Center"/>
-
-                                    <Button x:Name="ButtonViewProfile"
-                           Grid.Column="2"
-                           Content="Ver Perfil"
-                           Width="100"
-                           Height="32"
-                           FontSize="14"
-                           FontWeight="SemiBold"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Cursor="Hand"
-                           Click="ButtonViewProfile_Click"/>
-                                </Grid>
-
-                                <TextBlock x:Name="TextBlockLanguage"
-                            Grid.Row="2"
-                            FontSize="19"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-
-                                <TextBlock x:Name="TextBlockWord"
-                            Grid.Row="3"
-                            FontSize="19"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-
-                                <TextBlock x:Name="TextBlockType"
-                            Grid.Row="4"
-                            FontSize="19"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-
-                                <TextBlock x:Name="TextBlockDate"
-                            Grid.Row="5"
-                            FontSize="19"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-
-                        <Button x:Name="ButtonBack"
-                    Grid.Row="2"
-                    Content="Regresar  ↩"
-                    Width="180"
-                    Height="40"
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Cursor="Hand"
-                    Click="ButtonBack_Click"/>
-                    </Grid>
-
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="95"/>
-                            <RowDefinition Height="250"/>
-                            <RowDefinition Height="55"/>
-                            <RowDefinition Height="130"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Image x:Name="ImageLogo"
-                    Grid.Row="0"
-                    Source="/Assets/Images/LogoLetterClash.jpeg"
-                    Width="300"
-                    Height="90"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
-
-                        <Canvas x:Name="CanvasHangmanBattle"
-                    Grid.Row="1"
-                    Width="330"
-                    Height="240"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-
-                            <Image x:Name="ImageHangman"
-                      Source="/Assets/Images/Hangedman1.jpg"
-                      Width="280"
-                      Height="230"
-                      Stretch="Uniform"
-                      Canvas.Left="20"
-                      Canvas.Top="5"/>
-
-                            <Border x:Name="BorderUserAvatar"
-                       Width="66"
-                       Height="66"
-                       CornerRadius="33"
-                       BorderBrush="#2B2B2B"
-                       BorderThickness="2"
-                       Background="White"
-                       Canvas.Left="190"
-                       Canvas.Top="50">
-
-                                <Image x:Name="ImageUserAvatar"
-                        Source="/Assets/Images/UserAvatar.png"
-                        Width="52"
-                        Height="52"
-                        Stretch="Uniform"
+            <!-- Row 0: Content Area -->
+            <Grid Grid.Row="0">
+                <!-- Main Card Container -->
+                <Border Width="950"
+                        Height="520"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-                            </Border>
-                        </Canvas>
-
-                        <Grid Grid.Row="2"
-                  Width="360"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="70"/>
-                            </Grid.ColumnDefinitions>
-
-                            <ProgressBar x:Name="ProgressBarBattle"
-                            Grid.Column="0"
-                            Height="25"
-                            Minimum="0"
-                            Maximum="5"/>
-
-                            <TextBlock x:Name="TextBlockProgress"
-                          Grid.Column="1"
-                          FontSize="17"
-                          FontWeight="SemiBold"
-                          Foreground="#111111"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"/>
-                        </Grid>
-
-                        <Grid Grid.Row="3"
-                  Width="430"
-                  Height="110"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0"
-                          HorizontalAlignment="Center"
-                           VerticalAlignment="Center">
-
-                                <TextBlock Text="Estado de la partida:"
-                            FontSize="16"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            HorizontalAlignment="Center"
-                            Margin="0,0,0,18"/>
-
-                                <TextBlock x:Name="TextBlockBattleStatus"
-                            FontSize="16"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            HorizontalAlignment="Center"/>
-                            </StackPanel>
-
-                            <Border Grid.Column="1"
-                       Width="2"
-                       Background="#2B2B2B"
-                       VerticalAlignment="Stretch"
-                       Margin="0,10,0,10"/>
-
-                            <StackPanel Grid.Column="2"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
-
-                                <TextBlock Text="Puntaje:"
-                            FontSize="16"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            HorizontalAlignment="Center"
-                            Margin="0,0,0,18"/>
-
-                                <TextBlock x:Name="TextBlockScore"
-                            FontSize="16"
-                            FontWeight="SemiBold"
-                            Foreground="#111111"
-                            HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
-                </Grid>
-
-                <Border Grid.Row="1"
-                BorderBrush="#2B2B2B"
-                BorderThickness="0,2,0,0"
-                Background="#F7F7F7">
+                        BorderBrush="#2D2D30"
+                        BorderThickness="1.5"
+                        Background="#121214"
+                        CornerRadius="0"
+                        Padding="35">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="25" ShadowDepth="0" Color="#000000" Opacity="0.5"/>
+                    </Border.Effect>
 
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <!-- Header -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Content Details -->
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                        <Button x:Name="ButtonMainMenu"
-                    Grid.Column="0"
-                    Content="Menu Principal  ⚔"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonMainMenu_Click"/>
+                        <!-- Header Section -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,25">
+                            <TextBlock Text="DETALLES DE LA PARTIDA"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="#FFFFFF"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,6"/>
 
-                        <Button x:Name="ButtonProfile"
-                    Grid.Column="1"
-                    Content="Perfil  👤"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonProfile_Click"/>
+                            <TextBlock Text="Ficha técnica de puntaje, oponente y progreso del juego"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       FontSize="13"
+                                       Foreground="#A1A1AA"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
 
-                        <Button x:Name="ButtonHistory"
-                    Grid.Column="2"
-                    Content="Historial  ◴"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonHistory_Click"/>
+                        <!-- Content Details Grid -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <!-- Match Info (Left) -->
+                                <ColumnDefinition Width="1.25*"/>
+                                <!-- Divider -->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- Match Progress & State (Right) -->
+                                <ColumnDefinition Width="0.75*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <Button x:Name="ButtonScoreboard"
-                    Grid.Column="3"
-                    Content="Marcadores  🏆"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonScoreboard_Click"/>
+                            <!-- Left Column: Details -->
+                            <StackPanel Grid.Column="0" Margin="0,0,30,0" VerticalAlignment="Center">
+                                <!-- Rival Header bar -->
+                                <TextBlock Text="ADVERSARIO" Style="{StaticResource FormLabelStyle}"/>
+                                <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#09090B" Padding="15,10" Margin="0,0,0,15">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
 
-                        <Button x:Name="ButtonSettings"
-                    Grid.Column="4"
-                    Content="Ajustes  ⚙"
-                    FontSize="15"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonSettings_Click"/>
+                                        <TextBlock x:Name="TextBlockRival" 
+                                                   Style="{StaticResource ValueTextStyle}" 
+                                                   FontWeight="Bold"
+                                                   VerticalAlignment="Center"/>
+
+                                        <Button x:Name="ButtonViewProfile"
+                                                Grid.Column="1"
+                                                Content="VER PERFIL  👤"
+                                                Height="28"
+                                                Width="110"
+                                                Style="{StaticResource ModernPrimaryButton}"
+                                                FontSize="11"
+                                                Click="ButtonViewProfile_Click"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Role -->
+                                <TextBlock Text="TU ROL EN LA PARTIDA" Style="{StaticResource FormLabelStyle}"/>
+                                <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#09090B" Padding="15,10" Margin="0,0,0,15">
+                                    <TextBlock x:Name="TextBlockRole" Style="{StaticResource ValueTextStyle}"/>
+                                </Border>
+
+                                <!-- Word details -->
+                                <TextBlock Text="PALABRA DEL AHORCADO" Style="{StaticResource FormLabelStyle}"/>
+                                <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#09090B" Padding="15,10" Margin="0,0,0,15">
+                                    <TextBlock x:Name="TextBlockWord" Style="{StaticResource ValueTextStyle}"/>
+                                </Border>
+
+                                <!-- Room info row (Language, Type, Date) -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="IDIOMA" Style="{StaticResource FormLabelStyle}"/>
+                                        <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#09090B" Padding="15,10">
+                                            <TextBlock x:Name="TextBlockLanguage" Style="{StaticResource ValueTextStyle}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="PRIVACIDAD" Style="{StaticResource FormLabelStyle}"/>
+                                        <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#09090B" Padding="15,10">
+                                            <TextBlock x:Name="TextBlockType" Style="{StaticResource ValueTextStyle}"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- Vertical Divider -->
+                            <Border Grid.Column="1" Width="1.5" Background="#2D2D30" VerticalAlignment="Stretch" Margin="0,10"/>
+
+                            <!-- Right Column: Status & Progress -->
+                            <Grid Grid.Column="2" Margin="30,0,0,0" VerticalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Match Date -->
+                                <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                                    <TextBlock Text="FECHA DE PARTIDA" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="TextBlockDate" 
+                                               FontFamily="{StaticResource GeistMono}" 
+                                               FontSize="13" 
+                                               Foreground="#A1A1AA" 
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+
+                                <!-- Status and Score Panel -->
+                                <Border Grid.Row="1" BorderBrush="#2D2D30" BorderThickness="1.5" Background="#09090B" Padding="20" Margin="0,0,0,20">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                            <TextBlock Text="RESULTADO" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                            <TextBlock x:Name="TextBlockBattleStatus" 
+                                                       FontFamily="{StaticResource GeistPixelSquare}" 
+                                                       FontSize="16" 
+                                                       Foreground="#FFFFFF" 
+                                                       HorizontalAlignment="Center" 
+                                                       FontWeight="Bold"/>
+                                        </StackPanel>
+
+                                        <Border Grid.Column="1" Width="1" Background="#2D2D30" VerticalAlignment="Stretch"/>
+
+                                        <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                                            <TextBlock Text="PUNTOS" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                            <TextBlock x:Name="TextBlockScore" 
+                                                       FontFamily="{StaticResource GeistMono}" 
+                                                       FontSize="16" 
+                                                       Foreground="#FFFFFF" 
+                                                       HorizontalAlignment="Center" 
+                                                       FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Progress Bar Section -->
+                                <StackPanel Grid.Row="2" Margin="0,0,0,25">
+                                    <Grid Margin="2,0,2,5">
+                                        <TextBlock Text="PROGRESO DE PALABRA" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock x:Name="TextBlockProgress" 
+                                                   FontFamily="{StaticResource GeistMono}" 
+                                                   FontSize="11" 
+                                                   Foreground="#A1A1AA" 
+                                                   HorizontalAlignment="Right" 
+                                                   FontWeight="Bold"/>
+                                    </Grid>
+                                    <ProgressBar x:Name="ProgressBarBattle" Height="22" Style="{StaticResource FlatProgressBar}" Minimum="0" Maximum="5"/>
+                                </StackPanel>
+
+                                <!-- Back Button -->
+                                <Button x:Name="ButtonBack"
+                                        Grid.Row="4"
+                                        Content="REGRESAR  ↩"
+                                        Height="50"
+                                        Style="{StaticResource ModernSecondaryButton}"
+                                        VerticalAlignment="Bottom"
+                                        Click="ButtonBack_Click"/>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Border>
             </Grid>
-        </Border>
+
+            <!-- Row 1: Bottom Navigation Bar Tray -->
+            <Border Grid.Row="1"
+                    BorderBrush="#2D2D30"
+                    BorderThickness="0,1,0,0"
+                    Background="#121214">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="ButtonMainMenu"
+                            Grid.Column="0"
+                            Content="Menu Principal  ⚔"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonMainMenu_Click"/>
+
+                    <Button x:Name="ButtonProfile"
+                            Grid.Column="1"
+                            Content="Perfil  👤"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonProfile_Click"/>
+
+                    <Button x:Name="ButtonHistory"
+                            Grid.Column="2"
+                            Content="Historial  ◴"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonHistory_Click"/>
+
+                    <Button x:Name="ButtonScoreboard"
+                            Grid.Column="3"
+                            Content="Marcadores  🏆"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonScoreboard_Click"/>
+
+                    <Button x:Name="ButtonSettings"
+                            Grid.Column="4"
+                            Content="Ajustes  ⚙"
+                            Style="{StaticResource NavBarButton}"
+                            Click="ButtonSettings_Click"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Hidden elements to preserve code-behind field references -->
+        <Grid Visibility="Collapsed">
+            <Border x:Name="BorderHeaderMatch"/>
+            <Border x:Name="BorderBattleInfo"/>
+            <Image x:Name="ImageEnemyAvatar"/>
+            <Image x:Name="ImageLogo"/>
+            <Canvas x:Name="CanvasHangmanBattle"/>
+            <Image x:Name="ImageHangman"/>
+            <Border x:Name="BorderUserAvatar"/>
+            <Image x:Name="ImageUserAvatar"/>
+        </Grid>
     </Grid>
 </Page>
