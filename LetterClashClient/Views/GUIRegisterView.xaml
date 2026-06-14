@@ -523,15 +523,38 @@
                             <!-- Preferred Language -->
                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                 <TextBlock Text="IDIOMA PREFERIDO" Style="{StaticResource FormLabelStyle}"/>
+                                
+                                <!-- Segmented Buttons for Language Selection -->
+                                <Grid Height="40">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Button x:Name="ButtonLangES"
+                                            Grid.Column="0"
+                                            Content="ESPAÑOL"
+                                            Style="{StaticResource ModernPrimaryButton}"
+                                            Margin="0,0,5,0"
+                                            Click="ButtonLangES_Click"/>
+                                            
+                                    <Button x:Name="ButtonLangEN"
+                                            Grid.Column="1"
+                                            Content="ENGLISH"
+                                            Style="{StaticResource ModernSecondaryButton}"
+                                            Margin="5,0,0,0"
+                                            Click="ButtonLangEN_Click"/>
+                                </Grid>
+                                
+                                <!-- Hidden ComboBox to preserve code-behind field and index references -->
                                 <ComboBox x:Name="ComboBoxPreferredLanguage"
-                                          Style="{StaticResource ModernComboBox}"
-                                          Height="40"
                                           SelectedIndex="2"
-                                          HorizontalAlignment="Stretch">
+                                          Visibility="Collapsed">
                                     <ComboBoxItem Content="Seleccionar Idioma"/>
                                     <ComboBoxItem Content="Ingles"/>
                                     <ComboBoxItem Content="Español"/>
                                 </ComboBox>
+                                
                                 <TextBlock x:Name="TextBlockLanguageError" Text="Seleccione un idioma" Style="{StaticResource ErrorLabelStyle}" Margin="2,4,0,0"/>
                             </StackPanel>
                         </Grid>

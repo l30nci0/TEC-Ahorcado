@@ -169,5 +169,17 @@ namespace LetterClashClient.Views {
     private void PasswordBoxConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e) {
       TextBlockConfirmPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxConfirmPassword.Password) ? Visibility.Visible : Visibility.Hidden;
     }
+
+    private void ButtonLangES_Click(object sender, RoutedEventArgs e) {
+      ComboBoxPreferredLanguage.SelectedIndex = 2; // Español
+      ButtonLangES.Style = (Style)FindResource("ModernPrimaryButton");
+      ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+    }
+
+    private void ButtonLangEN_Click(object sender, RoutedEventArgs e) {
+      ComboBoxPreferredLanguage.SelectedIndex = 1; // Ingles
+      ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
+      ButtonLangEN.Style = (Style)FindResource("ModernPrimaryButton");
+    }
   }
 }
