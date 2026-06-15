@@ -31,7 +31,7 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
               <Border.Effect>
-                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="5.5"/>
               </Border.Effect>
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
             </Border>
@@ -75,7 +75,7 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
               <Border.Effect>
-                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#9B004F" Opacity="0.6"/>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#9B004F" Opacity="5.5"/>
               </Border.Effect>
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
             </Border>
