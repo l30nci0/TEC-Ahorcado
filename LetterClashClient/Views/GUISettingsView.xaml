@@ -203,7 +203,7 @@
                         Height="480"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
-                        BorderBrush="#2D2D30"
+                        BorderBrush="#4DEEEA"
                         BorderThickness="1.5"
                         Background="#0B0E14"
                         CornerRadius="0"

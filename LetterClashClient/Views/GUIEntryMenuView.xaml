@@ -31,23 +31,28 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
               <Border.Effect>
-                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="5.5"/>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
               </Border.Effect>
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="border" Property="Background" Value="#142834"/>
-                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
-                <Setter Property="Foreground" Value="#FFFFFF"/>
+                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                <Setter Property="Foreground" Value="#0B0E14"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
               <Trigger Property="IsPressed" Value="true">
                 <Setter TargetName="border" Property="Background" Value="#00A896"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
                 <Setter Property="Foreground" Value="#0B0E14"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
               <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="border" Property="BorderBrush" Value="#181E29"/>
+                <Setter TargetName="border" Property="Background" Value="#181E29"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
                 <Setter Property="Foreground" Value="#4A5568"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -75,23 +80,26 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
               <Border.Effect>
-                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#9B004F" Opacity="5.5"/>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#9B004F" Opacity="0.6"/>
               </Border.Effect>
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="border" Property="Background" Value="#2D0B1E"/>
-                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
-                <Setter Property="Foreground" Value="#FFFFFF"/>
+                <Setter TargetName="border" Property="Background" Value="#F649A7"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#F649A7"/>
+                <Setter Property="Foreground" Value="#0B0E14"/>
               </Trigger>
               <Trigger Property="IsPressed" Value="true">
                 <Setter TargetName="border" Property="Background" Value="#9B004F"/>
-                <Setter Property="Foreground" Value="#FFFFFF"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#9B004F"/>
+                <Setter Property="Foreground" Value="#F649A7"/>
               </Trigger>
               <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="border" Property="BorderBrush" Value="#181E29"/>
+                <Setter TargetName="border" Property="Background" Value="#181E29"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
                 <Setter Property="Foreground" Value="#4A5568"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>

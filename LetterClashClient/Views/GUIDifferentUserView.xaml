@@ -204,7 +204,7 @@
                         Height="520"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
-                        BorderBrush="#181E29"
+                        BorderBrush="#4DEEEA"
                         BorderThickness="1.5"
                         Background="#0B0E14"
                         CornerRadius="0"

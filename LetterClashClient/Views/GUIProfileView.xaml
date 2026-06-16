@@ -196,7 +196,7 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
                         <Border.Effect>
-                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
+                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.6"/>
                         </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
@@ -423,7 +423,7 @@
                                 <StackPanel Grid.Column="0" Margin="0,0,30,0" VerticalAlignment="Center">
                                     <!-- Full Name -->
                                     <TextBlock Text="NOMBRE COMPLETO" Style="{StaticResource FormLabelStyle}"/>
-                                    <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                                    <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                                         <TextBlock x:Name="TextBlockFullName" Style="{StaticResource ValueTextStyle}"/>
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
@@ -440,7 +440,7 @@
 
                                         <StackPanel Grid.Column="0">
                                             <TextBlock Text="EDAD" Style="{StaticResource FormLabelStyle}"/>
-                                            <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                                            <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                                 <TextBlock x:Name="TextBlockAge" Style="{StaticResource ValueTextStyle}"/>
                                                 <Border.Effect>
                                                     <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
@@ -450,7 +450,7 @@
 
                                         <StackPanel Grid.Column="2">
                                             <TextBlock Text="FECHA DE NACIMIENTO" Style="{StaticResource FormLabelStyle}"/>
-                                            <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                                            <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                                 <TextBlock x:Name="TextBlockBirthDate" Style="{StaticResource ValueTextStyle}"/>
                                                 <Border.Effect>
                                                     <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
@@ -461,7 +461,7 @@
 
                                     <!-- Email -->
                                     <TextBlock Text="CORREO ELECTRÓNICO" Style="{StaticResource FormLabelStyle}"/>
-                                    <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                                    <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                                         <TextBlock x:Name="TextBlockEmail" Style="{StaticResource ValueTextStyle}"/>
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
@@ -470,7 +470,7 @@
 
                                     <!-- Phone -->
                                     <TextBlock Text="TELÉFONO" Style="{StaticResource FormLabelStyle}"/>
-                                    <Border BorderBrush="#2D2D30" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                                    <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                         <TextBlock x:Name="TextBlockPhone" Style="{StaticResource ValueTextStyle}"/>
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
@@ -502,12 +502,13 @@
                                         </Border>
                                     </StackPanel>
 
-                                    <Button x:Name="ButtonEdit"
+                  <Button x:Name="ButtonEdit"
                                             Grid.Row="1"
                                             Content="EDITAR PERFIL  🛠"
                                             Height="50"
                                             Style="{StaticResource ModernPrimaryButton}"
-                                            Click="ButtonEdit_Click"/>
+                                            Click="ButtonEdit_Click"
+                                            BorderThickness="1.5"/>
                                 </Grid>
                             </Grid>
                         </Grid>
