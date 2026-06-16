@@ -67,10 +67,10 @@
 
         <!-- Modern Dark Grayscale PasswordBox Style -->
         <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
-            <Setter Property="Background" Value="#09090B"/>
-            <Setter Property="BorderBrush" Value="#2D2D30"/>
-            <Setter Property="Foreground" Value="#F4F4F5"/>
-            <Setter Property="CaretBrush" Value="#F4F4F5"/>
+            <Setter Property="Background" Value="#0B0E14"/>
+            <Setter Property="BorderBrush" Value="#181E29"/>
+            <Setter Property="Foreground" Value="#4DEEEA"/>
+            <Setter Property="CaretBrush" Value="#4DEEEA"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="Padding" Value="12,8"/>
@@ -85,14 +85,18 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                <Border.Effect>
+                                    <DropShadowEffect x:Name="neonGlow" BlurRadius="6" Color="#00A896" Opacity="0.15" ShadowDepth="0"/>
+                                </Border.Effect>
+                                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#3F3F46"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
+                                <Setter TargetName="border" Property="Background" Value="#101520"/>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#E4E4E7"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -116,10 +120,10 @@
                                                Focusable="{TemplateBinding Focusable}"
                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               Background="#09090B"
-                                               Foreground="#F4F4F5"
+                                               Background="#0B0E14"
+                                               Foreground="#4DEEEA"
                                                BorderThickness="1.5,1.5,0,1.5"
-                                               BorderBrush="#2D2D30"
+                                               BorderBrush="#4DEEEA"
                                                Padding="10,6"
                                                FontFamily="{StaticResource GeistMono}"
                                                FontSize="13"/>
@@ -244,20 +248,31 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#9B004F" Opacity="0.6"/>
+                                </Border.Effect>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
-                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#F649A7"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#F649A7"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                                <Setter TargetName="border" Property="Background" Value="#E60067"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#E60067"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter TargetName="border" Property="Background" Value="#181E29"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
                                 <Setter Property="Foreground" Value="#52525B"/>
+                                <Setter TargetName="border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="0" ShadowDepth="0" Color="#000000" Opacity="0"/>
+                                </Setter.Value>
+                                </Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

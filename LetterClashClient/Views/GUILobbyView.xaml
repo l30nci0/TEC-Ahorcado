@@ -8,18 +8,19 @@
       d:DesignWidth="1280"
       Title="GUILobbyView"
       Loaded="Page_Loaded"
-      Background="#09090B">
+      Background="#0B0E14">
 
     <Page.Resources>
         <!-- Retro Grayscale Primary Button Style -->
         <Style x:Key="ModernPrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#E4E4E7"/>
-            <Setter Property="Foreground" Value="#09090B"/>
+            <Setter Property="Background" Value="#0B0E14"/>
+            <Setter Property="Foreground" Value="#4DEEEA"/>
+            <Setter Property="BorderBrush" Value="#4DEEEA"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="16,10"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -30,18 +31,25 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.6"/>
+                                </Border.Effect>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                                <Setter TargetName="border" Property="Background" Value="#00A896"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                 <Setter TargetName="border" Property="Background" Value="#27272A"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
                                 <Setter Property="Foreground" Value="#71717A"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -52,9 +60,9 @@
 
         <!-- Retro Grayscale Secondary Button Style -->
         <Style x:Key="ModernSecondaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#18181B"/>
-            <Setter Property="Foreground" Value="#A1A1AA"/>
-            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="Background" Value="#0B0E14"/>
+            <Setter Property="Foreground" Value="#F649A7"/>
+            <Setter Property="BorderBrush" Value="#E60067"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="FontSize" Value="14"/>
@@ -70,20 +78,31 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#9B004F" Opacity="0.6"/>
+                                </Border.Effect>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
-                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter TargetName="border" Property="Background" Value="#F649A7"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#F649A7"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                                <Setter TargetName="border" Property="Background" Value="#E60067"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#E60067"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                                <Setter TargetName="border" Property="Background" Value="#181E29"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
                                 <Setter Property="Foreground" Value="#52525B"/>
+                                <Setter TargetName="border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="0" ShadowDepth="0" Color="#000000" Opacity="0"/>
+                                </Setter.Value>
+                                </Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -93,8 +112,9 @@
 
         <!-- Style for Bottom Navigation Bar Buttons -->
         <Style x:Key="NavBarButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="Background" Value="#0B0E14"/>
+            <Setter Property="Foreground" Value="#4DEEEA"/>
+            <Setter Property="BorderBrush" Value="#4DEEEA"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -104,19 +124,24 @@
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border" 
                                 Background="{TemplateBinding Background}" 
-                                BorderBrush="Transparent"
-                                BorderThickness="0" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1.5" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
+                                </Border.Effect>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Foreground" Value="#FFFFFF"/>
-                                <Setter TargetName="border" Property="Background" Value="#1E1E21"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
+                                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
+                                <Setter TargetName="border" Property="Background" Value="#00A896"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -126,10 +151,10 @@
 
         <!-- Style for Modern Dark TextBox -->
         <Style x:Key="ModernTextBox" TargetType="TextBox">
-            <Setter Property="Background" Value="#09090B"/>
-            <Setter Property="BorderBrush" Value="#2D2D30"/>
-            <Setter Property="Foreground" Value="#F4F4F5"/>
-            <Setter Property="CaretBrush" Value="#F4F4F5"/>
+            <Setter Property="Background" Value="#0B0E14"/>
+            <Setter Property="BorderBrush" Value="#00A896"/>
+            <Setter Property="Foreground" Value="#4DEEEA"/>
+            <Setter Property="CaretBrush" Value="#4DEEEA"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="Padding" Value="12,8"/>
@@ -144,14 +169,25 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
+                                <Border.Effect>
+                                    <DropShadowEffect x:Name="neonGlow" BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.6"/>
+                                </Border.Effect>
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#3F3F46"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#E4E4E7"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
+                                <Setter TargetName="border" Property="Background" Value="#00A896"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#181E29"/>
+                                <Setter TargetName="border" Property="Background" Value="#0B0E14"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#181E29"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -164,14 +200,14 @@
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="FontSize" Value="11"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="#71717A"/>
+            <Setter Property="Foreground" Value="#00A896"/>
             <Setter Property="Margin" Value="2,0,0,6"/>
         </Style>
 
         <Style x:Key="PlaceholderStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="#52525B"/>
+            <Setter Property="Foreground" Value="#00A896"/>
             <Setter Property="Margin" Value="14,0,0,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
@@ -180,53 +216,54 @@
         <Style x:Key="ErrorLabelStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="FontSize" Value="11"/>
-            <Setter Property="Foreground" Value="#F87171"/>
+            <Setter Property="Foreground" Value="#E60067"/>
             <Setter Property="Margin" Value="2,2,0,12"/>
             <Setter Property="Visibility" Value="Hidden"/>
         </Style>
 
         <!-- DataGrid Dark Grayscale Styles -->
         <Style TargetType="DataGrid">
-            <Setter Property="Background" Value="#09090B"/>
-            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="Background" Value="#0B0E14"/>
+            <Setter Property="BorderBrush" Value="#00A896"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="Foreground" Value="#4DEEEA"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="#1F1F23"/>
-            <Setter Property="VerticalGridLinesBrush" Value="#1F1F23"/>
-            <Setter Property="RowBackground" Value="#0E0E10"/>
-            <Setter Property="AlternatingRowBackground" Value="#141417"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#181E29"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#181E29"/>
+            <Setter Property="RowBackground" Value="#0B0E14"/>
+            <Setter Property="AlternatingRowBackground" Value="#181E29"/>
         </Style>
 
         <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#18181B"/>
-            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="Background" Value="#181E29"/>
+            <Setter Property="Foreground" Value="#4DEEEA"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="12,8"/>
-            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderBrush" Value="#00A896"/>
             <Setter Property="BorderThickness" Value="0,0,1,1"/>
         </Style>
 
         <Style TargetType="DataGridCell">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#F4F4F5"/>
+            <Setter Property="Foreground" Value="#4DEEEA"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="10,0"/>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#27272A"/>
-                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                    <Setter Property="Background" Value="#4DEEEA"/>
+                    <Setter Property="Foreground" Value="#0B0E14"/>
+                    <Setter Property="BorderBrush" Value="#4DEEEA"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
 
         <Style TargetType="DataGridRow">
-            <Setter Property="BorderBrush" Value="#2D2D30"/>
+            <Setter Property="BorderBrush" Value="#00A896"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
         </Style>
     </Page.Resources>
@@ -272,11 +309,11 @@
                            FontFamily="{StaticResource GeistPixelSquare}"
                            FontSize="24"
                            FontWeight="Bold"
-                           Foreground="#FFFFFF"
+                           Foreground="#4DEEEA"
                            HorizontalAlignment="Center"
                            Margin="0,0,0,25">
                     <TextBlock.Effect>
-                        <DropShadowEffect BlurRadius="10" ShadowDepth="3" Color="#000000" Opacity="0.5"/>
+                        <DropShadowEffect BlurRadius="12" ShadowDepth="3" Color="#4DEEEA" Opacity="0.5"/>
                     </TextBlock.Effect>
                 </TextBlock>
 
@@ -308,16 +345,16 @@
                     <Border x:Name="BorderPublicLobby"
                             Width="950"
                             Height="400"
-                            BorderBrush="#2D2D30"
+                            BorderBrush="#4DEEEA"
                             BorderThickness="1.5"
-                            Background="#121214"
+                            Background="#0B0E14"
                             CornerRadius="0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             Visibility="Visible"
                             Padding="0">
                         <Border.Effect>
-                            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#000000" Opacity="0.4"/>
+                            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#4DEEEA" Opacity="0.7"/>
                         </Border.Effect>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -327,16 +364,16 @@
 
                             <!-- Lobby Card Header -->
                             <Border Grid.Row="0"
-                                    BorderBrush="#2D2D30"
+                                    BorderBrush="#00A896"
                                     BorderThickness="0,0,0,1.5"
-                                    Background="#18181B"
+                                    Background="#0B0E14"
                                     Padding="15,0">
                                 <Grid>
                                     <TextBlock Text="SALAS DISPONIBLES EN LÍNEA"
                                                FontFamily="{StaticResource GeistPixelSquare}"
                                                FontSize="13"
                                                FontWeight="Bold"
-                                               Foreground="#A1A1AA"
+                                               Foreground="#4DEEEA"
                                                VerticalAlignment="Center"/>
                                     
                                     <Button x:Name="ButtonRefreshLobby"
@@ -359,7 +396,7 @@
                                       IsReadOnly="True"
                                       HeadersVisibility="Column"
                                       Margin="10"
-                                      Background="#09090B">
+                                      Background="#0B0E14">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ANFITRIÓN"
                                                         Binding="{Binding NombreAnfitrion}"
@@ -392,15 +429,15 @@
                     <Border x:Name="BorderPrivateLobby"
                             Width="600"
                             Height="300"
-                            BorderBrush="#2D2D30"
+                            BorderBrush="#00A896"
                             BorderThickness="1.5"
-                            Background="#121214"
+                            Background="#0B0E14"
                             CornerRadius="0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             Visibility="Collapsed">
                         <Border.Effect>
-                            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#000000" Opacity="0.4"/>
+                            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00A896" Opacity="0.7"/>
                         </Border.Effect>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -410,15 +447,15 @@
 
                             <!-- Private Card Header -->
                             <Border Grid.Row="0"
-                                    BorderBrush="#2D2D30"
+                                    BorderBrush="#00A896"
                                     BorderThickness="0,0,0,1.5"
-                                    Background="#18181B"
+                                    Background="#0B0E14"
                                     Padding="15,0">
                                 <TextBlock Text="UNIRSE A SALA PRIVADA"
                                            FontFamily="{StaticResource GeistPixelSquare}"
                                            FontSize="13"
                                            FontWeight="Bold"
-                                           Foreground="#A1A1AA"
+                                           Foreground="#4DEEEA"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"/>
                             </Border>
@@ -464,9 +501,9 @@
 
             <!-- Row 1: Bottom Navigation Bar Tray -->
             <Border Grid.Row="1"
-                    BorderBrush="#2D2D30"
+                    BorderBrush="#00A896"
                     BorderThickness="0,1,0,0"
-                    Background="#121214">
+                    Background="#0B0E14">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

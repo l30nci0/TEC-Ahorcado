@@ -370,6 +370,9 @@
                     BorderBrush="#00A986"
                     BorderThickness="0,1,0,0"
                     Background="#0B0E14">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.6"/>
+                    </Border.Effect>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

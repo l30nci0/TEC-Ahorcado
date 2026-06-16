@@ -129,8 +129,8 @@
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border" 
                                 Background="{TemplateBinding Background}" 
-                                BorderBrush="Transparent"
-                                BorderThickness="0" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1.5" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
                                 <Border.Effect>
