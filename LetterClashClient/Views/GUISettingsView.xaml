@@ -144,7 +144,7 @@
                                 <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter Property="Foreground" Value="#0B0E14"/>
                                 <Setter TargetName="border" Property="Background" Value="#00A896"/>
                                 <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
                             </Trigger>
