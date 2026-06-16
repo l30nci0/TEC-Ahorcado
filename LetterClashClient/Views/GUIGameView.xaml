@@ -195,7 +195,7 @@
           <Border Grid.Column="0"
                             Width="200"
                             Height="50"
-                            BorderBrush="#00FFCC44"
+                            BorderBrush="#00A986"
                             BorderThickness="1.5"
                             Background="#061A22"
                             HorizontalAlignment="Left"
@@ -224,7 +224,7 @@
           <Border Grid.Column="1"
                             Width="300"
                             Height="50"
-                            BorderBrush="#00FFCC44"
+                            BorderBrush="#00A986"
                             BorderThickness="1.5"
                             Background="#061A22"
                             HorizontalAlignment="Left"
@@ -240,7 +240,7 @@
                                        Text="Vs"
                                        FontSize="15"
                                        FontFamily="{StaticResource GeistPixelSquare}"
-                                       Foreground="#00FFCC66"
+                                       Foreground="#00A986"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
               <TextBlock x:Name="TextBlockOpponent"
@@ -248,7 +248,7 @@
                                        Text="Usuario 1"
                                        FontSize="14"
                                        FontFamily="{StaticResource GeistMono}"
-                                       Foreground="#E0F7F4"
+                                       Foreground="#00A986"
                                        VerticalAlignment="Center"/>
               <Image x:Name="ImageOpponentAvatar"
                                    Grid.Column="2"
@@ -266,6 +266,7 @@
                             Content="Abandonar  ⚑"
                             Width="140"
                             Height="38"
+                            BorderBrush="#00A986"
                             Style="{StaticResource ModernSecondaryButton}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -306,7 +307,7 @@
                                        FontSize="38"
                                        FontFamily="{StaticResource GeistMono}"
                                        FontWeight="Bold"
-                                       Foreground="#E0F7F4"
+                                       Foreground="#4DEEEA"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
 
@@ -367,38 +368,38 @@
                 </Grid.RowDefinitions>
 
                 <UniformGrid Grid.Row="0" Columns="10">
-                  <Button Content="Q" Click="ButtonLetter_Click"/>
-                  <Button Content="W" Click="ButtonLetter_Click"/>
-                  <Button Content="E" Click="ButtonLetter_Click"/>
-                  <Button Content="R" Click="ButtonLetter_Click"/>
-                  <Button Content="T" Click="ButtonLetter_Click"/>
-                  <Button Content="Y" Click="ButtonLetter_Click"/>
-                  <Button Content="U" Click="ButtonLetter_Click"/>
-                  <Button Content="I" Click="ButtonLetter_Click"/>
-                  <Button Content="O" Click="ButtonLetter_Click"/>
-                  <Button Content="P" Click="ButtonLetter_Click"/>
+                  <Button Content="Q" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="W" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="E" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="R" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="T" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="Y" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="U" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="I" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="O" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="P" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
                 </UniformGrid>
 
                 <UniformGrid Grid.Row="1" Columns="9" Margin="24,0,24,0">
-                  <Button Content="A" Click="ButtonLetter_Click"/>
-                  <Button Content="S" Click="ButtonLetter_Click"/>
-                  <Button Content="D" Click="ButtonLetter_Click"/>
-                  <Button Content="F" Click="ButtonLetter_Click"/>
-                  <Button Content="G" Click="ButtonLetter_Click"/>
-                  <Button Content="H" Click="ButtonLetter_Click"/>
-                  <Button Content="J" Click="ButtonLetter_Click"/>
-                  <Button Content="K" Click="ButtonLetter_Click"/>
-                  <Button Content="L" Click="ButtonLetter_Click"/>
+                  <Button Content="A" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="S" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="D" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="F" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="G" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="H" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="J" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="K" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="L" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
                 </UniformGrid>
 
                 <UniformGrid Grid.Row="2" Columns="7" Margin="70,0,70,0">
-                  <Button Content="Z" Click="ButtonLetter_Click"/>
-                  <Button Content="X" Click="ButtonLetter_Click"/>
-                  <Button Content="C" Click="ButtonLetter_Click"/>
-                  <Button Content="V" Click="ButtonLetter_Click"/>
-                  <Button Content="B" Click="ButtonLetter_Click"/>
-                  <Button Content="N" Click="ButtonLetter_Click"/>
-                  <Button Content="M" Click="ButtonLetter_Click"/>
+                  <Button Content="Z" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="X" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="C" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="V" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="B" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="N" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
+                  <Button Content="M" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
                 </UniformGrid>
               </Grid>
             </Grid>
@@ -567,7 +568,7 @@
               </Grid.RowDefinitions>
 
               <Border Grid.Row="0" 
-                                    BorderBrush="#00FFCC44"
+                                    BorderBrush="#00A986"
                                     BorderThickness="1.5"
                                     Background="#04111A"
                                     CornerRadius="0">
@@ -575,7 +576,7 @@
                                            Text="Chat con Oponente"
                                            FontSize="12"
                                            FontFamily="{StaticResource GeistPixelSquare}"
-                                           Foreground="#00FFCC88"
+                                           Foreground="#4DEEEA"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"/>
               </Border>
@@ -588,8 +589,8 @@
                                      TextWrapping="Wrap"
                                      VerticalScrollBarVisibility="Auto"
                                      Background="#061A22"
-                                     Foreground="#9EE8DC"
-                                     BorderBrush="#00FFCC44"
+                                     Foreground="#4DEEEA"
+                                     BorderBrush="#00A986"
                                      BorderThickness="1.5,0,1.5,1.5"
                                      Padding="8"/>
 
@@ -603,8 +604,8 @@
                                          FontSize="13"
                                          FontFamily="{StaticResource GeistMono}"
                                          Background="#061A22"
-                                         Foreground="#E0F7F4"
-                                         BorderBrush="#00FFCC44"
+                                         Foreground="#4DEEEA"
+                                         BorderBrush="#00A986"
                                          BorderThickness="1.5,0,1.5,1.5"
                                          CaretBrush="#00FFCC"
                                          Padding="8,6"
