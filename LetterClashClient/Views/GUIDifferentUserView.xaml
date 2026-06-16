@@ -25,22 +25,27 @@
           <ControlTemplate TargetType="Button">
             <Border x:Name="border" 
                                 Background="{TemplateBinding Background}" 
-                                BorderBrush="Transparent"
-                                BorderThickness="0" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
               <Border.Effect>
-                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="5.5"/>
+                <DropShadowEffect x:Name="neonShadow"  BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.7"/>
               </Border.Effect>
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Foreground" Value="#FFFFFF"/>
-                <Setter TargetName="border" Property="Background" Value="#1E1E21"/>
+                <Setter Property="Foreground" Value="#0B0E14"/>
+                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
               <Trigger Property="IsPressed" Value="true">
-                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                <Setter Property="Foreground" Value="#0B0E14"/>
+                <Setter TargetName="border" Property="Background" Value="#00A896"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -75,15 +80,22 @@
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
-                <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF"/>
+                <Setter Property="Foreground" Value="#0B0E14"/>
+                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
               <Trigger Property="IsPressed" Value="true">
-                <Setter TargetName="border" Property="Background" Value="#D4D4D8"/>
+                <Setter Property="Foreground" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="Background" Value="#00A896"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
               <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="border" Property="Background" Value="#27272A"/>
-                <Setter Property="Foreground" Value="#71717A"/>
+                <Setter Property="Foreground" Value="#4A5568"/>
+                <Setter TargetName="border" Property="Background" Value="#181E29"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -112,21 +124,27 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
               <Border.Effect>
-                <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#9B004F" Opacity="0.5"/>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#9B004F" Opacity="0.6"/>
               </Border.Effect>
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="border" Property="Background" Value="#27272A"/>
-                <Setter TargetName="border" Property="BorderBrush" Value="#F4F4F5"/>
-                <Setter Property="Foreground" Value="#FFFFFF"/>
+                <Setter TargetName="border" Property="Background" Value="#F649A7"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#F649A7"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
+                <Setter Property="Foreground" Value="#0B0E14"/>
               </Trigger>
               <Trigger Property="IsPressed" Value="true">
-                <Setter TargetName="border" Property="Background" Value="#09090B"/>
+                <Setter TargetName="border" Property="Background" Value="#9B004F"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#F649A7"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
+                <Setter Property="Foreground" Value="#F649A7"/>
               </Trigger>
               <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="border" Property="BorderBrush" Value="#09090B"/>
+                <Setter TargetName="border" Property="Background" Value="#0B0E14"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#181E29"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
                 <Setter Property="Foreground" Value="#52525B"/>
               </Trigger>
             </ControlTemplate.Triggers>
@@ -140,7 +158,7 @@
       <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
       <Setter Property="FontSize" Value="11"/>
       <Setter Property="FontWeight" Value="Bold"/>
-      <Setter Property="Foreground" Value="#71717A"/>
+      <Setter Property="Foreground" Value="#7DE2D1"/>
       <Setter Property="Margin" Value="2,0,0,6"/>
     </Style>
 
@@ -245,14 +263,20 @@
                 <StackPanel Grid.Row="0" VerticalAlignment="Center">
                   <!-- Full Name -->
                   <TextBlock Text="NOMBRE COMPLETO" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                  <Border BorderBrush="#181E29" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                  <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                     <TextBlock x:Name="TextBlockFullName" Style="{StaticResource ValueTextStyle}"/>
+                    <Border.Effect>
+                      <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
+                    </Border.Effect>
                   </Border>
 
                   <!-- Email -->
                   <TextBlock Text="CORREO ELECTRÓNICO" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                  <Border BorderBrush="#181E29" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                  <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                     <TextBlock x:Name="TextBlockEmail" Style="{StaticResource ValueTextStyle}"/>
+                    <Border.Effect>
+                      <DropShadowEffect  BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
+                    </Border.Effect>
                   </Border>
 
                   <!-- Age and Birthday Row -->
@@ -265,14 +289,20 @@
 
                     <StackPanel Grid.Column="0">
                       <TextBlock Text="EDAD" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                      <Border BorderBrush="#181E29" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                      <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                        <Border.Effect>
+                          <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
+                        </Border.Effect>
                         <TextBlock x:Name="TextBlockAge" Style="{StaticResource ValueTextStyle}"/>
                       </Border>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2">
                       <TextBlock Text="FECHA DE NACIMIENTO" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                      <Border BorderBrush="#181E29" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                      <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                        <Border.Effect>
+                          <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
+                        </Border.Effect>
                         <TextBlock x:Name="TextBlockBirthDate" Style="{StaticResource ValueTextStyle}" />
                       </Border>
                     </StackPanel>
@@ -280,18 +310,24 @@
 
                   <!-- Phone -->
                   <TextBlock Text="TELÉFONO" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                  <Border BorderBrush="#181E29" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                  <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                     <TextBlock x:Name="TextBlockPhone" Style="{StaticResource ValueTextStyle}"/>
+                    <Border.Effect>
+                      <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
+                    </Border.Effect>
                   </Border>
                 </StackPanel>
 
                 <!-- Statistics panel -->
                 <Border Grid.Row="1"
-                                        BorderBrush="#181E29"
+                                        BorderBrush="#00A986"
                                         BorderThickness="1"
                                         Background="#0B0E14"
                                         Padding="10,12"
                                         Margin="0,20,0,0">
+                  <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
+                  </Border.Effect>
                   <Grid>
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="*"/>
@@ -306,7 +342,7 @@
                                                    Grid.Column="0"
                                                    FontFamily="{StaticResource GeistMono}"
                                                    FontSize="11"
-                                                   Foreground="#E4E4E7"
+                                                   Foreground="#7DE2D1"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
 
@@ -314,7 +350,7 @@
                                                    Grid.Column="1"
                                                    FontFamily="{StaticResource GeistMono}"
                                                    FontSize="11"
-                                                   Foreground="#A1A1AA"
+                                                   Foreground="#7DE2D1"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
 
@@ -322,7 +358,7 @@
                                                    Grid.Column="2"
                                                    FontFamily="{StaticResource GeistMono}"
                                                    FontSize="11"
-                                                   Foreground="#E4E4E7"
+                                                   Foreground="#7DE2D1"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
 
@@ -330,7 +366,7 @@
                                                    Grid.Column="3"
                                                    FontFamily="{StaticResource GeistMono}"
                                                    FontSize="11"
-                                                   Foreground="#A1A1AA"
+                                                   Foreground="#7DE2D1"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
 
@@ -338,7 +374,7 @@
                                                    Grid.Column="4"
                                                    FontFamily="{StaticResource GeistMono}"
                                                    FontSize="11"
-                                                   Foreground="#E4E4E7"
+                                                   Foreground="#7DE2D1"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
 
@@ -346,7 +382,7 @@
                                                    Grid.Column="5"
                                                    FontFamily="{StaticResource GeistMono}"
                                                    FontSize="11"
-                                                   Foreground="#A1A1AA"
+                                                   Foreground="#7DE2D1"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
                   </Grid>
@@ -354,7 +390,11 @@
               </Grid>
 
               <!-- Vertical Divider -->
-              <Border Grid.Column="1" Width="1.5" Background="#2D2D30" VerticalAlignment="Stretch" Margin="0,10"/>
+              <Border Grid.Column="1" Width="1.5" Background="#4DEEEA" VerticalAlignment="Stretch" Margin="0,10">
+                <Border.Effect>
+                  <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#4DEEEA" Opacity="0.5"/>
+                </Border.Effect>
+              </Border>
 
               <!-- Right Column: Avatar and Back button -->
               <Grid Grid.Column="2" Margin="30,0,0,0">

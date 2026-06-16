@@ -479,9 +479,13 @@
                                 </StackPanel>
 
                                 <!-- Divider -->
-                                <Border Grid.Column="1" Width="1.5" Background="#2D2D30" VerticalAlignment="Stretch" Margin="0,5"/>
+                <Border Grid.Column="1" Width="1.5" Background="#4DEEEA" VerticalAlignment="Stretch" Margin="0,5">
+                  <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.6"/>
+                  </Border.Effect>
+                </Border>
 
-                                <!-- Right Column (Avatar & Action) -->
+                <!-- Right Column (Avatar & Action) -->
                                 <Grid Grid.Column="2" Margin="30,0,0,0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
