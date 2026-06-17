@@ -101,7 +101,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="16,10"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -649,9 +649,9 @@
                             <Border Grid.Column="0" 
                                     Width="90" 
                                     Height="90" 
-                                    BorderBrush="#2D2D30" 
+                                    BorderBrush="#4DEEEA" 
                                     BorderThickness="1.5" 
-                                    Background="#09090B" 
+                                    Background="#0B0E14" 
                                     CornerRadius="0">
                                 <Grid>
                                     <Image x:Name="ImageUserAvatar"
@@ -667,6 +667,7 @@
                                             Width="24"
                                             Height="24"
                                             FontSize="14"
+                                            BorderBrush="#4DEEEA"
                                             FontFamily="{StaticResource GeistPixelSquare}"
                                             HorizontalAlignment="Right"
                                             VerticalAlignment="Bottom"
@@ -675,8 +676,8 @@
                                             Click="ButtonAddAvatar_Click">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="#E4E4E7"
-                                                        BorderBrush="#FFFFFF"
+                                                <Border Background="#4DEEEA"
+                                                        BorderBrush="#4DEEEA"
                                                         BorderThickness="1"
                                                         CornerRadius="0">
                                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>

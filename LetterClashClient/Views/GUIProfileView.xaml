@@ -136,20 +136,26 @@
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="btnBorder"
-                                                Background="#18181B"
-                                                BorderBrush="#2D2D30"
+                                                Background="#181E29"
+                                                BorderBrush="#4DEEEA"
                                                 BorderThickness="1,1.5,1.5,1.5"
                                                 CornerRadius="0">
-                                            <TextBlock Text="📅" 
-                                                       Foreground="#A1A1AA"
-                                                       FontSize="12"
+                                            <TextBlock x:Name="btnIcon"
+                                                       Text="📅" 
+                                                       Foreground="#4DEEEA"
+                                                       FontSize="13"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="btnBorder" Property="BorderBrush" Value="#E4E4E7"/>
-                                                <Setter TargetName="btnBorder" Property="Background" Value="#27272A"/>
+                                                
+                                                <Setter TargetName="btnBorder" Property="Background" Value="#4DEEEA"/>
+                                                <Setter TargetName="btnIcon" Property="Foreground" Value="#0B0E14"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="btnBorder" Property="Background" Value="#00A896"/>
+                                                <Setter TargetName="btnIcon" Property="Foreground" Value="#4DEEEA"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -162,14 +168,14 @@
                                    AllowsTransparency="True"
                                    Focusable="False"
                                    PopupAnimation="Slide">
-                                <Border Background="#121214"
-                                        BorderBrush="#2D2D30"
+                                <Border Background="#0B0E14"
+                                        BorderBrush="#4DEEEA"
                                         BorderThickness="1.5"
                                         Padding="5"
                                         CornerRadius="0">
                                     <Calendar x:Name="PART_Calendar"
-                                              Background="#121214"
-                                              Foreground="#F4F4F5"
+                                              Background="#0B0E14"
+                                              Foreground="#4DEEEA"
                                               BorderThickness="0"/>
                                 </Border>
                             </Popup>
