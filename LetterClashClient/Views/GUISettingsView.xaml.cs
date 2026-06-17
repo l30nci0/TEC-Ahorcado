@@ -11,51 +11,44 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Ajustes";
+        window.Title = (string) Application.Current.FindResource("Settings_WindowTitle") ?? "Ajustes";
       }
 
       UpdateLanguageButtons();
     }
 
     private void UpdateLanguageButtons() {
-      if (ComboBoxPreferredLanguage.SelectedIndex == 1) { // Ingles
-        ButtonLangEN.Style = (Style)FindResource("ModernPrimaryButton");
-        ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
-      } else { // Español
-        ButtonLangES.Style = (Style)FindResource("ModernPrimaryButton");
-        ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+      if (Services.LanguageManager.CurrentLanguage == "EN") {
+        ComboBoxPreferredLanguage.SelectedIndex = 1;
+        ButtonLangEN.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonLangES.Style = (Style) FindResource("ModernSecondaryButton");
+      } else {
+        ComboBoxPreferredLanguage.SelectedIndex = 0;
+        ButtonLangES.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonLangEN.Style = (Style) FindResource("ModernSecondaryButton");
       }
     }
 
     private void ButtonLangES_Click(object sender, RoutedEventArgs e) {
-      ComboBoxPreferredLanguage.SelectedIndex = 0;
+      Services.LanguageManager.SetLanguage("ES");
       UpdateLanguageButtons();
+
+      // Update window title dynamically on language change
+      Window window = Window.GetWindow(this);
+      if (window != null) {
+        window.Title = (string) Application.Current.FindResource("Settings_WindowTitle") ?? "Ajustes";
+      }
     }
 
     private void ButtonLangEN_Click(object sender, RoutedEventArgs e) {
-      ComboBoxPreferredLanguage.SelectedIndex = 1;
+      Services.LanguageManager.SetLanguage("EN");
       UpdateLanguageButtons();
-    }
 
-    private void ButtonPrivacy_Click(object sender, RoutedEventArgs e) {
-      MessageBox.Show("La privacidad del perfil se modificará aquí.",
-                      "TecnoHorcado",
-                      MessageBoxButton.OK,
-                      MessageBoxImage.Information);
-    }
-
-    private void ButtonSound_Click(object sender, RoutedEventArgs e) {
-      MessageBox.Show("La configuración de sonido se modificará aquí.",
-                      "TecnoHorcado",
-                      MessageBoxButton.OK,
-                      MessageBoxImage.Information);
-    }
-
-    private void ButtonHowToPlay_Click(object sender, RoutedEventArgs e) {
-      MessageBox.Show("Aquí se mostrarán las instrucciones del juego.",
-                      "TecnoHorcado",
-                      MessageBoxButton.OK,
-                      MessageBoxImage.Information);
+      // Update window title dynamically on language change
+      Window window = Window.GetWindow(this);
+      if (window != null) {
+        window.Title = (string) Application.Current.FindResource("Settings_WindowTitle") ?? "Ajustes";
+      }
     }
 
     private void ButtonLogout_Click(object sender, RoutedEventArgs e) {

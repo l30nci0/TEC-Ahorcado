@@ -5,6 +5,7 @@ using System.Windows.Controls;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -17,7 +18,18 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Crear Cuenta";
+        window.Title = (string) Application.Current.FindResource("Register_WindowTitle") ?? "Crear Cuenta";
+      }
+
+      // Sincronizar UI de botones según el idioma cargado actual
+      if (Services.LanguageManager.CurrentLanguage == "EN") {
+        ComboBoxPreferredLanguage.SelectedIndex = 1; // Ingles
+        ButtonLangES.Style = (Style) FindResource("ModernSecondaryButton");
+        ButtonLangEN.Style = (Style) FindResource("ModernPrimaryButton");
+      } else {
+        ComboBoxPreferredLanguage.SelectedIndex = 2; // Español
+        ButtonLangES.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonLangEN.Style = (Style) FindResource("ModernSecondaryButton");
       }
     }
 
@@ -95,18 +107,26 @@ namespace LetterClashClient.Views {
           return;
         }
 
-        MessageBox.Show("Cuenta creada con éxito. Inicie sesión para comenzar.", "Registro Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
+        string successMsg = (string) Application.Current.FindResource("Register_SuccessMsg") ?? "Cuenta creada con éxito. Inicie sesión para comenzar.";
+        string successTitle = (string) Application.Current.FindResource("Register_SuccessTitle") ?? "Registro Exitoso";
+        MessageBox.Show(successMsg, successTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         NavigationService.Navigate(new GUILoginView());
       } catch (CommunicationException) {
-        MessageBox.Show("No se pudo establecer conexión con el servidor. Compruebe que el servidor esté activo.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connMsg = (string) Application.Current.FindResource("Msg_ConnectionError") ?? "No se pudo establecer conexión con el servidor. Compruebe que el servidor esté activo.";
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
     private void ManejarErrorRegistro(ServiceFault error) {
+      string registerErrTitle = (string) Application.Current.FindResource("Register_ErrorTitle") ?? "Error de Registro";
       if (error == null) {
-        MessageBox.Show("Error al registrar la cuenta.", "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errGeneric = (string) Application.Current.FindResource("Register_ErrorGeneric") ?? "Error al registrar la cuenta.";
+        MessageBox.Show(errGeneric, registerErrTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         return;
       }
 
@@ -118,7 +138,7 @@ namespace LetterClashClient.Views {
           TextBlockUsernameError.Text = error.Mensaje;
           TextBlockUsernameError.Visibility = Visibility.Visible;
         } else {
-          MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
+          MessageBox.Show(error.Mensaje, registerErrTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       } else if (error.CodigoError == CodigoError.PARAMETRO_INVALIDO) {
         if (error.Mensaje != null && (error.Mensaje.Contains("usuario") || error.Mensaje.Contains("Nombre de usuario"))) {
@@ -128,10 +148,10 @@ namespace LetterClashClient.Views {
           TextBlockEmailError.Text = error.Mensaje;
           TextBlockEmailError.Visibility = Visibility.Visible;
         } else {
-          MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
+          MessageBox.Show(error.Mensaje, registerErrTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       } else {
-        MessageBox.Show(error.Mensaje, "Error de Registro", MessageBoxButton.OK, MessageBoxImage.Error);
+        MessageBox.Show(error.Mensaje, registerErrTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
@@ -140,8 +160,9 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonAddAvatar_Click(object sender, RoutedEventArgs e) {
-      MessageBox.Show("Aquí se podrá seleccionar una imagen de avatar.",
-                      "TecnoHorcado",
+      string avatarMsg = (string) Application.Current.FindResource("Register_AvatarSelectMsg") ?? "Aquí se podrá seleccionar una imagen de avatar.";
+      MessageBox.Show(avatarMsg,
+                      "Letter Clash",
                       MessageBoxButton.OK,
                       MessageBoxImage.Information);
     }
@@ -172,14 +193,16 @@ namespace LetterClashClient.Views {
 
     private void ButtonLangES_Click(object sender, RoutedEventArgs e) {
       ComboBoxPreferredLanguage.SelectedIndex = 2; // Español
-      ButtonLangES.Style = (Style)FindResource("ModernPrimaryButton");
-      ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+      ButtonLangES.Style = (Style) FindResource("ModernPrimaryButton");
+      ButtonLangEN.Style = (Style) FindResource("ModernSecondaryButton");
+      Services.LanguageManager.SetLanguage("ES");
     }
 
     private void ButtonLangEN_Click(object sender, RoutedEventArgs e) {
       ComboBoxPreferredLanguage.SelectedIndex = 1; // Ingles
-      ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
-      ButtonLangEN.Style = (Style)FindResource("ModernPrimaryButton");
+      ButtonLangES.Style = (Style) FindResource("ModernSecondaryButton");
+      ButtonLangEN.Style = (Style) FindResource("ModernPrimaryButton");
+      Services.LanguageManager.SetLanguage("EN");
     }
   }
 }

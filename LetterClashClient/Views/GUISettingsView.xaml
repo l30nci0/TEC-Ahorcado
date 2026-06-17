@@ -200,7 +200,7 @@
             <Grid Grid.Row="0">
                 <!-- Main Card Container -->
                 <Border Width="550"
-                        Height="480"
+                        Height="340"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         BorderBrush="#4DEEEA"
@@ -222,7 +222,7 @@
 
                         <!-- Header Section -->
                         <StackPanel Grid.Row="0" Margin="0,0,0,25">
-                            <TextBlock Text="AJUSTES"
+                            <TextBlock Text="{DynamicResource Settings_Title}"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        FontSize="24"
                                        FontWeight="Bold"
@@ -230,7 +230,7 @@
                                        HorizontalAlignment="Center"
                                        Margin="0,0,0,6"/>
 
-                            <TextBlock Text="Configura las preferencias de tu perfil y juego"
+                            <TextBlock Text="{DynamicResource Settings_Subtitle}"
                                        FontFamily="{StaticResource GeistMono}"
                                        FontSize="13"
                                        Foreground="#4DEEEA"
@@ -239,33 +239,9 @@
 
                         <!-- Settings Panel Stack -->
                         <StackPanel Grid.Row="1" VerticalAlignment="Center">
-                            <!-- Privacy settings -->
-                            <Button x:Name="ButtonPrivacy"
-                                    Content="Perfil: Publico          🔒"
-                                    Height="45"
-                                    Style="{StaticResource ModernSecondaryButton}"
-                                    Margin="0,0,0,15"
-                                    Click="ButtonPrivacy_Click"/>
-
-                            <!-- Sound settings -->
-                            <Button x:Name="ButtonSound"
-                                    Content="Sonido                 ≋"
-                                    Height="45"
-                                    Style="{StaticResource ModernSecondaryButton}"
-                                    Margin="0,0,0,15"
-                                    Click="ButtonSound_Click"/>
-
-                            <!-- How to play instructions -->
-                            <Button x:Name="ButtonHowToPlay"
-                                    Content="Como Jugar??          ?"
-                                    Height="45"
-                                    Style="{StaticResource ModernSecondaryButton}"
-                                    Margin="0,0,0,15"
-                                    Click="ButtonHowToPlay_Click"/>
-
                             <!-- Segmented Language selector -->
                             <StackPanel Margin="0,5,0,20">
-                                <TextBlock Text="IDIOMA PREFERIDO" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource Settings_PreferredLanguage}" Style="{StaticResource FormLabelStyle}"/>
                                 <Grid Height="40">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -274,7 +250,7 @@
                                     
                                     <Button x:Name="ButtonLangES"
                                             Grid.Column="0"
-                                            Content="ESPAÑOL"
+                                            Content="{DynamicResource Settings_LangES}"
                                             Style="{StaticResource ModernPrimaryButton}"
                                             Margin="0,0,5,0"
                                             BorderThickness="1.5"
@@ -282,7 +258,7 @@
                                             
                                     <Button x:Name="ButtonLangEN"
                                             Grid.Column="1"
-                                            Content="ENGLISH"
+                                            Content="{DynamicResource Settings_LangEN}"
                                             Style="{StaticResource ModernSecondaryButton}"
                                             Margin="5,0,0,0"
                                             Click="ButtonLangEN_Click"/>
@@ -291,7 +267,7 @@
 
                             <!-- Logout button -->
                             <Button x:Name="ButtonLogout"
-                                    Content="Cerrar Sesion          ↩"
+                                    Content="{DynamicResource Settings_BtnLogout}"
                                     Height="45"
                                     Style="{StaticResource ModernSecondaryButton}"
                                     Click="ButtonLogout_Click"/>
@@ -316,31 +292,31 @@
 
                     <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
-                            Content="Menu Principal  ⚔"
+                            Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
                     <Button x:Name="ButtonProfile"
                             Grid.Column="1"
-                            Content="Perfil  👤"
+                            Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
                     <Button x:Name="ButtonHistory"
                             Grid.Column="2"
-                            Content="Historial  ◴"
+                            Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
                     <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
-                            Content="Marcadores  🏆"
+                            Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
                     <Button x:Name="ButtonSettings"
                             Grid.Column="4"
-                            Content="Ajustes  ⚙"
+                            Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
                 </Grid>

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -23,7 +24,7 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Crea Lobby (Escoger palabra)";
+        window.Title = (string) Application.Current.FindResource("SelectWord_WindowTitle") ?? "Crea Lobby (Escoger palabra)";
       }
 
       LoadWords();
@@ -31,15 +32,19 @@ namespace LetterClashClient.Views {
 
     private void LoadWords() {
       // Update header text based on selected language
-      TextBlockHeader.Text = $"Palabras en {selectedLanguage.ToLower()}";
+      string langStr = selectedLanguage == Idiomas.INGLES
+        ? (string) Application.Current.FindResource("SelectWord_LangNameEN") ?? "Inglés"
+        : (string) Application.Current.FindResource("SelectWord_LangNameES") ?? "Español";
+      string headerTemplate = (string) Application.Current.FindResource("SelectWord_HeaderTemplate") ?? "Palabras en {0}";
+      TextBlockHeader.Text = string.Format(headerTemplate, langStr.ToLower());
 
       // Dynamically toggle styles of the segmented buttons
       if (selectedLanguage == Idiomas.INGLES) {
-        ButtonLangEN.Style = (Style)FindResource("ModernPrimaryButton");
-        ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonLangEN.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonLangES.Style = (Style) FindResource("ModernSecondaryButton");
       } else {
-        ButtonLangES.Style = (Style)FindResource("ModernPrimaryButton");
-        ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonLangES.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonLangEN.Style = (Style) FindResource("ModernSecondaryButton");
       }
 
       try {
@@ -49,12 +54,18 @@ namespace LetterClashClient.Views {
         if (result != null && result.IsSuccess) {
           DataGridWords.ItemsSource = result.Value;
         } else {
-          MessageBox.Show(result?.Error?.Mensaje ?? "Error al recuperar palabras del catálogo.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string errRetrieve = (string) Application.Current.FindResource("SelectWord_ErrorRetrieve") ?? "Error al recuperar palabras del catálogo.";
+          MessageBox.Show(result?.Error?.Mensaje ?? errRetrieve, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       } catch (CommunicationException) {
-        MessageBox.Show("No se pudo conectar con el servidor para obtener las palabras.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        string connMsg = (string) Application.Current.FindResource("SelectWord_ErrorConnection") ?? "No se pudo conectar con el servidor para obtener las palabras.";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 

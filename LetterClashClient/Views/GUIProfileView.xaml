@@ -421,7 +421,7 @@
 
                             <!-- View Mode Header -->
                             <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                                <TextBlock Text="PERFIL"
+                                <TextBlock Text="{DynamicResource Profile_Title}"
                                            FontFamily="{StaticResource GeistPixelSquare}"
                                            FontSize="24"
                                            FontWeight="Bold"
@@ -448,7 +448,7 @@
                                 <!-- Left column (Fields) -->
                                 <StackPanel Grid.Column="0" Margin="0,0,30,0" VerticalAlignment="Center">
                                     <!-- Full Name -->
-                                    <TextBlock Text="NOMBRE COMPLETO" Style="{StaticResource FormLabelStyle}"/>
+                                    <TextBlock Text="{DynamicResource Profile_FullNameLabel}" Style="{StaticResource FormLabelStyle}"/>
                                     <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                                         <TextBlock x:Name="TextBlockFullName" Style="{StaticResource ValueTextStyle}"/>
                                         <Border.Effect>
@@ -465,7 +465,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock Text="EDAD" Style="{StaticResource FormLabelStyle}"/>
+                                            <TextBlock Text="{DynamicResource Profile_AgeLabel}" Style="{StaticResource FormLabelStyle}"/>
                                             <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                                 <TextBlock x:Name="TextBlockAge" Style="{StaticResource ValueTextStyle}"/>
                                                 <Border.Effect>
@@ -475,7 +475,7 @@
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="2">
-                                            <TextBlock Text="FECHA DE NACIMIENTO" Style="{StaticResource FormLabelStyle}"/>
+                                            <TextBlock Text="{DynamicResource Profile_BirthDateLabel}" Style="{StaticResource FormLabelStyle}"/>
                                             <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                                 <TextBlock x:Name="TextBlockBirthDate" Style="{StaticResource ValueTextStyle}"/>
                                                 <Border.Effect>
@@ -486,7 +486,7 @@
                                     </Grid>
 
                                     <!-- Email -->
-                                    <TextBlock Text="CORREO ELECTRÓNICO" Style="{StaticResource FormLabelStyle}"/>
+                                    <TextBlock Text="{DynamicResource Profile_EmailLabel}" Style="{StaticResource FormLabelStyle}"/>
                                     <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                                         <TextBlock x:Name="TextBlockEmail" Style="{StaticResource ValueTextStyle}"/>
                                         <Border.Effect>
@@ -495,7 +495,7 @@
                                     </Border>
 
                                     <!-- Phone -->
-                                    <TextBlock Text="TELÉFONO" Style="{StaticResource FormLabelStyle}"/>
+                                    <TextBlock Text="{DynamicResource Profile_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
                                     <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                         <TextBlock x:Name="TextBlockPhone" Style="{StaticResource ValueTextStyle}"/>
                                         <Border.Effect>
@@ -519,7 +519,7 @@
                                     </Grid.RowDefinitions>
 
                                     <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="AVATAR DE JUGADOR" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                        <TextBlock Text="{DynamicResource Profile_AvatarLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
                                         <Border Width="150" Height="150" BorderBrush="#4DEEEA" BorderThickness="1.5" Background="#0B0E14">
                                             <Image x:Name="ImageUserAvatar" Source="/Assets/Images/UserAvatar.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             <Border.Effect>
@@ -530,7 +530,7 @@
 
                   <Button x:Name="ButtonEdit"
                                             Grid.Row="1"
-                                            Content="EDITAR PERFIL  🛠"
+                                            Content="{DynamicResource Profile_BtnEdit}"
                                             Height="50"
                                             Style="{StaticResource ModernPrimaryButton}"
                                             Click="ButtonEdit_Click"
@@ -548,7 +548,7 @@
 
                             <!-- Edit Mode Header -->
                             <StackPanel Grid.Row="0" Margin="0,0,0,15">
-                                <TextBlock Text="EDITAR PERFIL"
+                                <TextBlock Text="{DynamicResource Profile_EditTitle}"
                                            FontFamily="{StaticResource GeistPixelSquare}"
                                            FontSize="22"
                                            FontWeight="Bold"
@@ -561,7 +561,7 @@
                                         ShadowDepth="0" Color="#00A896" Opacity="0.7"/>
                                     </TextBlock.Effect>
                                 </TextBlock>
-                            <TextBlock Text="Modifica los datos personales de tu cuenta"
+                            <TextBlock Text="{DynamicResource Profile_EditSubtitle}"
                                            FontFamily="{StaticResource GeistMono}"
                                            FontSize="12"
                                            Foreground="#7DE2D1"
@@ -581,7 +581,7 @@
 
                                 <!-- Left Column -->
                                 <StackPanel Grid.Column="0" Margin="0,0,25,0" VerticalAlignment="Center">
-                                    <TextBlock Text="AVATAR DE PERFIL" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                                    <TextBlock Text="{DynamicResource Profile_AvatarEditLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,5"/>
                                     <Grid Width="130" Height="130" Margin="0,0,0,15" HorizontalAlignment="Center">
                                         <Border BorderBrush="#4DEEEA" BorderThickness="1.5" Background="#0B0E14">
                                         <Border.Effect>
@@ -593,11 +593,11 @@
                                     </Grid>
 
                                     <!-- Username read-only field -->
-                                    <TextBlock Text="NOMBRE DE JUGADOR" Style="{StaticResource FormLabelStyle}"/>
+                                    <TextBlock Text="{DynamicResource Profile_UsernameEditLabel}" Style="{StaticResource FormLabelStyle}"/>
                                     <TextBox x:Name="TextBoxUsername" Height="38" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,15"/>
 
                                     <!-- Segmented Language Selection -->
-                                    <TextBlock Text="IDIOMA PREFERIDO" Style="{StaticResource FormLabelStyle}"/>
+                                    <TextBlock Text="{DynamicResource Profile_PreferredLanguageLabel}" Style="{StaticResource FormLabelStyle}"/>
                                     <Grid Height="38">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -606,7 +606,7 @@
                                         <Button x:Name="ButtonLangES" Grid.Column="0" Content="ESPAÑOL" Style="{StaticResource ModernPrimaryButton}" Margin="0,0,4,0" Click="ButtonLangES_Click"/>
                                         <Button x:Name="ButtonLangEN" Grid.Column="1" Content="ENGLISH" Style="{StaticResource ModernSecondaryButton}" Margin="4,0,0,0" Click="ButtonLangEN_Click"/>
                                     </Grid>
-                                    <TextBlock x:Name="TextBlockLanguageError" Text="Seleccione un idioma" Style="{StaticResource ErrorLabelStyle}"/>
+                                    <TextBlock x:Name="TextBlockLanguageError" Text="{DynamicResource Profile_LanguageError}" Style="{StaticResource ErrorLabelStyle}"/>
                                 </StackPanel>
 
                                 <!-- Divider -->
@@ -616,49 +616,49 @@
                                 <ScrollViewer Grid.Column="2" Margin="25,0,0,0" VerticalScrollBarVisibility="Auto" Focusable="False">
                                     <StackPanel VerticalAlignment="Center">
                                         <!-- Full Name -->
-                                        <TextBlock Text="NOMBRE COMPLETO" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource Profile_FullNameLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <TextBox x:Name="TextBoxFullName" Height="38" Style="{StaticResource ModernTextBox}"/>
-                                        <TextBlock x:Name="TextBlockFullNameError" Text="Ingrese un nombre válido" Style="{StaticResource ErrorLabelStyle}"/>
+                                        <TextBlock x:Name="TextBlockFullNameError" Text="{DynamicResource Profile_FullNameError}" Style="{StaticResource ErrorLabelStyle}"/>
 
                                         <!-- Email read-only -->
-                                        <TextBlock Text="CORREO ELECTRÓNICO" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource Profile_EmailLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <TextBox x:Name="TextBoxEmail" Height="38" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,12"/>
 
                                         <!-- Phone -->
-                                        <TextBlock Text="TELÉFONO" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource Profile_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <TextBox x:Name="TextBoxPhone" Height="38" Style="{StaticResource ModernTextBox}"/>
-                                        <TextBlock x:Name="TextBlockPhoneError" Text="Coloque solo números (10 dígitos)" Style="{StaticResource ErrorLabelStyle}"/>
+                                        <TextBlock x:Name="TextBlockPhoneError" Text="{DynamicResource Profile_PhoneError}" Style="{StaticResource ErrorLabelStyle}"/>
 
                                         <!-- Birthday -->
-                                        <TextBlock Text="CUMPLEAÑOS" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource Profile_BirthdayLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <DatePicker x:Name="DatePickerBirthDate" Height="38" Style="{StaticResource ModernDatePicker}" HorizontalAlignment="Stretch"/>
-                                        <TextBlock x:Name="TextBlockBirthDateError" Text="Seleccione una fecha" Style="{StaticResource ErrorLabelStyle}"/>
+                                        <TextBlock x:Name="TextBlockBirthDateError" Text="{DynamicResource Profile_BirthDateError}" Style="{StaticResource ErrorLabelStyle}"/>
 
                                         <!-- Passwords Grid -->
-                                        <TextBlock Text="CAMBIAR CONTRASEÑA" Style="{StaticResource FormLabelStyle}" Foreground="#7DE2D1" Margin="0,10,0,5"/>
+                                        <TextBlock Text="{DynamicResource Profile_ChangePasswordHeader}" Style="{StaticResource FormLabelStyle}" Foreground="#7DE2D1" Margin="0,10,0,5"/>
 
                                         <!-- Current Password -->
-                                        <TextBlock Text="CONTRASEÑA ACTUAL" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource Profile_CurrentPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <Grid Height="38">
                                             <PasswordBox x:Name="PasswordBoxCurrentPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxCurrentPassword_PasswordChanged"/>
-                                            <TextBlock x:Name="TextBlockCurrentPasswordPlaceholder" Text="Requerida para cambiar contraseña" Style="{StaticResource PlaceholderStyle}"/>
+                                            <TextBlock x:Name="TextBlockCurrentPasswordPlaceholder" Text="{DynamicResource Profile_CurrentPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                                         </Grid>
-                                        <TextBlock x:Name="TextBlockCurrentPasswordError" Text="Contraseña actual incorrecta" Style="{StaticResource ErrorLabelStyle}"/>
+                                        <TextBlock x:Name="TextBlockCurrentPasswordError" Text="{DynamicResource Profile_CurrentPasswordError}" Style="{StaticResource ErrorLabelStyle}"/>
 
                                         <!-- New Password -->
-                                        <TextBlock Text="NUEVA CONTRASEÑA" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource Profile_NewPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <Grid Height="38" Margin="0,0,0,12">
                                             <PasswordBox x:Name="PasswordBoxPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
-                                            <TextBlock x:Name="TextBlockPasswordPlaceholder" Text="Dejar vacío si no desea cambiarla" Style="{StaticResource PlaceholderStyle}"/>
+                                            <TextBlock x:Name="TextBlockPasswordPlaceholder" Text="{DynamicResource Profile_NewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                                         </Grid>
 
                                         <!-- Confirm Password -->
-                                        <TextBlock Text="CONFIRMAR CONTRASEÑA" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource Profile_ConfirmNewPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <Grid Height="38">
                                             <PasswordBox x:Name="PasswordBoxConfirmPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxConfirmPassword_PasswordChanged"/>
-                                            <TextBlock x:Name="TextBlockConfirmPasswordPlaceholder" Text="Confirme nueva contraseña" Style="{StaticResource PlaceholderStyle}"/>
+                                            <TextBlock x:Name="TextBlockConfirmPasswordPlaceholder" Text="{DynamicResource Profile_ConfirmNewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                                         </Grid>
-                                        <TextBlock x:Name="TextBlockPasswordError" Text="Contraseña es diferente" Style="{StaticResource ErrorLabelStyle}"/>
+                                        <TextBlock x:Name="TextBlockPasswordError" Text="{DynamicResource Profile_PasswordMatchError}" Style="{StaticResource ErrorLabelStyle}"/>
                                     </StackPanel>
                                 </ScrollViewer>
                             </Grid>
@@ -685,34 +685,34 @@
                     </Grid.ColumnDefinitions>
 
                     <Button x:Name="ButtonMainMenu"
-                            Grid.Column="0"
-                            Content="Menu Principal  ⚔"
-                            Style="{StaticResource NavBarButton}"
-                            Click="ButtonMainMenu_Click"/>
+                                                            Grid.Column="0"
+                                                            Content="{DynamicResource Nav_MainMenu}"
+                                                            Style="{StaticResource NavBarButton}"
+                                                            Click="ButtonMainMenu_Click"/>
 
-                    <Button x:Name="ButtonProfile"
-                            Grid.Column="1"
-                            Content="Perfil  👤"
-                            Style="{StaticResource NavBarButton}"
-                            Click="ButtonProfile_Click"/>
+                                                    <Button x:Name="ButtonProfile"
+                                                            Grid.Column="1"
+                                                            Content="{DynamicResource Nav_Profile}"
+                                                            Style="{StaticResource NavBarButton}"
+                                                            Click="ButtonProfile_Click"/>
 
-                    <Button x:Name="ButtonHistory"
-                            Grid.Column="2"
-                            Content="Historial  ◴"
-                            Style="{StaticResource NavBarButton}"
-                            Click="ButtonHistory_Click"/>
+                                                    <Button x:Name="ButtonHistory"
+                                                            Grid.Column="2"
+                                                            Content="{DynamicResource Nav_History}"
+                                                            Style="{StaticResource NavBarButton}"
+                                                            Click="ButtonHistory_Click"/>
 
-                    <Button x:Name="ButtonScoreboard"
-                            Grid.Column="3"
-                            Content="Marcadores  🏆"
-                            Style="{StaticResource NavBarButton}"
-                            Click="ButtonScoreboard_Click"/>
+                                                    <Button x:Name="ButtonScoreboard"
+                                                            Grid.Column="3"
+                                                            Content="{DynamicResource Nav_Scoreboard}"
+                                                            Style="{StaticResource NavBarButton}"
+                                                            Click="ButtonScoreboard_Click"/>
 
-                    <Button x:Name="ButtonSettings"
-                            Grid.Column="4"
-                            Content="Ajustes  ⚙"
-                            Style="{StaticResource NavBarButton}"
-                            Click="ButtonSettings_Click"/>
+                                                    <Button x:Name="ButtonSettings"
+                                                            Grid.Column="4"
+                                                            Content="{DynamicResource Nav_Settings}"
+                                                            Style="{StaticResource NavBarButton}"
+                                                            Click="ButtonSettings_Click"/>
                 </Grid>
             </Border>
 
@@ -732,7 +732,7 @@
 
                     <Button x:Name="ButtonSave"
                             Grid.Column="0"
-                            Content="Guardar Cambios  ✓"
+                            Content="{DynamicResource Profile_BtnSave}"
                             Height="45"
                             Style="{StaticResource ModernPrimaryButton}"
                             VerticalAlignment="Center"
@@ -740,7 +740,7 @@
 
                     <Button x:Name="ButtonCancel"
                             Grid.Column="2"
-                            Content="Cancelar  ✕"
+                            Content="{DynamicResource Profile_BtnCancel}"
                             Height="45"
                             Style="{StaticResource ModernSecondaryButton}"
                             VerticalAlignment="Center"

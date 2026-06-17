@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -30,13 +31,16 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Menu Principal (Crear Sala)";
+        window.Title = (string) Application.Current.FindResource("CreateRoom_WindowTitle") ?? "Menu Principal (Crear Sala)";
       }
 
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario != null) {
         TextBlockUsername.Text = $"\"{usuario.NombreDeUsuario}\"";
-        TextBlockAge.Text = $"\"{CalculateAge(usuario.FechaDeNacimiento)} Años\"";
+
+        int age = CalculateAge(usuario.FechaDeNacimiento);
+        string yearsSuffix = (string) Application.Current.FindResource("MainMenu_Years") ?? "Años";
+        TextBlockAge.Text = $"\"{age} {yearsSuffix}\"";
 
         if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
           try {
@@ -65,7 +69,7 @@ namespace LetterClashClient.Views {
         TextBlockSelectedLanguageLabel.Text = selectedLanguage;
       } else {
         ComboBoxLanguage.SelectedIndex = 0;
-        TextBlockSelectedLanguageLabel.Text = "NINGUNO SELECCIONADO";
+        TextBlockSelectedLanguageLabel.Text = (string) Application.Current.FindResource("CreateRoom_LangNone") ?? "NINGUNO SELECCIONADO";
       }
 
       if (privacyIndex > 0) {
@@ -91,14 +95,14 @@ namespace LetterClashClient.Views {
 
     private void UpdateGameTypeButtons() {
       if (ComboBoxGameType.SelectedIndex == 1) { // Publica
-        ButtonTypePublic.Style = (Style)FindResource("ModernPrimaryButton");
-        ButtonTypePrivate.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonTypePublic.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonTypePrivate.Style = (Style) FindResource("ModernSecondaryButton");
       } else if (ComboBoxGameType.SelectedIndex == 2) { // Privada
-        ButtonTypePrivate.Style = (Style)FindResource("ModernPrimaryButton");
-        ButtonTypePublic.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonTypePrivate.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonTypePublic.Style = (Style) FindResource("ModernSecondaryButton");
       } else { // Ninguno
-        ButtonTypePublic.Style = (Style)FindResource("ModernSecondaryButton");
-        ButtonTypePrivate.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonTypePublic.Style = (Style) FindResource("ModernSecondaryButton");
+        ButtonTypePrivate.Style = (Style) FindResource("ModernSecondaryButton");
       }
     }
 
@@ -123,7 +127,7 @@ namespace LetterClashClient.Views {
       } else {
         lang = Idiomas.ESPANOL; // default to ESPANOL
       }
-      
+
       int privacy = ComboBoxGameType.SelectedIndex;
       NavigationService.Navigate(new GUISelectWordView(lang, privacy));
     }
@@ -134,7 +138,8 @@ namespace LetterClashClient.Views {
       bool hasWord = selectedWord != null;
 
       if (!hasLanguage || !hasGameType || !hasWord) {
-        MessageBox.Show("Seleccione idioma, palabra y tipo de partida.",
+        string warningMsg = (string) Application.Current.FindResource("CreateRoom_WarningFields") ?? "Seleccione idioma, palabra y tipo de partida.";
+        MessageBox.Show(warningMsg,
                         "TecnoHorcado",
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning);
@@ -155,15 +160,23 @@ namespace LetterClashClient.Views {
 
         if (result != null && result.IsSuccess) {
           string accessCode = result.Value;
-          MessageBox.Show("Partida creada con éxito.", "Sala Creada", MessageBoxButton.OK, MessageBoxImage.Information);
+          string successMsg = (string) Application.Current.FindResource("CreateRoom_SuccessCreate") ?? "Partida creada con éxito.";
+          string successTitle = (string) Application.Current.FindResource("CreateRoom_SuccessTitle") ?? "Sala Creada";
+          MessageBox.Show(successMsg, successTitle, MessageBoxButton.OK, MessageBoxImage.Information);
           NavigationService.Navigate(new GUIGameView(selectedWord.PalabraTexto, accessCode));
         } else {
-          MessageBox.Show(result?.Error?.Mensaje ?? "No se pudo crear la partida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string errCreate = (string) Application.Current.FindResource("CreateRoom_ErrorCreate") ?? "No se pudo crear la partida.";
+          MessageBox.Show(result?.Error?.Mensaje ?? errCreate, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       } catch (CommunicationException) {
-        MessageBox.Show("No se pudo conectar con el servidor para registrar la partida.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        string connMsg = (string) Application.Current.FindResource("CreateRoom_ErrorConnection") ?? "No se pudo conectar con el servidor para registrar la partida.";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 

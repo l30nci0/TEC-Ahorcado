@@ -3,8 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
 	<Application.Resources>
-        <!-- Fuentes Globales -->
-        <FontFamily x:Key="GeistPixelSquare">pack://application:,,,/LetterClashClient;component/Assets/Fonts/GeistPixel-Square.ttf#Geist Pixel Square</FontFamily>
-        <FontFamily x:Key="GeistMono">pack://application:,,,/LetterClashClient;component/Assets/Fonts/GeistMono-Regular.ttf#Geist Mono</FontFamily>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Idioma por defecto cargado al arrancar -->
+                <ResourceDictionary Source="/LetterClashClient;component/Themes/LangES.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Fuentes Globales -->
+            <FontFamily x:Key="GeistPixelSquare">pack://application:,,,/LetterClashClient;component/Assets/Fonts/GeistPixel-Square.ttf#Geist Pixel Square</FontFamily>
+            <FontFamily x:Key="GeistMono">pack://application:,,,/LetterClashClient;component/Assets/Fonts/GeistMono-Regular.ttf#Geist Mono</FontFamily>
+        </ResourceDictionary>
 	</Application.Resources>
 </Application>

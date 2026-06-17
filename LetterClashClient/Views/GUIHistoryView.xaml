@@ -243,7 +243,7 @@
 
                         <!-- Header Section -->
                         <StackPanel Grid.Row="0" Margin="0,0,0,15">
-                            <TextBlock Text="HISTORIAL DE PARTIDAS"
+                            <TextBlock Text="{DynamicResource History_Title}"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        FontSize="24"
                                        FontWeight="Bold"
@@ -251,7 +251,7 @@
                                        HorizontalAlignment="Center"
                                        Margin="0,0,0,4"/>
 
-                            <TextBlock Text="Registro completo de tus victorias, derrotas y estadísticas globales"
+                            <TextBlock Text="{DynamicResource History_Subtitle}"
                                        FontFamily="{StaticResource GeistMono}"
                                        FontSize="13"
                                        Foreground="#4DEEEA"
@@ -272,25 +272,25 @@
                                   Margin="0,5,0,15"
                                   SelectionChanged="DataGridHistory_SelectionChanged">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="RIVAL"
+                                <DataGridTextColumn Header="{DynamicResource History_ColRival}"
                                                     Binding="{Binding Rival}"
                                                     Width="1.2*"
                                                     Foreground="#4DEEEA"
                                                     />
 
-                                <DataGridTextColumn Header="FECHA"
+                                <DataGridTextColumn Header="{DynamicResource History_ColDate}"
                                                     Binding="{Binding Fecha}"
                                                     Width="*"/>
 
-                                <DataGridTextColumn Header="PALABRA"
+                                <DataGridTextColumn Header="{DynamicResource History_ColWord}"
                                                     Binding="{Binding Palabra}"
                                                     Width="*"/>
 
-                                <DataGridTextColumn Header="RESULTADO"
+                                <DataGridTextColumn Header="{DynamicResource History_ColResult}"
                                                     Binding="{Binding Resultado}"
                                                     Width="*"/>
 
-                                <DataGridTextColumn Header="PUNTUACIÓN"
+                                <DataGridTextColumn Header="{DynamicResource History_ColScore}"
                                                     Binding="{Binding Puntuacion}"
                                                     Width="*"/>
                             </DataGrid.Columns>
@@ -384,31 +384,31 @@
 
                     <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
-                            Content="Menu Principal  ⚔"
+                            Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
                     <Button x:Name="ButtonProfile"
                             Grid.Column="1"
-                            Content="Perfil  👤"
+                            Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
                     <Button x:Name="ButtonHistory"
                             Grid.Column="2"
-                            Content="Historial  ◴"
+                            Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
                     <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
-                            Content="Marcadores  🏆"
+                            Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
                     <Button x:Name="ButtonSettings"
                             Grid.Column="4"
-                            Content="Ajustes  ⚙"
+                            Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
                 </Grid>

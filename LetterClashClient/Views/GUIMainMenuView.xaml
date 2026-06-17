@@ -203,21 +203,21 @@
 
                 <!-- Vertical Buttons Stack -->
                 <Button x:Name="ButtonCreateRoom"
-                        Content="CREAR SALA ✎"
+                        Content="{DynamicResource MainMenu_BtnCreateRoom}"
                         Style="{StaticResource ModernPrimaryButton}"
                         Height="48"
                         Margin="0,0,0,16"
                         Click="ButtonCreateRoom_Click"/>
 
                 <Button x:Name="ButtonPublicLobby"
-                        Content="ENTRAR A LOBBY PÚBLICO ◔"
+                        Content="{DynamicResource MainMenu_BtnPublicLobby}"
                         Style="{StaticResource ModernSecondaryButton}"
                         Height="48"
                         Margin="0,0,0,16"
                         Click="ButtonPublicLobby_Click"/>
 
                 <Button x:Name="ButtonPrivateLobby"
-                        Content="ENTRAR A LOBBY PRIVADO 🔒"
+                        Content="{DynamicResource MainMenu_BtnPrivateLobby}"
                         Style="{StaticResource ModernSecondaryButton}"
                         Height="48"
                         Click="ButtonPrivateLobby_Click"/>
@@ -239,31 +239,31 @@
 
                     <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
-                            Content="Menu Principal  ⚔"
+                            Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
                     <Button x:Name="ButtonProfile"
                             Grid.Column="1"
-                            Content="Perfil  👤"
+                            Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
                     <Button x:Name="ButtonHistory"
                             Grid.Column="2"
-                            Content="Historial  ◴"
+                            Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
                     <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
-                            Content="Marcadores  🏆"
+                            Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
                     <Button x:Name="ButtonSettings"
                             Grid.Column="4"
-                            Content="Ajustes  ⚙"
+                            Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
                 </Grid>

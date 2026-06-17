@@ -213,7 +213,7 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
               <TextBlock Grid.Column="1"
-                                       Text="Partida"
+                                       Text="{DynamicResource Game_Header}"
                                        FontSize="16"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        Foreground="#00FFCC"
@@ -263,7 +263,7 @@
 
           <Button x:Name="ButtonAbandon"
                             Grid.Column="2"
-                            Content="Abandonar  ⚑"
+                            Content="{DynamicResource Game_BtnAbandon}"
                             Width="140"
                             Height="38"
                             BorderBrush="#00A986"
@@ -418,7 +418,7 @@
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         Margin="0,15,0,0">
-                <TextBlock Text="CÓDIGO DE ACCESO"
+                <TextBlock Text="{DynamicResource Game_AccessCodeLabel}"
                                            FontSize="13"
                                            FontFamily="{StaticResource GeistPixelSquare}"
                                            Foreground="#00FFCC66"
@@ -434,7 +434,7 @@
               </StackPanel>
 
               <TextBlock Grid.Row="1"
-                                       Text="PALABRA SELECCIONADA"
+                                       Text="{DynamicResource Game_WordLabel}"
                                        FontSize="13"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        Foreground="#00FFCC66"
@@ -467,7 +467,7 @@
                   </Grid.RowDefinitions>
 
                   <TextBlock Grid.Row="0"
-                                               Text="LETRA PROPUESTA POR EL ADIVINADOR"
+                                               Text="{DynamicResource Game_ProposedLetterLabel}"
                                                FontSize="12"
                                                FontFamily="{StaticResource GeistPixelSquare}"
                                                Foreground="#00FFCC66"
@@ -573,7 +573,7 @@
                                     Background="#04111A"
                                     CornerRadius="0">
                 <TextBlock x:Name="TextBlockChatTitle"
-                                           Text="Chat con Oponente"
+                                           Text="{DynamicResource Game_ChatTitle}"
                                            FontSize="12"
                                            FontFamily="{StaticResource GeistPixelSquare}"
                                            Foreground="#4DEEEA"
@@ -612,7 +612,7 @@
                                          VerticalContentAlignment="Center"/>
                 <Button x:Name="ButtonSendMessage"
                                         Grid.Column="1"
-                                        Content="Enviar"
+                                        Content="{DynamicResource Game_BtnSend}"
                                         Style="{StaticResource ModernPrimaryButton}"
                                         FontSize="12"
                                         Height="36"

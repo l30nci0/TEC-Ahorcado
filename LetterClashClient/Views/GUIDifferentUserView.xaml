@@ -223,7 +223,7 @@
 
             <!-- Header Section -->
             <StackPanel Grid.Row="0" Margin="0,0,0,25">
-              <TextBlock Text="PERFIL DE JUGADOR"
+              <TextBlock Text="{DynamicResource DiffUser_Title}"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        FontSize="24"
                                        FontWeight="Bold"
@@ -262,7 +262,7 @@
                 <!-- Details Fields -->
                 <StackPanel Grid.Row="0" VerticalAlignment="Center">
                   <!-- Full Name -->
-                  <TextBlock Text="NOMBRE COMPLETO" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                  <TextBlock Text="{DynamicResource DiffUser_FullNameLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
                   <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                     <TextBlock x:Name="TextBlockFullName" Style="{StaticResource ValueTextStyle}"/>
                     <Border.Effect>
@@ -271,7 +271,7 @@
                   </Border>
 
                   <!-- Email -->
-                  <TextBlock Text="CORREO ELECTRÓNICO" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                  <TextBlock Text="{DynamicResource DiffUser_EmailLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
                   <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                     <TextBlock x:Name="TextBlockEmail" Style="{StaticResource ValueTextStyle}"/>
                     <Border.Effect>
@@ -288,7 +288,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                      <TextBlock Text="EDAD" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                      <TextBlock Text="{DynamicResource DiffUser_AgeLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
                       <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                         <Border.Effect>
                           <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
@@ -298,7 +298,7 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="2">
-                      <TextBlock Text="FECHA DE NACIMIENTO" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                      <TextBlock Text="{DynamicResource DiffUser_BirthDateLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
                       <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                         <Border.Effect>
                           <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
@@ -309,7 +309,7 @@
                   </Grid>
 
                   <!-- Phone -->
-                  <TextBlock Text="TELÉFONO" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                  <TextBlock Text="{DynamicResource DiffUser_PhoneLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
                   <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                     <TextBlock x:Name="TextBlockPhone" Style="{StaticResource ValueTextStyle}"/>
                     <Border.Effect>
@@ -407,7 +407,7 @@
 
                 <!-- Premium Square Avatar Container -->
                 <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                  <TextBlock Text="AVATAR" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="#4DEEEA"/>
+                  <TextBlock Text="{DynamicResource DiffUser_AvatarLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="#4DEEEA"/>
                   <Border Width="160"
                                             Height="160"
                                             BorderBrush="#2D2D30"
@@ -424,7 +424,7 @@
                 <!-- Button Back -->
                 <Button x:Name="ButtonBack"
                                         Grid.Row="1"
-                                        Content="REGRESAR  ↩"
+                                        Content="{DynamicResource DiffUser_BtnBack}"
                                         Height="50"
                                         Style="{StaticResource ModernSecondaryButton}"
                                         VerticalAlignment="Bottom"
@@ -451,31 +451,31 @@
 
           <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
-                            Content="Menu Principal  ⚔"
+                            Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
           <Button x:Name="ButtonProfile"
                             Grid.Column="1"
-                            Content="Perfil  👤"
+                            Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
           <Button x:Name="ButtonHistory"
                             Grid.Column="2"
-                            Content="Historial  ◴"
+                            Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
           <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
-                            Content="Marcadores  🏆"
+                            Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
           <Button x:Name="ButtonSettings"
                             Grid.Column="4"
-                            Content="Ajustes  ⚙"
+                            Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
         </Grid>

@@ -212,7 +212,7 @@
 
                 <!-- Header Section -->
                 <StackPanel Grid.Row="0" Margin="0,0,0,15">
-                    <TextBlock Text="CATÁLOGO DE PALABRAS"
+                    <TextBlock Text="{DynamicResource SelectWord_Title}"
                                FontFamily="{StaticResource GeistPixelSquare}"
                                FontSize="22"
                                FontWeight="Bold"
@@ -221,7 +221,7 @@
                                Margin="0,0,0,6"/>
 
                     <TextBlock x:Name="TextBlockHeader"
-                               Text="Palabras disponibles"
+                               Text=""
                                FontFamily="{StaticResource GeistMono}"
                                FontSize="13"
                                Foreground="#4DEEEA"
@@ -236,7 +236,7 @@
                         
                         <Button x:Name="ButtonLangES"
                                 Grid.Column="0"
-                                Content="ESPAÑOL"
+                                Content="{DynamicResource SelectWord_LangES}"
                                 Style="{StaticResource ModernPrimaryButton}"
                                 Margin="0,0,5,0"
                                 FontSize="12"
@@ -244,7 +244,7 @@
                                 
                         <Button x:Name="ButtonLangEN"
                                 Grid.Column="1"
-                                Content="ENGLISH"
+                                Content="{DynamicResource SelectWord_LangEN}"
                                 Style="{StaticResource ModernSecondaryButton}"
                                 Margin="5,0,0,0"
                                 FontSize="12"
@@ -263,19 +263,19 @@
                           Background="#0B0E14"
                           Margin="0,10,0,20">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="PALABRA"
+                        <DataGridTextColumn Header="{DynamicResource SelectWord_ColWord}"
                                             Binding="{Binding PalabraTexto}"
                                             Width="110"/>
 
-                        <DataGridTextColumn Header="DESCRIPCIÓN"
+                        <DataGridTextColumn Header="{DynamicResource SelectWord_ColDescription}"
                                             Binding="{Binding Descripcion}"
                                             Width="*"/>
 
-                        <DataGridTemplateColumn Header="ACCIÓN"
+                        <DataGridTemplateColumn Header="{DynamicResource SelectWord_ColAction}"
                                                 Width="130">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="USAR  ➔"
+                                    <Button Content="{DynamicResource SelectWord_BtnUse}"
                                             Width="105"
                                             Height="26"
                                             Style="{StaticResource ModernPrimaryButton}"
@@ -290,7 +290,7 @@
                 <!-- Bottom Action Row -->
                 <Grid Grid.Row="2">
                     <Button x:Name="ButtonBack"
-                            Content="REGRESAR  ↩"
+                            Content="{DynamicResource SelectWord_BtnBack}"
                             Width="150"
                             Height="40"
                             Style="{StaticResource ModernSecondaryButton}"

@@ -142,6 +142,15 @@
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
 		</Page>
+
+		<Page Include="Themes\LangES.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="Themes\LangEN.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
 		<Page Include="Views\GUIRegisterView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 			<SubType>Designer</SubType>
@@ -201,6 +210,8 @@
 		</Compile>
 		<Compile Include="Services\ServiceProxyManager.cs" />
 		<Compile Include="Services\GameCallbackHandler.cs" />
+
+		<Compile Include="Services\LanguageManager.cs" />
 		<Compile Include="Models\SessionContext.cs" />
 	</ItemGroup>
 

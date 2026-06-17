@@ -214,7 +214,7 @@
 
                         <!-- Header Section -->
                         <StackPanel Grid.Row="0" Margin="0,0,0,15">
-                            <TextBlock Text="CONFIGURAR SALA"
+                            <TextBlock Text="{DynamicResource CreateRoom_Title}"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        FontSize="24"
                                        FontWeight="Bold"
@@ -222,7 +222,7 @@
                                        HorizontalAlignment="Center"
                                        Margin="0,0,0,6"/>
 
-                            <TextBlock Text="Establece los parámetros para tu nueva partida"
+                            <TextBlock Text="{DynamicResource CreateRoom_Subtitle}"
                                        FontFamily="{StaticResource GeistMono}"
                                        FontSize="13"
                                        Foreground="#4DEEEA"
@@ -243,7 +243,7 @@
                             <!-- Left Column: Configuration -->
                             <StackPanel Grid.Column="0" Margin="0,0,30,0" VerticalAlignment="Center">
                                 <!-- Game Type Selection -->
-                                <TextBlock Text="TIPO DE PARTIDA" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource CreateRoom_TypeLabel}" Style="{StaticResource FormLabelStyle}"/>
                                 <Grid Height="40" Margin="0,0,0,15">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -252,23 +252,23 @@
 
                                     <Button x:Name="ButtonTypePublic"
                                             Grid.Column="0"
-                                            Content="PÚBLICA"
+                                            Content="{DynamicResource CreateRoom_BtnPublic}"
                                             Style="{StaticResource ModernSecondaryButton}"
                                             Margin="0,0,5,0"
                                             Click="ButtonTypePublic_Click"/>
 
                                     <Button x:Name="ButtonTypePrivate"
                                             Grid.Column="1"
-                                            Content="PRIVADA"
+                                            Content="{DynamicResource CreateRoom_BtnPrivate}"
                                             Style="{StaticResource ModernSecondaryButton}"
                                             Margin="5,0,0,0"
                                             Click="ButtonTypePrivate_Click"/>
                                 </Grid>
 
                                 <!-- Word Selection -->
-                                <TextBlock Text="PALABRA DEL AHORCADO" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource CreateRoom_WordLabel}" Style="{StaticResource FormLabelStyle}"/>
                                 <Button x:Name="ButtonSelectWord"
-                                        Content="SELECCIONAR PALABRA  ⌕"
+                                        Content="{DynamicResource CreateRoom_BtnSelectWord}"
                                         Height="42"
                                         Style="{StaticResource ModernSecondaryButton}"
                                         Margin="0,0,0,15"
@@ -284,8 +284,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        
-                                        <TextBlock Text="SELECCIONADA: " 
+                                                                              <TextBlock Text="{DynamicResource CreateRoom_WordSelectedLabel}" 
                                                    FontFamily="{StaticResource GeistMono}" 
                                                    FontSize="12" 
                                                    FontWeight="Bold" 
@@ -303,15 +302,15 @@
                                                    TextAlignment="Right"/>
                                     </Grid>
                                 </Border>
-
+ 
                                 <!-- Visual Selected Language Display -->
-                                <TextBlock Text="IDIOMA DE LA SALA" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource CreateRoom_LangLabel}" Style="{StaticResource FormLabelStyle}"/>
                                 <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,8" Margin="0,0,0,0">
                                     <Border.Effect>
                                         <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.3"/> 
                                     </Border.Effect>
                                     <TextBlock x:Name="TextBlockSelectedLanguageLabel" 
-                                               Text="NINGUNO SELECCIONADO" 
+                                               Text="{DynamicResource CreateRoom_LangNone}" 
                                                FontFamily="{StaticResource GeistMono}" 
                                                FontSize="12" 
                                                FontWeight="Bold" 
@@ -332,11 +331,9 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- Access Key Section -->
+                                </Grid.RowDefinitions>                                <!-- Access Key Section -->
                                 <StackPanel Grid.Row="0" Margin="0,0,0,20" HorizontalAlignment="Center">
-                                    <TextBlock Text="CLAVE DE INGRESO" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{DynamicResource CreateRoom_AccessKeyLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
                                     <Border BorderBrush="#00A896" BorderThickness="1" Background="#0B0E14" Padding="25,10" MinWidth="180">
                                         <TextBlock x:Name="TextBlockAccessKey"
                                                    Text="------"
@@ -348,18 +345,18 @@
                                                    VerticalAlignment="Center"/>
                                     </Border>
                                 </StackPanel>
-
+ 
                                 <!-- Primary Buttons -->
                                 <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
                                     <Button x:Name="ButtonCreateRoom"
-                                            Content="CREAR SALA  ↑"
+                                            Content="{DynamicResource CreateRoom_BtnCreate}"
                                             Height="46"
                                             Style="{StaticResource ModernPrimaryButton}"
                                             Margin="0,0,0,10"
                                             Click="ButtonCreateRoom_Click"/>
-
+ 
                                     <Button x:Name="ButtonBack"
-                                            Content="REGRESAR  ↩"
+                                            Content="{DynamicResource CreateRoom_BtnBack}"
                                             Height="46"
                                             Style="{StaticResource ModernSecondaryButton}"
                                             Click="ButtonBack_Click"/>
@@ -386,31 +383,31 @@
 
                     <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
-                            Content="Menu Principal  ⚔"
+                            Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
                     <Button x:Name="ButtonProfile"
                             Grid.Column="1"
-                            Content="Perfil  👤"
+                            Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
                     <Button x:Name="ButtonHistory"
                             Grid.Column="2"
-                            Content="Historial  ◴"
+                            Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
                     <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
-                            Content="Marcadores  🏆"
+                            Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
                     <Button x:Name="ButtonSettings"
                             Grid.Column="4"
-                            Content="Ajustes  ⚙"
+                            Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
                 </Grid>

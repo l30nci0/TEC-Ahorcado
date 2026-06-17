@@ -1,10 +1,11 @@
 using System;
 using System.ServiceModel;
+
 using LetterClashServer.Contracts;
 
 namespace LetterClashClient.Services {
   public static class ServiceProxyManager {
-    private static readonly string BASE_URL = 
+    private static readonly string BASE_URL =
       System.Configuration.ConfigurationManager.AppSettings["ServerBaseUrl"] ?? "http://localhost:64294/Services/";
 
     private static BasicHttpBinding GetBasicHttpBinding() {

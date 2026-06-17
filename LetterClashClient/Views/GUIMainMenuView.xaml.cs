@@ -18,13 +18,14 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Menu Principal";
+        window.Title = (string) Application.Current.FindResource("MainMenu_WindowTitle") ?? "Menu Principal";
       }
 
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario != null) {
         TextBlockUsername.Text = $"\"{usuario.NombreDeUsuario}\"";
-        TextBlockAge.Text = $"\"{CalculateAge(usuario.FechaDeNacimiento)} Años\"";
+        string yearsText = (string) Application.Current.FindResource("MainMenu_Years") ?? "Años";
+        TextBlockAge.Text = $"\"{CalculateAge(usuario.FechaDeNacimiento)} {yearsText}\"";
 
         if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
           try {

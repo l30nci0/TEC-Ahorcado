@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -24,13 +25,14 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Lobby de Partidas";
+        window.Title = (string) Application.Current.FindResource("Lobby_WindowTitle") ?? "Lobby de Partidas";
       }
 
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario != null) {
         TextBlockUsername.Text = $"\"{usuario.NombreDeUsuario}\"";
-        TextBlockAge.Text = $"\"{CalculateAge(usuario.FechaDeNacimiento)} Años\"";
+        string yearsText = (string) Application.Current.FindResource("MainMenu_Years") ?? "Años";
+        TextBlockAge.Text = $"\"{CalculateAge(usuario.FechaDeNacimiento)} {yearsText}\"";
 
         if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
           try {
@@ -74,12 +76,18 @@ namespace LetterClashClient.Views {
         if (result != null && result.IsSuccess) {
           DataGridPublicMatches.ItemsSource = result.Value;
         } else {
-          MessageBox.Show(result?.Error?.Mensaje ?? "No se pudieron obtener las partidas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string errMatches = (string) Application.Current.FindResource("Lobby_ErrorGetMatches") ?? "No se pudieron obtener las partidas.";
+          MessageBox.Show(result?.Error?.Mensaje ?? errMatches, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       } catch (CommunicationException) {
-        MessageBox.Show("No se pudo establecer conexión con el servidor para obtener los lobbies.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        string connMsg = (string) Application.Current.FindResource("Lobby_ErrorGetMatchesConn") ?? "No se pudo establecer conexión con el servidor para obtener los lobbies.";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
@@ -119,7 +127,9 @@ namespace LetterClashClient.Views {
           }
 
           if (selectedMatch.IDAnfitrion == usuario.IDJugador) {
-            MessageBox.Show("No puedes unirte a una partida creada por ti mismo.", "Operación Inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
+            string selfMsg = (string) Application.Current.FindResource("Lobby_ErrorSelfJoin") ?? "No puedes unirte a una partida creada por ti mismo.";
+            string selfTitle = (string) Application.Current.FindResource("Lobby_ErrorSelfJoinTitle") ?? "Operación Inválida";
+            MessageBox.Show(selfMsg, selfTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
           }
 
@@ -130,13 +140,19 @@ namespace LetterClashClient.Views {
             if (result != null && result.IsSuccess) {
               NavigationService.Navigate(new GUIGameView(selectedMatch.NombreAnfitrion, selectedMatch.Idioma, selectedMatch.CodigoAcceso));
             } else {
-              MessageBox.Show(result?.Error?.Mensaje ?? "No se pudo unir a la partida.", "Error al unirse", MessageBoxButton.OK, MessageBoxImage.Error);
+              string joinTitle = (string) Application.Current.FindResource("Lobby_ErrorJoinTitle") ?? "Error al unirse";
+              string joinMsg = (string) Application.Current.FindResource("Lobby_ErrorJoin") ?? "No se pudo unir a la partida.";
+              MessageBox.Show(result?.Error?.Mensaje ?? joinMsg, joinTitle, MessageBoxButton.OK, MessageBoxImage.Error);
               CargarPartidasLobby();
             }
           } catch (CommunicationException) {
-            MessageBox.Show("No se pudo conectar con el servidor para unirse a la partida.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+            string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+            string connMsg = (string) Application.Current.FindResource("Lobby_ErrorJoinConn") ?? "No se pudo conectar con el servidor para unirse a la partida.";
+            MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
           } catch (Exception ex) {
-            MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+            string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+            MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
           }
         }
       }
@@ -148,13 +164,13 @@ namespace LetterClashClient.Views {
       string accessCode = TextBoxAccessCode.Text.Trim().ToUpper().Replace("#", "");
 
       if (string.IsNullOrWhiteSpace(accessCode)) {
-        TextBlockAccessCodeError.Text = "Ingrese un código de acceso";
+        TextBlockAccessCodeError.Text = (string) Application.Current.FindResource("Lobby_AccessCodeErrorEmpty") ?? "Ingrese un código de acceso";
         TextBlockAccessCodeError.Visibility = Visibility.Visible;
         return;
       }
 
       if (accessCode.Length != 6) {
-        TextBlockAccessCodeError.Text = "El código debe tener 6 caracteres";
+        TextBlockAccessCodeError.Text = (string) Application.Current.FindResource("Lobby_AccessCodeErrorLength") ?? "El código debe tener 6 caracteres";
         TextBlockAccessCodeError.Visibility = Visibility.Visible;
         return;
       }
@@ -172,13 +188,18 @@ namespace LetterClashClient.Views {
           var partida = result.Value;
           NavigationService.Navigate(new GUIGameView(partida.NombreAnfitrion, partida.Idioma, accessCode));
         } else {
-          TextBlockAccessCodeError.Text = result?.Error?.Mensaje ?? "No se pudo unir a la sala.";
+          string defaultErr = (string) Application.Current.FindResource("Lobby_ErrorPrivateJoin") ?? "No se pudo unir a la sala.";
+          TextBlockAccessCodeError.Text = result?.Error?.Mensaje ?? defaultErr;
           TextBlockAccessCodeError.Visibility = Visibility.Visible;
         }
       } catch (CommunicationException) {
-        MessageBox.Show("No se pudo establecer conexión con el servidor.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        string connMsg = (string) Application.Current.FindResource("Msg_ConnectionError") ?? "No se pudo establecer conexión con el servidor.";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 

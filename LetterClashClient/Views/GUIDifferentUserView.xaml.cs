@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -27,7 +28,7 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Diferente Usuario";
+        window.Title = (string) Application.Current.FindResource("DiffUser_WindowTitle") ?? "Diferente Usuario";
       }
 
       LoadUserData();
@@ -85,35 +86,48 @@ namespace LetterClashClient.Views {
             int losses = battles.Count(battle => battle.Resultado == "Derrota");
             int disconnected = battles.Count(battle => battle.Resultado == "Desconectada");
 
-            TextBlockTotalWins.Text = $"Total Ganadas = {wins}";
-            TextBlockPercentWins.Text = $"%{GetPercentage(wins, total)}";
-            TextBlockTotalLosses.Text = $"Total Perdidas = {losses}";
-            TextBlockPercentLosses.Text = $"%{GetPercentage(losses, total)}";
-            TextBlockTotalDisconnected.Text = $"Total Desconectadas = {disconnected}";
-            TextBlockPercentDisconnected.Text = $"%{GetPercentage(disconnected, total)}";
+            string percentFormat = (string) Application.Current.FindResource("History_StatPercentFormat") ?? "{0}%";
+
+            TextBlockTotalWins.Text = string.Format((string) Application.Current.FindResource("History_StatTotalWins") ?? "Total Ganadas = {0}", wins);
+            TextBlockPercentWins.Text = string.Format(percentFormat, GetPercentage(wins, total));
+            TextBlockTotalLosses.Text = string.Format((string) Application.Current.FindResource("History_StatTotalLosses") ?? "Total Perdidas = {0}", losses);
+            TextBlockPercentLosses.Text = string.Format(percentFormat, GetPercentage(losses, total));
+            TextBlockTotalDisconnected.Text = string.Format((string) Application.Current.FindResource("History_StatTotalDisconnected") ?? "Total Desconectadas = {0}", disconnected);
+            TextBlockPercentDisconnected.Text = string.Format(percentFormat, GetPercentage(disconnected, total));
           } else {
             SetEmptyStatistics();
           }
         } else {
-          MessageBox.Show(result?.Error?.Mensaje ?? "No se pudo obtener la información del usuario.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string errRetrieve = (string) Application.Current.FindResource("DiffUser_ErrorRetrieve") ?? "No se pudo obtener la información del usuario.";
+          MessageBox.Show(result?.Error?.Mensaje ?? errRetrieve, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
           NavigationService.GoBack();
         }
       } catch (System.ServiceModel.CommunicationException) {
-        MessageBox.Show("No se pudo establecer conexión con el servidor.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        string connMsg = (string) Application.Current.FindResource("Msg_ConnectionError") ?? "No se pudo establecer conexión con el servidor.";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         NavigationService.GoBack();
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado al cargar el perfil: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string unexpMsg = (string) Application.Current.FindResource("DiffUser_ErrorUnexpected") ?? "Ocurrió un error inesperado al cargar el perfil:";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         NavigationService.GoBack();
       }
     }
 
     private void SetEmptyStatistics() {
-      TextBlockTotalWins.Text = "Total Ganadas = 0";
-      TextBlockPercentWins.Text = "%0";
-      TextBlockTotalLosses.Text = "Total Perdidas = 0";
-      TextBlockPercentLosses.Text = "%0";
-      TextBlockTotalDisconnected.Text = "Total Desconectadas = 0";
-      TextBlockPercentDisconnected.Text = "%0";
+      string statWins = (string) Application.Current.FindResource("History_StatTotalWins") ?? "Total Ganadas = {0}";
+      string statLosses = (string) Application.Current.FindResource("History_StatTotalLosses") ?? "Total Perdidas = {0}";
+      string statDisconnected = (string) Application.Current.FindResource("History_StatTotalDisconnected") ?? "Total Desconectadas = {0}";
+      string percentFormat = (string) Application.Current.FindResource("History_StatPercentFormat") ?? "{0}%";
+
+      TextBlockTotalWins.Text = string.Format(statWins, 0);
+      TextBlockPercentWins.Text = string.Format(percentFormat, 0);
+      TextBlockTotalLosses.Text = string.Format(statLosses, 0);
+      TextBlockPercentLosses.Text = string.Format(percentFormat, 0);
+      TextBlockTotalDisconnected.Text = string.Format(statDisconnected, 0);
+      TextBlockPercentDisconnected.Text = string.Format(percentFormat, 0);
     }
 
     private int GetPercentage(int amount, int total) {

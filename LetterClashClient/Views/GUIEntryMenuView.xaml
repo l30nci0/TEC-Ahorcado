@@ -143,7 +143,7 @@
         </Image.Effect>
       </Image>
 
-      <TextBlock Text="Juego del Ahorcado"
+      <TextBlock Text="{DynamicResource EntryMenu_Title}"
                        FontFamily="{StaticResource GeistPixelSquare}"
                        FontSize="20"
                        FontWeight="Bold"
@@ -156,14 +156,14 @@
       </TextBlock>
 
       <Button x:Name="ButtonLogin"
-                    Content="INICIAR SESIÓN"
+                    Content="{DynamicResource EntryMenu_BtnLogin}"
                     Style="{StaticResource ModernPrimaryButton}"
                     Height="44"
                     Margin="0,0,0,16"
                     Click="ButtonLogin_Click"/>
 
       <Button x:Name="ButtonRegister"
-                    Content="REGISTRARSE"
+                    Content="{DynamicResource EntryMenu_BtnRegister}"
                     Style="{StaticResource ModernSecondaryButton}"
                     Height="44"
                     Margin="0,0,0,16"

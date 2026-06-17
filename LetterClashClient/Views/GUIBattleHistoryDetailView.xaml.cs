@@ -17,15 +17,22 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Partida (Historial)";
+        window.Title = (string) Application.Current.FindResource("HistoryDetail_WindowTitle") ?? "Partida (Historial)";
       }
 
-      TextBlockRole.Text = $"Tu Rol fue: {selectedBattle.Rol}";
-      TextBlockRival.Text = $"Adversario: {selectedBattle.Rival}";
-      TextBlockLanguage.Text = $"Idioma: {selectedBattle.Idioma}";
-      TextBlockWord.Text = $"Palabra: {selectedBattle.Palabra}";
-      TextBlockType.Text = $"Tipo: {selectedBattle.Tipo}";
-      TextBlockDate.Text = $"Fecha de juego: {selectedBattle.Fecha}";
+      string roleText = (string) Application.Current.FindResource("HistoryDetail_RoleText") ?? "Tu Rol fue: {0}";
+      string rivalText = (string) Application.Current.FindResource("HistoryDetail_RivalText") ?? "Adversario: {0}";
+      string langText = (string) Application.Current.FindResource("HistoryDetail_LangText") ?? "Idioma: {0}";
+      string wordText = (string) Application.Current.FindResource("HistoryDetail_WordText") ?? "Palabra: {0}";
+      string typeText = (string) Application.Current.FindResource("HistoryDetail_TypeText") ?? "Tipo: {0}";
+      string dateText = (string) Application.Current.FindResource("HistoryDetail_DateText") ?? "Fecha de juego: {0}";
+
+      TextBlockRole.Text = string.Format(roleText, selectedBattle.Rol);
+      TextBlockRival.Text = string.Format(rivalText, selectedBattle.Rival);
+      TextBlockLanguage.Text = string.Format(langText, selectedBattle.Idioma);
+      TextBlockWord.Text = string.Format(wordText, selectedBattle.Palabra);
+      TextBlockType.Text = string.Format(typeText, selectedBattle.Tipo);
+      TextBlockDate.Text = string.Format(dateText, selectedBattle.Fecha);
       TextBlockBattleStatus.Text = selectedBattle.Resultado;
       TextBlockScore.Text = selectedBattle.Puntuacion;
       ProgressBarBattle.Value = selectedBattle.Progreso;

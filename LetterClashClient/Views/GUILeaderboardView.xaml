@@ -161,7 +161,7 @@
 
                         <!-- Header Section -->
                         <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                            <TextBlock Text="MARCADORES"
+                            <TextBlock Text="{DynamicResource Leaderboard_Title}"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        FontSize="24"
                                        FontWeight="Bold"
@@ -169,7 +169,7 @@
                                        HorizontalAlignment="Center"
                                        Margin="0,0,0,4"/>
 
-                            <TextBlock Text="Los 50 mejores jugadores globales y líderes de la temporada"
+                            <TextBlock Text="{DynamicResource Leaderboard_Subtitle}"
                                        FontFamily="{StaticResource GeistMono}"
                                        FontSize="13"
                                        Foreground="#4DEEEA"
@@ -202,19 +202,19 @@
                                       SelectionUnit="FullRow"
                                       MouseDoubleClick="DataGridScoreboard_MouseDoubleClick">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="PUESTO"
+                                    <DataGridTextColumn Header="{DynamicResource Leaderboard_ColRank}"
                                                         Binding="{Binding Puesto}"
                                                         Width="75"/>
 
-                                    <DataGridTextColumn Header="JUGADOR"
+                                    <DataGridTextColumn Header="{DynamicResource Leaderboard_ColPlayer}"
                                                         Binding="{Binding Nombre}"
                                                         Width="*"/>
 
-                                    <DataGridTextColumn Header="VICTORIAS"
+                                    <DataGridTextColumn Header="{DynamicResource Leaderboard_ColWins}"
                                                         Binding="{Binding PartidasGanadas}"
                                                         Width="95"/>
 
-                                    <DataGridTextColumn Header="PUNTUACIÓN"
+                                    <DataGridTextColumn Header="{DynamicResource Leaderboard_ColScore}"
                                                         Binding="{Binding Puntuacion}"
                                                         Width="105"/>
                                 </DataGrid.Columns>
@@ -225,7 +225,7 @@
 
                             <!-- Right Column: Podium -->
                             <StackPanel Grid.Column="2" Margin="25,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="PODIO DE LÍDERES" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                                <TextBlock Text="{DynamicResource Leaderboard_PodiumTitle}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,15"/>
 
                                 <!-- First Place Card -->
                                 <Border BorderBrush="#4DEEEA" BorderThickness="1.5" Background="#0B0E14" Padding="12,10" Margin="0,0,0,12">
@@ -354,31 +354,31 @@
 
                     <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
-                            Content="Menu Principal  ⚔"
+                            Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
                     <Button x:Name="ButtonProfile"
                             Grid.Column="1"
-                            Content="Perfil  👤"
+                            Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
                     <Button x:Name="ButtonHistory"
                             Grid.Column="2"
-                            Content="Historial  ◴"
+                            Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
                     <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
-                            Content="Marcadores  🏆"
+                            Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
                     <Button x:Name="ButtonSettings"
                             Grid.Column="4"
-                            Content="Ajustes  ⚙"
+                            Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
                 </Grid>

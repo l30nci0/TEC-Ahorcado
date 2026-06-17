@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -19,12 +20,14 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Historial";
+        window.Title = (string) Application.Current.FindResource("History_WindowTitle") ?? "Historial";
       }
 
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario == null) {
-        MessageBox.Show("Sesión de usuario inválida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string invalidSession = (string) Application.Current.FindResource("Msg_InvalidUserSession") ?? "Sesión de usuario inválida.";
+        MessageBox.Show(invalidSession, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         NavigationService.Navigate(new GUIMainMenuView());
         return;
       }
@@ -33,7 +36,7 @@ namespace LetterClashClient.Views {
       if (usuario.FechaDeNacimiento != null) {
         TextBlockAge.Text = CalculateAge(usuario.FechaDeNacimiento).ToString();
       } else {
-        TextBlockAge.Text = "N/D";
+        TextBlockAge.Text = (string) Application.Current.FindResource("History_NotAvailable") ?? "N/D";
       }
 
       // Cargar avatar local
@@ -55,11 +58,22 @@ namespace LetterClashClient.Views {
         var service = ServiceProxyManager.GetJugadorService();
         var result = service.ConsultarHistorial(usuario.IDJugador);
         if (result != null && result.IsSuccess && result.Value != null) {
+          string rolHost = (string) Application.Current.FindResource("History_RoleHost") ?? "Verdugo";
+          string rolChallenger = (string) Application.Current.FindResource("History_RoleChallenger") ?? "Adivino";
+          string noChallenger = (string) Application.Current.FindResource("History_NoChallenger") ?? "Sin adivinador";
+          string resWin = (string) Application.Current.FindResource("History_ResultWin") ?? "Victoria";
+          string resLoss = (string) Application.Current.FindResource("History_ResultLoss") ?? "Derrota";
+          string resDisconnect = (string) Application.Current.FindResource("History_ResultDisconnect") ?? "Desconectada";
+          string typePublic = (string) Application.Current.FindResource("History_TypePublic") ?? "Público";
+          string typePrivate = (string) Application.Current.FindResource("History_TypePrivate") ?? "Privado";
+          string langES = (string) Application.Current.FindResource("History_LangES") ?? "Español";
+          string langEN = (string) Application.Current.FindResource("History_LangEN") ?? "Inglés";
+
           List<BattleHistoryItem> battles = new List<BattleHistoryItem>();
           foreach (var p in result.Value) {
             bool isHost = p.IDAnfitrion == usuario.IDJugador;
-            string rol = isHost ? "Verdugo" : "Adivino";
-            string rival = isHost ? (p.NombreAdivinador ?? "Sin adivinador") : p.NombreAnfitrion;
+            string rol = isHost ? rolHost : rolChallenger;
+            string rival = isHost ? (p.NombreAdivinador ?? noChallenger) : p.NombreAnfitrion;
             string fecha = p.FechaDeJuego.ToString("dd/MM/yyyy");
             string palabra = p.PalabraRevelada ?? "";
 
@@ -69,38 +83,38 @@ namespace LetterClashClient.Views {
 
             if (p.Resultado == "ADIVINADA") {
               if (isHost) {
-                resultado = "Derrota";
+                resultado = resLoss;
                 puntuacion = "0";
                 progreso = 5;
               } else {
-                resultado = "Victoria";
+                resultado = resWin;
                 puntuacion = "+50";
                 progreso = 5;
               }
             } else if (p.Resultado == "SIN_ADIVINAR") {
               if (isHost) {
-                resultado = "Victoria";
+                resultado = resWin;
                 puntuacion = "+50";
                 progreso = 5;
               } else {
-                resultado = "Derrota";
+                resultado = resLoss;
                 puntuacion = "0";
                 progreso = 0;
               }
             } else if (p.Resultado == "ABANDONADA") {
-              resultado = "Desconectada";
+              resultado = resDisconnect;
               puntuacion = "0";
               progreso = 0;
             } else {
-              resultado = "Desconectada";
+              resultado = resDisconnect;
               puntuacion = "0";
               progreso = 0;
             }
 
-            string tipo = (p.Privacidad == "PÚBLICA") ? "Publico" : "Privado";
-            string idioma = "Español";
+            string tipo = (p.Privacidad == "PÚBLICA") ? typePublic : typePrivate;
+            string idioma = langES;
             if (p.Idioma != null && p.Idioma.ToUpper() == "INGLÉS") {
-              idioma = "Ingles";
+              idioma = langEN;
             }
 
             battles.Add(new BattleHistoryItem {
@@ -119,12 +133,18 @@ namespace LetterClashClient.Views {
           DataGridHistory.ItemsSource = battles;
           LoadStatistics(battles);
         } else {
-          MessageBox.Show(result?.Error?.Mensaje ?? "No se pudo obtener el historial de partidas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string errRetrieve = (string) Application.Current.FindResource("History_ErrorRetrieve") ?? "No se pudo obtener el historial de partidas.";
+          MessageBox.Show(result?.Error?.Mensaje ?? errRetrieve, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       } catch (System.ServiceModel.CommunicationException) {
-        MessageBox.Show("No se pudo conectar con el servidor para obtener el historial.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        string connMsg = (string) Application.Current.FindResource("History_ErrorConnection") ?? "No se pudo conectar con el servidor para obtener el historial.";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado al cargar el historial: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
@@ -139,16 +159,22 @@ namespace LetterClashClient.Views {
 
     private void LoadStatistics(List<BattleHistoryItem> battles) {
       int total = battles.Count;
-      int wins = battles.Count(battle => battle.Resultado == "Victoria");
-      int losses = battles.Count(battle => battle.Resultado == "Derrota");
-      int disconnected = battles.Count(battle => battle.Resultado == "Desconectada");
+      string resWin = (string) Application.Current.FindResource("History_ResultWin") ?? "Victoria";
+      string resLoss = (string) Application.Current.FindResource("History_ResultLoss") ?? "Derrota";
+      string resDisconnect = (string) Application.Current.FindResource("History_ResultDisconnect") ?? "Desconectada";
 
-      TextBlockTotalWins.Text = $"Total Ganadas = {wins}";
-      TextBlockPercentWins.Text = $"%{GetPercentage(wins, total)}";
-      TextBlockTotalLosses.Text = $"Total Perdidas = {losses}";
-      TextBlockPercentLosses.Text = $"%{GetPercentage(losses, total)}";
-      TextBlockTotalDisconnected.Text = $"Total Desconectadas = {disconnected}";
-      TextBlockPercentDisconnected.Text = $"%{GetPercentage(disconnected, total)}";
+      int wins = battles.Count(battle => battle.Resultado == resWin);
+      int losses = battles.Count(battle => battle.Resultado == resLoss);
+      int disconnected = battles.Count(battle => battle.Resultado == resDisconnect);
+
+      string percentFormat = (string) Application.Current.FindResource("History_StatPercentFormat") ?? "{0}%";
+
+      TextBlockTotalWins.Text = string.Format((string) Application.Current.FindResource("History_StatTotalWins") ?? "Total Ganadas = {0}", wins);
+      TextBlockPercentWins.Text = string.Format(percentFormat, GetPercentage(wins, total));
+      TextBlockTotalLosses.Text = string.Format((string) Application.Current.FindResource("History_StatTotalLosses") ?? "Total Perdidas = {0}", losses);
+      TextBlockPercentLosses.Text = string.Format(percentFormat, GetPercentage(losses, total));
+      TextBlockTotalDisconnected.Text = string.Format((string) Application.Current.FindResource("History_StatTotalDisconnected") ?? "Total Desconectadas = {0}", disconnected);
+      TextBlockPercentDisconnected.Text = string.Format(percentFormat, GetPercentage(disconnected, total));
     }
 
     private int GetPercentage(int amount, int total) {

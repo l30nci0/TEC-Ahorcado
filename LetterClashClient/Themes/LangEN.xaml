@@ -1,0 +1,298 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- Language: English -->
+    <sys:String x:Key="EntryMenu_Title">Hangman Game</sys:String>
+    <sys:String x:Key="EntryMenu_BtnLogin">LOG IN</sys:String>
+    <sys:String x:Key="EntryMenu_BtnRegister">REGISTER</sys:String>
+
+    <!-- Login Screen -->
+    <sys:String x:Key="Login_WindowTitle">Log In</sys:String>
+    <sys:String x:Key="Login_Title">LOG IN</sys:String>
+    <sys:String x:Key="Login_UsernameLabel">USERNAME OR EMAIL</sys:String>
+    <sys:String x:Key="Login_UsernamePlaceholder">Enter your username or email</sys:String>
+    <sys:String x:Key="Login_UsernameErrorEmpty">Please enter your username or email.</sys:String>
+    <sys:String x:Key="Login_PasswordLabel">PASSWORD</sys:String>
+    <sys:String x:Key="Login_PasswordPlaceholder">Enter your password</sys:String>
+    <sys:String x:Key="Login_PasswordErrorEmpty">Please enter your password.</sys:String>
+    <sys:String x:Key="Login_PasswordErrorIncorrect">Incorrect username or password.</sys:String>
+    <sys:String x:Key="Login_BtnLogin">LOG IN</sys:String>
+    <sys:String x:Key="Login_BtnRegister">REGISTER</sys:String>
+    <sys:String x:Key="Login_BtnBack">BACK ↩</sys:String>
+    
+    <sys:String x:Key="Login_MsgBoxErrorTitle">Log In Error</sys:String>
+    <sys:String x:Key="Msg_ConnectionError">Could not establish connection to the server. Check that the server is active.</sys:String>
+    <sys:String x:Key="Msg_ConnectionErrorTitle">Connection Error</sys:String>
+    <sys:String x:Key="Msg_UnexpectedError">An unexpected error occurred:</sys:String>
+    <sys:String x:Key="Msg_ErrorTitle">Error</sys:String>
+
+    <!-- Register Screen -->
+    <sys:String x:Key="Register_WindowTitle">Create Account</sys:String>
+    <sys:String x:Key="Register_MainTitle">CREATE ACCOUNT</sys:String>
+    <sys:String x:Key="Register_AccessTitle">USER ACCESS</sys:String>
+    <sys:String x:Key="Register_UsernameLabel">USERNAME</sys:String>
+    <sys:String x:Key="Register_UsernamePlaceholder">Username</sys:String>
+    <sys:String x:Key="Register_UsernameErrorEmpty">Please Enter a Username / Already in Use</sys:String>
+    <sys:String x:Key="Register_EmailLabel">EMAIL ADDRESS</sys:String>
+    <sys:String x:Key="Register_EmailPlaceholder">email@domain.com</sys:String>
+    <sys:String x:Key="Register_EmailError">Invalid domain</sys:String>
+    <sys:String x:Key="Register_PasswordLabel">PASSWORD</sys:String>
+    <sys:String x:Key="Register_PasswordPlaceholder">Enter your password</sys:String>
+    <sys:String x:Key="Register_ConfirmPasswordLabel">CONFIRM PASSWORD</sys:String>
+    <sys:String x:Key="Register_ConfirmPasswordPlaceholder">Confirm your password</sys:String>
+    <sys:String x:Key="Register_PasswordError">Passwords do not match</sys:String>
+    <sys:String x:Key="Register_PersonalInfoTitle">PERSONAL INFORMATION</sys:String>
+    <sys:String x:Key="Register_FullNameLabel">FULL NAME</sys:String>
+    <sys:String x:Key="Register_FullNamePlaceholder">Full Name</sys:String>
+    <sys:String x:Key="Register_FullNameConfirmError">Are you sure that is your name?</sys:String>
+    <sys:String x:Key="Register_ConfirmYes">YES</sys:String>
+    <sys:String x:Key="Register_PhoneLabel">PHONE</sys:String>
+    <sys:String x:Key="Register_PhonePlaceholder">Phone Number</sys:String>
+    <sys:String x:Key="Register_PhoneError">Please enter numbers only</sys:String>
+    <sys:String x:Key="Register_BirthDateLabel">DATE OF BIRTH</sys:String>
+    <sys:String x:Key="Register_BirthDateError">Select date</sys:String>
+    <sys:String x:Key="Register_PreferredLanguageLabel">PREFERRED LANGUAGE</sys:String>
+    <sys:String x:Key="Register_LanguageError">Select a language</sys:String>
+    <sys:String x:Key="Register_AvatarLabel">PLAYER AVATAR</sys:String>
+    <sys:String x:Key="Register_AvatarDescription">Select a custom image to identify yourself in games.</sys:String>
+    <sys:String x:Key="Register_BtnCreate">CREATE ACCOUNT</sys:String>
+    <sys:String x:Key="Register_BtnCancel">CANCEL</sys:String>
+
+    <sys:String x:Key="Register_SuccessMsg">Account created successfully. Log in to begin.</sys:String>
+    <sys:String x:Key="Register_SuccessTitle">Successful Registration</sys:String>
+    <sys:String x:Key="Register_ErrorGeneric">Error registering account.</sys:String>
+    <sys:String x:Key="Register_ErrorTitle">Registration Error</sys:String>
+    <sys:String x:Key="Register_AvatarSelectMsg">Here you can select an avatar image.</sys:String>
+
+    <!-- Main Menu -->
+    <sys:String x:Key="MainMenu_WindowTitle">Main Menu</sys:String>
+    <sys:String x:Key="MainMenu_BtnCreateRoom">CREATE ROOM ✎</sys:String>
+    <sys:String x:Key="MainMenu_BtnPublicLobby">ENTER PUBLIC LOBBY ◔</sys:String>
+    <sys:String x:Key="MainMenu_BtnPrivateLobby">ENTER PRIVATE LOBBY 🔒</sys:String>
+    <sys:String x:Key="MainMenu_Years">Years</sys:String>
+
+    <!-- Global Navigation Bar -->
+    <sys:String x:Key="Nav_MainMenu">Main Menu  ⚔</sys:String>
+    <sys:String x:Key="Nav_Profile">Profile  👤</sys:String>
+    <sys:String x:Key="Nav_History">History  ◴</sys:String>
+    <sys:String x:Key="Nav_Scoreboard">Scoreboard  🏆</sys:String>
+    <sys:String x:Key="Nav_Settings">Settings  ⚙</sys:String>
+
+    <!-- Profile Screen -->
+    <sys:String x:Key="Profile_WindowTitle">User Profile</sys:String>
+    <sys:String x:Key="Profile_Title">PROFILE</sys:String>
+    <sys:String x:Key="Profile_FullNameLabel">FULL NAME</sys:String>
+    <sys:String x:Key="Profile_AgeLabel">AGE</sys:String>
+    <sys:String x:Key="Profile_BirthDateLabel">DATE OF BIRTH</sys:String>
+    <sys:String x:Key="Profile_EmailLabel">EMAIL ADDRESS</sys:String>
+    <sys:String x:Key="Profile_PhoneLabel">PHONE NUMBER</sys:String>
+    <sys:String x:Key="Profile_AvatarLabel">PLAYER AVATAR</sys:String>
+    <sys:String x:Key="Profile_BtnEdit">EDIT PROFILE  🛠</sys:String>
+    <sys:String x:Key="Profile_NotRegistered">Not Registered</sys:String>
+
+    <sys:String x:Key="Profile_EditTitle">EDIT PROFILE</sys:String>
+    <sys:String x:Key="Profile_EditSubtitle">Modify the personal details of your account</sys:String>
+    <sys:String x:Key="Profile_AvatarEditLabel">PROFILE AVATAR</sys:String>
+    <sys:String x:Key="Profile_UsernameEditLabel">PLAYER NAME</sys:String>
+    <sys:String x:Key="Profile_PreferredLanguageLabel">PREFERRED LANGUAGE</sys:String>
+    <sys:String x:Key="Profile_LanguageError">Select a language</sys:String>
+    <sys:String x:Key="Profile_FullNameError">Enter a valid name</sys:String>
+    <sys:String x:Key="Profile_PhoneError">Please enter numbers only (10 digits)</sys:String>
+    <sys:String x:Key="Profile_BirthdayLabel">BIRTHDAY</sys:String>
+    <sys:String x:Key="Profile_BirthDateError">Select a date</sys:String>
+    <sys:String x:Key="Profile_ChangePasswordHeader">CHANGE PASSWORD</sys:String>
+    <sys:String x:Key="Profile_CurrentPasswordLabel">CURRENT PASSWORD</sys:String>
+    <sys:String x:Key="Profile_CurrentPasswordPlaceholder">Required to change password</sys:String>
+    <sys:String x:Key="Profile_CurrentPasswordError">Incorrect current password</sys:String>
+    <sys:String x:Key="Profile_NewPasswordLabel">NEW PASSWORD</sys:String>
+    <sys:String x:Key="Profile_NewPasswordPlaceholder">Leave blank if you do not wish to change it</sys:String>
+    <sys:String x:Key="Profile_ConfirmNewPasswordLabel">CONFIRM NEW PASSWORD</sys:String>
+    <sys:String x:Key="Profile_ConfirmNewPasswordPlaceholder">Confirm new password</sys:String>
+    <sys:String x:Key="Profile_PasswordMatchError">Passwords do not match</sys:String>
+    
+    <sys:String x:Key="Profile_BtnSave">Save Changes  ✓</sys:String>
+    <sys:String x:Key="Profile_BtnCancel">Cancel  ✕</sys:String>
+
+    <sys:String x:Key="Profile_ErrorPasswordChange">Could not change password.</sys:String>
+    <sys:String x:Key="Profile_UpdateSuccessMsg">Profile updated successfully.</sys:String>
+    <sys:String x:Key="Profile_UpdateSuccessTitle">Letter Clash</sys:String>
+    <sys:String x:Key="Profile_UpdateErrorMsg">Error updating profile.</sys:String>
+    <sys:String x:Key="Profile_ImageSizeExceededMsg">The image size must not exceed 2MB.</sys:String>
+    <sys:String x:Key="Profile_ImageSizeExceededTitle">Size Exceeded</sys:String>
+    <sys:String x:Key="Profile_ImageLoadError">Error loading image:</sys:String>
+    <sys:String x:Key="Profile_PasswordChangeErrorTitle">Error changing password</sys:String>
+    <sys:String x:Key="Profile_AvatarSelectTitle">Select Avatar</sys:String>
+    <sys:String x:Key="Profile_ImageFilter">Images (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg</sys:String>
+
+    <!-- Game Lobby -->
+    <sys:String x:Key="Lobby_WindowTitle">Game Lobby</sys:String>
+    <sys:String x:Key="Lobby_Title">GAME LOBBY</sys:String>
+    <sys:String x:Key="Lobby_TabPublic">Public Rooms ◔</sys:String>
+    <sys:String x:Key="Lobby_TabPrivate">Join by Code 🔒</sys:String>
+    <sys:String x:Key="Lobby_PublicTitle">AVAILABLE ONLINE ROOMS</sys:String>
+    <sys:String x:Key="Lobby_BtnRefresh">REFRESH ⟳</sys:String>
+    <sys:String x:Key="Lobby_ColHost">HOST</sys:String>
+    <sys:String x:Key="Lobby_ColLanguage">LANGUAGE</sys:String>
+    <sys:String x:Key="Lobby_ColPrivacy">PRIVACY</sys:String>
+    <sys:String x:Key="Lobby_ColAction">ACTION</sys:String>
+    <sys:String x:Key="Lobby_BtnJoin">ENTER  ➔</sys:String>
+    <sys:String x:Key="Lobby_PrivateTitle">JOIN PRIVATE ROOM</sys:String>
+    <sys:String x:Key="Lobby_AccessCodeLabel">6-CHARACTER ACCESS CODE</sys:String>
+    <sys:String x:Key="Lobby_AccessCodePlaceholder">Enter the code</sys:String>
+    <sys:String x:Key="Lobby_AccessCodeErrorEmpty">Please enter an access code</sys:String>
+    <sys:String x:Key="Lobby_AccessCodeErrorLength">Code must be exactly 6 characters</sys:String>
+    <sys:String x:Key="Lobby_BtnSearch">SEARCH LOBBY  ⌕</sys:String>
+    
+    <sys:String x:Key="Lobby_ErrorGetMatches">Could not retrieve game matches.</sys:String>
+    <sys:String x:Key="Lobby_ErrorGetMatchesConn">Could not establish connection to server to retrieve lobbies.</sys:String>
+    <sys:String x:Key="Lobby_ErrorSelfJoin">You cannot join a game created by yourself.</sys:String>
+    <sys:String x:Key="Lobby_ErrorSelfJoinTitle">Invalid Operation</sys:String>
+    <sys:String x:Key="Lobby_ErrorJoin">Could not join the match.</sys:String>
+    <sys:String x:Key="Lobby_ErrorJoinTitle">Join Error</sys:String>
+    <sys:String x:Key="Lobby_ErrorJoinConn">Could not connect to server to join the match.</sys:String>
+    <sys:String x:Key="Lobby_ErrorPrivateJoin">Could not join the room.</sys:String>
+
+    <!-- Leaderboards -->
+    <sys:String x:Key="Leaderboard_WindowTitle">Leaderboards</sys:String>
+    <sys:String x:Key="Leaderboard_Title">LEADERBOARDS</sys:String>
+    <sys:String x:Key="Leaderboard_Subtitle">The top 50 global players and season leaders</sys:String>
+    <sys:String x:Key="Leaderboard_ColRank">RANK</sys:String>
+    <sys:String x:Key="Leaderboard_ColPlayer">PLAYER</sys:String>
+    <sys:String x:Key="Leaderboard_ColWins">WINS</sys:String>
+    <sys:String x:Key="Leaderboard_ColScore">SCORE</sys:String>
+    <sys:String x:Key="Leaderboard_PodiumTitle">LEADERS PODIUM</sys:String>
+    
+    <sys:String x:Key="Leaderboard_ErrorLoad">Could not retrieve the leaderboards.</sys:String>
+    <sys:String x:Key="Leaderboard_ErrorLoadConn">Could not establish connection to the server to load leaderboards.</sys:String>
+
+    <!-- SelectWord Screen -->
+    <sys:String x:Key="SelectWord_WindowTitle">Create Lobby (Choose word)</sys:String>
+    <sys:String x:Key="SelectWord_Title">WORD CATALOG</sys:String>
+    <sys:String x:Key="SelectWord_HeaderTemplate">Words in {0}</sys:String>
+    <sys:String x:Key="SelectWord_LangES">SPANISH</sys:String>
+    <sys:String x:Key="SelectWord_LangEN">ENGLISH</sys:String>
+    <sys:String x:Key="SelectWord_LangNameES">Spanish</sys:String>
+    <sys:String x:Key="SelectWord_LangNameEN">English</sys:String>
+    <sys:String x:Key="SelectWord_ColWord">WORD</sys:String>
+    <sys:String x:Key="SelectWord_ColDescription">DESCRIPTION</sys:String>
+    <sys:String x:Key="SelectWord_ColAction">ACTION</sys:String>
+    <sys:String x:Key="SelectWord_BtnUse">USE  ➔</sys:String>
+    <sys:String x:Key="SelectWord_BtnBack">BACK  ↩</sys:String>
+    <sys:String x:Key="SelectWord_ErrorRetrieve">Error retrieving words from the catalog.</sys:String>
+    <sys:String x:Key="SelectWord_ErrorConnection">Could not connect to server to retrieve words.</sys:String>
+
+    <!-- History Screen -->
+    <sys:String x:Key="History_WindowTitle">History</sys:String>
+    <sys:String x:Key="History_Title">MATCH HISTORY</sys:String>
+    <sys:String x:Key="History_Subtitle">Complete log of your wins, losses and global statistics</sys:String>
+    <sys:String x:Key="History_ColRival">OPPONENT</sys:String>
+    <sys:String x:Key="History_ColDate">DATE</sys:String>
+    <sys:String x:Key="History_ColWord">WORD</sys:String>
+    <sys:String x:Key="History_ColResult">RESULT</sys:String>
+    <sys:String x:Key="History_ColScore">SCORE</sys:String>
+    <sys:String x:Key="History_NotAvailable">N/A</sys:String>
+    <sys:String x:Key="History_RoleHost">Executioner</sys:String>
+    <sys:String x:Key="History_RoleChallenger">Guesser</sys:String>
+    <sys:String x:Key="History_NoChallenger">No challenger</sys:String>
+    <sys:String x:Key="History_ResultWin">Win</sys:String>
+    <sys:String x:Key="History_ResultLoss">Loss</sys:String>
+    <sys:String x:Key="History_ResultDisconnect">Disconnected</sys:String>
+    <sys:String x:Key="History_TypePublic">Public</sys:String>
+    <sys:String x:Key="History_TypePrivate">Private</sys:String>
+    <sys:String x:Key="History_LangES">Spanish</sys:String>
+    <sys:String x:Key="History_LangEN">English</sys:String>
+    <sys:String x:Key="History_StatTotalWins">Total Wins = {0}</sys:String>
+    <sys:String x:Key="History_StatPercentFormat">{0}%</sys:String>
+    <sys:String x:Key="History_StatTotalLosses">Total Losses = {0}</sys:String>
+    <sys:String x:Key="History_StatTotalDisconnected">Total Disconnected = {0}</sys:String>
+    <sys:String x:Key="History_ErrorRetrieve">Could not retrieve match history.</sys:String>
+    <sys:String x:Key="History_ErrorConnection">Could not connect to server to retrieve history.</sys:String>
+
+    <!-- CreateRoom Screen -->
+    <sys:String x:Key="CreateRoom_WindowTitle">Main Menu (Create Room)</sys:String>
+    <sys:String x:Key="CreateRoom_Title">CONFIGURE ROOM</sys:String>
+    <sys:String x:Key="CreateRoom_Subtitle">Set the parameters for your new match</sys:String>
+    <sys:String x:Key="CreateRoom_TypeLabel">MATCH TYPE</sys:String>
+    <sys:String x:Key="CreateRoom_BtnPublic">PUBLIC</sys:String>
+    <sys:String x:Key="CreateRoom_BtnPrivate">PRIVATE</sys:String>
+    <sys:String x:Key="CreateRoom_WordLabel">HANGMAN WORD</sys:String>
+    <sys:String x:Key="CreateRoom_BtnSelectWord">SELECT WORD  ⌕</sys:String>
+    <sys:String x:Key="CreateRoom_WordSelectedLabel">SELECTED: </sys:String>
+    <sys:String x:Key="CreateRoom_LangLabel">ROOM LANGUAGE</sys:String>
+    <sys:String x:Key="CreateRoom_LangNone">NONE SELECTED</sys:String>
+    <sys:String x:Key="CreateRoom_AccessKeyLabel">ACCESS KEY</sys:String>
+    <sys:String x:Key="CreateRoom_BtnCreate">CREATE ROOM  ↑</sys:String>
+    <sys:String x:Key="CreateRoom_BtnBack">BACK  ↩</sys:String>
+    <sys:String x:Key="CreateRoom_WarningFields">Please select language, word, and match type.</sys:String>
+    <sys:String x:Key="CreateRoom_SuccessCreate">Match created successfully.</sys:String>
+    <sys:String x:Key="CreateRoom_SuccessTitle">Room Created</sys:String>
+    <sys:String x:Key="CreateRoom_ErrorCreate">Could not create match.</sys:String>
+    <sys:String x:Key="CreateRoom_ErrorConnection">Could not connect to server to register the match.</sys:String>
+
+    <!-- BattleHistoryDetail Screen -->
+    <sys:String x:Key="HistoryDetail_WindowTitle">Match (History)</sys:String>
+    <sys:String x:Key="HistoryDetail_Title">MATCH DETAILS</sys:String>
+    <sys:String x:Key="HistoryDetail_Subtitle">Technical file of score, opponent and game progress</sys:String>
+    <sys:String x:Key="HistoryDetail_OpponentLabel">OPPONENT</sys:String>
+    <sys:String x:Key="HistoryDetail_BtnViewProfile">VIEW PROFILE  👤</sys:String>
+    <sys:String x:Key="HistoryDetail_RoleLabel">YOUR ROLE IN THE MATCH</sys:String>
+    <sys:String x:Key="HistoryDetail_WordLabel">HANGMAN WORD</sys:String>
+    <sys:String x:Key="HistoryDetail_LangLabel">LANGUAGE</sys:String>
+    <sys:String x:Key="HistoryDetail_PrivacyLabel">PRIVACY</sys:String>
+    <sys:String x:Key="HistoryDetail_DateLabel">MATCH DATE</sys:String>
+    <sys:String x:Key="HistoryDetail_ResultLabel">RESULT</sys:String>
+    <sys:String x:Key="HistoryDetail_PointsLabel">POINTS</sys:String>
+    <sys:String x:Key="HistoryDetail_ProgressLabel">WORD PROGRESS</sys:String>
+    <sys:String x:Key="HistoryDetail_BtnBack">BACK  ↩</sys:String>
+    <sys:String x:Key="HistoryDetail_RoleText">Your Role was: {0}</sys:String>
+    <sys:String x:Key="HistoryDetail_RivalText">Opponent: {0}</sys:String>
+    <sys:String x:Key="HistoryDetail_LangText">Language: {0}</sys:String>
+    <sys:String x:Key="HistoryDetail_WordText">Word: {0}</sys:String>
+    <sys:String x:Key="HistoryDetail_TypeText">Type: {0}</sys:String>
+    <sys:String x:Key="HistoryDetail_DateText">Date of game: {0}</sys:String>
+
+    <!-- DifferentUser Screen -->
+    <sys:String x:Key="DiffUser_WindowTitle">Player Profile</sys:String>
+    <sys:String x:Key="DiffUser_Title">PLAYER PROFILE</sys:String>
+    <sys:String x:Key="DiffUser_FullNameLabel">FULL NAME</sys:String>
+    <sys:String x:Key="DiffUser_EmailLabel">EMAIL ADDRESS</sys:String>
+    <sys:String x:Key="DiffUser_AgeLabel">AGE</sys:String>
+    <sys:String x:Key="DiffUser_BirthDateLabel">DATE OF BIRTH</sys:String>
+    <sys:String x:Key="DiffUser_PhoneLabel">PHONE</sys:String>
+    <sys:String x:Key="DiffUser_AvatarLabel">AVATAR</sys:String>
+    <sys:String x:Key="DiffUser_BtnBack">BACK  ↩</sys:String>
+    <sys:String x:Key="DiffUser_ErrorRetrieve">Could not retrieve user information.</sys:String>
+    <sys:String x:Key="DiffUser_ErrorUnexpected">An unexpected error occurred while loading profile:</sys:String>
+
+    <!-- Game Screen -->
+    <sys:String x:Key="Game_HostWindowTitle">Match (Host)</sys:String>
+    <sys:String x:Key="Game_GuesserWindowTitle">Match (Guesser)</sys:String>
+    <sys:String x:Key="Game_Header">Match</sys:String>
+    <sys:String x:Key="Game_BtnAbandon">Abandon  ⚑</sys:String>
+    <sys:String x:Key="Game_AccessCodeLabel">ACCESS CODE</sys:String>
+    <sys:String x:Key="Game_WordLabel">SELECTED WORD</sys:String>
+    <sys:String x:Key="Game_ProposedLetterLabel">LETTER PROPOSED BY GUESSER</sys:String>
+    <sys:String x:Key="Game_ChatTitle">Chat with Opponent</sys:String>
+    <sys:String x:Key="Game_BtnSend">Send</sys:String>
+    <sys:String x:Key="Game_ChatTitleTemplate">Chat with {0}</sys:String>
+    <sys:String x:Key="Game_ErrorConnect">Error connecting to server:</sys:String>
+    <sys:String x:Key="Game_ResultWon">Congratulations! You won the game and obtained {0} points.</sys:String>
+    <sys:String x:Key="Game_ResultLost">The game has concluded. Winner: {0}.</sys:String>
+    <sys:String x:Key="Game_ResultTitle">Match Finished</sys:String>
+    <sys:String x:Key="Game_AbandonHost">The guesser ({0}) has abandoned the game. You won by abandonment (+50 points)!</sys:String>
+    <sys:String x:Key="Game_AbandonGuesser">The host ({0}) has abandoned the game. You won by abandonment (+50 points)!</sys:String>
+    <sys:String x:Key="Game_ServerError">A server error occurred: {0}</sys:String>
+    <sys:String x:Key="Game_ErrorLetter">Could not register the letter on server: {0}</sys:String>
+    <sys:String x:Key="Game_ChatYou">You</sys:String>
+    <sys:String x:Key="Game_ErrorSend">Could not send the message: {0}</sys:String>
+    <sys:String x:Key="Game_ConfirmAbandon">Are you sure you want to abandon the match?</sys:String>
+
+    <!-- Settings Screen -->
+    <sys:String x:Key="Settings_WindowTitle">Settings</sys:String>
+    <sys:String x:Key="Settings_Title">SETTINGS</sys:String>
+    <sys:String x:Key="Settings_Subtitle">Configure your profile and game preferences</sys:String>
+    <sys:String x:Key="Settings_PreferredLanguage">PREFERRED LANGUAGE</sys:String>
+    <sys:String x:Key="Settings_LangES">SPANISH</sys:String>
+    <sys:String x:Key="Settings_LangEN">ENGLISH</sys:String>
+    <sys:String x:Key="Settings_BtnLogout">Log Out ↩</sys:String>
+</ResourceDictionary>

@@ -485,16 +485,15 @@
                     <!-- Bottom Buttons -->
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-
                 <!-- Header Title -->
                 <TextBlock Grid.Row="0"
-                           Text="CREAR CUENTA"
-                           FontFamily="{StaticResource GeistPixelSquare}"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           Foreground="#4DEEEA"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,30"/>
+                            Text="{DynamicResource Register_MainTitle}"
+                            FontFamily="{StaticResource GeistPixelSquare}"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Foreground="#4DEEEA"
+                            HorizontalAlignment="Center"
+                            Margin="0,0,0,30"/>
 
                 <!-- Two Column Form Grid -->
                 <Grid Grid.Row="1" Margin="0,0,0,25">
@@ -507,7 +506,7 @@
 
                     <!-- Left Column: Account Info -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="ACCESO DE USUARIO"
+                        <TextBlock Text="{DynamicResource Register_AccessTitle}"
                                    FontFamily="{StaticResource GeistPixelSquare}"
                                    FontSize="14"
                                    FontWeight="Bold"
@@ -515,35 +514,35 @@
                                    Margin="0,0,0,16"/>
 
                         <!-- Username -->
-                        <TextBlock Text="NOMBRE DE USUARIO" Style="{StaticResource FormLabelStyle}"/>
+                        <TextBlock Text="{DynamicResource Register_UsernameLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Margin="0,0,0,2">
                             <TextBox x:Name="TextBoxUsername" Style="{StaticResource ModernTextBox}" Height="40" TextChanged="TextBoxUsername_TextChanged"/>
-                            <TextBlock x:Name="TextBlockUsernamePlaceholder" Text="Nombre de Usuario" Style="{StaticResource PlaceholderStyle}"/>
+                            <TextBlock x:Name="TextBlockUsernamePlaceholder" Text="{DynamicResource Register_UsernamePlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                         </Grid>
-                        <TextBlock x:Name="TextBlockUsernameError" Text="Ingrese un Usuario/Nombre ya en Uso" Style="{StaticResource ErrorLabelStyle}"/>
+                        <TextBlock x:Name="TextBlockUsernameError" Text="{DynamicResource Register_UsernameErrorEmpty}" Style="{StaticResource ErrorLabelStyle}"/>
 
                         <!-- Email -->
-                        <TextBlock Text="CORREO ELECTRÓNICO" Style="{StaticResource FormLabelStyle}"/>
+                        <TextBlock Text="{DynamicResource Register_EmailLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Margin="0,0,0,2">
                             <TextBox x:Name="TextBoxEmail" Style="{StaticResource ModernTextBox}" Height="40" TextChanged="TextBoxEmail_TextChanged"/>
-                            <TextBlock x:Name="TextBlockEmailPlaceholder" Text="correo@dominio.com" Style="{StaticResource PlaceholderStyle}"/>
+                            <TextBlock x:Name="TextBlockEmailPlaceholder" Text="{DynamicResource Register_EmailPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                         </Grid>
-                        <TextBlock x:Name="TextBlockEmailError" Text="Dominio no válido" Style="{StaticResource ErrorLabelStyle}"/>
+                        <TextBlock x:Name="TextBlockEmailError" Text="{DynamicResource Register_EmailError}" Style="{StaticResource ErrorLabelStyle}"/>
 
                         <!-- Password -->
-                        <TextBlock Text="CONTRASEÑA" Style="{StaticResource FormLabelStyle}"/>
+                        <TextBlock Text="{DynamicResource Register_PasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Margin="0,0,0,16">
                             <PasswordBox x:Name="PasswordBoxPassword" Style="{StaticResource ModernPasswordBox}" Height="40" PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
-                            <TextBlock x:Name="TextBlockPasswordPlaceholder" Text="Ingresa tu contraseña" Style="{StaticResource PlaceholderStyle}"/>
+                            <TextBlock x:Name="TextBlockPasswordPlaceholder" Text="{DynamicResource Register_PasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                         </Grid>
 
                         <!-- Confirm Password -->
-                        <TextBlock Text="CONFIRMAR CONTRASEÑA" Style="{StaticResource FormLabelStyle}"/>
+                        <TextBlock Text="{DynamicResource Register_ConfirmPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Margin="0,0,0,2">
                             <PasswordBox x:Name="PasswordBoxConfirmPassword" Style="{StaticResource ModernPasswordBox}" Height="40" PasswordChanged="PasswordBoxConfirmPassword_PasswordChanged"/>
-                            <TextBlock x:Name="TextBlockConfirmPasswordPlaceholder" Text="Confirma tu contraseña" Style="{StaticResource PlaceholderStyle}"/>
+                            <TextBlock x:Name="TextBlockConfirmPasswordPlaceholder" Text="{DynamicResource Register_ConfirmPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                         </Grid>
-                        <TextBlock x:Name="TextBlockPasswordError" Text="Contraseña es diferente" Style="{StaticResource ErrorLabelStyle}"/>
+                        <TextBlock x:Name="TextBlockPasswordError" Text="{DynamicResource Register_PasswordError}" Style="{StaticResource ErrorLabelStyle}"/>
                     </StackPanel>
 
                     <!-- Center Divider -->
@@ -555,7 +554,7 @@
 
                     <!-- Right Column: Personal Info -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="INFORMACIÓN PERSONAL"
+                        <TextBlock Text="{DynamicResource Register_PersonalInfoTitle}"
                                    FontFamily="{StaticResource GeistPixelSquare}"
                                    FontSize="14"
                                    FontWeight="Bold"
@@ -563,23 +562,23 @@
                                    Margin="0,0,0,16"/>
 
                         <!-- Full Name -->
-                        <TextBlock Text="NOMBRE COMPLETO" Style="{StaticResource FormLabelStyle}"/>
+                        <TextBlock Text="{DynamicResource Register_FullNameLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Margin="0,0,0,2">
                             <TextBox x:Name="TextBoxFullName" Style="{StaticResource ModernTextBox}" Height="40" TextChanged="TextBoxFullName_TextChanged"/>
-                            <TextBlock x:Name="TextBlockFullNamePlaceholder" Text="Nombre Completo" Style="{StaticResource PlaceholderStyle}"/>
+                            <TextBlock x:Name="TextBlockFullNamePlaceholder" Text="{DynamicResource Register_FullNamePlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                         </Grid>
                         <StackPanel Orientation="Horizontal" Margin="2,2,0,6">
-                            <TextBlock x:Name="TextBlockFullNameError" Text="¿Está seguro de que ese es su nombre?" FontFamily="{StaticResource GeistMono}" FontSize="11" Foreground="#F87171" VerticalAlignment="Center" Visibility="Hidden"/>
-                            <Button x:Name="ButtonConfirmName" Content="SÍ" Width="45" Height="20" Margin="10,0,0,0" Style="{StaticResource ModernPrimaryButton}" FontSize="10" Visibility="Hidden"/>
+                            <TextBlock x:Name="TextBlockFullNameError" Text="{DynamicResource Register_FullNameConfirmError}" FontFamily="{StaticResource GeistMono}" FontSize="11" Foreground="#F87171" VerticalAlignment="Center" Visibility="Hidden"/>
+                            <Button x:Name="ButtonConfirmName" Content="{DynamicResource Register_ConfirmYes}" Width="45" Height="20" Margin="10,0,0,0" Style="{StaticResource ModernPrimaryButton}" FontSize="10" Visibility="Hidden"/>
                         </StackPanel>
 
                         <!-- Phone -->
-                        <TextBlock Text="TELÉFONO" Style="{StaticResource FormLabelStyle}"/>
+                        <TextBlock Text="{DynamicResource Register_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Margin="0,0,0,2">
                             <TextBox x:Name="TextBoxPhone" Style="{StaticResource ModernTextBox}" Height="40" TextChanged="TextBoxPhone_TextChanged"/>
-                            <TextBlock x:Name="TextBlockPhonePlaceholder" Text="Número Telefónico" Style="{StaticResource PlaceholderStyle}"/>
+                            <TextBlock x:Name="TextBlockPhonePlaceholder" Text="{DynamicResource Register_PhonePlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                         </Grid>
-                        <TextBlock x:Name="TextBlockPhoneError" Text="Coloque solo números" Style="{StaticResource ErrorLabelStyle}"/>
+                        <TextBlock x:Name="TextBlockPhoneError" Text="{DynamicResource Register_PhoneError}" Style="{StaticResource ErrorLabelStyle}"/>
 
                         <!-- ComboBox and DatePicker row -->
                         <Grid Margin="0,0,0,16">
@@ -590,17 +589,17 @@
 
                             <!-- Birthday -->
                             <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                                <TextBlock Text="FECHA NACIMIENTO" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource Register_BirthDateLabel}" Style="{StaticResource FormLabelStyle}"/>
                                 <DatePicker x:Name="DatePickerBirthDate" 
                                             Style="{StaticResource ModernDatePicker}"
                                             Height="40"
                                             HorizontalAlignment="Stretch"/>
-                                <TextBlock x:Name="TextBlockBirthDateError" Text="Seleccione fecha" Style="{StaticResource ErrorLabelStyle}" Margin="2,4,0,0"/>
+                                <TextBlock x:Name="TextBlockBirthDateError" Text="{DynamicResource Register_BirthDateError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,4,0,0"/>
                             </StackPanel>
 
                             <!-- Preferred Language -->
                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                <TextBlock Text="IDIOMA PREFERIDO" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource Register_PreferredLanguageLabel}" Style="{StaticResource FormLabelStyle}"/>
                                 
                                 <!-- Segmented Buttons for Language Selection -->
                                 <Grid Height="40">
@@ -615,7 +614,7 @@
                                             Style="{StaticResource ModernPrimaryButton}"
                                             Margin="0,0,5,0"
                                             Click="ButtonLangES_Click"/>
-                                            
+                                             
                                     <Button x:Name="ButtonLangEN"
                                             Grid.Column="1"
                                             Content="ENGLISH"
@@ -633,12 +632,12 @@
                                     <ComboBoxItem Content="Español"/>
                                 </ComboBox>
                                 
-                                <TextBlock x:Name="TextBlockLanguageError" Text="Seleccione un idioma" Style="{StaticResource ErrorLabelStyle}" Margin="2,4,0,0"/>
+                                <TextBlock x:Name="TextBlockLanguageError" Text="{DynamicResource Register_LanguageError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,4,0,0"/>
                             </StackPanel>
                         </Grid>
 
                         <!-- Avatar Section -->
-                        <TextBlock Text="AVATAR DE JUGADOR" Style="{StaticResource FormLabelStyle}"/>
+                        <TextBlock Text="{DynamicResource Register_AvatarLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid HorizontalAlignment="Left">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -695,9 +694,8 @@
                                        Foreground="#4DEEEA" 
                                        FontSize="11" 
                                        FontFamily="{StaticResource GeistMono}"
-                                       MaxWidth="220">
-                                Selecciona una imagen personalizada para identificarte en partidas.
-                            </TextBlock>
+                                       MaxWidth="220"
+                                       Text="{DynamicResource Register_AvatarDescription}"/>
                         </Grid>
                     </StackPanel>
                 </Grid>
@@ -711,7 +709,7 @@
 
                     <Button x:Name="ButtonCreate"
                             Grid.Column="0"
-                            Content="CREAR CUENTA"
+                            Content="{DynamicResource Register_BtnCreate}"
                             Style="{StaticResource ModernPrimaryButton}"
                             Height="44"
                             Margin="0,0,10,0"
@@ -719,7 +717,7 @@
 
                     <Button x:Name="ButtonCancel"
                             Grid.Column="1"
-                            Content="CANCELAR"
+                            Content="{DynamicResource Register_BtnCancel}"
                             Style="{StaticResource ModernSecondaryButton}"
                             Height="44"
                             Margin="10,0,0,0"

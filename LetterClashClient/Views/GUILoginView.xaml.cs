@@ -5,6 +5,7 @@ using System.Windows.Controls;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -17,7 +18,7 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Ingreso de Sesión";
+        window.Title = (string) Application.Current.FindResource("Login_WindowTitle") ?? "Ingreso de Sesión";
       }
     }
 
@@ -30,13 +31,13 @@ namespace LetterClashClient.Views {
       bool hasError = false;
 
       if (usernameEmpty) {
-        TextBlockUsernameError.Text = "Ingrese su nombre de usuario o correo.";
+        TextBlockUsernameError.Text = (string) Application.Current.FindResource("Login_UsernameErrorEmpty") ?? "Ingrese su nombre de usuario o correo.";
         TextBlockUsernameError.Visibility = Visibility.Visible;
         hasError = true;
       }
 
       if (passwordEmpty) {
-        TextBlockPasswordError.Text = "Coloque su contraseña.";
+        TextBlockPasswordError.Text = (string) Application.Current.FindResource("Login_PasswordErrorEmpty") ?? "Coloque su contraseña.";
         TextBlockPasswordError.Visibility = Visibility.Visible;
         hasError = true;
       }
@@ -58,16 +59,21 @@ namespace LetterClashClient.Views {
         } else {
           string errorMsg = result?.Error?.Mensaje ?? "Credenciales incorrectas o error en el sistema.";
           if (result?.Error?.CodigoError == CodigoError.CREDENCIALES_INVALIDAS) {
-            TextBlockPasswordError.Text = "Usuario o contraseña incorrectos.";
+            TextBlockPasswordError.Text = (string) Application.Current.FindResource("Login_PasswordErrorIncorrect") ?? "Usuario o contraseña incorrectos.";
             TextBlockPasswordError.Visibility = Visibility.Visible;
           } else {
-            MessageBox.Show(errorMsg, "Error de Inicio de Sesión", MessageBoxButton.OK, MessageBoxImage.Error);
+            string errTitle = (string) Application.Current.FindResource("Login_MsgBoxErrorTitle") ?? "Error de Inicio de Sesión";
+            MessageBox.Show(errorMsg, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
           }
         }
       } catch (CommunicationException) {
-        MessageBox.Show("No se pudo establecer conexión con el servidor. Compruebe que el servidor esté activo.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connMsg = (string) Application.Current.FindResource("Msg_ConnectionError") ?? "No se pudo establecer conexión con el servidor. Compruebe que el servidor esté activo.";
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 

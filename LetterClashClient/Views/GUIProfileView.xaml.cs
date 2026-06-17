@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -22,7 +23,7 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Perfil de Usuario";
+        window.Title = (string) Application.Current.FindResource("Profile_WindowTitle") ?? "Perfil de Usuario";
       }
 
       LoadViewData();
@@ -34,10 +35,12 @@ namespace LetterClashClient.Views {
       if (usuario != null) {
         TextBlockUsernameHeader.Text = $"\"{usuario.NombreDeUsuario}\"";
         TextBlockFullName.Text = usuario.Nombre;
-        TextBlockAge.Text = CalculateAge(usuario.FechaDeNacimiento).ToString() + " Años";
+        string yearsText = (string) Application.Current.FindResource("MainMenu_Years") ?? "Años";
+        TextBlockAge.Text = $"{CalculateAge(usuario.FechaDeNacimiento)} {yearsText}";
         TextBlockBirthDate.Text = usuario.FechaDeNacimiento.ToString("dd/MM/yyyy");
         TextBlockEmail.Text = usuario.Correo;
-        TextBlockPhone.Text = !string.IsNullOrWhiteSpace(usuario.Telefono) ? usuario.Telefono : "No Registrado";
+        string notRegText = (string) Application.Current.FindResource("Profile_NotRegistered") ?? "No Registrado";
+        TextBlockPhone.Text = !string.IsNullOrWhiteSpace(usuario.Telefono) ? usuario.Telefono : notRegText;
 
         if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
           try {
@@ -131,14 +134,14 @@ namespace LetterClashClient.Views {
 
       string fullName = TextBoxFullName.Text.Trim();
       if (string.IsNullOrWhiteSpace(fullName)) {
-        TextBlockFullNameError.Text = "Ingrese un nombre válido.";
+        TextBlockFullNameError.Text = (string) Application.Current.FindResource("Profile_FullNameError") ?? "Ingrese un nombre válido.";
         TextBlockFullNameError.Visibility = Visibility.Visible;
         hasError = true;
       }
 
       string phone = TextBoxPhone.Text.Trim();
       if (string.IsNullOrWhiteSpace(phone) || !Regex.IsMatch(phone, @"^[0-9]{10}$")) {
-        TextBlockPhoneError.Text = "Coloque un número de 10 dígitos.";
+        TextBlockPhoneError.Text = (string) Application.Current.FindResource("Profile_PhoneError") ?? "Coloque un número de 10 dígitos.";
         TextBlockPhoneError.Visibility = Visibility.Visible;
         hasError = true;
       }
@@ -163,17 +166,17 @@ namespace LetterClashClient.Views {
 
       if (isChangingPassword) {
         if (string.IsNullOrEmpty(currentPassword)) {
-          TextBlockCurrentPasswordError.Text = "Ingrese su contraseña actual.";
+          TextBlockCurrentPasswordError.Text = (string) Application.Current.FindResource("Profile_CurrentPasswordPlaceholder") ?? "Ingrese su contraseña actual.";
           TextBlockCurrentPasswordError.Visibility = Visibility.Visible;
           hasError = true;
         }
 
         if (string.IsNullOrEmpty(newPassword)) {
-          TextBlockPasswordError.Text = "Ingrese la nueva contraseña.";
+          TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_NewPasswordPlaceholder") ?? "Ingrese la nueva contraseña.";
           TextBlockPasswordError.Visibility = Visibility.Visible;
           hasError = true;
         } else if (newPassword != confirmPassword) {
-          TextBlockPasswordError.Text = "Las contraseñas no coinciden.";
+          TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_PasswordMatchError") ?? "Las contraseñas no coinciden.";
           TextBlockPasswordError.Visibility = Visibility.Visible;
           hasError = true;
         }
@@ -200,10 +203,13 @@ namespace LetterClashClient.Views {
                 TextBlockCurrentPasswordError.Text = passwordResult.Error.Mensaje;
                 TextBlockCurrentPasswordError.Visibility = Visibility.Visible;
               } else {
-                MessageBox.Show(passwordResult.Error.Mensaje, "Error al cambiar contraseña", MessageBoxButton.OK, MessageBoxImage.Error);
+                string passChangeErrTitle = (string) Application.Current.FindResource("Profile_PasswordChangeErrorTitle") ?? "Error al cambiar contraseña";
+                MessageBox.Show(passwordResult.Error.Mensaje, passChangeErrTitle, MessageBoxButton.OK, MessageBoxImage.Error);
               }
             } else {
-              MessageBox.Show("No se pudo cambiar la contraseña.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+              string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+              string noChangeErr = (string) Application.Current.FindResource("Profile_ErrorPasswordChange") ?? "No se pudo cambiar la contraseña.";
+              MessageBox.Show(noChangeErr, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             return;
           }
@@ -231,8 +237,10 @@ namespace LetterClashClient.Views {
           usuario.IdiomaPreferido = jugadorDto.IdiomaPreferido;
           usuario.FechaDeNacimiento = jugadorDto.FechaDeNacimiento;
 
-          MessageBox.Show("Perfil actualizado correctamente.",
-                          "TecnoHorcado",
+          string successMsg = (string) Application.Current.FindResource("Profile_UpdateSuccessMsg") ?? "Perfil actualizado correctamente.";
+          string successTitle = (string) Application.Current.FindResource("Profile_UpdateSuccessTitle") ?? "TecnoHorcado";
+          MessageBox.Show(successMsg,
+                          successTitle,
                           MessageBoxButton.OK,
                           MessageBoxImage.Information);
 
@@ -245,15 +253,22 @@ namespace LetterClashClient.Views {
           SwitchMode(false);
         } else {
           if (profileResult?.Error != null) {
-            MessageBox.Show(profileResult.Error.Mensaje, "Error de Perfil", MessageBoxButton.OK, MessageBoxImage.Error);
+            string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+            MessageBox.Show(profileResult.Error.Mensaje, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
           } else {
-            MessageBox.Show("Error al actualizar el perfil.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+            string updateErr = (string) Application.Current.FindResource("Profile_UpdateErrorMsg") ?? "Error al actualizar el perfil.";
+            MessageBox.Show(updateErr, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
           }
         }
       } catch (CommunicationException) {
-        MessageBox.Show("No se pudo conectar con el servidor. Verifique su conexión.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connMsg = (string) Application.Current.FindResource("Msg_ConnectionError") ?? "No se pudo conectar con el servidor. Verifique su conexión.";
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
@@ -265,9 +280,12 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonAddAvatar_Click(object sender, RoutedEventArgs e) {
+      string fileFilter = (string) Application.Current.FindResource("Profile_ImageFilter") ?? "Imágenes (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
+      string dialogTitle = (string) Application.Current.FindResource("Profile_AvatarSelectTitle") ?? "Seleccionar Avatar";
+
       var openFileDialog = new Microsoft.Win32.OpenFileDialog {
-        Filter = "Imágenes (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg",
-        Title = "Seleccionar Avatar"
+        Filter = fileFilter,
+        Title = dialogTitle
       };
 
       if (openFileDialog.ShowDialog() == true) {
@@ -277,7 +295,9 @@ namespace LetterClashClient.Views {
 
           const int maxSizeBytes = 2 * 1024 * 1024;
           if (avatarBytes.Length > maxSizeBytes) {
-            MessageBox.Show("El tamaño de la imagen no debe superar los 2MB.", "Tamaño Excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
+            string sizeMsg = (string) Application.Current.FindResource("Profile_ImageSizeExceededMsg") ?? "El tamaño de la imagen no debe superar los 2MB.";
+            string sizeTitle = (string) Application.Current.FindResource("Profile_ImageSizeExceededTitle") ?? "Tamaño Excedido";
+            MessageBox.Show(sizeMsg, sizeTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
           }
 
@@ -292,7 +312,9 @@ namespace LetterClashClient.Views {
 
           selectedAvatarBytes = avatarBytes;
         } catch (Exception ex) {
-          MessageBox.Show($"Error al cargar la imagen: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          string loadErr = (string) Application.Current.FindResource("Profile_ImageLoadError") ?? "Error al cargar la imagen:";
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          MessageBox.Show($"{loadErr} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       }
     }
@@ -337,25 +359,27 @@ namespace LetterClashClient.Views {
 
     private void UpdateLanguageButtons() {
       if (ComboBoxPreferredLanguage.SelectedIndex == 1) { // Ingles
-        ButtonLangEN.Style = (Style)FindResource("ModernPrimaryButton");
-        ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonLangEN.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonLangES.Style = (Style) FindResource("ModernSecondaryButton");
       } else if (ComboBoxPreferredLanguage.SelectedIndex == 2) { // Español
-        ButtonLangES.Style = (Style)FindResource("ModernPrimaryButton");
-        ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonLangES.Style = (Style) FindResource("ModernPrimaryButton");
+        ButtonLangEN.Style = (Style) FindResource("ModernSecondaryButton");
       } else {
-        ButtonLangES.Style = (Style)FindResource("ModernSecondaryButton");
-        ButtonLangEN.Style = (Style)FindResource("ModernSecondaryButton");
+        ButtonLangES.Style = (Style) FindResource("ModernSecondaryButton");
+        ButtonLangEN.Style = (Style) FindResource("ModernSecondaryButton");
       }
     }
 
     private void ButtonLangES_Click(object sender, RoutedEventArgs e) {
       ComboBoxPreferredLanguage.SelectedIndex = 2;
       UpdateLanguageButtons();
+      Services.LanguageManager.SetLanguage("ES");
     }
 
     private void ButtonLangEN_Click(object sender, RoutedEventArgs e) {
       ComboBoxPreferredLanguage.SelectedIndex = 1;
       UpdateLanguageButtons();
+      Services.LanguageManager.SetLanguage("EN");
     }
   }
 }

@@ -238,7 +238,7 @@
           </Image.Effect>
         </Image>
 
-        <TextBlock Text="INICIAR SESION"
+        <TextBlock Text="{DynamicResource Login_Title}"
                            FontFamily="{StaticResource GeistPixelSquare}"
                            FontSize="22"
                            FontWeight="Bold"
@@ -250,7 +250,7 @@
           </TextBlock.Effect>
         </TextBlock>
 
-        <TextBlock Text="USUARIO O CORREO"
+        <TextBlock Text="{DynamicResource Login_UsernameLabel}"
                            FontFamily="{StaticResource GeistMono}"
                            FontSize="11"
                            FontWeight="Bold"
@@ -263,7 +263,7 @@
                              Height="42"
                              TextChanged="TextBoxUsername_TextChanged"/>
           <TextBlock x:Name="TextBlockUsernamePlaceholder"
-                               Text="Ingresa tu usuario o correo"
+                               Text="{DynamicResource Login_UsernamePlaceholder}"
                                FontFamily="{StaticResource GeistMono}"
                                FontSize="14"
                                Foreground="#00A896"
@@ -273,14 +273,14 @@
         </Grid>
 
         <TextBlock x:Name="TextBlockUsernameError"
-                           Text="Usuario o Correo no válido / no encontrado"
+                           Text="{DynamicResource Login_UsernameErrorEmpty}"
                            FontFamily="{StaticResource GeistMono}"
                            FontSize="11"
                            Foreground="#E60067"
                            Margin="2,0,0,16"
                            Visibility="Hidden"/>
 
-        <TextBlock Text="CONTRASEÑA"
+        <TextBlock Text="{DynamicResource Login_PasswordLabel}"
                            FontFamily="{StaticResource GeistMono}"
                            FontSize="11"
                            FontWeight="Bold"
@@ -293,7 +293,7 @@
                                  Height="42"
                                  PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
           <TextBlock x:Name="TextBlockPasswordPlaceholder"
-                               Text="Ingresa tu contraseña"
+                               Text="{DynamicResource Login_PasswordPlaceholder}"
                                FontFamily="{StaticResource GeistMono}"
                                FontSize="14"
                                Foreground="#00A896"
@@ -303,7 +303,7 @@
         </Grid>
 
         <TextBlock x:Name="TextBlockPasswordError"
-                           Text="Coloque su contraseña"
+                           Text="{DynamicResource Login_PasswordErrorEmpty}"
                            FontFamily="{StaticResource GeistMono}"
                            FontSize="11"
                            Foreground="#E60067"
@@ -311,7 +311,7 @@
                            Visibility="Hidden"/>
 
         <Button x:Name="ButtonLogin"
-                        Content="INICIAR SESION"
+                        Content="{DynamicResource Login_BtnLogin}"
                         Style="{StaticResource ModernPrimaryButton}"
                         Height="44"
                         Click="ButtonLogin_Click"
@@ -327,7 +327,7 @@
 
         <Grid>
           <Button x:Name="ButtonCreateAccount"
-                            Content="REGISTRARSE"
+                            Content="{DynamicResource Login_BtnRegister}"
                             Style="{StaticResource ModernSecondaryButton}"
                             Height="36"
                             Width="150"
@@ -335,7 +335,7 @@
                             Click="ButtonCreateAccount_Click"/>
 
           <Button x:Name="ButtonBackHome"
-                            Content="VOLVER ↩"
+                            Content="{DynamicResource Login_BtnBack}"
                             Style="{StaticResource ModernSecondaryButton}"
                             Height="36"
                             Width="120"

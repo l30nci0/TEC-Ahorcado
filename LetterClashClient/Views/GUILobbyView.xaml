@@ -305,7 +305,7 @@
 
                 <!-- Section Title Header -->
                 <TextBlock Grid.Row="0"
-                           Text="LOBBY DE PARTIDAS"
+                           Text="{DynamicResource Lobby_Title}"
                            FontFamily="{StaticResource GeistPixelSquare}"
                            FontSize="24"
                            FontWeight="Bold"
@@ -323,7 +323,7 @@
                             HorizontalAlignment="Center"
                             Margin="0,0,0,20">
                     <Button x:Name="ButtonTabPublic"
-                            Content="Salas Públicas ◔"
+                            Content="{DynamicResource Lobby_TabPublic}"
                             Width="200"
                             Height="40"
                             Style="{StaticResource ModernSecondaryButton}"
@@ -331,7 +331,7 @@
                             Click="ButtonTabPublic_Click"/>
 
                     <Button x:Name="ButtonTabPrivate"
-                            Content="Unirse por Código 🔒"
+                            Content="{DynamicResource Lobby_TabPrivate}"
                             Width="200"
                             Height="40"
                             Style="{StaticResource ModernSecondaryButton}"
@@ -369,7 +369,7 @@
                                     Background="#0B0E14"
                                     Padding="15,0">
                                 <Grid>
-                                    <TextBlock Text="SALAS DISPONIBLES EN LÍNEA"
+                                    <TextBlock Text="{DynamicResource Lobby_PublicTitle}"
                                                FontFamily="{StaticResource GeistPixelSquare}"
                                                FontSize="13"
                                                FontWeight="Bold"
@@ -377,7 +377,7 @@
                                                VerticalAlignment="Center"/>
                                     
                                     <Button x:Name="ButtonRefreshLobby"
-                                            Content="ACTUALIZAR ⟳"
+                                            Content="{DynamicResource Lobby_BtnRefresh}"
                                             Width="130"
                                             Height="30"
                                             Style="{StaticResource ModernPrimaryButton}"
@@ -398,20 +398,20 @@
                                       Margin="10"
                                       Background="#0B0E14">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ANFITRIÓN"
+                                    <DataGridTextColumn Header="{DynamicResource Lobby_ColHost}"
                                                         Binding="{Binding NombreAnfitrion}"
                                                         Width="*"/>
-                                    <DataGridTextColumn Header="IDIOMA"
+                                    <DataGridTextColumn Header="{DynamicResource Lobby_ColLanguage}"
                                                         Binding="{Binding Idioma}"
                                                         Width="*"/>
-                                    <DataGridTextColumn Header="PRIVACIDAD"
+                                    <DataGridTextColumn Header="{DynamicResource Lobby_ColPrivacy}"
                                                         Binding="{Binding Privacidad}"
                                                         Width="*"/>
-                                    <DataGridTemplateColumn Header="ACCIÓN"
+                                    <DataGridTemplateColumn Header="{DynamicResource Lobby_ColAction}"
                                                             Width="140">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Content="ENTRAR  ➔"
+                                                <Button Content="{DynamicResource Lobby_BtnJoin}"
                                                         Width="110"
                                                         Height="26"
                                                         Style="{StaticResource ModernPrimaryButton}"
@@ -451,7 +451,7 @@
                                     BorderThickness="0,0,0,1.5"
                                     Background="#0B0E14"
                                     Padding="15,0">
-                                <TextBlock Text="UNIRSE A SALA PRIVADA"
+                                <TextBlock Text="{DynamicResource Lobby_PrivateTitle}"
                                            FontFamily="{StaticResource GeistPixelSquare}"
                                            FontSize="13"
                                            FontWeight="Bold"
@@ -465,7 +465,7 @@
                                         HorizontalAlignment="Center" 
                                         Width="320">
                                 
-                                <TextBlock Text="CÓDIGO DE ACCESO DE 6 CARACTERES"
+                                <TextBlock Text="{DynamicResource Lobby_AccessCodeLabel}"
                                            Style="{StaticResource FormLabelStyle}"
                                            HorizontalAlignment="Center"
                                            Margin="0,0,0,10"/>
@@ -476,18 +476,18 @@
                                              Height="40"
                                              TextChanged="TextBoxAccessCode_TextChanged"/>
                                     <TextBlock x:Name="TextBlockAccessCodePlaceholder"
-                                               Text="Ingresa el código"
+                                               Text="{DynamicResource Lobby_AccessCodePlaceholder}"
                                                Style="{StaticResource PlaceholderStyle}"/>
                                 </Grid>
 
                                 <TextBlock x:Name="TextBlockAccessCodeError"
-                                           Text="Ingrese un código válido"
+                                           Text="{DynamicResource Lobby_AccessCodeErrorLength}"
                                            Style="{StaticResource ErrorLabelStyle}"
                                            HorizontalAlignment="Center"
                                            Margin="0,0,0,15"/>
 
                                 <Button x:Name="ButtonSearchLobby"
-                                        Content="BUSCAR LOBBY  ⌕"
+                                        Content="{DynamicResource Lobby_BtnSearch}"
                                         Width="220"
                                         Height="44"
                                         Style="{StaticResource ModernPrimaryButton}"
@@ -515,31 +515,31 @@
 
                     <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
-                            Content="Menu Principal  ⚔"
+                            Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
                     <Button x:Name="ButtonProfile"
                             Grid.Column="1"
-                            Content="Perfil  👤"
+                            Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
                     <Button x:Name="ButtonHistory"
                             Grid.Column="2"
-                            Content="Historial  ◴"
+                            Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
                     <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
-                            Content="Marcadores  🏆"
+                            Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
                     <Button x:Name="ButtonSettings"
                             Grid.Column="4"
-                            Content="Ajustes  ⚙"
+                            Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
                 </Grid>

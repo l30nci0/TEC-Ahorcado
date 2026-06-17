@@ -258,7 +258,7 @@
 
                         <!-- Header Section -->
                         <StackPanel Grid.Row="0" Margin="0,0,0,25">
-                            <TextBlock Text="DETALLES DE LA PARTIDA"
+                            <TextBlock Text="{DynamicResource HistoryDetail_Title}"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        FontSize="24"
                                        FontWeight="Bold"
@@ -266,7 +266,7 @@
                                        HorizontalAlignment="Center"
                                        Margin="0,0,0,6"/>
 
-                            <TextBlock Text="Ficha técnica de puntaje, oponente y progreso del juego"
+                            <TextBlock Text="{DynamicResource HistoryDetail_Subtitle}"
                                        FontFamily="{StaticResource GeistMono}"
                                        FontSize="13"
                                        Foreground="#4DEEEA"
@@ -287,7 +287,7 @@
                             <!-- Left Column: Details -->
                             <StackPanel Grid.Column="0" Margin="0,0,30,0" VerticalAlignment="Center">
                                 <!-- Rival Header bar -->
-                                <TextBlock Text="ADVERSARIO" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource HistoryDetail_OpponentLabel}" Style="{StaticResource FormLabelStyle}"/>
                                 <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                                     <Border.Effect>
                                         <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
@@ -305,7 +305,7 @@
 
                                         <Button x:Name="ButtonViewProfile"
                                                 Grid.Column="1"
-                                                Content="VER PERFIL  👤"
+                                                Content="{DynamicResource HistoryDetail_BtnViewProfile}"
                                                 Height="28"
                                                 Width="110"
                                                 Style="{StaticResource ModernPrimaryButton}"
@@ -315,7 +315,7 @@
                                 </Border>
 
                                 <!-- Role -->
-                                <TextBlock Text="TU ROL EN LA PARTIDA" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource HistoryDetail_RoleLabel}" Style="{StaticResource FormLabelStyle}"/>
                                 <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                                     <TextBlock x:Name="TextBlockRole" Style="{StaticResource ValueTextStyle}"/>
                                     <Border.Effect>
@@ -324,7 +324,7 @@
                                 </Border>
 
                                 <!-- Word details -->
-                                <TextBlock Text="PALABRA DEL AHORCADO" Style="{StaticResource FormLabelStyle}"/>
+                                <TextBlock Text="{DynamicResource HistoryDetail_WordLabel}" Style="{StaticResource FormLabelStyle}"/>
                                 <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                                     <TextBlock x:Name="TextBlockWord" Style="{StaticResource ValueTextStyle}"/>
                                     <Border.Effect>
@@ -341,7 +341,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Grid.Column="0">
-                                        <TextBlock Text="IDIOMA" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource HistoryDetail_LangLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                             <TextBlock x:Name="TextBlockLanguage" Style="{StaticResource ValueTextStyle}"/>
                                             <Border.Effect>
@@ -351,7 +351,7 @@
                                     </StackPanel>
 
                                     <StackPanel Grid.Column="2">
-                                        <TextBlock Text="PRIVACIDAD" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource HistoryDetail_PrivacyLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <Border BorderBrush="#4DEEEA" BorderThickness="1.0" Background="#0B0E14" Padding="15,10">
                                             <TextBlock x:Name="TextBlockType" Style="{StaticResource ValueTextStyle}"/>
                                             <Border.Effect>
@@ -381,7 +381,7 @@
 
                                 <!-- Match Date -->
                                 <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                                    <TextBlock Text="FECHA DE PARTIDA" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{DynamicResource HistoryDetail_DateLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
                                     <TextBlock x:Name="TextBlockDate" 
                                                FontFamily="{StaticResource GeistMono}" 
                                                FontSize="13" 
@@ -399,7 +399,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                                            <TextBlock Text="RESULTADO" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{DynamicResource HistoryDetail_ResultLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
                                             <TextBlock x:Name="TextBlockBattleStatus" 
                                                        FontFamily="{StaticResource GeistPixelSquare}" 
                                                        FontSize="16" 
@@ -411,7 +411,7 @@
                                         <Border Grid.Column="1" Width="1" Background="#4DEEEA" VerticalAlignment="Stretch"/>
 
                                         <StackPanel Grid.Column="2" HorizontalAlignment="Center">
-                                            <TextBlock Text="PUNTOS" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{DynamicResource HistoryDetail_PointsLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
                                             <TextBlock x:Name="TextBlockScore" 
                                                        FontFamily="{StaticResource GeistMono}" 
                                                        FontSize="16" 
@@ -420,12 +420,10 @@
                                                        FontWeight="Bold"/>
                                         </StackPanel>
                                     </Grid>
-                                </Border>
-
-                                <!-- Progress Bar Section -->
+                                </Border>                                <!-- Progress Bar Section -->
                                 <StackPanel Grid.Row="2" Margin="0,0,0,25">
                                     <Grid Margin="2,0,2,5">
-                                        <TextBlock Text="PROGRESO DE PALABRA" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBlock Text="{DynamicResource HistoryDetail_ProgressLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <TextBlock x:Name="TextBlockProgress" 
                                                    FontFamily="{StaticResource GeistMono}" 
                                                    FontSize="11" 
@@ -435,11 +433,11 @@
                                     </Grid>
                                     <ProgressBar x:Name="ProgressBarBattle" Height="22" Style="{StaticResource FlatProgressBar}" Minimum="0" Maximum="5"/>
                                 </StackPanel>
-
+ 
                                 <!-- Back Button -->
                                 <Button x:Name="ButtonBack"
                                         Grid.Row="4"
-                                        Content="REGRESAR  ↩"
+                                        Content="{DynamicResource HistoryDetail_BtnBack}"
                                         Height="50"
                                         Style="{StaticResource ModernSecondaryButton}"
                                         VerticalAlignment="Bottom"
@@ -466,31 +464,31 @@
 
                     <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
-                            Content="Menu Principal  ⚔"
+                            Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
                     <Button x:Name="ButtonProfile"
                             Grid.Column="1"
-                            Content="Perfil  👤"
+                            Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
                     <Button x:Name="ButtonHistory"
                             Grid.Column="2"
-                            Content="Historial  ◴"
+                            Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
                     <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
-                            Content="Marcadores  🏆"
+                            Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
                     <Button x:Name="ButtonSettings"
                             Grid.Column="4"
-                            Content="Ajustes  ⚙"
+                            Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
                 </Grid>

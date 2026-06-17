@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
+
 using LetterClashServer.Contracts;
 using LetterClashServer.Domain.Models;
 
@@ -49,7 +50,7 @@ namespace LetterClashClient.Views {
 
       if (isHost) {
         if (window != null) {
-          window.Title = "Partida (Anfitrión)";
+          window.Title = (string) Application.Current.FindResource("Game_HostWindowTitle") ?? "Partida (Anfitrión)";
         }
         GridHostSection.Visibility = Visibility.Visible;
         GridGuesserSection.Visibility = Visibility.Collapsed;
@@ -59,7 +60,7 @@ namespace LetterClashClient.Views {
         TextBlockSelectedLetter.Text = "-";
       } else {
         if (window != null) {
-          window.Title = "Partida (Adivinador)";
+          window.Title = (string) Application.Current.FindResource("Game_GuesserWindowTitle") ?? "Partida (Adivinador)";
         }
         GridHostSection.Visibility = Visibility.Collapsed;
         GridGuesserSection.Visibility = Visibility.Visible;
@@ -72,7 +73,8 @@ namespace LetterClashClient.Views {
       }
 
       TextBlockOpponent.Text = opponentName;
-      TextBlockChatTitle.Text = $"Chat con {opponentName}";
+      string chatTitle = (string) Application.Current.FindResource("Game_ChatTitleTemplate") ?? "Chat con {0}";
+      TextBlockChatTitle.Text = string.Format(chatTitle, opponentName);
       TextBoxChatMessages.Text = "";
       UpdateHangmanImage();
       UpdateAttempts();
@@ -93,7 +95,9 @@ namespace LetterClashClient.Views {
       }
 
       if (usuario == null) {
-        MessageBox.Show("Sesión de usuario inválida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string invalidSession = (string) Application.Current.FindResource("Msg_InvalidUserSession") ?? "Sesión de usuario inválida.";
+        MessageBox.Show(invalidSession, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         NavigationService.Navigate(new GUIMainMenuView());
         return;
       }
@@ -111,7 +115,9 @@ namespace LetterClashClient.Views {
         gameServiceProxy = ServiceProxyManager.GetGameService(callbackHandler);
         gameServiceProxy.ConectarJuego(usuario.IDJugador, codigoAcceso);
       } catch (Exception ex) {
-        MessageBox.Show($"Error al conectar al servidor: {ex.Message}", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        string connMsg = (string) Application.Current.FindResource("Game_ErrorConnect") ?? "Error al conectar al servidor:";
+        MessageBox.Show($"{connMsg} {ex.Message}", connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         NavigationService.Navigate(new GUIMainMenuView());
       }
     }
@@ -120,7 +126,8 @@ namespace LetterClashClient.Views {
       Dispatcher.Invoke(() => {
         opponentName = jugadorDTO.NombreDeUsuario;
         TextBlockOpponent.Text = opponentName;
-        TextBlockChatTitle.Text = $"Chat con {opponentName}";
+        string chatTitle = (string) Application.Current.FindResource("Game_ChatTitleTemplate") ?? "Chat con {0}";
+        TextBlockChatTitle.Text = string.Format(chatTitle, opponentName);
         if (jugadorDTO.Avatar != null && jugadorDTO.Avatar.Length > 0) {
           try {
             var image = new BitmapImage();
@@ -164,11 +171,15 @@ namespace LetterClashClient.Views {
     private void OnPartidaFinalizada(string ganador, int puntuacionObtenida) {
       Dispatcher.Invoke(() => {
         DesconectarJuego();
-        string mensajeResult = (ganador == SessionContext.UsuarioLogueado?.NombreDeUsuario)
-            ? $"¡Felicidades! Ganaste la partida y obtuviste {puntuacionObtenida} puntos."
-            : $"El juego ha concluido. Ganador: {ganador}.";
+        string wonMsg = (string) Application.Current.FindResource("Game_ResultWon") ?? "¡Felicidades! Ganaste la partida y obtuviste {0} puntos.";
+        string lostMsg = (string) Application.Current.FindResource("Game_ResultLost") ?? "El juego ha concluido. Ganador: {0}.";
+        string resultTitle = (string) Application.Current.FindResource("Game_ResultTitle") ?? "Partida Finalizada";
 
-        MessageBox.Show(mensajeResult, "Partida Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
+        string mensajeResult = (ganador == SessionContext.UsuarioLogueado?.NombreDeUsuario)
+            ? string.Format(wonMsg, puntuacionObtenida)
+            : string.Format(lostMsg, ganador);
+
+        MessageBox.Show(mensajeResult, resultTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         NavigationService.Navigate(new GUIMainMenuView());
       });
     }
@@ -183,10 +194,14 @@ namespace LetterClashClient.Views {
     private void OnOponenteAbandono(string oponenteNombre) {
       Dispatcher.Invoke(() => {
         DesconectarJuego();
+        string abandonHost = (string) Application.Current.FindResource("Game_AbandonHost") ?? "El adivinador ({0}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!";
+        string abandonGuesser = (string) Application.Current.FindResource("Game_AbandonGuesser") ?? "El anfitrión ({0}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!";
+        string resultTitle = (string) Application.Current.FindResource("Game_ResultTitle") ?? "Partida Finalizada";
+
         string abandonMsg = isHost
-            ? $"El adivinador ({oponenteNombre}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!"
-            : $"El anfitrión ({oponenteNombre}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!";
-        MessageBox.Show(abandonMsg, "Partida Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
+            ? string.Format(abandonHost, oponenteNombre)
+            : string.Format(abandonGuesser, oponenteNombre);
+        MessageBox.Show(abandonMsg, resultTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         NavigationService.Navigate(new GUIMainMenuView());
       });
     }
@@ -194,7 +209,9 @@ namespace LetterClashClient.Views {
     private void OnErrorOcurrido(ServiceFault fault) {
       Dispatcher.Invoke(() => {
         DesconectarJuego();
-        MessageBox.Show($"Ocurrió un error en el servidor: {fault.Mensaje}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string serverErr = (string) Application.Current.FindResource("Game_ServerError") ?? "Ocurrió un error en el servidor: {0}";
+        MessageBox.Show(string.Format(serverErr, fault.Mensaje), errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         NavigationService.Navigate(new GUIMainMenuView());
       });
     }
@@ -202,7 +219,7 @@ namespace LetterClashClient.Views {
     private void DesconectarJuego() {
       if (gameServiceProxy != null) {
         try {
-          var clientChannel = (System.ServiceModel.ICommunicationObject)gameServiceProxy;
+          var clientChannel = (System.ServiceModel.ICommunicationObject) gameServiceProxy;
           if (clientChannel.State == System.ServiceModel.CommunicationState.Opened) {
             clientChannel.Close();
           }
@@ -251,7 +268,9 @@ namespace LetterClashClient.Views {
         try {
           gameServiceProxy.EscribirLetra(codigoAcceso, usuario.IDJugador, selectedLetter);
         } catch (Exception ex) {
-          MessageBox.Show($"No se pudo registrar la letra en el servidor: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string letterErr = (string) Application.Current.FindResource("Game_ErrorLetter") ?? "No se pudo registrar la letra en el servidor: {0}";
+          MessageBox.Show(string.Format(letterErr, ex.Message), errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       }
     }
@@ -284,17 +303,21 @@ namespace LetterClashClient.Views {
       if (usuario != null && gameServiceProxy != null) {
         try {
           gameServiceProxy.EnviarMensaje(codigoAcceso, usuario.IDJugador, message);
-          TextBoxChatMessages.Text += $"\nTú: {message}";
+          string youStr = (string) Application.Current.FindResource("Game_ChatYou") ?? "Tú";
+          TextBoxChatMessages.Text += $"\n{youStr}: {message}";
           TextBoxChatInput.Text = "";
           TextBoxChatMessages.ScrollToEnd();
         } catch (Exception ex) {
-          MessageBox.Show($"No se pudo enviar el mensaje: {ex.Message}", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+          string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+          string sendErr = (string) Application.Current.FindResource("Game_ErrorSend") ?? "No se pudo enviar el mensaje: {0}";
+          MessageBox.Show(string.Format(sendErr, ex.Message), connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       }
     }
 
     private void ButtonAbandon_Click(object sender, RoutedEventArgs e) {
-      MessageBoxResult result = MessageBox.Show("¿Seguro que deseas abandonar la partida?",
+      string confirmMsg = (string) Application.Current.FindResource("Game_ConfirmAbandon") ?? "¿Seguro que deseas abandonar la partida?";
+      MessageBoxResult result = MessageBox.Show(confirmMsg,
                                                 "TecnoHorcado",
                                                 MessageBoxButton.YesNo,
                                                 MessageBoxImage.Warning);

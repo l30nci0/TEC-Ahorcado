@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 using LetterClashClient.Services;
+
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -18,7 +19,7 @@ namespace LetterClashClient.Views {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
-        window.Title = "Marcadores";
+        window.Title = (string) Application.Current.FindResource("Leaderboard_WindowTitle") ?? "Marcadores";
       }
 
       try {
@@ -83,12 +84,18 @@ namespace LetterClashClient.Views {
 
           DataGridScoreboard.ItemsSource = listado;
         } else {
-          MessageBox.Show(result?.Error?.Mensaje ?? "No se pudieron obtener los marcadores.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string errLoad = (string) Application.Current.FindResource("Leaderboard_ErrorLoad") ?? "No se pudieron obtener los marcadores.";
+          MessageBox.Show(result?.Error?.Mensaje ?? errLoad, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       } catch (System.ServiceModel.CommunicationException) {
-        MessageBox.Show("No se pudo establecer conexión con el servidor para cargar los marcadores.", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        string connMsg = (string) Application.Current.FindResource("Leaderboard_ErrorLoadConn") ?? "No se pudo establecer conexión con el servidor para cargar los marcadores.";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
-        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
