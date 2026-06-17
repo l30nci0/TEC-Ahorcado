@@ -183,7 +183,7 @@
         </Style>
 
         <Style TargetType="DataGridRow">
-            <Setter Property="BorderBrush" Value="#00A986"/>
+            <Setter Property="BorderBrush" Value="#00A896"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
         </Style>
     </Page.Resources>

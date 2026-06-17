@@ -123,8 +123,8 @@
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border" 
                                 Background="{TemplateBinding Background}" 
-                                BorderBrush="Transparent"
-                                BorderThickness="0" 
+                                BorderBrush="#4DEEEA"
+                                BorderThickness="1" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
                         <Border.Effect>
@@ -225,9 +225,9 @@
 
             <!-- Row 1: Bottom Navigation Bar Tray -->
             <Border Grid.Row="1"
-                    BorderBrush="#2D2D30"
-                    BorderThickness="0,1,0,0"
-                    Background="#121214">
+                    BorderBrush="#4DEEEA"
+                    BorderThickness="1.5"
+                    Background="#0B0E14">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

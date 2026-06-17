@@ -14,7 +14,7 @@
         <!-- Modern Dark Grayscale TextBox Style -->
         <Style x:Key="ModernTextBox" TargetType="TextBox">
       <Setter Property="Background" Value="#0B0E14"/>
-            <Setter Property="BorderBrush" Value="#181E29"/>
+            <Setter Property="BorderBrush" Value="#00A896"/>
             <Setter Property="Foreground" Value="#4DEEEA"/>
             <Setter Property="CaretBrush" Value="#4DEEEA"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
@@ -32,7 +32,7 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0"/>   
+                                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>   
                             </Border.Effect>
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
