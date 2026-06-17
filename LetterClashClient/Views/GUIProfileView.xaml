@@ -13,10 +13,10 @@
     <Page.Resources>
         <!-- Modern Dark Grayscale TextBox Style -->
         <Style x:Key="ModernTextBox" TargetType="TextBox">
-      <Setter Property="Background" Value="#0B0E14"/>
+            <Setter Property="Background" Value="#0B0E14"/>
             <Setter Property="BorderBrush" Value="#00A896"/>
-            <Setter Property="Foreground" Value="#4DEEEA"/>
-            <Setter Property="CaretBrush" Value="#4DEEEA"/>
+            <Setter Property="Foreground" Value="#00A896"/>
+            <Setter Property="CaretBrush" Value="#00A896"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="Padding" Value="12,8"/>
@@ -38,10 +38,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
                                 <Setter TargetName="border" Property="Effect">
                                     <Setter.Value>
-                                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity         ="0.5"/>
+                                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00A896" Opacity="0.8"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -49,13 +49,13 @@
                                 <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
                                 <Setter TargetName="border" Property="Effect">
                                     <Setter.Value>
-                                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
+                                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.5"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
                             <Trigger Property="IsReadOnly" Value="true">
-                                <Setter Property="Background" Value="#09090B"/>
-                                <Setter Property="BorderBrush" Value="#181E29"/>
+                                <Setter Property="Background" Value="#181E29"/>
+                                <Setter Property="BorderBrush" Value="#27272A"/>
                                 <Setter Property="Foreground" Value="#7DE2D1"/>
                             </Trigger>
                             
@@ -68,9 +68,9 @@
         <!-- Modern Dark Grayscale PasswordBox Style -->
         <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
             <Setter Property="Background" Value="#0B0E14"/>
-            <Setter Property="BorderBrush" Value="#181E29"/>
-            <Setter Property="Foreground" Value="#4DEEEA"/>
-            <Setter Property="CaretBrush" Value="#4DEEEA"/>
+            <Setter Property="BorderBrush" Value="#00A896"/>
+            <Setter Property="Foreground" Value="#00A896"/>
+            <Setter Property="CaretBrush" Value="#00A896"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="Padding" Value="12,8"/>
@@ -86,17 +86,26 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
                                 <Border.Effect>
-                                    <DropShadowEffect x:Name="neonGlow" BlurRadius="6" Color="#00A896" Opacity="0.15" ShadowDepth="0"/>
+                                    <DropShadowEffect x:Name="neonGlow" BlurRadius="12" Color="#00A896" Opacity="0.5" ShadowDepth="0"/>
                                 </Border.Effect>
                                 <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
-                                <Setter TargetName="border" Property="Background" Value="#101520"/>
-                            </Trigger>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                                <Setter TargetName="border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.7"/>
+                                </Setter.Value>
+                            </Setter>
+                              </Trigger>
                             <Trigger Property="IsFocused" Value="true">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                                <Setter TargetName="border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.7"/>
+                                </Setter.Value>
+                                </Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -123,7 +132,7 @@
                                                Background="#0B0E14"
                                                Foreground="#4DEEEA"
                                                BorderThickness="1.5,1.5,0,1.5"
-                                               BorderBrush="#4DEEEA"
+                                               BorderBrush="#00A896"
                                                Padding="10,6"
                                                FontFamily="{StaticResource GeistMono}"
                                                FontSize="13"/>
@@ -136,8 +145,8 @@
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="btnBorder"
-                                                Background="#181E29"
-                                                BorderBrush="#4DEEEA"
+                                                Background="#061A22"
+                                                BorderBrush="#00FFCC"
                                                 BorderThickness="1,1.5,1.5,1.5"
                                                 CornerRadius="0">
                                             <TextBlock x:Name="btnIcon"
@@ -150,12 +159,12 @@
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 
-                                                <Setter TargetName="btnBorder" Property="Background" Value="#4DEEEA"/>
-                                                <Setter TargetName="btnIcon" Property="Foreground" Value="#0B0E14"/>
+                                                <Setter TargetName="btnBorder" Property="Background" Value="#00FFCC"/>
+                                                <Setter TargetName="btnIcon" Property="Foreground" Value="#050D14"/>
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
-                                                <Setter TargetName="btnBorder" Property="Background" Value="#00A896"/>
-                                                <Setter TargetName="btnIcon" Property="Foreground" Value="#4DEEEA"/>
+                                                <Setter TargetName="btnBorder" Property="Background" Value="#99FFE8"/>
+                                                <Setter TargetName="btnIcon" Property="Foreground" Value="#050D14"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -168,14 +177,14 @@
                                    AllowsTransparency="True"
                                    Focusable="False"
                                    PopupAnimation="Slide">
-                                <Border Background="#0B0E14"
-                                        BorderBrush="#4DEEEA"
+                                <Border Background="#050D14"
+                                        BorderBrush="#00FFCC"
                                         BorderThickness="1.5"
                                         Padding="5"
                                         CornerRadius="0">
                                     <Calendar x:Name="PART_Calendar"
-                                              Background="#0B0E14"
-                                              Foreground="#4DEEEA"
+                                              Background="#050D14"
+                                              Foreground="#00FFCC"
                                               BorderThickness="0"/>
                                 </Border>
                             </Popup>
@@ -187,9 +196,9 @@
 
         <!-- Retro Grayscale Primary Button Style -->
         <Style x:Key="ModernPrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#0B0E14"/>
-            <Setter Property="Foreground" Value="#4DEEEA"/>
-            <Setter Property="BorderBrush" Value="#4DEEEA"/>
+            <Setter Property="Background" Value="#00FFCC"/>
+            <Setter Property="Foreground" Value="#050D14"/>
+            <Setter Property="BorderBrush" Value="#00FFCC"/>
             <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -206,27 +215,26 @@
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
                         <Border.Effect>
-                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.6"/>
+                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00FFCC" Opacity="0.6"/>
                         </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
-                                <Setter Property="Foreground" Value="#0B0E14"/>
-                                
+                               <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
+                               <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                               <Setter Property="Foreground" Value="#050D14"/>
 
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter TargetName="border" Property="Background" Value="#00A896"/>
                                 <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
-                                <Setter Property="Foreground" Value="#0B0E14"/>
+                                <Setter Property="Foreground" Value="#050D14"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="Background" Value="#27272A"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
-                                <Setter Property="Foreground" Value="#71717A"/>
+                                <Setter TargetName="border" Property="Background" Value="#061A22"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#061A22"/>
+                                <Setter Property="Foreground" Value="#1A3D35"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -271,9 +279,9 @@
                                 <Setter Property="Foreground" Value="#0B0E14"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="Background" Value="#181E29"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
-                                <Setter Property="Foreground" Value="#52525B"/>
+                                <Setter TargetName="border" Property="Background" Value="#061A22"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#0A1F2A"/>
+                                <Setter Property="Foreground" Value="#1A3D35"/>
                                 <Setter TargetName="border" Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect BlurRadius="0" ShadowDepth="0" Color="#000000" Opacity="0"/>
@@ -325,7 +333,7 @@
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Foreground" Value="#4A5568"/>
                                 <Setter TargetName="border" Property="Background" Value="#181E29"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#27272A"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#0A1F2A"/>
                                 <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -353,7 +361,7 @@
         <Style x:Key="PlaceholderStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
             <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Foreground" Value="#4A5263"/>
+            <Setter Property="Foreground" Value="#00A896"/>
             <Setter Property="Margin" Value="14,0,0,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
@@ -375,7 +383,7 @@
                 <DrawingBrush.Drawing>
                     <GeometryDrawing>
                         <GeometryDrawing.Pen>
-                            <Pen Brush="#15151A" Thickness="1"/>
+                            <Pen Brush="#050D14" Thickness="1"/>
                         </GeometryDrawing.Pen>
                         <GeometryDrawing.Geometry>
                             <GeometryGroup>
@@ -564,7 +572,7 @@
                             <TextBlock Text="{DynamicResource Profile_EditSubtitle}"
                                            FontFamily="{StaticResource GeistMono}"
                                            FontSize="12"
-                                           Foreground="#7DE2D1"
+                                           Foreground="#00A896"
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
 
@@ -583,7 +591,7 @@
                                 <StackPanel Grid.Column="0" Margin="0,0,25,0" VerticalAlignment="Center">
                                     <TextBlock Text="{DynamicResource Profile_AvatarEditLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,5"/>
                                     <Grid Width="130" Height="130" Margin="0,0,0,15" HorizontalAlignment="Center">
-                                        <Border BorderBrush="#4DEEEA" BorderThickness="1.5" Background="#0B0E14">
+                                        <Border BorderBrush="#00A896" BorderThickness="1.5" Background="#0B0E14">
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
                                         </Border.Effect>
@@ -593,7 +601,7 @@
 
                                     <!-- Username read-only field -->
                                     <TextBlock Text="{DynamicResource Profile_UsernameEditLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                    <TextBox x:Name="TextBoxUsername" Height="38" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,15"/>
+                                    <TextBox x:Name="TextBoxUsername" Height="38" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,15" Background="#0B0E14" BorderBrush="#00A986"/>
 
                                     <!-- Segmented Language Selection -->
                                     <TextBlock Text="{DynamicResource Profile_PreferredLanguageLabel}" Style="{StaticResource FormLabelStyle}"/>
@@ -621,7 +629,7 @@
 
                                         <!-- Email read-only -->
                                         <TextBlock Text="{DynamicResource Profile_EmailLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <TextBox x:Name="TextBoxEmail" Height="38" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,12"/>
+                                        <TextBox x:Name="TextBoxEmail" Height="38" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,12"  Background="#0B0E14" BorderBrush="#00A986"/>
 
                                         <!-- Phone -->
                                         <TextBlock Text="{DynamicResource Profile_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
@@ -634,7 +642,7 @@
                                         <TextBlock x:Name="TextBlockBirthDateError" Text="{DynamicResource Profile_BirthDateError}" Style="{StaticResource ErrorLabelStyle}"/>
 
                                         <!-- Passwords Grid -->
-                                        <TextBlock Text="{DynamicResource Profile_ChangePasswordHeader}" Style="{StaticResource FormLabelStyle}" Foreground="#7DE2D1" Margin="0,10,0,5"/>
+                                        <TextBlock Text="{DynamicResource Profile_ChangePasswordHeader}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA" Margin="2,10,0,5"/>
 
                                         <!-- Current Password -->
                                         <TextBlock Text="{DynamicResource Profile_CurrentPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
@@ -670,9 +678,9 @@
             <!-- 1. VIEW MODE FOOTER -->
             <Border x:Name="GridFooterNavigation"
                     Grid.Row="1"
-                    BorderBrush="#2D2D30"
+                    BorderBrush="#00A896"
                     BorderThickness="0,1,0,0"
-                    Background="#121214"
+                    Background="#0B0E14"
                     Visibility="Visible">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -718,9 +726,9 @@
             <!-- 2. EDIT MODE FOOTER -->
             <Border x:Name="GridFooterEdit"
                     Grid.Row="1"
-                    BorderBrush="#2D2D30"
+                    BorderBrush="#00A896"
                     BorderThickness="0,1,0,0"
-                    Background="#121214"
+                    Background="#0B0E14"
                     Visibility="Collapsed">
                 <Grid Width="500" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
