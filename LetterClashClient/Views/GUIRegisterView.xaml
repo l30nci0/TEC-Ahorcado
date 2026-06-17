@@ -631,71 +631,8 @@
                                     <ComboBoxItem Content="Ingles"/>
                                     <ComboBoxItem Content="Español"/>
                                 </ComboBox>
-                                
-                                <TextBlock x:Name="TextBlockLanguageError" Text="{DynamicResource Register_LanguageError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,4,0,0"/>
+                                                            <TextBlock x:Name="TextBlockLanguageError" Text="{DynamicResource Register_LanguageError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,4,0,0"/>
                             </StackPanel>
-                        </Grid>
-
-                        <!-- Avatar Section -->
-                        <TextBlock Text="{DynamicResource Register_AvatarLabel}" Style="{StaticResource FormLabelStyle}"/>
-                        <Grid HorizontalAlignment="Left">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Picture frame -->
-                            <Border Grid.Column="0" 
-                                    Width="90" 
-                                    Height="90" 
-                                    BorderBrush="#4DEEEA" 
-                                    BorderThickness="1.5" 
-                                    Background="#0B0E14" 
-                                    CornerRadius="0">
-                                <Grid>
-                                    <Image x:Name="ImageUserAvatar"
-                                           Source="/Assets/Images/UserAvatar.png"
-                                           Width="80"
-                                           Height="80"
-                                           Stretch="Uniform"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-
-                                    <Button x:Name="ButtonAddAvatar"
-                                            Content="+"
-                                            Width="24"
-                                            Height="24"
-                                            FontSize="14"
-                                            BorderBrush="#4DEEEA"
-                                            FontFamily="{StaticResource GeistPixelSquare}"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Bottom"
-                                            Cursor="Hand"
-                                            Margin="0,0,2,2"
-                                            Click="ButtonAddAvatar_Click">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Background="#4DEEEA"
-                                                        BorderBrush="#4DEEEA"
-                                                        BorderThickness="1"
-                                                        CornerRadius="0">
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                </Grid>
-                            </Border>
-
-                            <TextBlock Grid.Column="1" 
-                                       VerticalAlignment="Center" 
-                                       Margin="15,0,0,0" 
-                                       TextWrapping="Wrap" 
-                                       Foreground="#4DEEEA" 
-                                       FontSize="11" 
-                                       FontFamily="{StaticResource GeistMono}"
-                                       MaxWidth="220"
-                                       Text="{DynamicResource Register_AvatarDescription}"/>
                         </Grid>
                     </StackPanel>
                 </Grid>

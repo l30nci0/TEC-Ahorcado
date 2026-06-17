@@ -159,14 +159,6 @@ namespace LetterClashClient.Views {
       NavigationService.Navigate(new GUILoginView());
     }
 
-    private void ButtonAddAvatar_Click(object sender, RoutedEventArgs e) {
-      string avatarMsg = (string) Application.Current.FindResource("Register_AvatarSelectMsg") ?? "Aquí se podrá seleccionar una imagen de avatar.";
-      MessageBox.Show(avatarMsg,
-                      "Letter Clash",
-                      MessageBoxButton.OK,
-                      MessageBoxImage.Information);
-    }
-
     private void TextBoxUsername_TextChanged(object sender, TextChangedEventArgs e) {
       TextBlockUsernamePlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxUsername.Text) ? Visibility.Visible : Visibility.Hidden;
     }

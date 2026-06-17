@@ -279,46 +279,6 @@ namespace LetterClashClient.Views {
       SwitchMode(false);
     }
 
-    private void ButtonAddAvatar_Click(object sender, RoutedEventArgs e) {
-      string fileFilter = (string) Application.Current.FindResource("Profile_ImageFilter") ?? "Imágenes (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
-      string dialogTitle = (string) Application.Current.FindResource("Profile_AvatarSelectTitle") ?? "Seleccionar Avatar";
-
-      var openFileDialog = new Microsoft.Win32.OpenFileDialog {
-        Filter = fileFilter,
-        Title = dialogTitle
-      };
-
-      if (openFileDialog.ShowDialog() == true) {
-        try {
-          string filePath = openFileDialog.FileName;
-          byte[] avatarBytes = File.ReadAllBytes(filePath);
-
-          const int maxSizeBytes = 2 * 1024 * 1024;
-          if (avatarBytes.Length > maxSizeBytes) {
-            string sizeMsg = (string) Application.Current.FindResource("Profile_ImageSizeExceededMsg") ?? "El tamaño de la imagen no debe superar los 2MB.";
-            string sizeTitle = (string) Application.Current.FindResource("Profile_ImageSizeExceededTitle") ?? "Tamaño Excedido";
-            MessageBox.Show(sizeMsg, sizeTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
-            return;
-          }
-
-          using (var stream = new MemoryStream(avatarBytes)) {
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.StreamSource = stream;
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.EndInit();
-            ImageEditUserAvatar.Source = bitmap;
-          }
-
-          selectedAvatarBytes = avatarBytes;
-        } catch (Exception ex) {
-          string loadErr = (string) Application.Current.FindResource("Profile_ImageLoadError") ?? "Error al cargar la imagen:";
-          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
-          MessageBox.Show($"{loadErr} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-      }
-    }
-
     private void PasswordBoxCurrentPassword_PasswordChanged(object sender, RoutedEventArgs e) {
       if (TextBlockCurrentPasswordPlaceholder != null) {
         TextBlockCurrentPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxCurrentPassword.Password) ? Visibility.Visible : Visibility.Hidden;
