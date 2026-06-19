@@ -109,6 +109,9 @@
     <sys:String x:Key="Profile_ConfirmNewPasswordLabel">CONFIRMAR CONTRASEÑA</sys:String>
     <sys:String x:Key="Profile_ConfirmNewPasswordPlaceholder">Confirme nueva contraseña</sys:String>
     <sys:String x:Key="Profile_PasswordMatchError">Contraseña es diferente</sys:String>
+    <sys:String x:Key="Profile_BtnChangePassword">CAMBIAR CONTRASEÑA  🔑</sys:String>
+    <sys:String x:Key="Profile_BtnSavePassword">Guardar Contraseña  ✓</sys:String>
+    <sys:String x:Key="Profile_BtnCancelPassword">Cancelar  ✕</sys:String>
     
     <sys:String x:Key="Profile_BtnSave">Guardar Cambios  ✓</sys:String>
     <sys:String x:Key="Profile_BtnCancel">Cancelar  ✕</sys:String>
