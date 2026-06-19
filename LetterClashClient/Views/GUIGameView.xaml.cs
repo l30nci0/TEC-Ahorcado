@@ -78,28 +78,7 @@ namespace LetterClashClient.Views {
 
         TextBlockAccessCodeGuesser.Text = codigoAcceso;
         TextBlockLanguageGuesser.Text = selectedLanguage == Idiomas.INGLES ? "ENGLISH" : "ESPAÑOL";
-        
-        if (idPalabra > 0) {
-          try {
-            var palabraService = ServiceProxyManager.GetPalabraService();
-            var result = palabraService.ObtenerPalabrasPorIdioma(selectedLanguage);
-            if (result != null && result.IsSuccess) {
-              var palabra = result.Value.FirstOrDefault(p => p.IDPalabra == idPalabra);
-              if (palabra != null) {
-                this.wordDescription = palabra.Descripcion;
-                TextBlockWordDescription.Text = palabra.Descripcion;
-              } else {
-                TextBlockWordDescription.Text = "";
-              }
-            } else {
-              TextBlockWordDescription.Text = "";
-            }
-          } catch {
-            TextBlockWordDescription.Text = "";
-          }
-        } else {
-          TextBlockWordDescription.Text = "";
-        }
+        CargarPistaAdivinador();
 
         guessedWord = new char[targetWord.Length];
         for (int index = 0; index < guessedWord.Length; index++) {
@@ -299,6 +278,30 @@ namespace LetterClashClient.Views {
 
     private void UpdateHiddenWord() {
       TextBlockHiddenWord.Text = string.Join(" ", guessedWord);
+    }
+
+    private void CargarPistaAdivinador() {
+      TextBlockWordDescription.Text = "";
+
+      if (idPalabra <= 0) {
+        return;
+      }
+
+      try {
+        var palabraService = ServiceProxyManager.GetPalabraService();
+        var result = palabraService.ObtenerPalabrasPorIdioma(selectedLanguage);
+        if (result == null || !result.IsSuccess) {
+          return;
+        }
+
+        var palabra = result.Value.FirstOrDefault(p => p.IDPalabra == idPalabra);
+        if (palabra != null) {
+          this.wordDescription = palabra.Descripcion;
+          TextBlockWordDescription.Text = palabra.Descripcion;
+        }
+      } catch {
+        // Ignorar o registrar error
+      }
     }
 
     private void UpdateHangmanImage() {
