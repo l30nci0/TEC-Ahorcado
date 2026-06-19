@@ -210,8 +210,8 @@
 		</Compile>
 		<Compile Include="Services\ServiceProxyManager.cs" />
 		<Compile Include="Services\GameCallbackHandler.cs" />
-
 		<Compile Include="Services\LanguageManager.cs" />
+		<Compile Include="Services\AvatarHelper.cs" />
 		<Compile Include="Models\SessionContext.cs" />
 	</ItemGroup>
 
