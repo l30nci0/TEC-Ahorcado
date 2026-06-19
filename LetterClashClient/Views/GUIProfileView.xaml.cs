@@ -13,7 +13,6 @@ using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class GUIProfileView : Page {
-    private byte[] selectedAvatarBytes;
 
     public GUIProfileView() {
       InitializeComponent();
@@ -41,21 +40,6 @@ namespace LetterClashClient.Views {
         TextBlockEmail.Text = usuario.Correo;
         string notRegText = (string) Application.Current.FindResource("Profile_NotRegistered") ?? "No Registrado";
         TextBlockPhone.Text = !string.IsNullOrWhiteSpace(usuario.Telefono) ? usuario.Telefono : notRegText;
-
-        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
-          try {
-            using (var stream = new MemoryStream(usuario.Avatar)) {
-              var bitmap = new BitmapImage();
-              bitmap.BeginInit();
-              bitmap.StreamSource = stream;
-              bitmap.CacheOption = BitmapCacheOption.OnLoad;
-              bitmap.EndInit();
-              ImageUserAvatar.Source = bitmap;
-            }
-          } catch {
-            // Mantiene el default en caso de error
-          }
-        }
       }
     }
 
@@ -82,22 +66,6 @@ namespace LetterClashClient.Views {
             ComboBoxPreferredLanguage.SelectedIndex = 0;
           }
           UpdateLanguageButtons();
-
-          selectedAvatarBytes = usuario.Avatar;
-          if (selectedAvatarBytes != null && selectedAvatarBytes.Length > 0) {
-            try {
-              using (var stream = new MemoryStream(selectedAvatarBytes)) {
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.StreamSource = stream;
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-                ImageEditUserAvatar.Source = bitmap;
-              }
-            } catch { }
-          } else {
-            ImageEditUserAvatar.Source = new BitmapImage(new Uri("/Assets/Images/UserAvatar.png", UriKind.RelativeOrAbsolute));
-          }
         }
       } else {
         GridProfileView.Visibility = Visibility.Visible;
@@ -223,7 +191,7 @@ namespace LetterClashClient.Views {
           Correo = usuario.Correo,
           Telefono = phone,
           Puntuacion = usuario.Puntuacion,
-          Avatar = selectedAvatarBytes,
+          Avatar = usuario.Avatar,
           IdiomaPreferido = ComboBoxPreferredLanguage.SelectedIndex == 1 ? Idiomas.INGLES : Idiomas.ESPANOL,
           FechaDeNacimiento = DatePickerBirthDate.SelectedDate.Value
         };
