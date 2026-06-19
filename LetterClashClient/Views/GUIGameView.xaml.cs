@@ -115,21 +115,7 @@ namespace LetterClashClient.Views {
       UpdateHangmanImage();
       UpdateAttempts();
 
-      // Cargar avatar local
       var usuario = SessionContext.UsuarioLogueado;
-      if (usuario != null && usuario.Avatar != null && usuario.Avatar.Length > 0) {
-        try {
-          var image = new BitmapImage();
-          using (var mem = new System.IO.MemoryStream(usuario.Avatar)) {
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.StreamSource = mem;
-            image.EndInit();
-          }
-          ImageUserAvatar.Source = image;
-        } catch { }
-      }
-
       if (usuario == null) {
         string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
         string invalidSession = (string) Application.Current.FindResource("Msg_InvalidUserSession") ?? "Sesión de usuario inválida.";

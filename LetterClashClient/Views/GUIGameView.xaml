@@ -622,24 +622,6 @@
                                    Stretch="Uniform"
                                    Canvas.Left="25"
                                    Canvas.Top="10"/>
-
-              <Border x:Name="BorderUserAvatar"
-                                    Width="58"
-                                    Height="58"
-                                    CornerRadius="0"
-                                    BorderBrush="#00FFCC44"
-                                    BorderThickness="2"
-                                    Background="#061A22"
-                                    Canvas.Left="173"
-                                    Canvas.Top="47">
-                <Image x:Name="ImageUserAvatar"
-                                       Source="/Assets/Images/UserAvatar.png"
-                                       Width="46"
-                                       Height="46"
-                                       Stretch="Uniform"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-              </Border>
             </Canvas>
 
             <Grid Grid.Row="1"
@@ -664,6 +646,7 @@
                                        FontFamily="{StaticResource GeistMono}"
                                        Foreground="#FF2D66"
                                        HorizontalAlignment="Center"
+               
                                        VerticalAlignment="Center"/>
             </Grid>
 
