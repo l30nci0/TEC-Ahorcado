@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
 
+using LetterClashServer.Contracts;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
@@ -16,7 +18,7 @@ namespace LetterClashClient.Views {
       InitializeComponent();
     }
 
-    private void Page_Loaded(object sender, RoutedEventArgs e) {
+    private void OnPaginaCargada(object sender, RoutedEventArgs e) {
       Window window = Window.GetWindow(this);
 
       if (window != null) {
@@ -33,15 +35,11 @@ namespace LetterClashClient.Views {
       }
 
       TextBlockUsername.Text = usuario.NombreDeUsuario;
-      if (usuario.FechaDeNacimiento != null) {
-        TextBlockAge.Text = CalculateAge(usuario.FechaDeNacimiento).ToString();
-      } else {
-        TextBlockAge.Text = (string) Application.Current.FindResource("History_NotAvailable") ?? "N/D";
-      }
 
-      // Cargar avatar local
-      if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
-        try {
+      // Cargar avatar local (o default si no tiene)
+      ImageSource avatarUsuario = null;
+      try {
+        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
           var image = new BitmapImage();
           using (var mem = new System.IO.MemoryStream(usuario.Avatar)) {
             image.BeginInit();
@@ -50,7 +48,15 @@ namespace LetterClashClient.Views {
             image.EndInit();
           }
           ImageUserAvatar.Source = image;
-        } catch { }
+          avatarUsuario = image;
+        } else {
+          var defaultImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/UserAvatar.png", UriKind.Absolute));
+          ImageUserAvatar.Source = defaultImage;
+          avatarUsuario = defaultImage;
+        }
+      } catch (Exception ex) {
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        System.Diagnostics.Debug.WriteLine($"[GUIHistoryView] Error al cargar avatar del usuario: {ex.Message}");
       }
 
       // Cargar historial de partidas
@@ -64,16 +70,12 @@ namespace LetterClashClient.Views {
           string resWin = (string) Application.Current.FindResource("History_ResultWin") ?? "Victoria";
           string resLoss = (string) Application.Current.FindResource("History_ResultLoss") ?? "Derrota";
           string resDisconnect = (string) Application.Current.FindResource("History_ResultDisconnect") ?? "Desconectada";
-          string typePublic = (string) Application.Current.FindResource("History_TypePublic") ?? "Público";
-          string typePrivate = (string) Application.Current.FindResource("History_TypePrivate") ?? "Privado";
-          string langES = (string) Application.Current.FindResource("History_LangES") ?? "Español";
-          string langEN = (string) Application.Current.FindResource("History_LangEN") ?? "Inglés";
 
           List<BattleHistoryItem> battles = new List<BattleHistoryItem>();
           foreach (var p in result.Value) {
             bool isHost = p.IDAnfitrion == usuario.IDJugador;
             string rol = isHost ? rolHost : rolChallenger;
-            string rival = isHost ? (p.NombreAdivinador ?? noChallenger) : p.NombreAnfitrion;
+            string nombreRival = isHost ? (p.NombreAdivinador ?? noChallenger) : p.NombreAnfitrion;
             string fecha = p.FechaDeJuego.ToString("dd/MM/yyyy");
             string palabra = p.PalabraRevelada ?? "";
 
@@ -111,27 +113,28 @@ namespace LetterClashClient.Views {
               progreso = 0;
             }
 
-            string tipo = (p.Privacidad == "PÚBLICA") ? typePublic : typePrivate;
-            string idioma = langES;
-            if (p.Idioma != null && p.Idioma.ToUpper() == "INGLÉS") {
-              idioma = langEN;
-            }
+            string rolRival = isHost ? rolChallenger : rolHost;
 
             battles.Add(new BattleHistoryItem {
-              Rival = rival,
+              Rival = nombreRival,
               Fecha = fecha,
               Palabra = palabra,
               Resultado = resultado,
               Puntuacion = puntuacion,
               Rol = rol,
-              Idioma = idioma,
-              Tipo = tipo,
-              Progreso = progreso
+              Progreso = progreso,
+              NombreUsuario = usuario.NombreDeUsuario,
+              RolUsuario = rol,
+              RolRival = rolRival,
+              AvatarUsuario = avatarUsuario
             });
           }
 
-          DataGridHistory.ItemsSource = battles;
-          LoadStatistics(battles);
+          // Cargar avatares de los rivales
+          CargarAvataresRivales(battles, service);
+
+          ItemsControlHistory.ItemsSource = battles;
+          CargarEstadisticas(battles);
         } else {
           string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
           string errRetrieve = (string) Application.Current.FindResource("History_ErrorRetrieve") ?? "No se pudo obtener el historial de partidas.";
@@ -148,16 +151,62 @@ namespace LetterClashClient.Views {
       }
     }
 
-    private int CalculateAge(DateTime birthDate) {
+    private void CargarAvataresRivales(List<BattleHistoryItem> battles, IJugadorService service) {
+      var nombresVistos = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+      var cacheAvatares = new Dictionary<string, ImageSource>(StringComparer.OrdinalIgnoreCase);
+      ImageSource avatarDefault = null;
+
+      try {
+        avatarDefault = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/UserAvatar.png", UriKind.Absolute));
+      } catch (Exception ex) {
+        System.Diagnostics.Debug.WriteLine($"[GUIHistoryView] Error al cargar avatar default: {ex.Message}");
+      }
+
+      foreach (var battle in battles) {
+        string nombreRival = battle.Rival;
+        if (string.IsNullOrEmpty(nombreRival) || nombresVistos.Contains(nombreRival)) continue;
+        nombresVistos.Add(nombreRival);
+
+        try {
+          var profileResult = service.ObtenerPerfilPorNombre(nombreRival);
+          if (profileResult != null && profileResult.IsSuccess && profileResult.Value != null) {
+            byte[] bytesAvatar = profileResult.Value.Avatar;
+            if (bytesAvatar != null && bytesAvatar.Length > 0) {
+              var image = new BitmapImage();
+              using (var mem = new System.IO.MemoryStream(bytesAvatar)) {
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = mem;
+                image.EndInit();
+              }
+              cacheAvatares[nombreRival] = image;
+            }
+          }
+        } catch (Exception ex) {
+          System.Diagnostics.Debug.WriteLine($"[GUIHistoryView] Error al cargar avatar del rival '{nombreRival}': {ex.Message}");
+        }
+      }
+
+      // Asignar avatares a las batallas (usar default si no se encontró)
+      foreach (var battle in battles) {
+        if (cacheAvatares.TryGetValue(battle.Rival, out var avatar)) {
+          battle.AvatarRival = avatar;
+        } else {
+          battle.AvatarRival = avatarDefault;
+        }
+      }
+    }
+
+    private int CalcularEdad(DateTime fechaNacimiento) {
       DateTime today = DateTime.Today;
-      int age = today.Year - birthDate.Year;
-      if (birthDate.Date > today.AddYears(-age)) {
+      int age = today.Year - fechaNacimiento.Year;
+      if (fechaNacimiento.Date > today.AddYears(-age)) {
         age--;
       }
       return age;
     }
 
-    private void LoadStatistics(List<BattleHistoryItem> battles) {
+    private void CargarEstadisticas(List<BattleHistoryItem> battles) {
       int total = battles.Count;
       string resWin = (string) Application.Current.FindResource("History_ResultWin") ?? "Victoria";
       string resLoss = (string) Application.Current.FindResource("History_ResultLoss") ?? "Derrota";
@@ -170,46 +219,38 @@ namespace LetterClashClient.Views {
       string percentFormat = (string) Application.Current.FindResource("History_StatPercentFormat") ?? "{0}%";
 
       TextBlockTotalWins.Text = string.Format((string) Application.Current.FindResource("History_StatTotalWins") ?? "Total Ganadas = {0}", wins);
-      TextBlockPercentWins.Text = string.Format(percentFormat, GetPercentage(wins, total));
+      TextBlockPercentWins.Text = string.Format(percentFormat, ObtenerPorcentaje(wins, total));
       TextBlockTotalLosses.Text = string.Format((string) Application.Current.FindResource("History_StatTotalLosses") ?? "Total Perdidas = {0}", losses);
-      TextBlockPercentLosses.Text = string.Format(percentFormat, GetPercentage(losses, total));
+      TextBlockPercentLosses.Text = string.Format(percentFormat, ObtenerPorcentaje(losses, total));
       TextBlockTotalDisconnected.Text = string.Format((string) Application.Current.FindResource("History_StatTotalDisconnected") ?? "Total Desconectadas = {0}", disconnected);
-      TextBlockPercentDisconnected.Text = string.Format(percentFormat, GetPercentage(disconnected, total));
+      TextBlockPercentDisconnected.Text = string.Format(percentFormat, ObtenerPorcentaje(disconnected, total));
     }
 
-    private int GetPercentage(int amount, int total) {
+    private int ObtenerPorcentaje(int cantidad, int total) {
       if (total == 0) {
         return 0;
       }
 
-      return amount * 100 / total;
+      return cantidad * 100 / total;
     }
 
-    private void DataGridHistory_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-      BattleHistoryItem selectedBattle = DataGridHistory.SelectedItem as BattleHistoryItem;
-
-      if (selectedBattle != null) {
-        NavigationService.Navigate(new GUIBattleHistoryDetailView(selectedBattle));
-      }
-    }
-
-    private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
+    private void OnClicMenuPrincipal(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUIMainMenuView());
     }
 
-    private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
+    private void OnClicPerfil(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUIProfileView());
     }
 
-    private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
+    private void OnClicHistorial(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUIHistoryView());
     }
 
-    private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
+    private void OnClicMarcadores(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUILeaderboardView());
     }
 
-    private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
+    private void OnClicAjustes(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUISettingsView());
     }
   }
@@ -224,5 +265,12 @@ namespace LetterClashClient.Views {
     public string Idioma { get; set; }
     public string Tipo { get; set; }
     public int Progreso { get; set; }
+
+    // Nuevas propiedades para la visualización estilo SF6
+    public string NombreUsuario { get; set; }
+    public string RolUsuario { get; set; }
+    public string RolRival { get; set; }
+    public ImageSource AvatarUsuario { get; set; }
+    public ImageSource AvatarRival { get; set; }
   }
 }
