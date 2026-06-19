@@ -115,6 +115,28 @@
 
         <!-- Custom DatePicker Template & Style -->
         <Style x:Key="ModernDatePicker" TargetType="DatePicker">
+            <Style.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="DatePickerTextBox">
+                                <Border x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                                  Focusable="False"
+                                                  HorizontalScrollBarVisibility="Hidden"
+                                                  VerticalScrollBarVisibility="Hidden"
+                                                  VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Style.Resources>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="DatePicker">
@@ -128,12 +150,12 @@
                                                Grid.Column="0"
                                                Focusable="{TemplateBinding Focusable}"
                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               VerticalContentAlignment="Center"
                                                Background="#0B0E14"
                                                Foreground="#4DEEEA"
                                                BorderThickness="1.5,1.5,0,1.5"
                                                BorderBrush="#00A896"
-                                               Padding="10,6"
+                                               Padding="10,4"
                                                FontFamily="{StaticResource GeistMono}"
                                                FontSize="13"/>
                                                
