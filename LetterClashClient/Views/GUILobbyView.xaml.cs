@@ -138,7 +138,7 @@ namespace LetterClashClient.Views {
             var result = lobbyService.UnirseAPartidaDeLobby(usuario.IDJugador, selectedMatch.IDPartida);
 
             if (result != null && result.IsSuccess) {
-              NavigationService.Navigate(new GUIGameView(selectedMatch.NombreAnfitrion, selectedMatch.Idioma, selectedMatch.CodigoAcceso));
+              NavigationService.Navigate(new GUIGameView(selectedMatch.NombreAnfitrion, selectedMatch.Idioma, selectedMatch.CodigoAcceso, selectedMatch.IDPalabra));
             } else {
               string joinTitle = (string) Application.Current.FindResource("Lobby_ErrorJoinTitle") ?? "Error al unirse";
               string joinMsg = (string) Application.Current.FindResource("Lobby_ErrorJoin") ?? "No se pudo unir a la partida.";
@@ -186,7 +186,7 @@ namespace LetterClashClient.Views {
 
         if (result != null && result.IsSuccess) {
           var partida = result.Value;
-          NavigationService.Navigate(new GUIGameView(partida.NombreAnfitrion, partida.Idioma, accessCode));
+          NavigationService.Navigate(new GUIGameView(partida.NombreAnfitrion, partida.Idioma, accessCode, partida.IDPalabra));
         } else {
           string defaultErr = (string) Application.Current.FindResource("Lobby_ErrorPrivateJoin") ?? "No se pudo unir a la sala.";
           TextBlockAccessCodeError.Text = result?.Error?.Mensaje ?? defaultErr;

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,26 +22,33 @@ namespace LetterClashClient.Views {
     private readonly string codigoAcceso;
     private IGameService gameServiceProxy;
     private GameCallbackHandler callbackHandler;
+    private int idPalabra;
+    private string wordDescription;
 
-    public GUIGameView() : this("SOFTWARE", "000000") { }
+    public GUIGameView() : this(new PalabraDTO { PalabraTexto = "SOFTWARE", Descripcion = "Conjunto de programas y rutinas que permiten a la computadora realizar determinadas tareas.", Idioma = Idiomas.ESPANOL }, "000000") { }
 
     // Host constructor
-    public GUIGameView(string selectedWord, string codigoAcceso) {
+    public GUIGameView(PalabraDTO selectedWord, string codigoAcceso) {
       InitializeComponent();
       this.isHost = true;
       this.opponentName = "Usuario 1";
-      this.targetWord = string.IsNullOrWhiteSpace(selectedWord) ? "SOFTWARE" : selectedWord.ToUpper();
+      this.targetWord = selectedWord != null && !string.IsNullOrWhiteSpace(selectedWord.PalabraTexto) 
+          ? selectedWord.PalabraTexto.ToUpper() 
+          : "SOFTWARE";
+      this.wordDescription = selectedWord != null ? selectedWord.Descripcion : "";
+      this.selectedLanguage = selectedWord != null ? selectedWord.Idioma : Idiomas.ESPANOL;
       this.codigoAcceso = string.IsNullOrWhiteSpace(codigoAcceso) ? "------" : codigoAcceso;
       this.mistakes = 0;
     }
 
     // Guesser constructor
-    public GUIGameView(string opponentName, string selectedLanguage, string codigoAcceso) {
+    public GUIGameView(string opponentName, string selectedLanguage, string codigoAcceso, int idPalabra) {
       InitializeComponent();
       this.isHost = false;
       this.opponentName = opponentName;
       this.selectedLanguage = selectedLanguage;
       this.codigoAcceso = codigoAcceso;
+      this.idPalabra = idPalabra;
       this.targetWord = "SOFTWARE";
       this.mistakes = 0;
     }
@@ -58,12 +66,40 @@ namespace LetterClashClient.Views {
         TextBlockWord.Text = string.Join(" ", targetWord.ToCharArray());
         TextBlockAccessCode.Text = codigoAcceso;
         TextBlockSelectedLetter.Text = "-";
+        
+        TextBlockLanguageHost.Text = selectedLanguage == Idiomas.INGLES ? "ENGLISH" : "ESPAÑOL";
+        TextBlockWordDescriptionHost.Text = wordDescription;
       } else {
         if (window != null) {
           window.Title = (string) Application.Current.FindResource("Game_GuesserWindowTitle") ?? "Partida (Adivinador)";
         }
         GridHostSection.Visibility = Visibility.Collapsed;
         GridGuesserSection.Visibility = Visibility.Visible;
+
+        TextBlockAccessCodeGuesser.Text = codigoAcceso;
+        TextBlockLanguageGuesser.Text = selectedLanguage == Idiomas.INGLES ? "ENGLISH" : "ESPAÑOL";
+        
+        if (idPalabra > 0) {
+          try {
+            var palabraService = ServiceProxyManager.GetPalabraService();
+            var result = palabraService.ObtenerPalabrasPorIdioma(selectedLanguage);
+            if (result != null && result.IsSuccess) {
+              var palabra = result.Value.FirstOrDefault(p => p.IDPalabra == idPalabra);
+              if (palabra != null) {
+                this.wordDescription = palabra.Descripcion;
+                TextBlockWordDescription.Text = palabra.Descripcion;
+              } else {
+                TextBlockWordDescription.Text = "";
+              }
+            } else {
+              TextBlockWordDescription.Text = "";
+            }
+          } catch {
+            TextBlockWordDescription.Text = "";
+          }
+        } else {
+          TextBlockWordDescription.Text = "";
+        }
 
         guessedWord = new char[targetWord.Length];
         for (int index = 0; index < guessedWord.Length; index++) {
