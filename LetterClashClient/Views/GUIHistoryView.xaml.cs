@@ -37,27 +37,8 @@ namespace LetterClashClient.Views {
       TextBlockUsername.Text = usuario.NombreDeUsuario;
 
       // Cargar avatar local (o default si no tiene)
-      ImageSource avatarUsuario = null;
-      try {
-        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
-          var image = new BitmapImage();
-          using (var mem = new System.IO.MemoryStream(usuario.Avatar)) {
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.StreamSource = mem;
-            image.EndInit();
-          }
-          ImageUserAvatar.Source = image;
-          avatarUsuario = image;
-        } else {
-          var defaultImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/UserAvatar.png", UriKind.Absolute));
-          ImageUserAvatar.Source = defaultImage;
-          avatarUsuario = defaultImage;
-        }
-      } catch (Exception ex) {
-        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
-        System.Diagnostics.Debug.WriteLine($"[GUIHistoryView] Error al cargar avatar del usuario: {ex.Message}");
-      }
+      ImageSource avatarUsuario = AvatarHelper.ObtenerImagen(usuario.Avatar);
+      ImageUserAvatar.Source = avatarUsuario;
 
       // Cargar historial de partidas
       try {
@@ -154,13 +135,6 @@ namespace LetterClashClient.Views {
     private void CargarAvataresRivales(List<BattleHistoryItem> battles, IJugadorService service) {
       var nombresVistos = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
       var cacheAvatares = new Dictionary<string, ImageSource>(StringComparer.OrdinalIgnoreCase);
-      ImageSource avatarDefault = null;
-
-      try {
-        avatarDefault = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/UserAvatar.png", UriKind.Absolute));
-      } catch (Exception ex) {
-        System.Diagnostics.Debug.WriteLine($"[GUIHistoryView] Error al cargar avatar default: {ex.Message}");
-      }
 
       foreach (var battle in battles) {
         string nombreRival = battle.Rival;
@@ -170,17 +144,7 @@ namespace LetterClashClient.Views {
         try {
           var profileResult = service.ObtenerPerfilPorNombre(nombreRival);
           if (profileResult != null && profileResult.IsSuccess && profileResult.Value != null) {
-            byte[] bytesAvatar = profileResult.Value.Avatar;
-            if (bytesAvatar != null && bytesAvatar.Length > 0) {
-              var image = new BitmapImage();
-              using (var mem = new System.IO.MemoryStream(bytesAvatar)) {
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = mem;
-                image.EndInit();
-              }
-              cacheAvatares[nombreRival] = image;
-            }
+            cacheAvatares[nombreRival] = AvatarHelper.ObtenerImagen(profileResult.Value.Avatar);
           }
         } catch (Exception ex) {
           System.Diagnostics.Debug.WriteLine($"[GUIHistoryView] Error al cargar avatar del rival '{nombreRival}': {ex.Message}");
@@ -192,7 +156,7 @@ namespace LetterClashClient.Views {
         if (cacheAvatares.TryGetValue(battle.Rival, out var avatar)) {
           battle.AvatarRival = avatar;
         } else {
-          battle.AvatarRival = avatarDefault;
+          battle.AvatarRival = AvatarHelper.AvatarDefault;
         }
       }
     }

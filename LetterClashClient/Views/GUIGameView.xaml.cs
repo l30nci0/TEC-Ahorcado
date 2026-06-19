@@ -129,18 +129,7 @@ namespace LetterClashClient.Views {
         TextBlockOpponent.Text = opponentName;
         string chatTitle = (string) Application.Current.FindResource("Game_ChatTitleTemplate") ?? "Chat con {0}";
         TextBlockChatTitle.Text = string.Format(chatTitle, opponentName);
-        if (jugadorDTO.Avatar != null && jugadorDTO.Avatar.Length > 0) {
-          try {
-            var image = new BitmapImage();
-            using (var mem = new System.IO.MemoryStream(jugadorDTO.Avatar)) {
-              image.BeginInit();
-              image.CacheOption = BitmapCacheOption.OnLoad;
-              image.StreamSource = mem;
-              image.EndInit();
-            }
-            ImageOpponentAvatar.Source = image;
-          } catch { }
-        }
+        AvatarHelper.AsignarAImageControl(ImageOpponentAvatar, jugadorDTO.Avatar);
       });
     }
 

@@ -33,10 +33,7 @@ namespace LetterClashClient.Views {
           if (jugadores.Count > 0) {
             var top1 = jugadores[0];
             TextBlockTopName1.Text = top1.NombreDeUsuario;
-            if (top1.Avatar != null && top1.Avatar.Length > 0) {
-              var img = CrearBitmapDeBytes(top1.Avatar);
-              if (img != null) ImageTopAvatar1.Source = img;
-            }
+            ImageTopAvatar1.Source = AvatarHelper.ObtenerImagen(top1.Avatar);
           } else {
             TextBlockTopName1.Text = "-";
           }
@@ -45,10 +42,7 @@ namespace LetterClashClient.Views {
           if (jugadores.Count > 1) {
             var top2 = jugadores[1];
             TextBlockTopName2.Text = top2.NombreDeUsuario;
-            if (top2.Avatar != null && top2.Avatar.Length > 0) {
-              var img = CrearBitmapDeBytes(top2.Avatar);
-              if (img != null) ImageTopAvatar2.Source = img;
-            }
+            ImageTopAvatar2.Source = AvatarHelper.ObtenerImagen(top2.Avatar);
           } else {
             TextBlockTopName2.Text = "-";
           }
@@ -57,10 +51,7 @@ namespace LetterClashClient.Views {
           if (jugadores.Count > 2) {
             var top3 = jugadores[2];
             TextBlockTopName3.Text = top3.NombreDeUsuario;
-            if (top3.Avatar != null && top3.Avatar.Length > 0) {
-              var img = CrearBitmapDeBytes(top3.Avatar);
-              if (img != null) ImageTopAvatar3.Source = img;
-            }
+            ImageTopAvatar3.Source = AvatarHelper.ObtenerImagen(top3.Avatar);
           } else {
             TextBlockTopName3.Text = "-";
           }

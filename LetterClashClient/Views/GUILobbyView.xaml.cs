@@ -31,23 +31,10 @@ namespace LetterClashClient.Views {
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario != null) {
         TextBlockUsername.Text = $"\"{usuario.NombreDeUsuario}\"";
-        string yearsText = (string) Application.Current.FindResource("MainMenu_Years") ?? "Años";
+        string yearsText = (string) Application.Current.FindResource("MainMenu_Years") ?? "Aรฑos";
         TextBlockAge.Text = $"\"{CalculateAge(usuario.FechaDeNacimiento)} {yearsText}\"";
 
-        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
-          try {
-            using (var stream = new MemoryStream(usuario.Avatar)) {
-              var bitmap = new BitmapImage();
-              bitmap.BeginInit();
-              bitmap.StreamSource = stream;
-              bitmap.CacheOption = BitmapCacheOption.OnLoad;
-              bitmap.EndInit();
-              ImageUserAvatar.Source = bitmap;
-            }
-          } catch {
-            // Mantiene el default en caso de error
-          }
-        }
+        AvatarHelper.AsignarAImageControl(ImageUserAvatar, usuario.Avatar);
       }
 
       SwitchTab(openPrivate);
@@ -81,12 +68,12 @@ namespace LetterClashClient.Views {
           MessageBox.Show(result?.Error?.Mensaje ?? errMatches, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
       } catch (CommunicationException) {
-        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
-        string connMsg = (string) Application.Current.FindResource("Lobby_ErrorGetMatchesConn") ?? "No se pudo establecer conexión con el servidor para obtener los lobbies.";
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexiรณn";
+        string connMsg = (string) Application.Current.FindResource("Lobby_ErrorGetMatchesConn") ?? "No se pudo establecer conexiรณn con el servidor para obtener los lobbies.";
         MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
         string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
-        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurriรณ un error inesperado:";
         MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
@@ -128,7 +115,7 @@ namespace LetterClashClient.Views {
 
           if (selectedMatch.IDAnfitrion == usuario.IDJugador) {
             string selfMsg = (string) Application.Current.FindResource("Lobby_ErrorSelfJoin") ?? "No puedes unirte a una partida creada por ti mismo.";
-            string selfTitle = (string) Application.Current.FindResource("Lobby_ErrorSelfJoinTitle") ?? "Operación Inválida";
+            string selfTitle = (string) Application.Current.FindResource("Lobby_ErrorSelfJoinTitle") ?? "Operaciรณn Invรกlida";
             MessageBox.Show(selfMsg, selfTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
           }
@@ -146,12 +133,12 @@ namespace LetterClashClient.Views {
               CargarPartidasLobby();
             }
           } catch (CommunicationException) {
-            string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+            string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexiรณn";
             string connMsg = (string) Application.Current.FindResource("Lobby_ErrorJoinConn") ?? "No se pudo conectar con el servidor para unirse a la partida.";
             MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
           } catch (Exception ex) {
             string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
-            string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+            string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurriรณ un error inesperado:";
             MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
           }
         }
@@ -164,13 +151,13 @@ namespace LetterClashClient.Views {
       string accessCode = TextBoxAccessCode.Text.Trim().ToUpper().Replace("#", "");
 
       if (string.IsNullOrWhiteSpace(accessCode)) {
-        TextBlockAccessCodeError.Text = (string) Application.Current.FindResource("Lobby_AccessCodeErrorEmpty") ?? "Ingrese un código de acceso";
+        TextBlockAccessCodeError.Text = (string) Application.Current.FindResource("Lobby_AccessCodeErrorEmpty") ?? "Ingrese un cรณdigo de acceso";
         TextBlockAccessCodeError.Visibility = Visibility.Visible;
         return;
       }
 
       if (accessCode.Length != 6) {
-        TextBlockAccessCodeError.Text = (string) Application.Current.FindResource("Lobby_AccessCodeErrorLength") ?? "El código debe tener 6 caracteres";
+        TextBlockAccessCodeError.Text = (string) Application.Current.FindResource("Lobby_AccessCodeErrorLength") ?? "El cรณdigo debe tener 6 caracteres";
         TextBlockAccessCodeError.Visibility = Visibility.Visible;
         return;
       }
@@ -193,12 +180,12 @@ namespace LetterClashClient.Views {
           TextBlockAccessCodeError.Visibility = Visibility.Visible;
         }
       } catch (CommunicationException) {
-        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
-        string connMsg = (string) Application.Current.FindResource("Msg_ConnectionError") ?? "No se pudo establecer conexión con el servidor.";
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexiรณn";
+        string connMsg = (string) Application.Current.FindResource("Msg_ConnectionError") ?? "No se pudo establecer conexiรณn con el servidor.";
         MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       } catch (Exception ex) {
         string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
-        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurriรณ un error inesperado:";
         MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }

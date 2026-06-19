@@ -5,6 +5,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
+using LetterClashClient.Services;
 
 namespace LetterClashClient.Views {
   public partial class GUIMainMenuView : Page {
@@ -27,20 +28,7 @@ namespace LetterClashClient.Views {
         string yearsText = (string) Application.Current.FindResource("MainMenu_Years") ?? "Años";
         TextBlockAge.Text = $"\"{CalculateAge(usuario.FechaDeNacimiento)} {yearsText}\"";
 
-        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
-          try {
-            using (var stream = new System.IO.MemoryStream(usuario.Avatar)) {
-              var bitmap = new BitmapImage();
-              bitmap.BeginInit();
-              bitmap.StreamSource = stream;
-              bitmap.CacheOption = BitmapCacheOption.OnLoad;
-              bitmap.EndInit();
-              ImageUserAvatar.Source = bitmap;
-            }
-          } catch {
-            // Mantiene el default en caso de error
-          }
-        }
+        AvatarHelper.AsignarAImageControl(ImageUserAvatar, usuario.Avatar);
       }
 
       UpdateHangmanImage();
