@@ -316,11 +316,11 @@ namespace LetterClashClient.Views {
     }
 
     private void UpdateHangmanImage() {
-      int imageNumber = 5 - mistakes;
+      int imageNumber = 6 - mistakes;
       if (imageNumber < 1) {
         imageNumber = 1;
       }
-      ImageHangman.Source = new BitmapImage(new Uri($"/Assets/Images/Hangedman{imageNumber}.jpg", UriKind.Relative));
+      ImageHangman.Source = new BitmapImage(new Uri($"/Assets/Images/Hangedman{imageNumber}.png", UriKind.Relative));
     }
 
     private void UpdateAttempts() {

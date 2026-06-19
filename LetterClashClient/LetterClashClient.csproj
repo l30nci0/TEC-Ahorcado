@@ -216,11 +216,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Assets\Images\Hangedman1.jpg" />
-		<Resource Include="Assets\Images\Hangedman2.jpg" />
-		<Resource Include="Assets\Images\Hangedman3.jpg" />
-		<Resource Include="Assets\Images\Hangedman4.jpg" />
-		<Resource Include="Assets\Images\Hangedman5.jpg" />
+		<Resource Include="Assets\Images\Hangedman1.png" />
+		<Resource Include="Assets\Images\Hangedman2.png" />
+		<Resource Include="Assets\Images\Hangedman3.png" />
+		<Resource Include="Assets\Images\Hangedman4.png" />
+		<Resource Include="Assets\Images\Hangedman5.png" />
+		<Resource Include="Assets\Images\Hangedman6.png" />
 		<Resource Include="Assets\Images\Hangman.jpg" />
 		<Resource Include="Assets\Images\LogoLetterClash.jpeg" />
 		<Resource Include="Assets\Images\LogoLetterClashRectangle.png" />
