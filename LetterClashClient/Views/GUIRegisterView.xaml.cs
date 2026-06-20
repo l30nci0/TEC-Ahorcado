@@ -1,9 +1,11 @@
 using System;
+using System.IO;
 using System.ServiceModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Win32;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
@@ -12,6 +14,8 @@ using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class GUIRegisterView : Page {
+    private byte[] selectedAvatarBytes;
+
     public GUIRegisterView() {
       InitializeComponent();
     }
@@ -141,7 +145,7 @@ namespace LetterClashClient.Views {
         FechaDeNacimiento = DatePickerBirthDate.SelectedDate.Value,
         IdiomaPreferido = ComboBoxPreferredLanguage.SelectedIndex == 1 ? Idiomas.INGLES : Idiomas.ESPANOL,
         Puntuacion = 0,
-        Avatar = null
+        Avatar = selectedAvatarBytes
       };
 
       string password = PasswordBoxPassword.Password;
@@ -264,6 +268,51 @@ namespace LetterClashClient.Views {
       ButtonLangES.Style = (Style) FindResource("ModernSecondaryButton");
       ButtonLangEN.Style = (Style) FindResource("ModernPrimaryButton");
       Services.LanguageManager.SetLanguage("EN");
+    }
+
+    private byte[] LoadAvatarFromDialog() {
+      OpenFileDialog dialog = new OpenFileDialog {
+        Title = (string) Application.Current.FindResource("Profile_AvatarSelectTitle") ?? "Seleccionar Avatar",
+        Filter = (string) Application.Current.FindResource("Profile_ImageFilter") ?? "Imágenes (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg"
+      };
+
+      if (dialog.ShowDialog() != true) {
+        return null;
+      }
+
+      string extension = Path.GetExtension(dialog.FileName)?.ToLowerInvariant();
+      if (extension != ".png" && extension != ".jpg" && extension != ".jpeg") {
+        string message = (string) Application.Current.FindResource("Profile_ImageFormatError") ?? "Seleccione una imagen PNG, JPG o JPEG.";
+        string title = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        return null;
+      }
+
+      FileInfo fileInfo = new FileInfo(dialog.FileName);
+      if (fileInfo.Length > 2 * 1024 * 1024) {
+        string message = (string) Application.Current.FindResource("Profile_ImageSizeExceededMsg") ?? "El tamaño de la imagen no debe superar los 2MB.";
+        string title = (string) Application.Current.FindResource("Profile_ImageSizeExceededTitle") ?? "Tamaño Excedido";
+        MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        return null;
+      }
+
+      return File.ReadAllBytes(dialog.FileName);
+    }
+
+    private void ButtonSelectAvatar_Click(object sender, RoutedEventArgs e) {
+      try {
+        byte[] avatar = LoadAvatarFromDialog();
+        if (avatar == null) {
+          return;
+        }
+
+        selectedAvatarBytes = avatar;
+        ImageRegisterAvatar.Source = AvatarHelper.ObtenerImagen(selectedAvatarBytes);
+      } catch (Exception ex) {
+        string message = (string) Application.Current.FindResource("Profile_ImageLoadError") ?? "Error al cargar la imagen:";
+        string title = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show($"{message} {ex.Message}", title, MessageBoxButton.OK, MessageBoxImage.Error);
+      }
     }
   }
 }

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 
 using LetterClashClient.Models;
 using LetterClashClient.Services;
@@ -14,6 +15,7 @@ using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class GUIProfileView : Page {
+    private byte[] selectedProfileAvatarBytes;
 
     public GUIProfileView() {
       InitializeComponent();
@@ -62,6 +64,7 @@ namespace LetterClashClient.Views {
         TextBlockEmail.Text = usuario.Correo;
         string notRegText = (string) Application.Current.FindResource("Profile_NotRegistered") ?? "No Registrado";
         TextBlockPhone.Text = !string.IsNullOrWhiteSpace(usuario.Telefono) ? usuario.Telefono : notRegText;
+        AvatarHelper.AsignarAImageControl(ImageProfileAvatarView, usuario.Avatar);
       }
     }
 
@@ -79,6 +82,8 @@ namespace LetterClashClient.Views {
           TextBoxEmail.Text = usuario.Correo;
           TextBoxPhone.Text = usuario.Telefono;
           DatePickerBirthDate.SelectedDate = usuario.FechaDeNacimiento;
+          selectedProfileAvatarBytes = usuario.Avatar;
+          AvatarHelper.AsignarAImageControl(ImageProfileAvatarEdit, selectedProfileAvatarBytes);
 
           if (usuario.IdiomaPreferido == Idiomas.INGLES) {
             ComboBoxPreferredLanguage.SelectedIndex = 1;
@@ -170,7 +175,7 @@ namespace LetterClashClient.Views {
           Correo = usuario.Correo,
           Telefono = phone,
           Puntuacion = usuario.Puntuacion,
-          Avatar = usuario.Avatar,
+          Avatar = selectedProfileAvatarBytes,
           IdiomaPreferido = ComboBoxPreferredLanguage.SelectedIndex == 1 ? Idiomas.INGLES : Idiomas.ESPANOL,
           FechaDeNacimiento = DatePickerBirthDate.SelectedDate.Value
         };
@@ -355,6 +360,51 @@ namespace LetterClashClient.Views {
 
     private void DatePickerBirthDate_Pasting(object sender, DataObjectPastingEventArgs e) {
       e.CancelCommand();
+    }
+
+    private byte[] LoadAvatarFromDialog() {
+      OpenFileDialog dialog = new OpenFileDialog {
+        Title = (string) Application.Current.FindResource("Profile_AvatarSelectTitle") ?? "Seleccionar Avatar",
+        Filter = (string) Application.Current.FindResource("Profile_ImageFilter") ?? "Imágenes (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg"
+      };
+
+      if (dialog.ShowDialog() != true) {
+        return null;
+      }
+
+      string extension = Path.GetExtension(dialog.FileName)?.ToLowerInvariant();
+      if (extension != ".png" && extension != ".jpg" && extension != ".jpeg") {
+        string message = (string) Application.Current.FindResource("Profile_ImageFormatError") ?? "Seleccione una imagen PNG, JPG o JPEG.";
+        string title = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        return null;
+      }
+
+      FileInfo fileInfo = new FileInfo(dialog.FileName);
+      if (fileInfo.Length > 2 * 1024 * 1024) {
+        string message = (string) Application.Current.FindResource("Profile_ImageSizeExceededMsg") ?? "El tamaño de la imagen no debe superar los 2MB.";
+        string title = (string) Application.Current.FindResource("Profile_ImageSizeExceededTitle") ?? "Tamaño Excedido";
+        MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        return null;
+      }
+
+      return File.ReadAllBytes(dialog.FileName);
+    }
+
+    private void ButtonSelectAvatar_Click(object sender, RoutedEventArgs e) {
+      try {
+        byte[] avatar = LoadAvatarFromDialog();
+        if (avatar == null) {
+          return;
+        }
+
+        selectedProfileAvatarBytes = avatar;
+        ImageProfileAvatarEdit.Source = AvatarHelper.ObtenerImagen(selectedProfileAvatarBytes);
+      } catch (Exception ex) {
+        string message = (string) Application.Current.FindResource("Profile_ImageLoadError") ?? "Error al cargar la imagen:";
+        string title = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show($"{message} {ex.Message}", title, MessageBoxButton.OK, MessageBoxImage.Error);
+      }
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {

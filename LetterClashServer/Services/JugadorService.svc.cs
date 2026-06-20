@@ -125,8 +125,10 @@ namespace LetterClashServer.Services {
           IDPartida = p.IDPartida,
           IDAnfitrion = p.IDAnfitrion,
           NombreAnfitrion = p.Jugador1.NombreDeUsuario,
+          AvatarAnfitrion = p.Jugador1.Avatar,
           IDAdivinador = p.IDAdivinador,
           NombreAdivinador = p.Jugador != null ? p.Jugador.NombreDeUsuario : null,
+          AvatarAdivinador = p.Jugador != null ? p.Jugador.Avatar : null,
           IDPalabra = p.IDPalabra,
           PalabraRevelada = p.Palabra != null ? p.Palabra.Palabra1 : null,
           Estado = p.Estado,
@@ -151,11 +153,16 @@ namespace LetterClashServer.Services {
     public ServiceResult<List<JugadorPublicoDTO>> ConsultarMarcadores() {
       try {
         var jugadores = jugadorRepository.ObtenerMarcadores();
+        var jugadorIDs = jugadores.Select(j => j.IDJugador).ToList();
+        var victoriasPorJugador = jugadorRepository.ObtenerVictoriasPorJugadores(jugadorIDs);
+        var partidasPorJugador = jugadorRepository.ObtenerPartidasConcluidasPorJugadores(jugadorIDs);
 
         var dtos = jugadores.Select(j => new JugadorPublicoDTO {
           IDJugador = j.IDJugador,
           NombreDeUsuario = j.NombreDeUsuario,
           Puntuacion = j.Puntuacion,
+          PartidasGanadas = victoriasPorJugador.ContainsKey(j.IDJugador) ? victoriasPorJugador[j.IDJugador] : 0,
+          PartidasConcluidas = partidasPorJugador.ContainsKey(j.IDJugador) ? partidasPorJugador[j.IDJugador] : 0,
           Avatar = j.Avatar
         }).ToList();
 

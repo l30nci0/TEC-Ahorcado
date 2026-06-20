@@ -62,6 +62,7 @@ namespace LetterClashClient.Views {
             bool isHost = p.IDAnfitrion == usuario.IDJugador;
             string rol = isHost ? rolHost : rolChallenger;
             string nombreRival = isHost ? (p.NombreAdivinador ?? noChallenger) : p.NombreAnfitrion;
+            byte[] avatarRivalBytes = isHost ? p.AvatarAdivinador : p.AvatarAnfitrion;
             string fecha = p.FechaDeJuego.ToString("dd/MM/yyyy");
             string palabra = p.PalabraRevelada ?? "";
 
@@ -114,14 +115,12 @@ namespace LetterClashClient.Views {
               RolUsuario = rol,
               RolRival = rolRival,
               AvatarUsuario = avatarUsuario,
+              AvatarRival = AvatarHelper.ObtenerImagen(avatarRivalBytes),
               Idioma = idioma,
               Tipo = tipo,
               CuentaComoDesconexion = cuentaComoDesconexion
             });
           }
-
-          // Cargar avatares de los rivales
-          CargarAvataresRivales(battles, service);
 
           ItemsControlHistory.ItemsSource = battles;
           CargarEstadisticas(battles);
@@ -183,35 +182,6 @@ namespace LetterClashClient.Views {
       }
 
       return errores;
-    }
-
-    private void CargarAvataresRivales(List<BattleHistoryItem> battles, IJugadorService service) {
-      var nombresVistos = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-      var cacheAvatares = new Dictionary<string, ImageSource>(StringComparer.OrdinalIgnoreCase);
-
-      foreach (var battle in battles) {
-        string nombreRival = battle.Rival;
-        if (string.IsNullOrEmpty(nombreRival) || nombresVistos.Contains(nombreRival)) continue;
-        nombresVistos.Add(nombreRival);
-
-        try {
-          var profileResult = service.ObtenerPerfilPorNombre(nombreRival);
-          if (profileResult != null && profileResult.IsSuccess && profileResult.Value != null) {
-            cacheAvatares[nombreRival] = AvatarHelper.ObtenerImagen(profileResult.Value.Avatar);
-          }
-        } catch (Exception ex) {
-          System.Diagnostics.Debug.WriteLine($"[GUIHistoryView] Error al cargar avatar del rival '{nombreRival}': {ex.Message}");
-        }
-      }
-
-      // Asignar avatares a las batallas (usar default si no se encontró)
-      foreach (var battle in battles) {
-        if (cacheAvatares.TryGetValue(battle.Rival, out var avatar)) {
-          battle.AvatarRival = avatar;
-        } else {
-          battle.AvatarRival = AvatarHelper.AvatarDefault;
-        }
-      }
     }
 
     private int CalcularEdad(DateTime fechaNacimiento) {

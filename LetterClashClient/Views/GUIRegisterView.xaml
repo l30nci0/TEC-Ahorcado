@@ -585,6 +585,40 @@
                                    Foreground="#4DEEEA"
                                    Margin="0,0,0,16"/>
 
+                        <!-- Avatar -->
+                        <StackPanel HorizontalAlignment="Center" Margin="0,0,0,12">
+                            <TextBlock Text="{DynamicResource Register_AvatarLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                            <Grid Width="96" Height="96">
+                                <Ellipse Stroke="#4DEEEA" StrokeThickness="2" Fill="#0B0E14">
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
+                                    </Ellipse.Effect>
+                                </Ellipse>
+                                <Image x:Name="ImageRegisterAvatar"
+                                       Width="88"
+                                       Height="88"
+                                       Stretch="UniformToFill"
+                                       Source="/Assets/Images/UserAvatar.png"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center">
+                                    <Image.Clip>
+                                        <EllipseGeometry Center="44,44" RadiusX="44" RadiusY="44"/>
+                                    </Image.Clip>
+                                </Image>
+                                <Button x:Name="ButtonSelectAvatar"
+                                        Content="+"
+                                        Width="30"
+                                        Height="30"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        FontFamily="{StaticResource GeistPixelSquare}"
+                                        FontSize="18"
+                                        Padding="0"
+                                        Style="{StaticResource ModernPrimaryButton}"
+                                        Click="ButtonSelectAvatar_Click"/>
+                            </Grid>
+                        </StackPanel>
+
                         <!-- Full Name -->
                         <TextBlock Text="{DynamicResource Register_FullNameLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Margin="0,0,0,2">

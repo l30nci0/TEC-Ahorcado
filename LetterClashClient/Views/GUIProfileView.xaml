@@ -431,14 +431,15 @@
             <Grid Grid.Row="0">
                 <!-- Main Card Container -->
                 <Border Width="950"
-                        Height="530"
-                        VerticalAlignment="Center"
+                        MaxHeight="590"
+                        VerticalAlignment="Stretch"
                         HorizontalAlignment="Center"
                         BorderBrush="#4DEEEA"
                         BorderThickness="1.5"
                         Background="#0B0E14"
                         CornerRadius="0"
-                        Padding="30">
+                        Padding="30"
+                        Margin="0,20">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
                     </Border.Effect>
@@ -476,7 +477,34 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 
-                                <StackPanel Grid.Row="0" Width="500" VerticalAlignment="Center" Margin="0,10,0,15">
+                                <ScrollViewer Grid.Row="0"
+                                              VerticalScrollBarVisibility="Auto"
+                                              HorizontalScrollBarVisibility="Disabled"
+                                              Margin="0,0,0,10">
+                                <StackPanel Width="500" VerticalAlignment="Top" Margin="0,0,0,10">
+                                    <!-- Avatar -->
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,15">
+                                        <TextBlock Text="{DynamicResource Profile_AvatarLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                        <Grid Width="96" Height="96">
+                                            <Ellipse Stroke="#4DEEEA" StrokeThickness="2" Fill="#0B0E14">
+                                                <Ellipse.Effect>
+                                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
+                                                </Ellipse.Effect>
+                                            </Ellipse>
+                                            <Image x:Name="ImageProfileAvatarView"
+                                                   Width="88"
+                                                   Height="88"
+                                                   Stretch="UniformToFill"
+                                                   Source="/Assets/Images/UserAvatar.png"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center">
+                                                <Image.Clip>
+                                                    <EllipseGeometry Center="44,44" RadiusX="44" RadiusY="44"/>
+                                                </Image.Clip>
+                                            </Image>
+                                        </Grid>
+                                    </StackPanel>
+
                                     <!-- Full Name -->
                                     <TextBlock Text="{DynamicResource Profile_FullNameLabel}" Style="{StaticResource FormLabelStyle}"/>
                                     <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
@@ -533,6 +561,7 @@
                                         </StackPanel>
                                     </Grid>
                                 </StackPanel>
+                                </ScrollViewer>
 
                                 <!-- Action Button at bottom -->
                                 <Button x:Name="ButtonEdit"
@@ -575,7 +604,10 @@
                                            Foreground="#00A896"
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
-                            <Grid Grid.Row="1">
+                            <ScrollViewer Grid.Row="1"
+                                          VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Disabled">
+                            <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="25"/>
@@ -592,6 +624,40 @@
 
                                     <!-- Left Column (Account Settings) -->
                                     <StackPanel Grid.Column="0" VerticalAlignment="Stretch">
+                                        <!-- Avatar -->
+                                        <StackPanel HorizontalAlignment="Center" Margin="0,0,0,10">
+                                            <TextBlock Text="{DynamicResource Profile_AvatarEditLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
+                                            <Grid Width="86" Height="86">
+                                                <Ellipse Stroke="#4DEEEA" StrokeThickness="2" Fill="#0B0E14">
+                                                    <Ellipse.Effect>
+                                                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
+                                                    </Ellipse.Effect>
+                                                </Ellipse>
+                                                <Image x:Name="ImageProfileAvatarEdit"
+                                                       Width="78"
+                                                       Height="78"
+                                                       Stretch="UniformToFill"
+                                                       Source="/Assets/Images/UserAvatar.png"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center">
+                                                    <Image.Clip>
+                                                        <EllipseGeometry Center="39,39" RadiusX="39" RadiusY="39"/>
+                                                    </Image.Clip>
+                                                </Image>
+                                                <Button x:Name="ButtonSelectAvatar"
+                                                        Content="+"
+                                                        Width="28"
+                                                        Height="28"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Bottom"
+                                                        FontFamily="{StaticResource GeistPixelSquare}"
+                                                        FontSize="16"
+                                                        Padding="0"
+                                                        Style="{StaticResource ModernPrimaryButton}"
+                                                        Click="ButtonSelectAvatar_Click"/>
+                                            </Grid>
+                                        </StackPanel>
+
                                         <!-- Username read-only field -->
                                         <TextBlock Text="{DynamicResource Profile_UsernameEditLabel}" Style="{StaticResource FormLabelStyle}"/>
                                         <TextBox x:Name="TextBoxUsername" Height="36" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,15" Background="#0B0E14" BorderBrush="#00A986"/>
@@ -649,6 +715,7 @@
                                         Style="{StaticResource ModernSecondaryButton}"
                                         Click="ButtonOpenChangePassword_Click"/>
                             </Grid>
+                            </ScrollViewer>
                         </Grid>
                     </Grid>
                 </Border>

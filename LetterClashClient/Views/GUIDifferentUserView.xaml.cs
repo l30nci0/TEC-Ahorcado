@@ -47,6 +47,7 @@ namespace LetterClashClient.Views {
           TextBlockAge.Text = CalculateAge(dto.FechaDeNacimiento).ToString();
           TextBlockEmail.Text = dto.Correo;
           TextBlockPhone.Text = dto.Telefono;
+          AvatarHelper.AsignarAImageControl(ImageDifferentUserAvatar, dto.Avatar);
 
 
 

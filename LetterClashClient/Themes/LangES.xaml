@@ -131,6 +131,7 @@
     <sys:String x:Key="Profile_UpdateErrorMsg">Error al actualizar el perfil.</sys:String>
     <sys:String x:Key="Profile_ImageSizeExceededMsg">El tamaño de la imagen no debe superar los 2MB.</sys:String>
     <sys:String x:Key="Profile_ImageSizeExceededTitle">Tamaño Excedido</sys:String>
+    <sys:String x:Key="Profile_ImageFormatError">Seleccione una imagen PNG, JPG o JPEG.</sys:String>
     <sys:String x:Key="Profile_ImageLoadError">Error al cargar la imagen:</sys:String>
     <sys:String x:Key="Profile_PasswordChangeErrorTitle">Error al cambiar contraseña</sys:String>
     <sys:String x:Key="Profile_AvatarSelectTitle">Seleccionar Avatar</sys:String>

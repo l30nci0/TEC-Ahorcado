@@ -201,14 +201,15 @@
       <Grid Grid.Row="0">
         <!-- Main Card Container -->
         <Border Width="950"
-                        Height="520"
-                        VerticalAlignment="Center"
+                        MaxHeight="590"
+                        VerticalAlignment="Stretch"
                         HorizontalAlignment="Center"
                         BorderBrush="#4DEEEA"
                         BorderThickness="1.5"
                         Background="#0B0E14"
                         CornerRadius="0"
-                        Padding="35">
+                        Padding="35"
+                        Margin="0,20">
           <Border.Effect>
             <DropShadowEffect BlurRadius="30" ShadowDepth="0" Color="#00A896" Opacity="0.3"/>
           </Border.Effect>
@@ -240,7 +241,10 @@
             </StackPanel>
 
             <!-- Content Details (Horizontal Layout) -->
-            <Grid Grid.Row="1">
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+            <Grid>
               <Grid.ColumnDefinitions>
                 <!-- Details (Left) -->
                 <ColumnDefinition Width="*"/>
@@ -251,7 +255,30 @@
               </Grid.ColumnDefinitions>
 
               <!-- Left Column: Details -->
-              <StackPanel Grid.Column="0" VerticalAlignment="Center">
+              <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                <!-- Avatar -->
+                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,15">
+                  <TextBlock Text="{DynamicResource DiffUser_AvatarLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA" HorizontalAlignment="Center"/>
+                  <Grid Width="96" Height="96">
+                    <Ellipse Stroke="#4DEEEA" StrokeThickness="2" Fill="#0B0E14">
+                      <Ellipse.Effect>
+                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
+                      </Ellipse.Effect>
+                    </Ellipse>
+                    <Image x:Name="ImageDifferentUserAvatar"
+                           Width="88"
+                           Height="88"
+                           Stretch="UniformToFill"
+                           Source="/Assets/Images/UserAvatar.png"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                      <Image.Clip>
+                        <EllipseGeometry Center="44,44" RadiusX="44" RadiusY="44"/>
+                      </Image.Clip>
+                    </Image>
+                  </Grid>
+                </StackPanel>
+
                 <!-- Full Name -->
                 <TextBlock Text="{DynamicResource DiffUser_FullNameLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
                 <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
@@ -415,6 +442,7 @@
                         Click="ButtonBack_Click"/>
               </Grid>
             </Grid>
+            </ScrollViewer>
           </Grid>
         </Border>
       </Grid>

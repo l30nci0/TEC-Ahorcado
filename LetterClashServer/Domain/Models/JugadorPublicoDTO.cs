@@ -13,6 +13,12 @@ namespace LetterClashServer.Domain.Models {
     public int Puntuacion { get; set; }
 
     [DataMember]
+    public int PartidasGanadas { get; set; }
+
+    [DataMember]
+    public int PartidasConcluidas { get; set; }
+
+    [DataMember]
     public byte[] Avatar { get; set; }
   }
 }

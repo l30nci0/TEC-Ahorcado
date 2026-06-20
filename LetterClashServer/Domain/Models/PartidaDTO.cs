@@ -14,10 +14,16 @@ namespace LetterClashServer.Domain.Models {
     public string NombreAnfitrion { get; set; }
 
     [DataMember]
+    public byte[] AvatarAnfitrion { get; set; }
+
+    [DataMember]
     public int? IDAdivinador { get; set; }
 
     [DataMember]
     public string NombreAdivinador { get; set; }
+
+    [DataMember]
+    public byte[] AvatarAdivinador { get; set; }
 
     [DataMember]
     public int IDPalabra { get; set; }

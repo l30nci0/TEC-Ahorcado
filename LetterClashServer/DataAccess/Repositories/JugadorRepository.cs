@@ -39,6 +39,55 @@ namespace LetterClashServer.DataAccess.Repositories {
       }
     }
 
+    public virtual Dictionary<int, int> ObtenerVictoriasPorJugadores(List<int> jugadorIDs) {
+      if (jugadorIDs == null || jugadorIDs.Count == 0) {
+        return new Dictionary<int, int>();
+      }
+
+      using (var context = new LetterClashDBEntities()) {
+        var partidas = context.Partidas
+                              .AsNoTracking()
+                              .Where(p => p.Estado == "CONCLUIDA" &&
+                                          (p.Resultado == "ADIVINADA" || p.Resultado == "SIN_ADIVINAR"))
+                              .Select(p => new {
+                                p.IDAnfitrion,
+                                p.IDAdivinador,
+                                p.Resultado
+                              })
+                              .ToList();
+
+        return partidas
+          .Select(p => p.Resultado == "ADIVINADA" ? p.IDAdivinador : p.IDAnfitrion)
+          .Where(id => id.HasValue && jugadorIDs.Contains(id.Value))
+          .GroupBy(id => id.Value)
+          .ToDictionary(g => g.Key, g => g.Count());
+      }
+    }
+
+    public virtual Dictionary<int, int> ObtenerPartidasConcluidasPorJugadores(List<int> jugadorIDs) {
+      if (jugadorIDs == null || jugadorIDs.Count == 0) {
+        return new Dictionary<int, int>();
+      }
+
+      using (var context = new LetterClashDBEntities()) {
+        var partidas = context.Partidas
+                              .AsNoTracking()
+                              .Where(p => p.Estado == "CONCLUIDA" &&
+                                          (p.Resultado == "ADIVINADA" || p.Resultado == "SIN_ADIVINAR"))
+                              .Select(p => new {
+                                p.IDAnfitrion,
+                                p.IDAdivinador
+                              })
+                              .ToList();
+
+        return partidas
+          .SelectMany(p => new int?[] { p.IDAnfitrion, p.IDAdivinador })
+          .Where(id => id.HasValue && jugadorIDs.Contains(id.Value))
+          .GroupBy(id => id.Value)
+          .ToDictionary(g => g.Key, g => g.Count());
+      }
+    }
+
     public virtual Jugador ObtenerJugadorPorID(int jugadorID) {
       using (var context = new LetterClashDBEntities()) {
         return context.Jugadores
