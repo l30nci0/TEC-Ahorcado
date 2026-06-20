@@ -51,7 +51,7 @@ namespace LetterClashServer.DataAccess.Repositories {
           Privacidad = privacidad,
           Estado = "PENDIENTE",
           Resultado = "SIN_ADIVINAR",
-          Turno = 1,
+          Turno = 0,
           CodigoAcceso = codigo,
           FechaDeJuego = DateTime.Now
         };
@@ -103,6 +103,10 @@ namespace LetterClashServer.DataAccess.Repositories {
     }
 
     public virtual bool ConcluirPartida(int partidaID, string resultado) {
+      return ConcluirPartida(partidaID, resultado, 0);
+    }
+
+    public virtual bool ConcluirPartida(int partidaID, string resultado, int erroresCometidos) {
       using (var context = new LetterClashDBEntities()) {
         var partida = context.Partidas.SingleOrDefault(p => p.IDPartida == partidaID);
         if (partida == null) {
@@ -111,6 +115,7 @@ namespace LetterClashServer.DataAccess.Repositories {
 
         partida.Estado = "CONCLUIDA";
         partida.Resultado = resultado;
+        partida.Turno = erroresCometidos;
         context.SaveChanges();
         return true;
       }

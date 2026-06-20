@@ -67,36 +67,30 @@ namespace LetterClashClient.Views {
 
             string resultado = "";
             string puntuacion = "0";
-            int progreso = 0;
+            int errores = ObtenerErroresDePartida(p);
 
             if (p.Resultado == "ADIVINADA") {
               if (isHost) {
                 resultado = resLoss;
                 puntuacion = "0";
-                progreso = 6;
               } else {
                 resultado = resWin;
                 puntuacion = "+10";
-                progreso = 6;
               }
             } else if (p.Resultado == "SIN_ADIVINAR") {
               if (isHost) {
                 resultado = resWin;
                 puntuacion = "+5";
-                progreso = 6;
               } else {
                 resultado = resLoss;
                 puntuacion = "0";
-                progreso = 0;
               }
             } else if (p.Resultado == "ABANDONADA") {
               resultado = resDisconnect;
               puntuacion = "0";
-              progreso = 0;
             } else {
               resultado = resDisconnect;
               puntuacion = "0";
-              progreso = 0;
             }
 
             string rolRival = isHost ? rolChallenger : rolHost;
@@ -113,7 +107,7 @@ namespace LetterClashClient.Views {
               Resultado = resultado,
               Puntuacion = puntuacion,
               Rol = rol,
-              Progreso = progreso,
+              Errores = errores,
               NombreUsuario = usuario.NombreDeUsuario,
               RolUsuario = rol,
               RolRival = rolRival,
@@ -142,6 +136,30 @@ namespace LetterClashClient.Views {
         string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
         MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
+    }
+
+    private int ObtenerErroresDePartida(PartidaDTO partida) {
+      if (partida == null) {
+        return 0;
+      }
+
+      if (partida.Resultado == "SIN_ADIVINAR") {
+        return 6;
+      }
+
+      return LimitarErrores(partida.Turno);
+    }
+
+    private int LimitarErrores(int errores) {
+      if (errores < 0) {
+        return 0;
+      }
+
+      if (errores > 6) {
+        return 6;
+      }
+
+      return errores;
     }
 
     private void CargarAvataresRivales(List<BattleHistoryItem> battles, IJugadorService service) {
@@ -246,7 +264,7 @@ namespace LetterClashClient.Views {
     public string Rol { get; set; }
     public string Idioma { get; set; }
     public string Tipo { get; set; }
-    public int Progreso { get; set; }
+    public int Errores { get; set; }
 
     // Nuevas propiedades para la visualización estilo SF6
     public string NombreUsuario { get; set; }

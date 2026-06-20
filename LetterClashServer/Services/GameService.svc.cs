@@ -268,9 +268,10 @@ namespace LetterClashServer.Services {
 
     private void TerminarPartida(string codigoAcceso, PartidaEnCurso partida, string resultado, int ganadorID, List<JugadorSesion> jugadoresEnSala) {
       int puntosGanador = ObtenerPuntosPorResultado(resultado);
+      int erroresCometidos = VidasIniciales - partida.VidasRestantes;
 
       try {
-        partidaRepository.ConcluirPartida(partida.IDPartida, resultado);
+        partidaRepository.ConcluirPartida(partida.IDPartida, resultado, erroresCometidos);
         if (ganadorID > 0 && puntosGanador != 0) {
           jugadorRepository.IncrementarPuntuacion(ganadorID, puntosGanador);
         }
@@ -318,7 +319,8 @@ namespace LetterClashServer.Services {
       }
 
       try {
-        partidaRepository.ConcluirPartida(partida.IDPartida, "ABANDONADA");
+        int erroresCometidos = VidasIniciales - partida.VidasRestantes;
+        partidaRepository.ConcluirPartida(partida.IDPartida, "ABANDONADA", erroresCometidos);
         jugadorRepository.IncrementarPuntuacion(jugadorID, PenalizacionAbandono);
       } catch (Exception ex) {
         System.Diagnostics.Debug.WriteLine($"Error al registrar abandono en DB: {ex.Message}");

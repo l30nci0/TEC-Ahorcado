@@ -245,7 +245,7 @@
     <!-- BattleHistoryDetail Screen -->
     <sys:String x:Key="HistoryDetail_WindowTitle">Match (History)</sys:String>
     <sys:String x:Key="HistoryDetail_Title">MATCH DETAILS</sys:String>
-    <sys:String x:Key="HistoryDetail_Subtitle">Technical file of score, opponent and game progress</sys:String>
+    <sys:String x:Key="HistoryDetail_Subtitle">Technical file of score, opponent and match errors</sys:String>
     <sys:String x:Key="HistoryDetail_OpponentLabel">OPPONENT</sys:String>
     <sys:String x:Key="HistoryDetail_BtnViewProfile">VIEW PROFILE  👤</sys:String>
     <sys:String x:Key="HistoryDetail_RoleLabel">YOUR ROLE IN THE MATCH</sys:String>
@@ -255,7 +255,7 @@
     <sys:String x:Key="HistoryDetail_DateLabel">MATCH DATE</sys:String>
     <sys:String x:Key="HistoryDetail_ResultLabel">RESULT</sys:String>
     <sys:String x:Key="HistoryDetail_PointsLabel">POINTS</sys:String>
-    <sys:String x:Key="HistoryDetail_ProgressLabel">WORD PROGRESS</sys:String>
+    <sys:String x:Key="HistoryDetail_ProgressLabel">ERROR COUNT</sys:String>
     <sys:String x:Key="HistoryDetail_BtnBack">BACK  ↩</sys:String>
     <sys:String x:Key="HistoryDetail_RoleText">Your Role was: {0}</sys:String>
     <sys:String x:Key="HistoryDetail_RivalText">Opponent: {0}</sys:String>

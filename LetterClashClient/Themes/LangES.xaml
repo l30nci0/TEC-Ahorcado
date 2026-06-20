@@ -237,7 +237,7 @@
     <!-- BattleHistoryDetail Screen -->
     <sys:String x:Key="HistoryDetail_WindowTitle">Partida (Historial)</sys:String>
     <sys:String x:Key="HistoryDetail_Title">DETALLES DE LA PARTIDA</sys:String>
-    <sys:String x:Key="HistoryDetail_Subtitle">Ficha técnica de puntaje, oponente y progreso del juego</sys:String>
+    <sys:String x:Key="HistoryDetail_Subtitle">Ficha técnica de puntaje, oponente y errores del juego</sys:String>
     <sys:String x:Key="HistoryDetail_OpponentLabel">ADVERSARIO</sys:String>
     <sys:String x:Key="HistoryDetail_BtnViewProfile">VER PERFIL  👤</sys:String>
     <sys:String x:Key="HistoryDetail_RoleLabel">TU ROL EN LA PARTIDA</sys:String>
@@ -247,7 +247,7 @@
     <sys:String x:Key="HistoryDetail_DateLabel">FECHA DE PARTIDA</sys:String>
     <sys:String x:Key="HistoryDetail_ResultLabel">RESULTADO</sys:String>
     <sys:String x:Key="HistoryDetail_PointsLabel">PUNTOS</sys:String>
-    <sys:String x:Key="HistoryDetail_ProgressLabel">PROGRESO DE PALABRA</sys:String>
+    <sys:String x:Key="HistoryDetail_ProgressLabel">CANTIDAD DE ERRORES</sys:String>
     <sys:String x:Key="HistoryDetail_BtnBack">REGRESAR  ↩</sys:String>
     <sys:String x:Key="HistoryDetail_RoleText">Tu Rol fue: {0}</sys:String>
     <sys:String x:Key="HistoryDetail_RivalText">Adversario: {0}</sys:String>
