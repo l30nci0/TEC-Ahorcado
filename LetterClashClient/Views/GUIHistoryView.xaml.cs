@@ -73,17 +73,17 @@ namespace LetterClashClient.Views {
               if (isHost) {
                 resultado = resLoss;
                 puntuacion = "0";
-                progreso = 5;
+                progreso = 6;
               } else {
                 resultado = resWin;
                 puntuacion = "+10";
-                progreso = 5;
+                progreso = 6;
               }
             } else if (p.Resultado == "SIN_ADIVINAR") {
               if (isHost) {
                 resultado = resWin;
                 puntuacion = "+5";
-                progreso = 5;
+                progreso = 6;
               } else {
                 resultado = resLoss;
                 puntuacion = "0";

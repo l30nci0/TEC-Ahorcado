@@ -9,7 +9,8 @@ using LetterClashClient.Services;
 
 namespace LetterClashClient.Views {
   public partial class GUIGameHubView : Page {
-    private int currentHangmanState = 5;
+    private static readonly int[] HangmanStates = { 6, 5, 4, 3, 2, 7, 1 };
+    private int currentHangmanStateIndex;
 
     public GUIGameHubView() {
       InitializeComponent();
@@ -58,21 +59,21 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonRemovePart_Click(object sender, RoutedEventArgs e) {
-      if (currentHangmanState < 5) {
-        currentHangmanState++;
+      if (currentHangmanStateIndex < HangmanStates.Length - 1) {
+        currentHangmanStateIndex++;
         UpdateHangmanImage();
       }
     }
 
     private void ButtonAddPart_Click(object sender, RoutedEventArgs e) {
-      if (currentHangmanState > 1) {
-        currentHangmanState--;
+      if (currentHangmanStateIndex > 0) {
+        currentHangmanStateIndex--;
         UpdateHangmanImage();
       }
     }
 
     private void UpdateHangmanImage() {
-      ImageHangman.Source = new BitmapImage(new Uri($"/Assets/Images/Hangedman{currentHangmanState}.jpg", UriKind.Relative));
+      ImageHangman.Source = new BitmapImage(new Uri($"/Assets/Images/Hangedman{HangmanStates[currentHangmanStateIndex]}.png", UriKind.Relative));
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {

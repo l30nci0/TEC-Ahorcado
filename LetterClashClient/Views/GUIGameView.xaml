@@ -654,11 +654,11 @@
                                          Height="20"
                                          Style="{StaticResource FlatProgressBar}"
                                          Minimum="0"
-                                         Maximum="5"
+                                         Maximum="6"
                                          Value="0"/>
               <TextBlock x:Name="TextBlockAttempts"
                                        Grid.Column="1"
-                                       Text="0/5"
+                                       Text="0/6"
                                        FontSize="15"
                                        FontFamily="{StaticResource GeistMono}"
                                        Foreground="#FF2D66"
