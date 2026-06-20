@@ -10,6 +10,7 @@ namespace LetterClashClient.Services {
     public event Action<string, int> PartidaFinalizada;
     public event Action<string, string> MensajeRecibido;
     public event Action<string> OponenteAbandono;
+    public event Action<string> OponenteDesconectado;
     public event Action<ServiceFault> ErrorOcurrido;
 
     public void OnJugadorSeUnio(JugadorPublicoDTO jugadorDTO) {
@@ -34,6 +35,10 @@ namespace LetterClashClient.Services {
 
     public void OnOponenteAbandono(string oponenteNombre) {
       OponenteAbandono?.Invoke(oponenteNombre);
+    }
+
+    public void OnOponenteDesconectado(string oponenteNombre) {
+      OponenteDesconectado?.Invoke(oponenteNombre);
     }
 
     public void OnErrorOcurrido(ServiceFault fault) {

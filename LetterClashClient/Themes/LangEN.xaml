@@ -292,13 +292,18 @@
     <sys:String x:Key="Game_ResultWon">Congratulations! You won the game and obtained {0} points.</sys:String>
     <sys:String x:Key="Game_ResultLost">The game has concluded. Winner: {0}.</sys:String>
     <sys:String x:Key="Game_ResultTitle">Match Finished</sys:String>
-    <sys:String x:Key="Game_AbandonHost">The guesser ({0}) has abandoned the game. The match was cancelled and the penalty was applied.</sys:String>
-    <sys:String x:Key="Game_AbandonGuesser">The host ({0}) has abandoned the game. The match was cancelled and the penalty was applied.</sys:String>
+    <sys:String x:Key="Game_AbandonHost">The guesser ({0}) abandoned the match. The match was cancelled and the penalty was applied. Returning to the main menu...</sys:String>
+    <sys:String x:Key="Game_AbandonGuesser">The host ({0}) abandoned the match. The match was cancelled and the penalty was applied. Returning to the main menu...</sys:String>
     <sys:String x:Key="Game_ServerError">A server error occurred: {0}</sys:String>
     <sys:String x:Key="Game_ErrorLetter">Could not register the letter on server: {0}</sys:String>
     <sys:String x:Key="Game_ChatYou">You</sys:String>
+    <sys:String x:Key="Game_SystemSender">System</sys:String>
     <sys:String x:Key="Game_ErrorSend">Could not send the message: {0}</sys:String>
-    <sys:String x:Key="Game_ConfirmAbandon">Are you sure you want to abandon the match?</sys:String>
+    <sys:String x:Key="Game_ConfirmAbandon">Do you really want to abandon the match? You will receive a score penalty.</sys:String>
+    <sys:String x:Key="Game_AbandonedSuccess">The match has been abandoned.</sys:String>
+    <sys:String x:Key="Game_InactivityPenalty">The match was closed due to inactivity. A -3 point penalty was applied.</sys:String>
+    <sys:String x:Key="Game_OpponentDisconnected">{0} disconnected. The match was closed. Returning to the main menu...</sys:String>
+    <sys:String x:Key="Game_PenaltyNotice">You were penalized -3 points for abandoning a match.</sys:String>
 
     <sys:String x:Key="Game_BtnClue">GET CLUE 👁</sys:String>
     <sys:String x:Key="Game_ClueStatus">Clues used: {0}/{1}</sys:String>

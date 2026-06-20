@@ -68,6 +68,7 @@ namespace LetterClashClient.Views {
             string resultado = "";
             string puntuacion = "0";
             int errores = ObtenerErroresDePartida(p);
+            bool cuentaComoDesconexion = false;
 
             if (p.Resultado == "ADIVINADA") {
               if (isHost) {
@@ -87,7 +88,8 @@ namespace LetterClashClient.Views {
               }
             } else if (p.Resultado == "ABANDONADA") {
               resultado = resDisconnect;
-              puntuacion = "0";
+              puntuacion = EsAbandonoDelJugador(p, usuario.IDJugador) && EsAbandonoPenalizado(p) ? "-3" : "0";
+              cuentaComoDesconexion = EsAbandonoDelJugador(p, usuario.IDJugador);
             } else {
               resultado = resDisconnect;
               puntuacion = "0";
@@ -113,7 +115,8 @@ namespace LetterClashClient.Views {
               RolRival = rolRival,
               AvatarUsuario = avatarUsuario,
               Idioma = idioma,
-              Tipo = tipo
+              Tipo = tipo,
+              CuentaComoDesconexion = cuentaComoDesconexion
             });
           }
 
@@ -143,11 +146,31 @@ namespace LetterClashClient.Views {
         return 0;
       }
 
+      if (partida.Resultado == "ABANDONADA") {
+        return 0;
+      }
+
       if (partida.Resultado == "SIN_ADIVINAR") {
         return 6;
       }
 
-      return LimitarErrores(partida.Turno);
+      return LimitarErrores(partida.Turno - 1);
+    }
+
+    private bool EsAbandonoDelJugador(PartidaDTO partida, int jugadorID) {
+      if (partida == null || partida.Resultado != "ABANDONADA") {
+        return false;
+      }
+
+      bool abandonoAnfitrion = partida.Turno == 1 || partida.Turno == 3;
+      bool abandonoAdivinador = partida.Turno == 2 || partida.Turno == 4;
+
+      return (abandonoAnfitrion && partida.IDAnfitrion == jugadorID) ||
+             (abandonoAdivinador && partida.IDAdivinador == jugadorID);
+    }
+
+    private bool EsAbandonoPenalizado(PartidaDTO partida) {
+      return partida != null && (partida.Turno == 1 || partida.Turno == 2);
     }
 
     private int LimitarErrores(int errores) {
@@ -208,7 +231,7 @@ namespace LetterClashClient.Views {
 
       int wins = battles.Count(battle => battle.Resultado == resWin);
       int losses = battles.Count(battle => battle.Resultado == resLoss);
-      int disconnected = battles.Count(battle => battle.Resultado == resDisconnect);
+      int disconnected = battles.Count(battle => battle.CuentaComoDesconexion);
 
       string percentFormat = (string) Application.Current.FindResource("History_StatPercentFormat") ?? "{0}%";
 
@@ -272,5 +295,6 @@ namespace LetterClashClient.Views {
     public string RolRival { get; set; }
     public ImageSource AvatarUsuario { get; set; }
     public ImageSource AvatarRival { get; set; }
+    public bool CuentaComoDesconexion { get; set; }
   }
 }

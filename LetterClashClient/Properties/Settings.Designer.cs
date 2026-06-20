@@ -56,5 +56,20 @@ namespace LetterClashClient.Properties
                 this["VolumenEfectos"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PenalizacionAbandonoPendiente
+        {
+            get
+            {
+                return ((bool)(this["PenalizacionAbandonoPendiente"]));
+            }
+            set
+            {
+                this["PenalizacionAbandonoPendiente"] = value;
+            }
+        }
     }
 }

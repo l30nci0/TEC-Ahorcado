@@ -62,8 +62,14 @@ namespace LetterClashClient.Views {
                 resultado = isHost ? "Derrota" : "Victoria";
               } else if (p.Resultado == "SIN_ADIVINAR") {
                 resultado = isHost ? "Victoria" : "Derrota";
-              } else {
+              } else if (p.Resultado == "ABANDONADA") {
+                if (!EsAbandonoDelJugador(p, dto.IDJugador)) {
+                  continue;
+                }
+
                 resultado = "Desconectada";
+              } else {
+                continue;
               }
 
               battles.Add(new BattleHistoryItem { Resultado = resultado });
@@ -116,6 +122,18 @@ namespace LetterClashClient.Views {
       TextBlockPercentLosses.Text = string.Format(percentFormat, 0);
       TextBlockTotalDisconnected.Text = string.Format(statDisconnected, 0);
       TextBlockPercentDisconnected.Text = string.Format(percentFormat, 0);
+    }
+
+    private bool EsAbandonoDelJugador(PartidaDTO partida, int jugadorID) {
+      if (partida == null || partida.Resultado != "ABANDONADA") {
+        return false;
+      }
+
+      bool abandonoAnfitrion = partida.Turno == 1 || partida.Turno == 3;
+      bool abandonoAdivinador = partida.Turno == 2 || partida.Turno == 4;
+
+      return (abandonoAnfitrion && partida.IDAnfitrion == jugadorID) ||
+             (abandonoAdivinador && partida.IDAdivinador == jugadorID);
     }
 
     private int GetPercentage(int amount, int total) {

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading;
 
 using LetterClashServer.Contracts;
 using LetterClashServer.DataAccess.Repositories;
@@ -24,6 +25,7 @@ namespace LetterClashServer.Services {
     public HashSet<char> LetrasPropuestas { get; set; } = new HashSet<char>();
     public int HostID { get; set; }
     public int GuesserID { get; set; }
+    public DateTime UltimaActividadUtc { get; set; } = DateTime.UtcNow;
   }
 
   [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
@@ -32,8 +34,10 @@ namespace LetterClashServer.Services {
     private const int PuntosVictoriaAdivinador = 10;
     private const int PuntosVictoriaAnfitrion = 5;
     private const int PenalizacionAbandono = -3;
+    private static readonly TimeSpan TiempoMaximoInactividad = TimeSpan.FromMinutes(5);
     private static readonly Random random = new Random();
     private static readonly object randomLock = new object();
+    private static readonly Timer inactivityTimer = new Timer(VerificarInactividad, null, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(30));
     private readonly PartidaRepository partidaRepository;
     private readonly JugadorRepository jugadorRepository;
 
@@ -161,7 +165,8 @@ namespace LetterClashServer.Services {
                 PalabraRevelada = new string('_', palabraOriginal.Length),
                 VidasRestantes = VidasIniciales,
                 HostID = partida.IDAnfitrion,
-                GuesserID = guesserId
+                GuesserID = guesserId,
+                UltimaActividadUtc = DateTime.UtcNow
               };
             });
 
@@ -194,9 +199,104 @@ namespace LetterClashServer.Services {
         }
       }
 
-      // Si la partida está activa en memoria, manejar como abandono automático
-      if (partidasActivas.ContainsKey(codigoAcceso)) {
-        AbandonarPartida(codigoAcceso, jugadorID);
+      if (partidasActivas.TryRemove(codigoAcceso, out var partida)) {
+        if (jugadorID == partida.GuesserID && DateTime.UtcNow - partida.UltimaActividadUtc >= TiempoMaximoInactividad) {
+          PenalizarAdivinadorPorInactividad(codigoAcceso, partida);
+        } else {
+          RegistrarDesconexionInesperada(codigoAcceso, jugadorID, partida);
+        }
+      } else {
+        partidaRepository.EliminarPartidaPendienteSinAdivinador(codigoAcceso, jugadorID);
+      }
+    }
+
+    private void RegistrarDesconexionInesperada(string codigoAcceso, int jugadorID, PartidaEnCurso partida) {
+      try {
+        partidaRepository.ConcluirPartidaPorAbandono(partida.IDPartida, jugadorID, false);
+      } catch (Exception ex) {
+        System.Diagnostics.Debug.WriteLine($"Error al cerrar partida por desconexion: {ex.Message}");
+      }
+
+      if (!salasDeJuego.TryGetValue(codigoAcceso, out var jugadoresEnSala)) {
+        return;
+      }
+
+      List<JugadorSesion> copiaJugadores;
+      lock (jugadoresEnSala) {
+        copiaJugadores = jugadoresEnSala.ToList();
+      }
+
+      string nombreDesconectado = ObtenerNombreJugadorDesconectado(jugadorID);
+
+      foreach (var jugador in copiaJugadores) {
+        if (jugador.JugadorID == jugadorID) {
+          continue;
+        }
+
+        try {
+          jugador.Callback.OnOponenteDesconectado(nombreDesconectado);
+        } catch (CommunicationException) { }
+      }
+    }
+
+    private string ObtenerNombreJugadorDesconectado(int jugadorID) {
+      var jugador = jugadorRepository.ObtenerJugadorPorID(jugadorID);
+      return jugador?.NombreDeUsuario ?? "El oponente";
+    }
+
+    private static void VerificarInactividad(object state) {
+      DateTime ahora = DateTime.UtcNow;
+
+      foreach (var entrada in partidasActivas.ToArray()) {
+        var partida = entrada.Value;
+        if (ahora - partida.UltimaActividadUtc < TiempoMaximoInactividad) {
+          continue;
+        }
+
+        if (!partidasActivas.TryRemove(entrada.Key, out var partidaInactiva)) {
+          continue;
+        }
+
+        PenalizarAdivinadorPorInactividad(entrada.Key, partidaInactiva);
+      }
+    }
+
+    private static void PenalizarAdivinadorPorInactividad(string codigoAcceso, PartidaEnCurso partida) {
+      var partidaRepositoryLocal = new PartidaRepository();
+      var jugadorRepositoryLocal = new JugadorRepository();
+
+      try {
+        partidaRepositoryLocal.ConcluirPartidaPorAbandono(partida.IDPartida, partida.GuesserID, true);
+        jugadorRepositoryLocal.IncrementarPuntuacion(partida.GuesserID, PenalizacionAbandono);
+      } catch (Exception ex) {
+        System.Diagnostics.Debug.WriteLine($"Error al cerrar partida por inactividad: {ex.Message}");
+      }
+
+      if (!salasDeJuego.TryGetValue(codigoAcceso, out var jugadoresEnSala)) {
+        return;
+      }
+
+      List<JugadorSesion> copiaJugadores;
+      lock (jugadoresEnSala) {
+        copiaJugadores = jugadoresEnSala.ToList();
+        salasDeJuego.TryRemove(codigoAcceso, out _);
+      }
+
+      var adivinador = copiaJugadores.FirstOrDefault(j => j.JugadorID == partida.GuesserID);
+      string nombreAdivinador = adivinador?.NombreUsuario ?? "El adivinador";
+
+      foreach (var jugador in copiaJugadores) {
+        try {
+          if (jugador.JugadorID == partida.GuesserID) {
+            jugador.Callback.OnErrorOcurrido(new ServiceFault {
+              Mensaje = "La partida se cerro por inactividad. Se aplico una penalizacion de -3 puntos.",
+              CodigoError = CodigoError.OPERACION_INVALIDA,
+              Detalle = "Timeout de inactividad del adivinador."
+            });
+          } else {
+            jugador.Callback.OnOponenteAbandono(nombreAdivinador);
+          }
+        } catch (CommunicationException) { }
       }
     }
 
@@ -219,6 +319,7 @@ namespace LetterClashServer.Services {
         return;
       }
 
+      partida.UltimaActividadUtc = DateTime.UtcNow;
       partida.LetrasPropuestas.Add(letraUpper);
 
       bool esCorrecta = partida.PalabraObjetivo.Contains(letraUpper);
@@ -319,8 +420,7 @@ namespace LetterClashServer.Services {
       }
 
       try {
-        int erroresCometidos = VidasIniciales - partida.VidasRestantes;
-        partidaRepository.ConcluirPartida(partida.IDPartida, "ABANDONADA", erroresCometidos);
+        partidaRepository.ConcluirPartidaPorAbandono(partida.IDPartida, jugadorID, true);
         jugadorRepository.IncrementarPuntuacion(jugadorID, PenalizacionAbandono);
       } catch (Exception ex) {
         System.Diagnostics.Debug.WriteLine($"Error al registrar abandono en DB: {ex.Message}");

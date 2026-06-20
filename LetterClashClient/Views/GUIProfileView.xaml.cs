@@ -272,6 +272,8 @@ namespace LetterClashClient.Views {
           PasswordBoxPassword.Password = "";
           PasswordBoxConfirmPassword.Password = "";
           GridPasswordModal.Visibility = Visibility.Collapsed;
+          SessionContext.UsuarioLogueado = null;
+          NavigationService.Navigate(new GUILoginView());
         } else {
           if (passwordResult?.Error != null) {
             if (passwordResult.Error.CodigoError == CodigoError.CREDENCIALES_INVALIDAS) {

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using LetterClashClient.Models;
+using LetterClashClient.Properties;
 using LetterClashClient.Services;
 
 using LetterClashServer.Domain.Models;
@@ -55,6 +56,7 @@ namespace LetterClashClient.Views {
 
         if (result != null && result.IsSuccess) {
           SessionContext.UsuarioLogueado = result.Value;
+          MostrarAvisoPenalizacionPendiente();
           NavigationService.Navigate(new GUIGameHubView());
         } else {
           string errorMsg = result?.Error?.Mensaje ?? "Credenciales incorrectas o error en el sistema.";
@@ -79,6 +81,21 @@ namespace LetterClashClient.Views {
 
     private void ButtonCreateAccount_Click(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUIRegisterView());
+    }
+
+    private void MostrarAvisoPenalizacionPendiente() {
+      try {
+        if (!Settings.Default.PenalizacionAbandonoPendiente) {
+          return;
+        }
+
+        Settings.Default.PenalizacionAbandonoPendiente = false;
+        Settings.Default.Save();
+
+        string message = (string) Application.Current.FindResource("Game_PenaltyNotice") ?? "Se te penalizo con -3 puntos por abandonar una partida.";
+        string title = (string) Application.Current.FindResource("Game_ResultTitle") ?? "Partida Finalizada";
+        MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+      } catch { }
     }
 
     private void ButtonBackHome_Click(object sender, RoutedEventArgs e) {

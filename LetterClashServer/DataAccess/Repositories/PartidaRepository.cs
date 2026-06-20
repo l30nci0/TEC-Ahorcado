@@ -51,7 +51,7 @@ namespace LetterClashServer.DataAccess.Repositories {
           Privacidad = privacidad,
           Estado = "PENDIENTE",
           Resultado = "SIN_ADIVINAR",
-          Turno = 0,
+          Turno = 1,
           CodigoAcceso = codigo,
           FechaDeJuego = DateTime.Now
         };
@@ -115,10 +115,51 @@ namespace LetterClashServer.DataAccess.Repositories {
 
         partida.Estado = "CONCLUIDA";
         partida.Resultado = resultado;
-        partida.Turno = erroresCometidos;
+        partida.Turno = ConvertirErroresATurno(resultado, erroresCometidos);
         context.SaveChanges();
         return true;
       }
+    }
+
+    public virtual bool ConcluirPartidaPorAbandono(int partidaID, int jugadorID, bool penalizado) {
+      using (var context = new LetterClashDBEntities()) {
+        var partida = context.Partidas.SingleOrDefault(p => p.IDPartida == partidaID);
+        if (partida == null) {
+          return false;
+        }
+
+        partida.Estado = "CONCLUIDA";
+        partida.Resultado = "ABANDONADA";
+        partida.Turno = ObtenerCodigoAbandono(partida, jugadorID, penalizado);
+        context.SaveChanges();
+        return true;
+      }
+    }
+
+    private int ConvertirErroresATurno(string resultado, int erroresCometidos) {
+      if (resultado == "SIN_ADIVINAR") {
+        return 6;
+      }
+
+      if (erroresCometidos < 0) {
+        return 1;
+      }
+
+      if (erroresCometidos > 5) {
+        return 6;
+      }
+
+      return erroresCometidos + 1;
+    }
+
+    private int ObtenerCodigoAbandono(Partida partida, int jugadorID, bool penalizado) {
+      bool abandonoAnfitrion = partida.IDAnfitrion == jugadorID;
+
+      if (penalizado) {
+        return abandonoAnfitrion ? 1 : 2;
+      }
+
+      return abandonoAnfitrion ? 3 : 4;
     }
 
     private string GenerarCodigoAccesoUnico(LetterClashDBEntities context) {

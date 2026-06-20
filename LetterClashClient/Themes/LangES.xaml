@@ -284,13 +284,18 @@
     <sys:String x:Key="Game_ResultWon">¡Felicidades! Ganaste la partida y obtuviste {0} puntos.</sys:String>
     <sys:String x:Key="Game_ResultLost">El juego ha concluido. Ganador: {0}.</sys:String>
     <sys:String x:Key="Game_ResultTitle">Partida Finalizada</sys:String>
-    <sys:String x:Key="Game_AbandonHost">El adivinador ({0}) ha abandonado la partida. La partida fue cancelada y se aplicó la penalización correspondiente.</sys:String>
-    <sys:String x:Key="Game_AbandonGuesser">El anfitrión ({0}) ha abandonado la partida. La partida fue cancelada y se aplicó la penalización correspondiente.</sys:String>
+    <sys:String x:Key="Game_AbandonHost">El adivinador ({0}) abandono la partida. La partida fue cancelada y se aplico la penalizacion correspondiente. Regresando al menu inicial...</sys:String>
+    <sys:String x:Key="Game_AbandonGuesser">El anfitrion ({0}) abandono la partida. La partida fue cancelada y se aplico la penalizacion correspondiente. Regresando al menu inicial...</sys:String>
     <sys:String x:Key="Game_ServerError">Ocurrió un error en el servidor: {0}</sys:String>
     <sys:String x:Key="Game_ErrorLetter">No se pudo registrar la letra en el servidor: {0}</sys:String>
     <sys:String x:Key="Game_ChatYou">Tú</sys:String>
+    <sys:String x:Key="Game_SystemSender">Sistema</sys:String>
     <sys:String x:Key="Game_ErrorSend">No se pudo enviar el mensaje: {0}</sys:String>
-    <sys:String x:Key="Game_ConfirmAbandon">¿Seguro que deseas abandonar la partida?</sys:String>
+    <sys:String x:Key="Game_ConfirmAbandon">¿De verdad desea abandonar la partida? Recibirá una penalización en su puntuación.</sys:String>
+    <sys:String x:Key="Game_AbandonedSuccess">La partida ha sido abandonada.</sys:String>
+    <sys:String x:Key="Game_InactivityPenalty">La partida se cerro por inactividad. Se aplico una penalizacion de -3 puntos.</sys:String>
+    <sys:String x:Key="Game_OpponentDisconnected">{0} se desconecto. La partida fue cerrada. Regresando al menu inicial...</sys:String>
+    <sys:String x:Key="Game_PenaltyNotice">Se te penalizo con -3 puntos por abandonar una partida.</sys:String>
 
     <sys:String x:Key="Game_BtnClue">VER PISTA 👁</sys:String>
     <sys:String x:Key="Game_ClueStatus">Pistas usadas: {0}/{1}</sys:String>

@@ -4,8 +4,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 using LetterClashClient.Models;
+using LetterClashClient.Properties;
 using LetterClashClient.Services;
 
 using LetterClashServer.Contracts;
@@ -29,6 +31,9 @@ namespace LetterClashClient.Views {
     private string wordDescription;
     private int pistasUsadas = 0;
     private int pistasMaximas = 0;
+    private bool partidaCerrada;
+    private bool abandonoEnviado;
+    private Window hostWindow;
 
     public GUIGameView() : this(new PalabraDTO { PalabraTexto = "SOFTWARE", Descripcion = "Conjunto de programas y rutinas que permiten a la computadora realizar determinadas tareas.", Idioma = Idiomas.ESPANOL }, "000000") { }
 
@@ -118,10 +123,12 @@ namespace LetterClashClient.Views {
         callbackHandler.PartidaFinalizada += OnPartidaFinalizada;
         callbackHandler.MensajeRecibido += OnMensajeRecibido;
         callbackHandler.OponenteAbandono += OnOponenteAbandono;
+        callbackHandler.OponenteDesconectado += OnOponenteDesconectado;
         callbackHandler.ErrorOcurrido += OnErrorOcurrido;
 
         gameServiceProxy = ServiceProxyManager.GetGameService(callbackHandler);
         gameServiceProxy.ConectarJuego(usuario.IDJugador, codigoAcceso);
+        RegistrarCierreVentana(window);
       } catch (Exception ex) {
         string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
         string connMsg = (string) Application.Current.FindResource("Game_ErrorConnect") ?? "Error al conectar al servidor:";
@@ -169,6 +176,7 @@ namespace LetterClashClient.Views {
 
     private void OnPartidaFinalizada(string ganador, int puntuacionObtenida) {
       Dispatcher.Invoke(() => {
+        partidaCerrada = true;
         DesconectarJuego();
         string wonMsg = (string) Application.Current.FindResource("Game_ResultWon") ?? "¡Felicidades! Ganaste la partida y obtuviste {0} puntos.";
         string lostMsg = (string) Application.Current.FindResource("Game_ResultLost") ?? "El juego ha concluido. Ganador: {0}.";
@@ -193,6 +201,7 @@ namespace LetterClashClient.Views {
 
     private void OnOponenteAbandono(string oponenteNombre) {
       Dispatcher.Invoke(() => {
+        partidaCerrada = true;
         DesconectarJuego();
         string abandonHost = (string) Application.Current.FindResource("Game_AbandonHost") ?? "El adivinador ({0}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!";
         string abandonGuesser = (string) Application.Current.FindResource("Game_AbandonGuesser") ?? "El anfitrión ({0}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!";
@@ -201,14 +210,33 @@ namespace LetterClashClient.Views {
         string abandonMsg = isHost
             ? string.Format(abandonHost, oponenteNombre)
             : string.Format(abandonGuesser, oponenteNombre);
-        MessageBox.Show(abandonMsg, resultTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-        NavigationService.Navigate(new GUIGameHubView());
+        AgregarMensajeSistema(abandonMsg);
+        RegresarAlMenuDespuesDeAviso();
+      });
+    }
+
+    private void OnOponenteDesconectado(string oponenteNombre) {
+      Dispatcher.Invoke(() => {
+        partidaCerrada = true;
+        DesconectarJuego();
+        string disconnectedMsg = (string) Application.Current.FindResource("Game_OpponentDisconnected") ?? "{0} se desconecto. La partida fue cerrada. Regresando al menu inicial...";
+        AgregarMensajeSistema(string.Format(disconnectedMsg, oponenteNombre));
+        RegresarAlMenuDespuesDeAviso();
       });
     }
 
     private void OnErrorOcurrido(ServiceFault fault) {
       Dispatcher.Invoke(() => {
+        partidaCerrada = true;
         DesconectarJuego();
+        if (fault != null && !string.IsNullOrWhiteSpace(fault.Detalle) && fault.Detalle.Contains("Timeout de inactividad")) {
+          string inactivityMsg = (string) Application.Current.FindResource("Game_InactivityPenalty") ?? "La partida se cerro por inactividad. Se aplico una penalizacion de -3 puntos.";
+          string resultTitle = (string) Application.Current.FindResource("Game_ResultTitle") ?? "Partida Finalizada";
+          MessageBox.Show(inactivityMsg, resultTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+          NavigationService.Navigate(new GUILobbyView());
+          return;
+        }
+
         string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
         string serverErr = (string) Application.Current.FindResource("Game_ServerError") ?? "Ocurrió un error en el servidor: {0}";
         MessageBox.Show(string.Format(serverErr, fault.Mensaje), errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -216,7 +244,71 @@ namespace LetterClashClient.Views {
       });
     }
 
+    private void RegistrarCierreVentana(Window window) {
+      if (window == null || hostWindow != null) {
+        return;
+      }
+
+      hostWindow = window;
+      hostWindow.Closing += Window_Closing;
+    }
+
+    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+      EnviarAbandonoVoluntario();
+    }
+
+    private void AgregarMensajeSistema(string mensaje) {
+      string systemName = (string) Application.Current.FindResource("Game_SystemSender") ?? "Sistema";
+      TextBoxChatMessages.Text += $"\n{systemName}: {mensaje}";
+      TextBoxChatMessages.ScrollToEnd();
+    }
+
+    private void RegresarAlMenuDespuesDeAviso() {
+      ButtonSendMessage.IsEnabled = false;
+      ButtonAbandon.IsEnabled = false;
+
+      var timer = new DispatcherTimer {
+        Interval = TimeSpan.FromSeconds(3)
+      };
+      timer.Tick += (sender, args) => {
+        timer.Stop();
+        NavigationService?.Navigate(new GUILobbyView());
+      };
+      timer.Start();
+    }
+
+    private void EnviarAbandonoVoluntario() {
+      if (partidaCerrada || abandonoEnviado) {
+        return;
+      }
+
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario == null || gameServiceProxy == null) {
+        return;
+      }
+
+      abandonoEnviado = true;
+      partidaCerrada = true;
+
+      try {
+        gameServiceProxy.AbandonarPartida(codigoAcceso, usuario.IDJugador);
+        RegistrarAvisoPenalizacionPendiente();
+      } catch { }
+    }
+
+    private void RegistrarAvisoPenalizacionPendiente() {
+      try {
+        Settings.Default.PenalizacionAbandonoPendiente = true;
+        Settings.Default.Save();
+      } catch { }
+    }
+
     private void DesconectarJuego() {
+      if (hostWindow != null) {
+        hostWindow.Closing -= Window_Closing;
+        hostWindow = null;
+      }
+
       if (gameServiceProxy != null) {
         try {
           var clientChannel = (System.ServiceModel.ICommunicationObject) gameServiceProxy;
@@ -268,6 +360,11 @@ namespace LetterClashClient.Views {
         try {
           gameServiceProxy.EscribirLetra(codigoAcceso, usuario.IDJugador, selectedLetter);
         } catch (Exception ex) {
+          if (!isHost && EsCanalFallido(gameServiceProxy)) {
+            ManejarFalloAdivinadorPorInactividad();
+            return;
+          }
+
           string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
           string letterErr = (string) Application.Current.FindResource("Game_ErrorLetter") ?? "No se pudo registrar la letra en el servidor: {0}";
           MessageBox.Show(string.Format(letterErr, ex.Message), errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -394,6 +491,11 @@ namespace LetterClashClient.Views {
           ActualizarEstadoPistas();
           AudioManager.ReproducirEfecto("Hint.mp3");
         } catch (Exception ex) {
+          if (!isHost && EsCanalFallido(gameServiceProxy)) {
+            ManejarFalloAdivinadorPorInactividad();
+            return;
+          }
+
           string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
           string letterErr = (string) Application.Current.FindResource("Game_ErrorLetter") ?? "No se pudo registrar la letra en el servidor: {0}";
           MessageBox.Show(string.Format(letterErr, ex.Message), errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -460,15 +562,52 @@ namespace LetterClashClient.Views {
                                                 MessageBoxImage.Warning);
 
       if (result == MessageBoxResult.Yes) {
-        var usuario = SessionContext.UsuarioLogueado;
-        if (usuario != null && gameServiceProxy != null) {
-          try {
-            gameServiceProxy.AbandonarPartida(codigoAcceso, usuario.IDJugador);
-          } catch { }
-        }
+        EnviarAbandonoVoluntario();
         DesconectarJuego();
-        NavigationService.Navigate(new GUIGameHubView());
+        string abandonedMsg = (string) Application.Current.FindResource("Game_AbandonedSuccess") ?? "La partida ha sido abandonada.";
+        string resultTitle = (string) Application.Current.FindResource("Game_ResultTitle") ?? "Partida Finalizada";
+        MessageBox.Show(abandonedMsg, resultTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+        NavigationService.Navigate(new GUILobbyView());
       }
+    }
+
+    private bool EsCanalFallido(IGameService service) {
+      try {
+        var channel = service as System.ServiceModel.ICommunicationObject;
+        return channel != null && channel.State == System.ServiceModel.CommunicationState.Faulted;
+      } catch {
+        return false;
+      }
+    }
+
+    private void ManejarFalloAdivinadorPorInactividad() {
+      EnviarAbandonoConCanalNuevo();
+      RegistrarAvisoPenalizacionPendiente();
+      partidaCerrada = true;
+      DesconectarJuego();
+
+      string message = (string) Application.Current.FindResource("Game_InactivityPenalty") ?? "La partida se cerro por inactividad. Se aplico una penalizacion de -3 puntos.";
+      string title = (string) Application.Current.FindResource("Game_ResultTitle") ?? "Partida Finalizada";
+      MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+      NavigationService.Navigate(new GUILobbyView());
+    }
+
+    private void EnviarAbandonoConCanalNuevo() {
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario == null) {
+        return;
+      }
+
+      try {
+        var nuevoCallback = new GameCallbackHandler();
+        var nuevoProxy = ServiceProxyManager.GetGameService(nuevoCallback);
+        nuevoProxy.AbandonarPartida(codigoAcceso, usuario.IDJugador);
+
+        var channel = nuevoProxy as System.ServiceModel.ICommunicationObject;
+        if (channel != null && channel.State == System.ServiceModel.CommunicationState.Opened) {
+          channel.Close();
+        }
+      } catch { }
     }
   }
 }
