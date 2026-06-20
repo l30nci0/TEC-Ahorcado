@@ -18,11 +18,6 @@ namespace LetterClashClient {
         return;
       }
 
-      if (e.Content is GUISettingsView || e.Content is GUIAudioSettingsView) {
-        AudioManager.DetenerMusica();
-        return;
-      }
-
       AudioManager.ReproducirMusicaMenu();
     }
 

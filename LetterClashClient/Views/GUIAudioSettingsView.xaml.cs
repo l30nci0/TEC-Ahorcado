@@ -5,11 +5,14 @@ using LetterClashClient.Services;
 
 namespace LetterClashClient.Views {
   public partial class GUIAudioSettingsView : Page {
+    private bool cargandoControles = true;
+
     public GUIAudioSettingsView() {
       InitializeComponent();
     }
 
     private void OnPaginaCargada(object sender, RoutedEventArgs e) {
+      cargandoControles = true;
       Window window = Window.GetWindow(this);
 
       if (window != null) {
@@ -23,14 +26,33 @@ namespace LetterClashClient.Views {
       if (SliderEffectsVolume != null) {
         SliderEffectsVolume.Value = AudioManager.VolumenEfectos * 100;
       }
+
+      cargandoControles = false;
     }
 
     private void SliderMusicVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+      if (cargandoControles) {
+        return;
+      }
+
       AudioManager.VolumenMusica = e.NewValue / 100.0;
     }
 
     private void SliderEffectsVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+      if (cargandoControles) {
+        return;
+      }
+
       AudioManager.VolumenEfectos = e.NewValue / 100.0;
+    }
+
+    private void ButtonTestAudio_Click(object sender, RoutedEventArgs e) {
+      AudioManager.ReproducirEfecto("ConfirmSelection.mp3");
+    }
+
+    private void ButtonSaveAudio_Click(object sender, RoutedEventArgs e) {
+      AudioManager.GuardarConfiguracionAudio();
+      AudioManager.ReproducirEfecto("ConfirmSelection.mp3");
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {

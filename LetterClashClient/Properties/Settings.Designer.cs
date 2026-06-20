@@ -26,5 +26,35 @@ namespace LetterClashClient.Properties
                 return defaultInstance;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
+        public double VolumenMusica
+        {
+            get
+            {
+                return ((double)(this["VolumenMusica"]));
+            }
+            set
+            {
+                this["VolumenMusica"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
+        public double VolumenEfectos
+        {
+            get
+            {
+                return ((double)(this["VolumenEfectos"]));
+            }
+            set
+            {
+                this["VolumenEfectos"] = value;
+            }
+        }
     }
 }

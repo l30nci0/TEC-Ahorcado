@@ -313,6 +313,8 @@
     <sys:String x:Key="AudioSettings_Subtitle">Adjust music and sound effects volume</sys:String>
     <sys:String x:Key="AudioSettings_MusicLabel">BACKGROUND MUSIC</sys:String>
     <sys:String x:Key="AudioSettings_SfxLabel">SOUND EFFECTS</sys:String>
+    <sys:String x:Key="AudioSettings_BtnTestAudio">TEST AUDIO</sys:String>
+    <sys:String x:Key="AudioSettings_BtnSave">SAVE CHANGES</sys:String>
     <sys:String x:Key="AudioSettings_LowLabel">LOW</sys:String>
     <sys:String x:Key="AudioSettings_HighLabel">HIGH</sys:String>
     <sys:String x:Key="AudioSettings_BtnBack">BACK ↩</sys:String>

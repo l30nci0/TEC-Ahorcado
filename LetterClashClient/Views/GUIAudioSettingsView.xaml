@@ -127,7 +127,7 @@
 
             <Grid Grid.Row="0">
                 <Border Width="620"
-                        Height="390"
+                        Height="485"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         BorderBrush="#4DEEEA"
@@ -185,7 +185,7 @@
                                         Grid.Row="1"
                                         Grid.ColumnSpan="2"
                                         Style="{StaticResource VolumeSlider}"
-                                        Value="70"
+                                        Value="40"
                                         ValueChanged="SliderMusicVolume_ValueChanged"/>
                             </Grid>
 
@@ -197,7 +197,7 @@
                                        HorizontalAlignment="Center"
                                        Margin="0,0,0,10"/>
 
-                            <Grid Width="340" HorizontalAlignment="Center">
+                            <Grid Width="340" HorizontalAlignment="Center" Margin="0,0,0,18">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -212,9 +212,28 @@
                                         Grid.Row="1"
                                         Grid.ColumnSpan="2"
                                         Style="{StaticResource VolumeSlider}"
-                                        Value="70"
+                                        Value="40"
                                         ValueChanged="SliderEffectsVolume_ValueChanged"/>
                             </Grid>
+
+                            <StackPanel HorizontalAlignment="Center">
+                                <Button x:Name="ButtonTestAudio"
+                                        Content="{DynamicResource AudioSettings_BtnTestAudio}"
+                                        Width="200"
+                                        Height="38"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource NavBarButton}"
+                                        Click="ButtonTestAudio_Click"/>
+
+                                <Button x:Name="ButtonSaveAudio"
+                                        Content="{DynamicResource AudioSettings_BtnSave}"
+                                        Width="220"
+                                        Height="38"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,14,0,0"
+                                        Style="{StaticResource NavBarButton}"
+                                        Click="ButtonSaveAudio_Click"/>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Border>

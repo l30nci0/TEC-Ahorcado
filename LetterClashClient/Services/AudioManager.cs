@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media;
 
+using LetterClashClient.Properties;
+
 namespace LetterClashClient.Services {
   public static class AudioManager {
+    private const double VolumenPredeterminado = 0.4;
+
     private enum TipoMusica {
       Ninguna,
       Menu,
@@ -16,8 +20,8 @@ namespace LetterClashClient.Services {
     private static MediaPlayer reproductorMusica;
     private static string musicaActual;
     private static TipoMusica tipoMusicaActual = TipoMusica.Ninguna;
-    private static double volumenMusica = 0.7;
-    private static double volumenEfectos = 0.7;
+    private static double volumenMusica = CargarVolumenMusica();
+    private static double volumenEfectos = CargarVolumenEfectos();
 
     public static double VolumenMusica {
       get => volumenMusica;
@@ -33,7 +37,14 @@ namespace LetterClashClient.Services {
 
     public static double VolumenEfectos {
       get => volumenEfectos;
-      set => volumenEfectos = LimitarVolumen(value);
+      set {
+        volumenEfectos = LimitarVolumen(value);
+      }
+    }
+
+    public static void GuardarConfiguracionAudio() {
+      GuardarVolumenMusica(volumenMusica);
+      GuardarVolumenEfectos(volumenEfectos);
     }
 
     public static void ReproducirMusicaMenu() {
@@ -145,6 +156,40 @@ namespace LetterClashClient.Services {
 
     private static double LimitarVolumen(double valor) {
       return Math.Max(0.0, Math.Min(1.0, valor));
+    }
+
+    private static double CargarVolumenMusica() {
+      try {
+        return LimitarVolumen(Settings.Default.VolumenMusica);
+      } catch {
+        return VolumenPredeterminado;
+      }
+    }
+
+    private static double CargarVolumenEfectos() {
+      try {
+        return LimitarVolumen(Settings.Default.VolumenEfectos);
+      } catch {
+        return VolumenPredeterminado;
+      }
+    }
+
+    private static void GuardarVolumenMusica(double volumen) {
+      try {
+        Settings.Default.VolumenMusica = volumen;
+        Settings.Default.Save();
+      } catch {
+        // Persistir preferencias no debe interrumpir la experiencia de audio.
+      }
+    }
+
+    private static void GuardarVolumenEfectos(double volumen) {
+      try {
+        Settings.Default.VolumenEfectos = volumen;
+        Settings.Default.Save();
+      } catch {
+        // Persistir preferencias no debe interrumpir la experiencia de audio.
+      }
     }
   }
 }
