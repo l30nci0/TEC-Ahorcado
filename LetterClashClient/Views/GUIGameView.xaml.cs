@@ -99,7 +99,7 @@ namespace LetterClashClient.Views {
         string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
         string invalidSession = (string) Application.Current.FindResource("Msg_InvalidUserSession") ?? "Sesión de usuario inválida.";
         MessageBox.Show(invalidSession, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new GUIMainMenuView());
+        NavigationService.Navigate(new GUIGameHubView());
         return;
       }
 
@@ -119,7 +119,7 @@ namespace LetterClashClient.Views {
         string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
         string connMsg = (string) Application.Current.FindResource("Game_ErrorConnect") ?? "Error al conectar al servidor:";
         MessageBox.Show($"{connMsg} {ex.Message}", connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new GUIMainMenuView());
+        NavigationService.Navigate(new GUIGameHubView());
       }
     }
 
@@ -170,7 +170,7 @@ namespace LetterClashClient.Views {
             : string.Format(lostMsg, ganador);
 
         MessageBox.Show(mensajeResult, resultTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-        NavigationService.Navigate(new GUIMainMenuView());
+        NavigationService.Navigate(new GUIGameHubView());
       });
     }
 
@@ -192,7 +192,7 @@ namespace LetterClashClient.Views {
             ? string.Format(abandonHost, oponenteNombre)
             : string.Format(abandonGuesser, oponenteNombre);
         MessageBox.Show(abandonMsg, resultTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-        NavigationService.Navigate(new GUIMainMenuView());
+        NavigationService.Navigate(new GUIGameHubView());
       });
     }
 
@@ -202,7 +202,7 @@ namespace LetterClashClient.Views {
         string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
         string serverErr = (string) Application.Current.FindResource("Game_ServerError") ?? "Ocurrió un error en el servidor: {0}";
         MessageBox.Show(string.Format(serverErr, fault.Mensaje), errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new GUIMainMenuView());
+        NavigationService.Navigate(new GUIGameHubView());
       });
     }
 
@@ -344,7 +344,7 @@ namespace LetterClashClient.Views {
           } catch { }
         }
         DesconectarJuego();
-        NavigationService.Navigate(new GUIMainMenuView());
+        NavigationService.Navigate(new GUIGameHubView());
       }
     }
   }

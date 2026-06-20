@@ -55,7 +55,7 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIMainMenuView());
+      NavigationService.Navigate(new GUIGameHubView());
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {

@@ -30,7 +30,7 @@ namespace LetterClashClient.Views {
         string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
         string invalidSession = (string) Application.Current.FindResource("Msg_InvalidUserSession") ?? "Sesión de usuario inválida.";
         MessageBox.Show(invalidSession, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new GUIMainMenuView());
+        NavigationService.Navigate(new GUIGameHubView());
         return;
       }
 
@@ -199,7 +199,7 @@ namespace LetterClashClient.Views {
     }
 
     private void OnClicMenuPrincipal(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIMainMenuView());
+      NavigationService.Navigate(new GUIGameHubView());
     }
 
     private void OnClicPerfil(object sender, RoutedEventArgs e) {

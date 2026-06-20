@@ -6,7 +6,7 @@ namespace LetterClashClient {
   public partial class MainWindow : Window {
     public MainWindow() {
       InitializeComponent();
-      MainFrame.Navigate(new GUIEntryMenuView());
+      MainFrame.Navigate(new GUIWelcomeView());
     }
 
     private void GridTitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {

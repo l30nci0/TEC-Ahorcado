@@ -55,7 +55,7 @@ namespace LetterClashClient.Views {
 
         if (result != null && result.IsSuccess) {
           SessionContext.UsuarioLogueado = result.Value;
-          NavigationService.Navigate(new GUIMainMenuView());
+          NavigationService.Navigate(new GUIGameHubView());
         } else {
           string errorMsg = result?.Error?.Mensaje ?? "Credenciales incorrectas o error en el sistema.";
           if (result?.Error?.CodigoError == CodigoError.CREDENCIALES_INVALIDAS) {
@@ -82,7 +82,7 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonBackHome_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIEntryMenuView());
+      NavigationService.Navigate(new GUIWelcomeView());
     }
 
     private void TextBoxUsername_TextChanged(object sender, TextChangedEventArgs e) {
