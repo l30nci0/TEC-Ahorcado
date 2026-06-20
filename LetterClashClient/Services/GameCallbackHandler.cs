@@ -7,7 +7,6 @@ namespace LetterClashClient.Services {
   public class GameCallbackHandler : IGameServiceCallback {
     public event Action<JugadorPublicoDTO> JugadorSeUnio;
     public event Action<char, bool, string, int> LetraPropuesta;
-    public event Action<char, string, int> PistaUsada;
     public event Action<string, int> PartidaFinalizada;
     public event Action<string, string> MensajeRecibido;
     public event Action<string> OponenteAbandono;
@@ -19,10 +18,6 @@ namespace LetterClashClient.Services {
 
     public void OnLetraPropuesta(char letra, bool esCorrecta, string palabraRevelada, int vidaRestante) {
       LetraPropuesta?.Invoke(letra, esCorrecta, palabraRevelada, vidaRestante);
-    }
-
-    public void OnPistaUsada(char letra, string palabraRevelada, int vidaRestante) {
-      PistaUsada?.Invoke(letra, palabraRevelada, vidaRestante);
     }
 
     public void OnPartidaFinalizada(string ganador, int puntuacionObtenida) {

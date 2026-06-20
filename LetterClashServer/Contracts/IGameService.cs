@@ -13,9 +13,6 @@ namespace LetterClashServer.Contracts {
     void AbandonarPartida(string codigoAcceso, int jugadorID);
 
     [OperationContract(IsOneWay = true)]
-    void VerPista(string codigoAcceso, int jugadorID);
-
-    [OperationContract(IsOneWay = true)]
     void EnviarMensaje(string codigoAcceso, int jugadorID, string mensaje);
   }
 }

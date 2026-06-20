@@ -110,7 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\GUIEntryMenuView.xaml">
+    <Page Include="Views\GUIWelcomeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -134,7 +134,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\GUIMainMenuView.xaml">
+    <Page Include="Views\GUIGameHubView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -179,8 +179,8 @@
     <Compile Include="Views\GUIDifferentUserView.xaml.cs">
       <DependentUpon>GUIDifferentUserView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GUIEntryMenuView.xaml.cs">
-      <DependentUpon>GUIEntryMenuView.xaml</DependentUpon>
+    <Compile Include="Views\GUIWelcomeView.xaml.cs">
+      <DependentUpon>GUIWelcomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GUIGameView.xaml.cs">
       <DependentUpon>GUIGameView.xaml</DependentUpon>
@@ -197,8 +197,8 @@
     <Compile Include="Views\GUILoginView.xaml.cs">
       <DependentUpon>GUILoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GUIMainMenuView.xaml.cs">
-      <DependentUpon>GUIMainMenuView.xaml</DependentUpon>
+    <Compile Include="Views\GUIGameHubView.xaml.cs">
+      <DependentUpon>GUIGameHubView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GUIProfileView.xaml.cs">
       <DependentUpon>GUIProfileView.xaml</DependentUpon>

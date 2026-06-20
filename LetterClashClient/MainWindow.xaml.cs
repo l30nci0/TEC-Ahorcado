@@ -9,7 +9,7 @@ namespace LetterClashClient {
     public MainWindow() {
       InitializeComponent();
       MainFrame.Navigated += MainFrame_Navigated;
-      MainFrame.Navigate(new GUIEntryMenuView());
+      MainFrame.Navigate(new GUIWelcomeView());
     }
 
     private void MainFrame_Navigated(object sender, NavigationEventArgs e) {
