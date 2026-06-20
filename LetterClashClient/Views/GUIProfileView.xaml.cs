@@ -13,7 +13,6 @@ using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class GUIProfileView : Page {
-    private byte[] selectedAvatarBytes;
 
     public GUIProfileView() {
       InitializeComponent();
@@ -41,21 +40,6 @@ namespace LetterClashClient.Views {
         TextBlockEmail.Text = usuario.Correo;
         string notRegText = (string) Application.Current.FindResource("Profile_NotRegistered") ?? "No Registrado";
         TextBlockPhone.Text = !string.IsNullOrWhiteSpace(usuario.Telefono) ? usuario.Telefono : notRegText;
-
-        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
-          try {
-            using (var stream = new MemoryStream(usuario.Avatar)) {
-              var bitmap = new BitmapImage();
-              bitmap.BeginInit();
-              bitmap.StreamSource = stream;
-              bitmap.CacheOption = BitmapCacheOption.OnLoad;
-              bitmap.EndInit();
-              ImageUserAvatar.Source = bitmap;
-            }
-          } catch {
-            // Mantiene el default en caso de error
-          }
-        }
       }
     }
 
@@ -82,28 +66,13 @@ namespace LetterClashClient.Views {
             ComboBoxPreferredLanguage.SelectedIndex = 0;
           }
           UpdateLanguageButtons();
-
-          selectedAvatarBytes = usuario.Avatar;
-          if (selectedAvatarBytes != null && selectedAvatarBytes.Length > 0) {
-            try {
-              using (var stream = new MemoryStream(selectedAvatarBytes)) {
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.StreamSource = stream;
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-                ImageEditUserAvatar.Source = bitmap;
-              }
-            } catch { }
-          } else {
-            ImageEditUserAvatar.Source = new BitmapImage(new Uri("/Assets/Images/UserAvatar.png", UriKind.RelativeOrAbsolute));
-          }
         }
       } else {
         GridProfileView.Visibility = Visibility.Visible;
         GridProfileEdit.Visibility = Visibility.Collapsed;
         GridFooterNavigation.Visibility = Visibility.Visible;
         GridFooterEdit.Visibility = Visibility.Collapsed;
+        GridPasswordModal.Visibility = Visibility.Collapsed;
       }
     }
 
@@ -125,8 +94,6 @@ namespace LetterClashClient.Views {
     private void ButtonSave_Click(object sender, RoutedEventArgs e) {
       TextBlockFullNameError.Visibility = Visibility.Hidden;
       TextBlockPhoneError.Visibility = Visibility.Hidden;
-      TextBlockCurrentPasswordError.Visibility = Visibility.Hidden;
-      TextBlockPasswordError.Visibility = Visibility.Hidden;
       TextBlockBirthDateError.Visibility = Visibility.Hidden;
       TextBlockLanguageError.Visibility = Visibility.Hidden;
 
@@ -156,32 +123,6 @@ namespace LetterClashClient.Views {
         hasError = true;
       }
 
-      string currentPassword = PasswordBoxCurrentPassword.Password;
-      string newPassword = PasswordBoxPassword.Password;
-      string confirmPassword = PasswordBoxConfirmPassword.Password;
-
-      bool isChangingPassword = !string.IsNullOrEmpty(currentPassword) ||
-                                !string.IsNullOrEmpty(newPassword) ||
-                                !string.IsNullOrEmpty(confirmPassword);
-
-      if (isChangingPassword) {
-        if (string.IsNullOrEmpty(currentPassword)) {
-          TextBlockCurrentPasswordError.Text = (string) Application.Current.FindResource("Profile_CurrentPasswordPlaceholder") ?? "Ingrese su contraseña actual.";
-          TextBlockCurrentPasswordError.Visibility = Visibility.Visible;
-          hasError = true;
-        }
-
-        if (string.IsNullOrEmpty(newPassword)) {
-          TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_NewPasswordPlaceholder") ?? "Ingrese la nueva contraseña.";
-          TextBlockPasswordError.Visibility = Visibility.Visible;
-          hasError = true;
-        } else if (newPassword != confirmPassword) {
-          TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_PasswordMatchError") ?? "Las contraseñas no coinciden.";
-          TextBlockPasswordError.Visibility = Visibility.Visible;
-          hasError = true;
-        }
-      }
-
       if (hasError) {
         return;
       }
@@ -194,28 +135,7 @@ namespace LetterClashClient.Views {
       try {
         var jugadorService = ServiceProxyManager.GetJugadorService();
 
-        // 1. Cambiar contraseña si se solicita
-        if (isChangingPassword) {
-          var passwordResult = jugadorService.CambiarContrasena(usuario.IDJugador, currentPassword, newPassword);
-          if (passwordResult == null || !passwordResult.IsSuccess) {
-            if (passwordResult?.Error != null) {
-              if (passwordResult.Error.CodigoError == CodigoError.CREDENCIALES_INVALIDAS) {
-                TextBlockCurrentPasswordError.Text = passwordResult.Error.Mensaje;
-                TextBlockCurrentPasswordError.Visibility = Visibility.Visible;
-              } else {
-                string passChangeErrTitle = (string) Application.Current.FindResource("Profile_PasswordChangeErrorTitle") ?? "Error al cambiar contraseña";
-                MessageBox.Show(passwordResult.Error.Mensaje, passChangeErrTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-              }
-            } else {
-              string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
-              string noChangeErr = (string) Application.Current.FindResource("Profile_ErrorPasswordChange") ?? "No se pudo cambiar la contraseña.";
-              MessageBox.Show(noChangeErr, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            return;
-          }
-        }
-
-        // 2. Actualizar perfil
+        // Actualizar perfil
         var jugadorDto = new JugadorDTO {
           IDJugador = usuario.IDJugador,
           Nombre = fullName,
@@ -223,7 +143,7 @@ namespace LetterClashClient.Views {
           Correo = usuario.Correo,
           Telefono = phone,
           Puntuacion = usuario.Puntuacion,
-          Avatar = selectedAvatarBytes,
+          Avatar = usuario.Avatar,
           IdiomaPreferido = ComboBoxPreferredLanguage.SelectedIndex == 1 ? Idiomas.INGLES : Idiomas.ESPANOL,
           FechaDeNacimiento = DatePickerBirthDate.SelectedDate.Value
         };
@@ -243,11 +163,6 @@ namespace LetterClashClient.Views {
                           successTitle,
                           MessageBoxButton.OK,
                           MessageBoxImage.Information);
-
-          // Limpiar campos de contraseña
-          PasswordBoxCurrentPassword.Password = "";
-          PasswordBoxPassword.Password = "";
-          PasswordBoxConfirmPassword.Password = "";
 
           LoadViewData();
           SwitchMode(false);
@@ -276,7 +191,98 @@ namespace LetterClashClient.Views {
       PasswordBoxCurrentPassword.Password = "";
       PasswordBoxPassword.Password = "";
       PasswordBoxConfirmPassword.Password = "";
+      GridPasswordModal.Visibility = Visibility.Collapsed;
       SwitchMode(false);
+    }
+
+    private void ButtonOpenChangePassword_Click(object sender, RoutedEventArgs e) {
+      PasswordBoxCurrentPassword.Password = "";
+      PasswordBoxPassword.Password = "";
+      PasswordBoxConfirmPassword.Password = "";
+      TextBlockCurrentPasswordError.Visibility = Visibility.Hidden;
+      TextBlockPasswordError.Visibility = Visibility.Hidden;
+      GridPasswordModal.Visibility = Visibility.Visible;
+    }
+
+    private void ButtonCancelPassword_Click(object sender, RoutedEventArgs e) {
+      PasswordBoxCurrentPassword.Password = "";
+      PasswordBoxPassword.Password = "";
+      PasswordBoxConfirmPassword.Password = "";
+      GridPasswordModal.Visibility = Visibility.Collapsed;
+    }
+
+    private void ButtonSavePassword_Click(object sender, RoutedEventArgs e) {
+      TextBlockCurrentPasswordError.Visibility = Visibility.Hidden;
+      TextBlockPasswordError.Visibility = Visibility.Hidden;
+
+      string currentPassword = PasswordBoxCurrentPassword.Password;
+      string newPassword = PasswordBoxPassword.Password;
+      string confirmPassword = PasswordBoxConfirmPassword.Password;
+
+      bool hasError = false;
+
+      if (string.IsNullOrEmpty(currentPassword)) {
+        TextBlockCurrentPasswordError.Text = (string) Application.Current.FindResource("Profile_CurrentPasswordPlaceholder") ?? "Ingrese su contraseña actual.";
+        TextBlockCurrentPasswordError.Visibility = Visibility.Visible;
+        hasError = true;
+      }
+
+      if (string.IsNullOrEmpty(newPassword)) {
+        TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_NewPasswordPlaceholder") ?? "Ingrese la nueva contraseña.";
+        TextBlockPasswordError.Visibility = Visibility.Visible;
+        hasError = true;
+      } else if (newPassword != confirmPassword) {
+        TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_PasswordMatchError") ?? "Las contraseñas no coinciden.";
+        TextBlockPasswordError.Visibility = Visibility.Visible;
+        hasError = true;
+      }
+
+      if (hasError) {
+        return;
+      }
+
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario == null) {
+        return;
+      }
+
+      try {
+        var jugadorService = ServiceProxyManager.GetJugadorService();
+        var passwordResult = jugadorService.CambiarContrasena(usuario.IDJugador, currentPassword, newPassword);
+        
+        if (passwordResult != null && passwordResult.IsSuccess) {
+          string successMsg = (string) Application.Current.FindResource("Profile_UpdateSuccessMsg") ?? "Contraseña actualizada correctamente.";
+          string successTitle = (string) Application.Current.FindResource("Profile_UpdateSuccessTitle") ?? "TecnoHorcado";
+          MessageBox.Show(successMsg, successTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+          
+          PasswordBoxCurrentPassword.Password = "";
+          PasswordBoxPassword.Password = "";
+          PasswordBoxConfirmPassword.Password = "";
+          GridPasswordModal.Visibility = Visibility.Collapsed;
+        } else {
+          if (passwordResult?.Error != null) {
+            if (passwordResult.Error.CodigoError == CodigoError.CREDENCIALES_INVALIDAS) {
+              TextBlockCurrentPasswordError.Text = passwordResult.Error.Mensaje;
+              TextBlockCurrentPasswordError.Visibility = Visibility.Visible;
+            } else {
+              string passChangeErrTitle = (string) Application.Current.FindResource("Profile_PasswordChangeErrorTitle") ?? "Error al cambiar contraseña";
+              MessageBox.Show(passwordResult.Error.Mensaje, passChangeErrTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+          } else {
+            string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+            string noChangeErr = (string) Application.Current.FindResource("Profile_ErrorPasswordChange") ?? "No se pudo cambiar la contraseña.";
+            MessageBox.Show(noChangeErr, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+          }
+        }
+      } catch (CommunicationException) {
+        string connMsg = (string) Application.Current.FindResource("Msg_ConnectionError") ?? "No se pudo conectar con el servidor. Verifique su conexión.";
+        string connTitle = (string) Application.Current.FindResource("Msg_ConnectionErrorTitle") ?? "Error de Conexión";
+        MessageBox.Show(connMsg, connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+      } catch (Exception ex) {
+        string unexpMsg = (string) Application.Current.FindResource("Msg_UnexpectedError") ?? "Ocurrió un error inesperado:";
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show($"{unexpMsg} {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+      }
     }
 
     private void PasswordBoxCurrentPassword_PasswordChanged(object sender, RoutedEventArgs e) {

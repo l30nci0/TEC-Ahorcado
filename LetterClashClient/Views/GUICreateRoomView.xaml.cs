@@ -42,20 +42,7 @@ namespace LetterClashClient.Views {
         string yearsSuffix = (string) Application.Current.FindResource("MainMenu_Years") ?? "Años";
         TextBlockAge.Text = $"\"{age} {yearsSuffix}\"";
 
-        if (usuario.Avatar != null && usuario.Avatar.Length > 0) {
-          try {
-            using (var stream = new System.IO.MemoryStream(usuario.Avatar)) {
-              var bitmap = new BitmapImage();
-              bitmap.BeginInit();
-              bitmap.StreamSource = stream;
-              bitmap.CacheOption = BitmapCacheOption.OnLoad;
-              bitmap.EndInit();
-              ImageUserAvatar.Source = bitmap;
-            }
-          } catch {
-            // Mantiene el default en caso de error
-          }
-        }
+        AvatarHelper.AsignarAImageControl(ImageUserAvatar, usuario.Avatar);
       }
 
       if (selectedWord != null) {
@@ -163,7 +150,7 @@ namespace LetterClashClient.Views {
           string successMsg = (string) Application.Current.FindResource("CreateRoom_SuccessCreate") ?? "Partida creada con éxito.";
           string successTitle = (string) Application.Current.FindResource("CreateRoom_SuccessTitle") ?? "Sala Creada";
           MessageBox.Show(successMsg, successTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-          NavigationService.Navigate(new GUIGameView(selectedWord.PalabraTexto, accessCode));
+          NavigationService.Navigate(new GUIGameView(selectedWord, accessCode));
         } else {
           string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
           string errCreate = (string) Application.Current.FindResource("CreateRoom_ErrorCreate") ?? "No se pudo crear la partida.";

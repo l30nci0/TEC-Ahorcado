@@ -239,196 +239,180 @@
                                        HorizontalAlignment="Center"/>
             </StackPanel>
 
-            <!-- Content Details Grid -->
+            <!-- Content Details (Horizontal Layout) -->
             <Grid Grid.Row="1">
               <Grid.ColumnDefinitions>
-                <!-- Info Fields (Left) -->
-                <ColumnDefinition Width="1.2*"/>
+                <!-- Details (Left) -->
+                <ColumnDefinition Width="*"/>
                 <!-- Divider -->
-                <ColumnDefinition Width="Auto"/>
-                <!-- Avatar and Back Button (Right) -->
-                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="35"/>
+                <!-- Stats & Action (Right) -->
+                <ColumnDefinition Width="*"/>
               </Grid.ColumnDefinitions>
 
-              <!-- Left Column: Details & Stats -->
-              <Grid Grid.Column="0" Margin="0,0,30,0">
-                <Grid.RowDefinitions>
-                  <!-- Fields Stack -->
-                  <RowDefinition Height="*"/>
-                  <!-- Statistics Box -->
-                  <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <!-- Details Fields -->
-                <StackPanel Grid.Row="0" VerticalAlignment="Center">
-                  <!-- Full Name -->
-                  <TextBlock Text="{DynamicResource DiffUser_FullNameLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                  <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
-                    <TextBlock x:Name="TextBlockFullName" Style="{StaticResource ValueTextStyle}"/>
-                    <Border.Effect>
-                      <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
-                    </Border.Effect>
-                  </Border>
-
-                  <!-- Email -->
-                  <TextBlock Text="{DynamicResource DiffUser_EmailLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                  <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
-                    <TextBlock x:Name="TextBlockEmail" Style="{StaticResource ValueTextStyle}"/>
-                    <Border.Effect>
-                      <DropShadowEffect  BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
-                    </Border.Effect>
-                  </Border>
-
-                  <!-- Age and Birthday Row -->
-                  <Grid Margin="0,0,0,15">
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="15"/>
-                      <ColumnDefinition Width="1.5*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0">
-                      <TextBlock Text="{DynamicResource DiffUser_AgeLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                      <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
-                        <Border.Effect>
-                          <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
-                        </Border.Effect>
-                        <TextBlock x:Name="TextBlockAge" Style="{StaticResource ValueTextStyle}"/>
-                      </Border>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="2">
-                      <TextBlock Text="{DynamicResource DiffUser_BirthDateLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                      <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
-                        <Border.Effect>
-                          <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
-                        </Border.Effect>
-                        <TextBlock x:Name="TextBlockBirthDate" Style="{StaticResource ValueTextStyle}" />
-                      </Border>
-                    </StackPanel>
-                  </Grid>
-
-                  <!-- Phone -->
-                  <TextBlock Text="{DynamicResource DiffUser_PhoneLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
-                  <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
-                    <TextBlock x:Name="TextBlockPhone" Style="{StaticResource ValueTextStyle}"/>
-                    <Border.Effect>
-                      <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
-                    </Border.Effect>
-                  </Border>
-                </StackPanel>
-
-                <!-- Statistics panel -->
-                <Border Grid.Row="1"
-                                        BorderBrush="#00A986"
-                                        BorderThickness="1"
-                                        Background="#0B0E14"
-                                        Padding="10,12"
-                                        Margin="0,20,0,0">
+              <!-- Left Column: Details -->
+              <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <!-- Full Name -->
+                <TextBlock Text="{DynamicResource DiffUser_FullNameLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                  <TextBlock x:Name="TextBlockFullName" Style="{StaticResource ValueTextStyle}"/>
                   <Border.Effect>
-                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A986" Opacity="0.5"/>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A986" Opacity="0.4"/>
                   </Border.Effect>
-                  <Grid>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock x:Name="TextBlockTotalWins"
-                                                   Grid.Column="0"
-                                                   FontFamily="{StaticResource GeistMono}"
-                                                   FontSize="11"
-                                                   Foreground="#7DE2D1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name="TextBlockPercentWins"
-                                                   Grid.Column="1"
-                                                   FontFamily="{StaticResource GeistMono}"
-                                                   FontSize="11"
-                                                   Foreground="#7DE2D1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name="TextBlockTotalLosses"
-                                                   Grid.Column="2"
-                                                   FontFamily="{StaticResource GeistMono}"
-                                                   FontSize="11"
-                                                   Foreground="#7DE2D1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name="TextBlockPercentLosses"
-                                                   Grid.Column="3"
-                                                   FontFamily="{StaticResource GeistMono}"
-                                                   FontSize="11"
-                                                   Foreground="#7DE2D1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name="TextBlockTotalDisconnected"
-                                                   Grid.Column="4"
-                                                   FontFamily="{StaticResource GeistMono}"
-                                                   FontSize="11"
-                                                   Foreground="#7DE2D1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name="TextBlockPercentDisconnected"
-                                                   Grid.Column="5"
-                                                   FontFamily="{StaticResource GeistMono}"
-                                                   FontSize="11"
-                                                   Foreground="#7DE2D1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-                  </Grid>
                 </Border>
-              </Grid>
 
-              <!-- Vertical Divider -->
+                <!-- Email -->
+                <TextBlock Text="{DynamicResource DiffUser_EmailLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                  <TextBlock x:Name="TextBlockEmail" Style="{StaticResource ValueTextStyle}"/>
+                  <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A986" Opacity="0.4"/>
+                  </Border.Effect>
+                </Border>
+
+                <!-- Phone -->
+                <TextBlock Text="{DynamicResource DiffUser_PhoneLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                  <TextBlock x:Name="TextBlockPhone" Style="{StaticResource ValueTextStyle}"/>
+                  <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A986" Opacity="0.4"/>
+                  </Border.Effect>
+                </Border>
+
+                <!-- Age and Birthday Row -->
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="1.5*"/>
+                  </Grid.ColumnDefinitions>
+
+                  <StackPanel Grid.Column="0">
+                    <TextBlock Text="{DynamicResource DiffUser_AgeLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                    <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                      <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A986" Opacity="0.4"/>
+                      </Border.Effect>
+                      <TextBlock x:Name="TextBlockAge" Style="{StaticResource ValueTextStyle}"/>
+                    </Border>
+                  </StackPanel>
+
+                  <StackPanel Grid.Column="2">
+                    <TextBlock Text="{DynamicResource DiffUser_BirthDateLabel}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA"/>
+                    <Border BorderBrush="#00A986" BorderThickness="1" Background="#0B0E14" Padding="15,10">
+                      <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A986" Opacity="0.4"/>
+                      </Border.Effect>
+                      <TextBlock x:Name="TextBlockBirthDate" Style="{StaticResource ValueTextStyle}" />
+                    </Border>
+                  </StackPanel>
+                </Grid>
+              </StackPanel>
+
+              <!-- Divider -->
               <Border Grid.Column="1" Width="1.5" Background="#4DEEEA" VerticalAlignment="Stretch" Margin="0,10">
                 <Border.Effect>
                   <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#4DEEEA" Opacity="0.5"/>
                 </Border.Effect>
               </Border>
 
-              <!-- Right Column: Avatar and Back button -->
-              <Grid Grid.Column="2" Margin="30,0,0,0">
+              <!-- Right Column: Stats & Action -->
+              <Grid Grid.Column="2" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
-                  <!-- Avatar display -->
-                  <RowDefinition Height="*"/>
-                  <!-- Back button -->
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="35"/>
                   <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Premium Square Avatar Container -->
-                <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                  <TextBlock Text="{DynamicResource DiffUser_AvatarLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="#4DEEEA"/>
-                  <Border Width="160"
-                                            Height="160"
-                                            BorderBrush="#2D2D30"
-                                            BorderThickness="1.5"
-                                            Background="#09090B">
-                    <Image x:Name="ImageUserAvatar"
-                                               Source="/Assets/Images/UserAvatar.png"
-                                               Stretch="Uniform"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
-                  </Border>
-                </StackPanel>
+                <!-- Stats Title -->
+                <TextBlock Grid.Row="0"
+                           Text="ESTADÍSTICAS DE PARTIDAS"
+                           FontFamily="{StaticResource GeistPixelSquare}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="#4DEEEA"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,15"/>
+
+                <!-- Statistics Box -->
+                <Border Grid.Row="1"
+                        BorderBrush="#00A986"
+                        BorderThickness="1"
+                        Background="#0B0E14"
+                        Padding="15,20">
+                  <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A986" Opacity="0.4"/>
+                  </Border.Effect>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="12"/>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="12"/>
+                      <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="2.2*"/>
+                      <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Wins -->
+                    <TextBlock x:Name="TextBlockTotalWins"
+                               Grid.Row="0" Grid.Column="0"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="12"
+                               Foreground="#7DE2D1"
+                               VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockPercentWins"
+                               Grid.Row="0" Grid.Column="1"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="12"
+                               Foreground="#00FFCC"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"/>
+
+                    <!-- Losses -->
+                    <TextBlock x:Name="TextBlockTotalLosses"
+                               Grid.Row="2" Grid.Column="0"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="12"
+                               Foreground="#7DE2D1"
+                               VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockPercentLosses"
+                               Grid.Row="2" Grid.Column="1"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="12"
+                               Foreground="#F649A7"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"/>
+
+                    <!-- Disconnected -->
+                    <TextBlock x:Name="TextBlockTotalDisconnected"
+                               Grid.Row="4" Grid.Column="0"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="12"
+                               Foreground="#7DE2D1"
+                               VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockPercentDisconnected"
+                               Grid.Row="4" Grid.Column="1"
+                               FontFamily="{StaticResource GeistMono}"
+                               FontSize="12"
+                               Foreground="#E60067"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"/>
+                  </Grid>
+                </Border>
+
+                <!-- Spacer is Row 2 -->
 
                 <!-- Button Back -->
                 <Button x:Name="ButtonBack"
-                                        Grid.Row="1"
-                                        Content="{DynamicResource DiffUser_BtnBack}"
-                                        Height="50"
-                                        Style="{StaticResource ModernSecondaryButton}"
-                                        VerticalAlignment="Bottom"
-                                        Click="ButtonBack_Click"/>
+                        Grid.Row="3"
+                        Content="{DynamicResource DiffUser_BtnBack}"
+                        Height="45"
+                        Style="{StaticResource ModernSecondaryButton}"
+                        Click="ButtonBack_Click"/>
               </Grid>
             </Grid>
           </Grid>

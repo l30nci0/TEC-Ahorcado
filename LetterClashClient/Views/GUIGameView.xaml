@@ -292,24 +292,93 @@
           <!-- Left Panel (Dynamically Toggled by Role) -->
           <Grid Grid.Column="0" x:Name="GridLeftContainer">
 
-            <!-- Guesser View Panel -->
-            <Grid x:Name="GridGuesserSection" Visibility="Visible">
+            <!-- Guesser View Panel -->            <Grid x:Name="GridGuesserSection" Visibility="Visible">
               <Grid.RowDefinitions>
                 <RowDefinition Height="120"/>
-                <RowDefinition Height="75"/>
+                <RowDefinition Height="95"/>
                 <RowDefinition Height="180"/>
                 <RowDefinition Height="*"/>
               </Grid.RowDefinitions>
 
-              <TextBlock x:Name="TextBlockHiddenWord"
-                                       Grid.Row="1"
-                                       Text="_ _ _ _ _ _ _ _"
-                                       FontSize="38"
-                                       FontFamily="{StaticResource GeistMono}"
-                                       FontWeight="Bold"
-                                       Foreground="#4DEEEA"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+              <!-- Guesser Info Row (Code, Clue & Language) -->
+              <Grid Grid.Row="0" Margin="0,15,0,0">
+                  <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="Auto"/>
+                      <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  
+                  <!-- Access Code for Guesser -->
+                  <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
+                      <TextBlock Text="{DynamicResource Game_AccessCodeLabel}"
+                                 FontSize="11"
+                                 FontFamily="{StaticResource GeistPixelSquare}"
+                                 Foreground="#00A896"
+                                 FontWeight="Bold"/>
+                      <TextBlock x:Name="TextBlockAccessCodeGuesser"
+                                 Text="------"
+                                 FontSize="18"
+                                 FontFamily="{StaticResource GeistMono}"
+                                 FontWeight="Bold"
+                                 Foreground="#00FFCC"
+                                 Margin="0,4,0,0"/>
+                  </StackPanel>
+                  
+                  <!-- Word Description Clue -->
+                  <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="340">
+                      <TextBlock Text="PISTA / DESCRIPCIÓN"
+                                 FontSize="11"
+                                 FontFamily="{StaticResource GeistPixelSquare}"
+                                 Foreground="#FF2D66"
+                                 FontWeight="Bold"
+                                 HorizontalAlignment="Center"
+                                 Margin="0,0,0,4"/>
+                      <TextBlock x:Name="TextBlockWordDescription"
+                                 Text="Cargando pista de la palabra..."
+                                 FontSize="13"
+                                 FontFamily="{StaticResource GeistMono}"
+                                 Foreground="#E0F7F4"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 TextWrapping="Wrap"/>
+                  </StackPanel>
+                  
+                  <!-- Room Language -->
+                  <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0">
+                      <TextBlock Text="IDIOMA"
+                                 FontSize="11"
+                                 FontFamily="{StaticResource GeistPixelSquare}"
+                                 Foreground="#00A896"
+                                 FontWeight="Bold"
+                                 HorizontalAlignment="Right"/>
+                      <TextBlock x:Name="TextBlockLanguageGuesser"
+                                 Text="ESPAÑOL"
+                                 FontSize="14"
+                                 FontFamily="{StaticResource GeistMono}"
+                                 FontWeight="Bold"
+                                 Foreground="#00FFCC"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,4,0,0"/>
+                  </StackPanel>
+              </Grid>
+
+              <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                  <TextBlock Text="PALABRA A ADIVINAR"
+                             FontSize="11"
+                             FontFamily="{StaticResource GeistPixelSquare}"
+                             Foreground="#00A896"
+                             FontWeight="Bold"
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,8"/>
+                  <TextBlock x:Name="TextBlockHiddenWord"
+                             Text="_ _ _ _ _ _ _ _"
+                             FontSize="38"
+                             FontFamily="{StaticResource GeistMono}"
+                             FontWeight="Bold"
+                             Foreground="#4DEEEA"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+              </StackPanel>
 
               <Grid Grid.Row="2"
                                   Width="560"
@@ -402,42 +471,84 @@
                   <Button Content="M" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
                 </UniformGrid>
               </Grid>
-            </Grid>
-
-            <!-- Host View Panel -->
+            </Grid>            <!-- Host View Panel -->
             <Grid x:Name="GridHostSection" Visibility="Collapsed">
               <Grid.RowDefinitions>
-                <RowDefinition Height="130"/>
+                <RowDefinition Height="120"/>
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="85"/>
                 <RowDefinition Height="150"/>
                 <RowDefinition Height="*"/>
               </Grid.RowDefinitions>
 
-              <StackPanel Grid.Row="0"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        Margin="0,15,0,0">
-                <TextBlock Text="{DynamicResource Game_AccessCodeLabel}"
-                                           FontSize="13"
-                                           FontFamily="{StaticResource GeistPixelSquare}"
-                                           Foreground="#00FFCC66"
-                                           HorizontalAlignment="Center"/>
-                <TextBlock x:Name="TextBlockAccessCode"
-                                           Text="------"
-                                           FontSize="32"
-                                           FontFamily="{StaticResource GeistMono}"
-                                           FontWeight="Bold"
-                                           Foreground="#00FFCC"
-                                           HorizontalAlignment="Center"
-                                           Margin="0,6,0,0"/>
-              </StackPanel>
+              <!-- Host Info Row (Code, Clue & Language) -->
+              <Grid Grid.Row="0" Margin="0,15,0,0">
+                  <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="Auto"/>
+                      <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  
+                  <!-- Access Code for Host -->
+                  <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
+                      <TextBlock Text="{DynamicResource Game_AccessCodeLabel}"
+                                 FontSize="11"
+                                 FontFamily="{StaticResource GeistPixelSquare}"
+                                 Foreground="#00A896"
+                                 FontWeight="Bold"/>
+                      <TextBlock x:Name="TextBlockAccessCode"
+                                 Text="------"
+                                 FontSize="18"
+                                 FontFamily="{StaticResource GeistMono}"
+                                 FontWeight="Bold"
+                                 Foreground="#00FFCC"
+                                 Margin="0,4,0,0"/>
+                  </StackPanel>
+                  
+                  <!-- Word Description Clue -->
+                  <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="340">
+                      <TextBlock Text="PISTA / DESCRIPCIÓN"
+                                 FontSize="11"
+                                 FontFamily="{StaticResource GeistPixelSquare}"
+                                 Foreground="#FF2D66"
+                                 FontWeight="Bold"
+                                 HorizontalAlignment="Center"
+                                 Margin="0,0,0,4"/>
+                      <TextBlock x:Name="TextBlockWordDescriptionHost"
+                                 Text="Descripción de la palabra..."
+                                 FontSize="13"
+                                 FontFamily="{StaticResource GeistMono}"
+                                 Foreground="#E0F7F4"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 TextWrapping="Wrap"/>
+                  </StackPanel>
+                  
+                  <!-- Room Language -->
+                  <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0">
+                      <TextBlock Text="IDIOMA"
+                                 FontSize="11"
+                                 FontFamily="{StaticResource GeistPixelSquare}"
+                                 Foreground="#00A896"
+                                 FontWeight="Bold"
+                                 HorizontalAlignment="Right"/>
+                      <TextBlock x:Name="TextBlockLanguageHost"
+                                 Text="ESPAÑOL"
+                                 FontSize="14"
+                                 FontFamily="{StaticResource GeistMono}"
+                                 FontWeight="Bold"
+                                 Foreground="#00FFCC"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,4,0,0"/>
+                  </StackPanel>
+              </Grid>
 
               <TextBlock Grid.Row="1"
                                        Text="{DynamicResource Game_WordLabel}"
-                                       FontSize="13"
+                                       FontSize="11"
                                        FontFamily="{StaticResource GeistPixelSquare}"
-                                       Foreground="#00FFCC66"
+                                       Foreground="#00A896"
+                                       FontWeight="Bold"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
 
@@ -468,9 +579,10 @@
 
                   <TextBlock Grid.Row="0"
                                                Text="{DynamicResource Game_ProposedLetterLabel}"
-                                               FontSize="12"
+                                               FontSize="11"
                                                FontFamily="{StaticResource GeistPixelSquare}"
-                                               Foreground="#00FFCC66"
+                                               Foreground="#00A896"
+                                               FontWeight="Bold"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
 
@@ -504,30 +616,12 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
               <Image x:Name="ImageHangman"
-                                   Source="/Assets/Images/Hangedman5.jpg"
+                                   Source="/Assets/Images/Hangedman6.png"
                                    Width="220"
                                    Height="190"
                                    Stretch="Uniform"
                                    Canvas.Left="25"
                                    Canvas.Top="10"/>
-
-              <Border x:Name="BorderUserAvatar"
-                                    Width="58"
-                                    Height="58"
-                                    CornerRadius="0"
-                                    BorderBrush="#00FFCC44"
-                                    BorderThickness="2"
-                                    Background="#061A22"
-                                    Canvas.Left="173"
-                                    Canvas.Top="47">
-                <Image x:Name="ImageUserAvatar"
-                                       Source="/Assets/Images/UserAvatar.png"
-                                       Width="46"
-                                       Height="46"
-                                       Stretch="Uniform"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-              </Border>
             </Canvas>
 
             <Grid Grid.Row="1"
@@ -552,6 +646,7 @@
                                        FontFamily="{StaticResource GeistMono}"
                                        Foreground="#FF2D66"
                                        HorizontalAlignment="Center"
+               
                                        VerticalAlignment="Center"/>
             </Grid>
 

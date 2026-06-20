@@ -109,6 +109,9 @@
     <sys:String x:Key="Profile_ConfirmNewPasswordLabel">CONFIRM NEW PASSWORD</sys:String>
     <sys:String x:Key="Profile_ConfirmNewPasswordPlaceholder">Confirm new password</sys:String>
     <sys:String x:Key="Profile_PasswordMatchError">Passwords do not match</sys:String>
+    <sys:String x:Key="Profile_BtnChangePassword">CHANGE PASSWORD  🔑</sys:String>
+    <sys:String x:Key="Profile_BtnSavePassword">Save Password  ✓</sys:String>
+    <sys:String x:Key="Profile_BtnCancelPassword">Cancel  ✕</sys:String>
     
     <sys:String x:Key="Profile_BtnSave">Save Changes  ✓</sys:String>
     <sys:String x:Key="Profile_BtnCancel">Cancel  ✕</sys:String>
@@ -196,6 +199,8 @@
     <sys:String x:Key="History_NoChallenger">No challenger</sys:String>
     <sys:String x:Key="History_ResultWin">Win</sys:String>
     <sys:String x:Key="History_ResultLoss">Loss</sys:String>
+    <sys:String x:Key="History_ResultWinBadge">Win</sys:String>
+    <sys:String x:Key="History_ResultLossBadge">Loss</sys:String>
     <sys:String x:Key="History_ResultDisconnect">Disconnected</sys:String>
     <sys:String x:Key="History_TypePublic">Public</sys:String>
     <sys:String x:Key="History_TypePrivate">Private</sys:String>

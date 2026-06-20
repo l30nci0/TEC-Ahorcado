@@ -115,6 +115,28 @@
 
         <!-- Custom DatePicker Template & Style -->
         <Style x:Key="ModernDatePicker" TargetType="DatePicker">
+            <Style.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="DatePickerTextBox">
+                                <Border x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                                  Focusable="False"
+                                                  HorizontalScrollBarVisibility="Hidden"
+                                                  VerticalScrollBarVisibility="Hidden"
+                                                  VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Style.Resources>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="DatePicker">
@@ -128,12 +150,12 @@
                                                Grid.Column="0"
                                                Focusable="{TemplateBinding Focusable}"
                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               VerticalContentAlignment="Center"
                                                Background="#0B0E14"
                                                Foreground="#4DEEEA"
                                                BorderThickness="1.5,1.5,0,1.5"
                                                BorderBrush="#00A896"
-                                               Padding="10,6"
+                                               Padding="10,4"
                                                FontFamily="{StaticResource GeistMono}"
                                                FontSize="13"/>
                                                
@@ -445,27 +467,43 @@
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
 
-                            <!-- View Mode Content Columns -->
+                            <!-- View Mode Content (Vertical Stack) -->
                             <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.2*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="0.8*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Left column (Fields) -->
-                                <StackPanel Grid.Column="0" Margin="0,0,30,0" VerticalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <StackPanel Grid.Row="0" Width="500" VerticalAlignment="Center" Margin="0,10,0,15">
                                     <!-- Full Name -->
                                     <TextBlock Text="{DynamicResource Profile_FullNameLabel}" Style="{StaticResource FormLabelStyle}"/>
                                     <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
                                         <TextBlock x:Name="TextBlockFullName" Style="{StaticResource ValueTextStyle}"/>
                                         <Border.Effect>
-                                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
+                                            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A896" Opacity="0.4"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <!-- Email -->
+                                    <TextBlock Text="{DynamicResource Profile_EmailLabel}" Style="{StaticResource FormLabelStyle}"/>
+                                    <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                                        <TextBlock x:Name="TextBlockEmail" Style="{StaticResource ValueTextStyle}"/>
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A896" Opacity="0.4"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <!-- Phone -->
+                                    <TextBlock Text="{DynamicResource Profile_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
+                                    <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
+                                        <TextBlock x:Name="TextBlockPhone" Style="{StaticResource ValueTextStyle}"/>
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A896" Opacity="0.4"/>
                                         </Border.Effect>
                                     </Border>
 
                                     <!-- Birthday and Age Row -->
-                                    <Grid Margin="0,0,0,15">
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="15"/>
@@ -477,7 +515,7 @@
                                             <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                                 <TextBlock x:Name="TextBlockAge" Style="{StaticResource ValueTextStyle}"/>
                                                 <Border.Effect>
-                                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
+                                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A896" Opacity="0.4"/>
                                                 </Border.Effect>
                                             </Border>
                                         </StackPanel>
@@ -487,63 +525,23 @@
                                             <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
                                                 <TextBlock x:Name="TextBlockBirthDate" Style="{StaticResource ValueTextStyle}"/>
                                                 <Border.Effect>
-                                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
+                                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#00A896" Opacity="0.4"/>
                                                 </Border.Effect>
                                             </Border>
                                         </StackPanel>
                                     </Grid>
-
-                                    <!-- Email -->
-                                    <TextBlock Text="{DynamicResource Profile_EmailLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                    <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10" Margin="0,0,0,15">
-                                        <TextBlock x:Name="TextBlockEmail" Style="{StaticResource ValueTextStyle}"/>
-                                        <Border.Effect>
-                                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
-                                        </Border.Effect>
-                                    </Border>
-
-                                    <!-- Phone -->
-                                    <TextBlock Text="{DynamicResource Profile_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                    <Border BorderBrush="#4DEEEA" BorderThickness="1" Background="#0B0E14" Padding="15,10">
-                                        <TextBlock x:Name="TextBlockPhone" Style="{StaticResource ValueTextStyle}"/>
-                                        <Border.Effect>
-                                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.5"/>
-                                        </Border.Effect>
-                                    </Border>
                                 </StackPanel>
 
-                                <!-- Divider -->
-                <Border Grid.Column="1" Width="1.5" Background="#4DEEEA" VerticalAlignment="Stretch" Margin="0,5">
-                  <Border.Effect>
-                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.6"/>
-                  </Border.Effect>
-                </Border>
-
-                <!-- Right Column (Avatar & Action) -->
-                                <Grid Grid.Column="2" Margin="30,0,0,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="{DynamicResource Profile_AvatarLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                                        <Border Width="150" Height="150" BorderBrush="#4DEEEA" BorderThickness="1.5" Background="#0B0E14">
-                                            <Image x:Name="ImageUserAvatar" Source="/Assets/Images/UserAvatar.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
-                                            </Border.Effect>
-                                        </Border>
-                                    </StackPanel>
-
-                  <Button x:Name="ButtonEdit"
-                                            Grid.Row="1"
-                                            Content="{DynamicResource Profile_BtnEdit}"
-                                            Height="50"
-                                            Style="{StaticResource ModernPrimaryButton}"
-                                            Click="ButtonEdit_Click"
-                                            BorderThickness="1.5"/>
-                                </Grid>
+                                <!-- Action Button at bottom -->
+                                <Button x:Name="ButtonEdit"
+                                        Grid.Row="1"
+                                        Content="{DynamicResource Profile_BtnEdit}"
+                                        Height="45"
+                                        Width="250"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource ModernPrimaryButton}"
+                                        Click="ButtonEdit_Click"
+                                        BorderThickness="1.5"/>
                             </Grid>
                         </Grid>
 
@@ -575,99 +573,79 @@
                                            Foreground="#00A896"
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
-
-                            <!-- Edit Mode Fields Grid -->
                             <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <!-- Left Edit Panel (Avatar / Language / Account) -->
-                                    <ColumnDefinition Width="1.1*"/>
-                                    <!-- Divider -->
-                                    <ColumnDefinition Width="Auto"/>
-                                    <!-- Right Edit Panel (Form fields) -->
-                                    <ColumnDefinition Width="1.4*"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                                <!-- Left Column -->
-                                <StackPanel Grid.Column="0" Margin="0,0,25,0" VerticalAlignment="Center">
-                                    <TextBlock Text="{DynamicResource Profile_AvatarEditLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-                                    <Grid Width="130" Height="130" Margin="0,0,0,15" HorizontalAlignment="Center">
-                                        <Border BorderBrush="#00A896" BorderThickness="1.5" Background="#0B0E14">
-                                        <Border.Effect>
-                                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
-                                        </Border.Effect>
-                                        <Image x:Name="ImageEditUserAvatar" Source="/Assets/Images/UserAvatar.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </Grid>
+                                <!-- Row 0: Two Columns (Account settings & Personal Info) -->
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                    <!-- Username read-only field -->
-                                    <TextBlock Text="{DynamicResource Profile_UsernameEditLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                    <TextBox x:Name="TextBoxUsername" Height="38" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,15" Background="#0B0E14" BorderBrush="#00A986"/>
+                                    <!-- Left Column (Account Settings) -->
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Stretch">
+                                        <!-- Username read-only field -->
+                                        <TextBlock Text="{DynamicResource Profile_UsernameEditLabel}" Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBox x:Name="TextBoxUsername" Height="36" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,15" Background="#0B0E14" BorderBrush="#00A986"/>
 
-                                    <!-- Segmented Language Selection -->
-                                    <TextBlock Text="{DynamicResource Profile_PreferredLanguageLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                    <Grid Height="38">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Button x:Name="ButtonLangES" Grid.Column="0" Content="ESPAÑOL" Style="{StaticResource ModernPrimaryButton}" Margin="0,0,4,0" Click="ButtonLangES_Click"/>
-                                        <Button x:Name="ButtonLangEN" Grid.Column="1" Content="ENGLISH" Style="{StaticResource ModernSecondaryButton}" Margin="4,0,0,0" Click="ButtonLangEN_Click"/>
-                                    </Grid>
-                                    <TextBlock x:Name="TextBlockLanguageError" Text="{DynamicResource Profile_LanguageError}" Style="{StaticResource ErrorLabelStyle}"/>
-                                </StackPanel>
-
-                                <!-- Divider -->
-                                <Border Grid.Column="1" Width="1.5" Background="#4DEEEA" VerticalAlignment="Stretch" Margin="0,5"/>
-
-                                <!-- Right Column -->
-                                <ScrollViewer Grid.Column="2" Margin="25,0,0,0" VerticalScrollBarVisibility="Auto" Focusable="False">
-                                    <StackPanel VerticalAlignment="Center">
                                         <!-- Full Name -->
                                         <TextBlock Text="{DynamicResource Profile_FullNameLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <TextBox x:Name="TextBoxFullName" Height="38" Style="{StaticResource ModernTextBox}"/>
-                                        <TextBlock x:Name="TextBlockFullNameError" Text="{DynamicResource Profile_FullNameError}" Style="{StaticResource ErrorLabelStyle}"/>
+                                        <TextBox x:Name="TextBoxFullName" Height="36" Style="{StaticResource ModernTextBox}"/>
+                                        <TextBlock x:Name="TextBlockFullNameError" Text="{DynamicResource Profile_FullNameError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,15"/>
 
+                                        <!-- Segmented Language Selection -->
+                                        <TextBlock Text="{DynamicResource Profile_PreferredLanguageLabel}" Style="{StaticResource FormLabelStyle}"/>
+                                        <Grid Height="36">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button x:Name="ButtonLangES" Grid.Column="0" Content="ESPAÑOL" Style="{StaticResource ModernPrimaryButton}" Margin="0,0,4,0" Click="ButtonLangES_Click"/>
+                                            <Button x:Name="ButtonLangEN" Grid.Column="1" Content="ENGLISH" Style="{StaticResource ModernSecondaryButton}" Margin="4,0,0,0" Click="ButtonLangEN_Click"/>
+                                        </Grid>
+                                        <TextBlock x:Name="TextBlockLanguageError" Text="{DynamicResource Profile_LanguageError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,0"/>
+                                    </StackPanel>
+
+                                    <!-- Divider -->
+                                    <Border Grid.Column="1" Width="1.5" Background="#4DEEEA" VerticalAlignment="Stretch" Margin="0,5">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#4DEEEA" Opacity="0.5"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <!-- Right Column (Personal Info) -->
+                                    <StackPanel Grid.Column="2" VerticalAlignment="Stretch">
                                         <!-- Email read-only -->
                                         <TextBlock Text="{DynamicResource Profile_EmailLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <TextBox x:Name="TextBoxEmail" Height="38" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,12"  Background="#0B0E14" BorderBrush="#00A986"/>
+                                        <TextBox x:Name="TextBoxEmail" Height="36" Style="{StaticResource ModernTextBox}" IsReadOnly="True" Margin="0,0,0,15" Background="#0B0E14" BorderBrush="#00A986"/>
 
                                         <!-- Phone -->
                                         <TextBlock Text="{DynamicResource Profile_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <TextBox x:Name="TextBoxPhone" Height="38" Style="{StaticResource ModernTextBox}"/>
-                                        <TextBlock x:Name="TextBlockPhoneError" Text="{DynamicResource Profile_PhoneError}" Style="{StaticResource ErrorLabelStyle}"/>
+                                        <TextBox x:Name="TextBoxPhone" Height="36" Style="{StaticResource ModernTextBox}"/>
+                                        <TextBlock x:Name="TextBlockPhoneError" Text="{DynamicResource Profile_PhoneError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,15"/>
 
                                         <!-- Birthday -->
                                         <TextBlock Text="{DynamicResource Profile_BirthdayLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <DatePicker x:Name="DatePickerBirthDate" Height="38" Style="{StaticResource ModernDatePicker}" HorizontalAlignment="Stretch"/>
-                                        <TextBlock x:Name="TextBlockBirthDateError" Text="{DynamicResource Profile_BirthDateError}" Style="{StaticResource ErrorLabelStyle}"/>
-
-                                        <!-- Passwords Grid -->
-                                        <TextBlock Text="{DynamicResource Profile_ChangePasswordHeader}" Style="{StaticResource FormLabelStyle}" Foreground="#4DEEEA" Margin="2,10,0,5"/>
-
-                                        <!-- Current Password -->
-                                        <TextBlock Text="{DynamicResource Profile_CurrentPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <Grid Height="38">
-                                            <PasswordBox x:Name="PasswordBoxCurrentPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxCurrentPassword_PasswordChanged"/>
-                                            <TextBlock x:Name="TextBlockCurrentPasswordPlaceholder" Text="{DynamicResource Profile_CurrentPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
-                                        </Grid>
-                                        <TextBlock x:Name="TextBlockCurrentPasswordError" Text="{DynamicResource Profile_CurrentPasswordError}" Style="{StaticResource ErrorLabelStyle}"/>
-
-                                        <!-- New Password -->
-                                        <TextBlock Text="{DynamicResource Profile_NewPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <Grid Height="38" Margin="0,0,0,12">
-                                            <PasswordBox x:Name="PasswordBoxPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
-                                            <TextBlock x:Name="TextBlockPasswordPlaceholder" Text="{DynamicResource Profile_NewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
-                                        </Grid>
-
-                                        <!-- Confirm Password -->
-                                        <TextBlock Text="{DynamicResource Profile_ConfirmNewPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <Grid Height="38">
-                                            <PasswordBox x:Name="PasswordBoxConfirmPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxConfirmPassword_PasswordChanged"/>
-                                            <TextBlock x:Name="TextBlockConfirmPasswordPlaceholder" Text="{DynamicResource Profile_ConfirmNewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
-                                        </Grid>
-                                        <TextBlock x:Name="TextBlockPasswordError" Text="{DynamicResource Profile_PasswordMatchError}" Style="{StaticResource ErrorLabelStyle}"/>
+                                        <DatePicker x:Name="DatePickerBirthDate" Height="36" Style="{StaticResource ModernDatePicker}" HorizontalAlignment="Stretch"/>
+                                        <TextBlock x:Name="TextBlockBirthDateError" Text="{DynamicResource Profile_BirthDateError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,0"/>
                                     </StackPanel>
-                                </ScrollViewer>
+                                </Grid>
+
+                                <!-- Row 2: Change Password Button -->
+                                <Button x:Name="ButtonOpenChangePassword"
+                                        Grid.Row="2"
+                                        Content="{DynamicResource Profile_BtnChangePassword}"
+                                        Height="40"
+                                        Width="260"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource ModernSecondaryButton}"
+                                        Click="ButtonOpenChangePassword_Click"/>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -767,6 +745,90 @@
             <Canvas x:Name="CanvasHangmanProfile"/>
             <Image x:Name="ImageHangman"/>
             <Border x:Name="BorderUserAvatar"/>
+        </Grid>
+
+        <!-- ================= CHANGE PASSWORD MODAL OVERLAY ================= -->
+        <Grid x:Name="GridPasswordModal" Visibility="Collapsed" Background="#F2070A0F">
+            <!-- Modal Box -->
+            <Border Width="460"
+                    Height="450"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    BorderBrush="#F649A7"
+                    BorderThickness="1.5"
+                    Background="#0B0E14"
+                    Padding="30">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="#F649A7" Opacity="0.5"/>
+                </Border.Effect>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Modal Header -->
+                    <TextBlock Grid.Row="0"
+                               Text="{DynamicResource Profile_ChangePasswordHeader}"
+                               FontFamily="{StaticResource GeistPixelSquare}"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#F649A7"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,15"/>
+                    
+                    <!-- Form Fields -->
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                        <!-- Current Password -->
+                        <TextBlock Text="{DynamicResource Profile_CurrentPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
+                        <Grid Height="36" Margin="0,0,0,2">
+                            <PasswordBox x:Name="PasswordBoxCurrentPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxCurrentPassword_PasswordChanged"/>
+                            <TextBlock x:Name="TextBlockCurrentPasswordPlaceholder" Text="{DynamicResource Profile_CurrentPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                        </Grid>
+                        <TextBlock x:Name="TextBlockCurrentPasswordError" Text="{DynamicResource Profile_CurrentPasswordError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,8"/>
+
+                        <!-- New Password -->
+                        <TextBlock Text="{DynamicResource Profile_NewPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
+                        <Grid Height="36" Margin="0,0,0,12">
+                            <PasswordBox x:Name="PasswordBoxPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
+                            <TextBlock x:Name="TextBlockPasswordPlaceholder" Text="{DynamicResource Profile_NewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                        </Grid>
+
+                        <!-- Confirm Password -->
+                        <TextBlock Text="{DynamicResource Profile_ConfirmNewPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
+                        <Grid Height="36" Margin="0,0,0,2">
+                            <PasswordBox x:Name="PasswordBoxConfirmPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxConfirmPassword_PasswordChanged"/>
+                            <TextBlock x:Name="TextBlockConfirmPasswordPlaceholder" Text="{DynamicResource Profile_ConfirmNewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                        </Grid>
+                        <TextBlock x:Name="TextBlockPasswordError" Text="{DynamicResource Profile_PasswordMatchError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,8"/>
+                    </StackPanel>
+                    
+                    <!-- Modal Buttons -->
+                    <Grid Grid.Row="2" Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button x:Name="ButtonSavePassword"
+                                Grid.Column="0"
+                                Content="{DynamicResource Profile_BtnSavePassword}"
+                                Height="40"
+                                Style="{StaticResource ModernPrimaryButton}"
+                                Click="ButtonSavePassword_Click"/>
+                                
+                        <Button x:Name="ButtonCancelPassword"
+                                Grid.Column="2"
+                                Content="{DynamicResource Profile_BtnCancelPassword}"
+                                Height="40"
+                                Style="{StaticResource ModernSecondaryButton}"
+                                Click="ButtonCancelPassword_Click"/>
+                    </Grid>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Page>

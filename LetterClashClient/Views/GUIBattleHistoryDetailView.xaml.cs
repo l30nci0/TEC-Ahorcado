@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
+using LetterClashClient.Services;
 
 namespace LetterClashClient.Views {
   public partial class GUIBattleHistoryDetailView : Page {
@@ -38,19 +39,10 @@ namespace LetterClashClient.Views {
       ProgressBarBattle.Value = selectedBattle.Progreso;
       TextBlockProgress.Text = $"{selectedBattle.Progreso}/5";
 
-      // Cargar avatar local
+      // Cargar avatar local (o default si no tiene)
       var usuario = SessionContext.UsuarioLogueado;
-      if (usuario != null && usuario.Avatar != null && usuario.Avatar.Length > 0) {
-        try {
-          var image = new BitmapImage();
-          using (var mem = new System.IO.MemoryStream(usuario.Avatar)) {
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.StreamSource = mem;
-            image.EndInit();
-          }
-          ImageUserAvatar.Source = image;
-        } catch { }
+      if (usuario != null) {
+        AvatarHelper.AsignarAImageControl(ImageUserAvatar, usuario.Avatar);
       }
     }
 

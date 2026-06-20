@@ -48,19 +48,7 @@ namespace LetterClashClient.Views {
           TextBlockEmail.Text = dto.Correo;
           TextBlockPhone.Text = dto.Telefono;
 
-          // Cargar avatar de rival
-          if (dto.Avatar != null && dto.Avatar.Length > 0) {
-            try {
-              var image = new BitmapImage();
-              using (var mem = new System.IO.MemoryStream(dto.Avatar)) {
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = mem;
-                image.EndInit();
-              }
-              ImageUserAvatar.Source = image;
-            } catch { }
-          }
+
 
           // Cargar historial de partidas del rival para calcular estadísticas
           var historyResult = service.ConsultarHistorial(dto.IDJugador);
