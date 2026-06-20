@@ -66,7 +66,6 @@ namespace LetterClashClient.Views {
       }
 
       UpdateGameTypeButtons();
-      TextBlockAccessKey.Text = "------";
     }
 
     private int CalculateAge(DateTime birthDate) {
