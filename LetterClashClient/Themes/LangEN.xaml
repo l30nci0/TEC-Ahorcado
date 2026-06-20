@@ -284,8 +284,8 @@
     <sys:String x:Key="Game_ResultWon">Congratulations! You won the game and obtained {0} points.</sys:String>
     <sys:String x:Key="Game_ResultLost">The game has concluded. Winner: {0}.</sys:String>
     <sys:String x:Key="Game_ResultTitle">Match Finished</sys:String>
-    <sys:String x:Key="Game_AbandonHost">The guesser ({0}) has abandoned the game. You won by abandonment (+50 points)!</sys:String>
-    <sys:String x:Key="Game_AbandonGuesser">The host ({0}) has abandoned the game. You won by abandonment (+50 points)!</sys:String>
+    <sys:String x:Key="Game_AbandonHost">The guesser ({0}) has abandoned the game. The match was cancelled and the penalty was applied.</sys:String>
+    <sys:String x:Key="Game_AbandonGuesser">The host ({0}) has abandoned the game. The match was cancelled and the penalty was applied.</sys:String>
     <sys:String x:Key="Game_ServerError">A server error occurred: {0}</sys:String>
     <sys:String x:Key="Game_ErrorLetter">Could not register the letter on server: {0}</sys:String>
     <sys:String x:Key="Game_ChatYou">You</sys:String>

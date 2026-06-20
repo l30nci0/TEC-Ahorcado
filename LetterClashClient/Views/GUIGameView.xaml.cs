@@ -188,8 +188,8 @@ namespace LetterClashClient.Views {
     private void OnOponenteAbandono(string oponenteNombre) {
       Dispatcher.Invoke(() => {
         DesconectarJuego();
-        string abandonHost = (string) Application.Current.FindResource("Game_AbandonHost") ?? "El adivinador ({0}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!";
-        string abandonGuesser = (string) Application.Current.FindResource("Game_AbandonGuesser") ?? "El anfitrión ({0}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!";
+        string abandonHost = (string) Application.Current.FindResource("Game_AbandonHost") ?? "El adivinador ({0}) ha abandonado la partida. La partida fue cancelada.";
+        string abandonGuesser = (string) Application.Current.FindResource("Game_AbandonGuesser") ?? "El anfitrión ({0}) ha abandonado la partida. La partida fue cancelada.";
         string resultTitle = (string) Application.Current.FindResource("Game_ResultTitle") ?? "Partida Finalizada";
 
         string abandonMsg = isHost

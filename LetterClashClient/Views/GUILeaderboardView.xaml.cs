@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -61,8 +62,10 @@ namespace LetterClashClient.Views {
           int limit = Math.Min(jugadores.Count, 50);
           for (int i = 0; i < limit; i++) {
             var j = jugadores[i];
-            int victorias = j.Puntuacion / 50;
-            string winRate = j.Puntuacion > 0 ? "%100" : "%0";
+            int victorias;
+            int partidasConcluidas;
+            ObtenerEstadisticasJugador(service, j.IDJugador, out victorias, out partidasConcluidas);
+            string winRate = partidasConcluidas > 0 ? $"%{victorias * 100 / partidasConcluidas}" : "%0";
 
             listado.Add(new ScoreboardItem {
               Nombre = j.NombreDeUsuario,
@@ -115,6 +118,24 @@ namespace LetterClashClient.Views {
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUIGameHubView());
+    }
+
+    private void ObtenerEstadisticasJugador(LetterClashServer.Contracts.IJugadorService service, int jugadorID, out int victorias, out int partidasConcluidas) {
+      victorias = 0;
+      partidasConcluidas = 0;
+
+      try {
+        var historial = service.ConsultarHistorial(jugadorID);
+        if (historial == null || !historial.IsSuccess || historial.Value == null) {
+          return;
+        }
+
+        partidasConcluidas = historial.Value.Count(p => p.Resultado == "ADIVINADA" || p.Resultado == "SIN_ADIVINAR");
+        victorias = historial.Value.Count(p => (p.Resultado == "ADIVINADA" && p.IDAdivinador == jugadorID) ||
+                                               (p.Resultado == "SIN_ADIVINAR" && p.IDAnfitrion == jugadorID));
+      } catch (Exception ex) {
+        System.Diagnostics.Debug.WriteLine($"[GUILeaderboardView] Error al calcular victorias de jugador {jugadorID}: {ex.Message}");
+      }
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {

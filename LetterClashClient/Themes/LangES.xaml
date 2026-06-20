@@ -282,8 +282,8 @@
     <sys:String x:Key="Game_ResultWon">¡Felicidades! Ganaste la partida y obtuviste {0} puntos.</sys:String>
     <sys:String x:Key="Game_ResultLost">El juego ha concluido. Ganador: {0}.</sys:String>
     <sys:String x:Key="Game_ResultTitle">Partida Finalizada</sys:String>
-    <sys:String x:Key="Game_AbandonHost">El adivinador ({0}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!</sys:String>
-    <sys:String x:Key="Game_AbandonGuesser">El anfitrión ({0}) ha abandonado la partida. ¡Ganaste por abandono (+50 puntos)!</sys:String>
+    <sys:String x:Key="Game_AbandonHost">El adivinador ({0}) ha abandonado la partida. La partida fue cancelada y se aplicó la penalización correspondiente.</sys:String>
+    <sys:String x:Key="Game_AbandonGuesser">El anfitrión ({0}) ha abandonado la partida. La partida fue cancelada y se aplicó la penalización correspondiente.</sys:String>
     <sys:String x:Key="Game_ServerError">Ocurrió un error en el servidor: {0}</sys:String>
     <sys:String x:Key="Game_ErrorLetter">No se pudo registrar la letra en el servidor: {0}</sys:String>
     <sys:String x:Key="Game_ChatYou">Tú</sys:String>

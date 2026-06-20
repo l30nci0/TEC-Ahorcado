@@ -30,6 +30,9 @@ namespace LetterClashServer.Services {
   [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
   public class GameService : IGameService {
     private const int MaxPistasPorPartida = 2;
+    private const int PuntosVictoriaAdivinador = 10;
+    private const int PuntosVictoriaAnfitrion = 5;
+    private const int PenalizacionAbandono = -3;
     private static readonly Random random = new Random();
     private static readonly object randomLock = new object();
     private readonly PartidaRepository partidaRepository;
@@ -265,14 +268,18 @@ namespace LetterClashServer.Services {
     }
 
     private void TerminarPartida(string codigoAcceso, PartidaEnCurso partida, string resultado, int ganadorID, List<JugadorSesion> jugadoresEnSala) {
+      int puntosGanador = ObtenerPuntosPorResultado(resultado);
+
       try {
         partidaRepository.ConcluirPartida(partida.IDPartida, resultado);
-        if (ganadorID > 0) {
-          jugadorRepository.IncrementarPuntuacion(ganadorID, 50);
+        if (ganadorID > 0 && puntosGanador != 0) {
+          jugadorRepository.IncrementarPuntuacion(ganadorID, puntosGanador);
         }
       } catch (Exception ex) {
         System.Diagnostics.Debug.WriteLine($"Error al guardar partida/puntuacion en DB: {ex.Message}");
       }
+
+      partidasActivas.TryRemove(codigoAcceso, out _);
 
       string nombreGanador = "";
       if (ganadorID > 0) {
@@ -284,11 +291,21 @@ namespace LetterClashServer.Services {
 
       foreach (var jugador in jugadoresEnSala) {
         try {
-          jugador.Callback.OnPartidaFinalizada(nombreGanador, 50);
+          jugador.Callback.OnPartidaFinalizada(nombreGanador, puntosGanador);
         } catch (CommunicationException) { }
       }
+    }
 
-      partidasActivas.TryRemove(codigoAcceso, out _);
+    private int ObtenerPuntosPorResultado(string resultado) {
+      if (resultado == "ADIVINADA") {
+        return PuntosVictoriaAdivinador;
+      }
+
+      if (resultado == "SIN_ADIVINAR") {
+        return PuntosVictoriaAnfitrion;
+      }
+
+      return 0;
     }
 
     public void AbandonarPartida(string codigoAcceso, int jugadorID) {
@@ -300,18 +317,9 @@ namespace LetterClashServer.Services {
         return;
       }
 
-      int ganadorID = 0;
-      if (jugadorID == partida.HostID) {
-        ganadorID = partida.GuesserID;
-      } else if (jugadorID == partida.GuesserID) {
-        ganadorID = partida.HostID;
-      }
-
       try {
         partidaRepository.ConcluirPartida(partida.IDPartida, "ABANDONADA");
-        if (ganadorID > 0) {
-          jugadorRepository.IncrementarPuntuacion(ganadorID, 50);
-        }
+        jugadorRepository.IncrementarPuntuacion(jugadorID, PenalizacionAbandono);
       } catch (Exception ex) {
         System.Diagnostics.Debug.WriteLine($"Error al registrar abandono en DB: {ex.Message}");
       }
