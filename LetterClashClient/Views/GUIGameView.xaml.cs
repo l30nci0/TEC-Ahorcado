@@ -17,6 +17,7 @@ namespace LetterClashClient.Views {
     private string opponentName;
     private string selectedLanguage;
     private string targetWord;
+    private string fullTargetWord;
     private char[] guessedWord;
     private int mistakes;
     private readonly string codigoAcceso;
@@ -24,6 +25,8 @@ namespace LetterClashClient.Views {
     private GameCallbackHandler callbackHandler;
     private int idPalabra;
     private string wordDescription;
+    private int pistasUsadas = 0;
+    private int pistasMaximas = 0;
 
     public GUIGameView() : this(new PalabraDTO { PalabraTexto = "SOFTWARE", Descripcion = "Conjunto de programas y rutinas que permiten a la computadora realizar determinadas tareas.", Idioma = Idiomas.ESPANOL }, "000000") { }
 
@@ -35,6 +38,7 @@ namespace LetterClashClient.Views {
       this.targetWord = selectedWord != null && !string.IsNullOrWhiteSpace(selectedWord.PalabraTexto) 
           ? selectedWord.PalabraTexto.ToUpper() 
           : "SOFTWARE";
+      this.fullTargetWord = this.targetWord;
       this.wordDescription = selectedWord != null ? selectedWord.Descripcion : "";
       this.selectedLanguage = selectedWord != null ? selectedWord.Idioma : Idiomas.ESPANOL;
       this.codigoAcceso = string.IsNullOrWhiteSpace(codigoAcceso) ? "------" : codigoAcceso;
@@ -50,6 +54,7 @@ namespace LetterClashClient.Views {
       this.codigoAcceso = codigoAcceso;
       this.idPalabra = idPalabra;
       this.targetWord = "SOFTWARE";
+      this.fullTargetWord = "SOFTWARE";
       this.mistakes = 0;
     }
 
@@ -151,6 +156,7 @@ namespace LetterClashClient.Views {
           if (letra != '\0') {
             DeshabilitarBotonLetra(letra);
           }
+          ActualizarEstadoPistas();
         }
 
         UpdateHangmanImage();
@@ -273,6 +279,8 @@ namespace LetterClashClient.Views {
       TextBlockWordDescription.Text = "";
 
       if (idPalabra <= 0) {
+        pistasMaximas = ObtenerPistasMaximas(targetWord.Length);
+        ActualizarEstadoPistas();
         return;
       }
 
@@ -280,6 +288,8 @@ namespace LetterClashClient.Views {
         var palabraService = ServiceProxyManager.GetPalabraService();
         var result = palabraService.ObtenerPalabrasPorIdioma(selectedLanguage);
         if (result == null || !result.IsSuccess) {
+          pistasMaximas = ObtenerPistasMaximas(targetWord.Length);
+          ActualizarEstadoPistas();
           return;
         }
 
@@ -287,9 +297,102 @@ namespace LetterClashClient.Views {
         if (palabra != null) {
           this.wordDescription = palabra.Descripcion;
           TextBlockWordDescription.Text = palabra.Descripcion;
+          this.targetWord = palabra.PalabraTexto.ToUpper();
+          this.fullTargetWord = this.targetWord;
         }
       } catch {
         // Ignorar o registrar error
+      }
+
+      pistasMaximas = ObtenerPistasMaximas(targetWord.Length);
+      ActualizarEstadoPistas();
+    }
+
+    private int ObtenerPistasMaximas(int longitud) {
+      if (longitud < 5) return 0;
+      if (longitud <= 8) return 1;
+      return 2;
+    }
+
+    private void ActualizarEstadoPistas() {
+      if (TextBlockClueStatus == null || ButtonClue == null) {
+        return;
+      }
+
+      if (pistasMaximas == 0) {
+        string noCluesMsg = (string) Application.Current.FindResource("Game_ClueNoClues") ?? "No hay pistas disponibles";
+        TextBlockClueStatus.Text = noCluesMsg;
+        ButtonClue.IsEnabled = false;
+      } else {
+        string statusTemplate = (string) Application.Current.FindResource("Game_ClueStatus") ?? "Pistas usadas: {0}/{1}";
+        TextBlockClueStatus.Text = string.Format(statusTemplate, pistasUsadas, pistasMaximas);
+
+        if (pistasUsadas >= pistasMaximas) {
+          ButtonClue.IsEnabled = false;
+          return;
+        }
+
+        if (guessedWord == null || string.IsNullOrEmpty(fullTargetWord)) {
+          ButtonClue.IsEnabled = false;
+          return;
+        }
+
+        var letrasRestantes = fullTargetWord.Where((c, idx) => idx < guessedWord.Length && guessedWord[idx] == '_')
+                                            .Select(c => char.ToUpper(c))
+                                            .Distinct()
+                                            .ToList();
+
+        if (letrasRestantes.Count <= 1) {
+          ButtonClue.IsEnabled = false;
+        } else {
+          ButtonClue.IsEnabled = true;
+        }
+      }
+    }
+
+    private void ButtonClue_Click(object sender, RoutedEventArgs e) {
+      if (isHost || gameServiceProxy == null) {
+        return;
+      }
+
+      if (pistasUsadas >= pistasMaximas) {
+        string title = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string msg = (string) Application.Current.FindResource("Game_ClueLimitReached") ?? "¡Límite de pistas alcanzado!";
+        MessageBox.Show(msg, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        return;
+      }
+
+      if (guessedWord == null || string.IsNullOrEmpty(fullTargetWord)) {
+        return;
+      }
+
+      var letrasRestantes = fullTargetWord.Where((c, idx) => idx < guessedWord.Length && guessedWord[idx] == '_')
+                                          .Select(c => char.ToUpper(c))
+                                          .Distinct()
+                                          .ToList();
+
+      if (letrasRestantes.Count <= 1) {
+        string title = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        string msg = (string) Application.Current.FindResource("Game_ClueAlmostWon") ?? "No puedes usar pistas si solo queda una letra por adivinar.";
+        MessageBox.Show(msg, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        return;
+      }
+
+      // Choose a random letter
+      var random = new Random();
+      char letraPista = letrasRestantes[random.Next(letrasRestantes.Count)];
+
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario != null) {
+        try {
+          gameServiceProxy.EscribirLetra(codigoAcceso, usuario.IDJugador, letraPista);
+          pistasUsadas++;
+          ActualizarEstadoPistas();
+        } catch (Exception ex) {
+          string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string letterErr = (string) Application.Current.FindResource("Game_ErrorLetter") ?? "No se pudo registrar la letra en el servidor: {0}";
+          MessageBox.Show(string.Format(letterErr, ex.Message), errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
       }
     }
 

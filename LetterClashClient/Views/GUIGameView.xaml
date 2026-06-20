@@ -471,6 +471,23 @@
                   <Button Content="M" Click="ButtonLetter_Click" BorderBrush="#00A986"/>
                 </UniformGrid>
               </Grid>
+
+              <!-- Clue Section for Guesser -->
+              <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button x:Name="ButtonClue"
+                        Content="{DynamicResource Game_BtnClue}"
+                        Width="200"
+                        Height="38"
+                        Style="{StaticResource ModernPrimaryButton}"
+                        Click="ButtonClue_Click"/>
+                <TextBlock x:Name="TextBlockClueStatus"
+                           Text="Pistas usadas: 0/0"
+                           FontSize="12"
+                           FontFamily="{StaticResource GeistMono}"
+                           Foreground="#A1A1AA"
+                           HorizontalAlignment="Center"
+                           Margin="0,8,0,0"/>
+              </StackPanel>
             </Grid>            <!-- Host View Panel -->
             <Grid x:Name="GridHostSection" Visibility="Collapsed">
               <Grid.RowDefinitions>
