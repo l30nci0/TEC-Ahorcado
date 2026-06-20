@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -51,6 +52,10 @@ namespace LetterClashClient.Views {
           string resWin = (string) Application.Current.FindResource("History_ResultWin") ?? "Victoria";
           string resLoss = (string) Application.Current.FindResource("History_ResultLoss") ?? "Derrota";
           string resDisconnect = (string) Application.Current.FindResource("History_ResultDisconnect") ?? "Desconectada";
+          string typePublic = (string) Application.Current.FindResource("History_TypePublic") ?? "Público";
+          string typePrivate = (string) Application.Current.FindResource("History_TypePrivate") ?? "Privado";
+          string langES = (string) Application.Current.FindResource("History_LangES") ?? "Español";
+          string langEN = (string) Application.Current.FindResource("History_LangEN") ?? "Inglés";
 
           List<BattleHistoryItem> battles = new List<BattleHistoryItem>();
           foreach (var p in result.Value) {
@@ -95,6 +100,11 @@ namespace LetterClashClient.Views {
             }
 
             string rolRival = isHost ? rolChallenger : rolHost;
+            string tipo = (p.Privacidad == "PÚBLICA" || p.Privacidad == "PUBLICA") ? typePublic : typePrivate;
+            string idioma = langES;
+            if (p.Idioma != null && (p.Idioma.ToUpper() == "INGLÉS" || p.Idioma.ToUpper() == "INGLES")) {
+              idioma = langEN;
+            }
 
             battles.Add(new BattleHistoryItem {
               Rival = nombreRival,
@@ -107,7 +117,9 @@ namespace LetterClashClient.Views {
               NombreUsuario = usuario.NombreDeUsuario,
               RolUsuario = rol,
               RolRival = rolRival,
-              AvatarUsuario = avatarUsuario
+              AvatarUsuario = avatarUsuario,
+              Idioma = idioma,
+              Tipo = tipo
             });
           }
 
@@ -216,6 +228,12 @@ namespace LetterClashClient.Views {
 
     private void OnClicAjustes(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUISettingsView());
+    }
+
+    private void OnClicItemHistorial(object sender, MouseButtonEventArgs e) {
+      if (sender is Border border && border.DataContext is BattleHistoryItem selectedBattle) {
+        NavigationService.Navigate(new GUIBattleHistoryDetailView(selectedBattle));
+      }
     }
   }
 

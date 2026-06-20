@@ -193,7 +193,7 @@
                         <ItemsControl x:Name="ItemsControlHistory">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Style="{StaticResource MatchCardStyle}">
+                                    <Border Style="{StaticResource MatchCardStyle}" MouseLeftButtonDown="OnClicItemHistorial">
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#4DEEEA" Opacity="0.3"/>
                                         </Border.Effect>
