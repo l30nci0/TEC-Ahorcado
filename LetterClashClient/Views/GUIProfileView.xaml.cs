@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 using LetterClashClient.Models;
@@ -29,12 +30,25 @@ namespace LetterClashClient.Views {
       SwitchMode(false);
     }
 
-    private bool IsValidPhone(string phone) {
-      return !string.IsNullOrWhiteSpace(phone) && Regex.IsMatch(phone.Trim(), @"^[0-9]{10,}$");
+    private bool IsValidFullName(string fullName) {
+      return !string.IsNullOrWhiteSpace(fullName) &&
+             Regex.IsMatch(fullName.Trim(), @"^(?=.{8,}$)\p{L}{3,}(?:\s+\p{L}+)*\s+\p{L}{4,}$");
     }
 
-    private bool IsValidMinimumAge(DateTime birthDate) {
-      return birthDate.Date <= DateTime.Today.AddYears(-3);
+    private bool IsValidPhone(string phone) {
+      return !string.IsNullOrWhiteSpace(phone) && Regex.IsMatch(phone.Trim(), @"^[0-9]{10}$");
+    }
+
+    private bool IsValidBirthDate(DateTime birthDate) {
+      DateTime today = DateTime.Today;
+      return birthDate.Date <= today.AddYears(-3) &&
+             birthDate.Date >= today.AddYears(-100) &&
+             birthDate.Date <= today;
+    }
+
+    private bool IsValidPassword(string password) {
+      return !string.IsNullOrEmpty(password) &&
+             Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$");
     }
 
     private void LoadViewData() {
@@ -108,7 +122,7 @@ namespace LetterClashClient.Views {
       bool hasError = false;
 
       string fullName = TextBoxFullName.Text.Trim();
-      if (string.IsNullOrWhiteSpace(fullName)) {
+      if (!IsValidFullName(fullName)) {
         TextBlockFullNameError.Text = (string) Application.Current.FindResource("Profile_FullNameError") ?? "Ingrese un nombre válido.";
         TextBlockFullNameError.Visibility = Visibility.Visible;
         hasError = true;
@@ -125,8 +139,8 @@ namespace LetterClashClient.Views {
         TextBlockBirthDateError.Text = (string) Application.Current.FindResource("Profile_BirthDateError") ?? "Seleccione una fecha válida.";
         TextBlockBirthDateError.Visibility = Visibility.Visible;
         hasError = true;
-      } else if (!IsValidMinimumAge(DatePickerBirthDate.SelectedDate.Value)) {
-        TextBlockBirthDateError.Text = (string) Application.Current.FindResource("Profile_MinimumAgeError") ?? "El jugador debe tener al menos 3 años.";
+      } else if (!IsValidBirthDate(DatePickerBirthDate.SelectedDate.Value)) {
+        TextBlockBirthDateError.Text = (string) Application.Current.FindResource("Profile_BirthDateRangeError") ?? "Edad permitida: 3 a 100 años.";
         TextBlockBirthDateError.Visibility = Visibility.Visible;
         hasError = true;
       }
@@ -244,6 +258,10 @@ namespace LetterClashClient.Views {
         TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_NewPasswordPlaceholder") ?? "Ingrese la nueva contraseña.";
         TextBlockPasswordError.Visibility = Visibility.Visible;
         hasError = true;
+      } else if (!IsValidPassword(newPassword)) {
+        TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_PasswordFormatError") ?? "Contraseña: 6-15, mayúscula, minúscula, número y símbolo.";
+        TextBlockPasswordError.Visibility = Visibility.Visible;
+        hasError = true;
       } else if (newPassword != confirmPassword) {
         TextBlockPasswordError.Text = (string) Application.Current.FindResource("Profile_PasswordMatchError") ?? "Las contraseñas no coinciden.";
         TextBlockPasswordError.Visibility = Visibility.Visible;
@@ -316,6 +334,27 @@ namespace LetterClashClient.Views {
       if (TextBlockConfirmPasswordPlaceholder != null) {
         TextBlockConfirmPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxConfirmPassword.Password) ? Visibility.Visible : Visibility.Hidden;
       }
+    }
+
+    private void TextBoxPhone_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+      e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]+$");
+    }
+
+    private void TextBoxPhone_Pasting(object sender, DataObjectPastingEventArgs e) {
+      if (!e.DataObject.GetDataPresent(typeof(string)) ||
+          !Regex.IsMatch((string) e.DataObject.GetData(typeof(string)), @"^[0-9]+$")) {
+        e.CancelCommand();
+      }
+    }
+
+    private void DatePickerBirthDate_PreviewKeyDown(object sender, KeyEventArgs e) {
+      if (e.Key != Key.Tab && e.Key != Key.LeftShift && e.Key != Key.RightShift) {
+        e.Handled = true;
+      }
+    }
+
+    private void DatePickerBirthDate_Pasting(object sender, DataObjectPastingEventArgs e) {
+      e.CancelCommand();
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {

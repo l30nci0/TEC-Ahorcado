@@ -462,6 +462,8 @@
             <Setter Property="Foreground" Value="#E60067"/>
             <Setter Property="Margin" Value="2,2,0,12"/>
             <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextTrimming" Value="None"/>
         </Style>
     </Page.Resources>
 
@@ -589,15 +591,12 @@
                             <TextBox x:Name="TextBoxFullName" Style="{StaticResource ModernTextBox}" Height="40" TextChanged="TextBoxFullName_TextChanged"/>
                             <TextBlock x:Name="TextBlockFullNamePlaceholder" Text="{DynamicResource Register_FullNamePlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                         </Grid>
-                        <StackPanel Orientation="Horizontal" Margin="2,2,0,6">
-                            <TextBlock x:Name="TextBlockFullNameError" Text="{DynamicResource Register_FullNameConfirmError}" FontFamily="{StaticResource GeistMono}" FontSize="11" Foreground="#F87171" VerticalAlignment="Center" Visibility="Hidden"/>
-                            <Button x:Name="ButtonConfirmName" Content="{DynamicResource Register_ConfirmYes}" Width="45" Height="20" Margin="10,0,0,0" Style="{StaticResource ModernPrimaryButton}" FontSize="10" Visibility="Hidden"/>
-                        </StackPanel>
+                        <TextBlock x:Name="TextBlockFullNameError" Text="{DynamicResource Register_FullNameError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,6"/>
 
                         <!-- Phone -->
                         <TextBlock Text="{DynamicResource Register_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Margin="0,0,0,2">
-                            <TextBox x:Name="TextBoxPhone" Style="{StaticResource ModernTextBox}" Height="40" TextChanged="TextBoxPhone_TextChanged"/>
+                            <TextBox x:Name="TextBoxPhone" Style="{StaticResource ModernTextBox}" Height="40" MaxLength="10" TextChanged="TextBoxPhone_TextChanged" PreviewTextInput="TextBoxPhone_PreviewTextInput" DataObject.Pasting="TextBoxPhone_Pasting"/>
                             <TextBlock x:Name="TextBlockPhonePlaceholder" Text="{DynamicResource Register_PhonePlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
                         </Grid>
                         <TextBlock x:Name="TextBlockPhoneError" Text="{DynamicResource Register_PhoneError}" Style="{StaticResource ErrorLabelStyle}"/>
@@ -615,6 +614,8 @@
                                 <DatePicker x:Name="DatePickerBirthDate" 
                                             Style="{StaticResource ModernDatePicker}"
                                             Height="40"
+                                            PreviewKeyDown="DatePickerBirthDate_PreviewKeyDown"
+                                            DataObject.Pasting="DatePickerBirthDate_Pasting"
                                             HorizontalAlignment="Stretch"/>
                                 <TextBlock x:Name="TextBlockBirthDateError" Text="{DynamicResource Register_BirthDateError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,4,0,0"/>
                             </StackPanel>

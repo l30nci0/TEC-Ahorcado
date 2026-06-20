@@ -1,5 +1,6 @@
 using System;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,6 +24,11 @@ namespace LetterClashClient.Views {
       }
     }
 
+    private bool IsValidPassword(string password) {
+      return !string.IsNullOrEmpty(password) &&
+             Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$");
+    }
+
     private void ButtonLogin_Click(object sender, RoutedEventArgs e) {
       TextBlockUsernameError.Visibility = Visibility.Hidden;
       TextBlockPasswordError.Visibility = Visibility.Hidden;
@@ -39,6 +45,10 @@ namespace LetterClashClient.Views {
 
       if (passwordEmpty) {
         TextBlockPasswordError.Text = (string) Application.Current.FindResource("Login_PasswordErrorEmpty") ?? "Coloque su contraseña.";
+        TextBlockPasswordError.Visibility = Visibility.Visible;
+        hasError = true;
+      } else if (!IsValidPassword(PasswordBoxPassword.Password)) {
+        TextBlockPasswordError.Text = (string) Application.Current.FindResource("Login_PasswordFormatError") ?? "Contraseña: 6-15, mayúscula, minúscula, número y símbolo.";
         TextBlockPasswordError.Visibility = Visibility.Visible;
         hasError = true;
       }

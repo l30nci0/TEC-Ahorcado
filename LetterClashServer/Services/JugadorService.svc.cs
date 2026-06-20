@@ -20,11 +20,24 @@ namespace LetterClashServer.Services {
     }
 
     private bool EsTelefonoValido(string telefono) {
-      return !string.IsNullOrWhiteSpace(telefono) && Regex.IsMatch(telefono.Trim(), @"^[0-9]{10,}$");
+      return !string.IsNullOrWhiteSpace(telefono) && Regex.IsMatch(telefono.Trim(), @"^[0-9]{10}$");
     }
 
-    private bool TieneEdadMinima(DateTime fechaDeNacimiento) {
-      return fechaDeNacimiento.Date <= DateTime.Today.AddYears(-3);
+    private bool EsFechaNacimientoValida(DateTime fechaDeNacimiento) {
+      DateTime today = DateTime.Today;
+      return fechaDeNacimiento.Date <= today.AddYears(-3) &&
+             fechaDeNacimiento.Date >= today.AddYears(-100) &&
+             fechaDeNacimiento.Date <= today;
+    }
+
+    private bool EsNombreCompletoValido(string nombre) {
+      return !string.IsNullOrWhiteSpace(nombre) &&
+             Regex.IsMatch(nombre.Trim(), @"^(?=.{8,}$)\p{L}{3,}(?:\s+\p{L}+)*\s+\p{L}{4,}$");
+    }
+
+    private bool EsContrasenaValida(string contrasena) {
+      return !string.IsNullOrEmpty(contrasena) &&
+             Regex.IsMatch(contrasena, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$");
     }
 
     public ServiceResult<bool> ActualizarPerfil(JugadorDTO jugadorDTO) {
@@ -44,26 +57,26 @@ namespace LetterClashServer.Services {
         );
       }
 
-      if (string.IsNullOrWhiteSpace(jugadorDTO.Nombre)) {
+      if (!EsNombreCompletoValido(jugadorDTO.Nombre)) {
         return ServiceResult<bool>.Failure(
           CodigoError.PARAMETRO_INVALIDO,
-          "El nombre del jugador es requerido y no puede estar vacío.",
-          "Nombre es nulo o vacío"
+          "El nombre completo debe incluir nombre y apellido, sin números ni signos especiales.",
+          $"Nombre: {jugadorDTO.Nombre}"
         );
       }
 
       if (!EsTelefonoValido(jugadorDTO.Telefono)) {
         return ServiceResult<bool>.Failure(
           CodigoError.PARAMETRO_INVALIDO,
-          "El teléfono debe contener mínimo 10 dígitos numéricos.",
+          "El teléfono debe contener exactamente 10 dígitos numéricos.",
           $"Teléfono: {jugadorDTO.Telefono}"
         );
       }
 
-      if (jugadorDTO.FechaDeNacimiento == default(DateTime) || !TieneEdadMinima(jugadorDTO.FechaDeNacimiento)) {
+      if (jugadorDTO.FechaDeNacimiento == default(DateTime) || !EsFechaNacimientoValida(jugadorDTO.FechaDeNacimiento)) {
         return ServiceResult<bool>.Failure(
           CodigoError.PARAMETRO_INVALIDO,
-          "El jugador debe tener al menos 3 años.",
+          "La edad del jugador debe estar entre 3 y 100 años.",
           $"Fecha de nacimiento: {jugadorDTO.FechaDeNacimiento}"
         );
       }
@@ -207,6 +220,14 @@ namespace LetterClashServer.Services {
           CodigoError.PARAMETRO_INVALIDO,
           "Las contraseñas no pueden estar vacías.",
           "contrasenaActual o nuevaContrasena vacías"
+        );
+      }
+
+      if (!EsContrasenaValida(nuevaContrasena)) {
+        return ServiceResult<bool>.Failure(
+          CodigoError.PARAMETRO_INVALIDO,
+          "La contraseña debe tener de 6 a 15 caracteres e incluir mayúscula, minúscula, número y carácter especial.",
+          "Formato de contraseña inválido"
         );
       }
 

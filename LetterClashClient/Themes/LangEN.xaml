@@ -15,6 +15,7 @@
     <sys:String x:Key="Login_PasswordLabel">PASSWORD</sys:String>
     <sys:String x:Key="Login_PasswordPlaceholder">Enter your password</sys:String>
     <sys:String x:Key="Login_PasswordErrorEmpty">Please enter your password.</sys:String>
+    <sys:String x:Key="Login_PasswordFormatError">Password: 6-15, uppercase, lowercase, number, and symbol.</sys:String>
     <sys:String x:Key="Login_PasswordErrorIncorrect">Incorrect username or password.</sys:String>
     <sys:String x:Key="Login_BtnLogin">LOG IN</sys:String>
     <sys:String x:Key="Login_BtnRegister">REGISTER</sys:String>
@@ -32,29 +33,33 @@
     <sys:String x:Key="Register_AccessTitle">USER ACCESS</sys:String>
     <sys:String x:Key="Register_UsernameLabel">USERNAME</sys:String>
     <sys:String x:Key="Register_UsernamePlaceholder">Username</sys:String>
-    <sys:String x:Key="Register_UsernameErrorEmpty">Please Enter a Username / Already in Use</sys:String>
+    <sys:String x:Key="Register_UsernameErrorEmpty">Please enter a username.</sys:String>
+    <sys:String x:Key="Register_UsernameErrorInvalid">Use 3 to 12 characters: letters, numbers, hyphen, or underscore.</sys:String>
     <sys:String x:Key="Register_EmailLabel">EMAIL ADDRESS</sys:String>
     <sys:String x:Key="Register_EmailPlaceholder">email@domain.com</sys:String>
-    <sys:String x:Key="Register_EmailError">Invalid domain</sys:String>
+    <sys:String x:Key="Register_EmailError">Enter an email with a valid domain.</sys:String>
     <sys:String x:Key="Register_PasswordLabel">PASSWORD</sys:String>
     <sys:String x:Key="Register_PasswordPlaceholder">Enter your password</sys:String>
     <sys:String x:Key="Register_ConfirmPasswordLabel">CONFIRM PASSWORD</sys:String>
     <sys:String x:Key="Register_ConfirmPasswordPlaceholder">Confirm your password</sys:String>
     <sys:String x:Key="Register_PasswordError">Passwords do not match</sys:String>
+    <sys:String x:Key="Register_PasswordFormatError">Password: 6-15, uppercase, lowercase, number, and symbol.</sys:String>
     <sys:String x:Key="Register_PersonalInfoTitle">PERSONAL INFORMATION</sys:String>
     <sys:String x:Key="Register_FullNameLabel">FULL NAME</sys:String>
     <sys:String x:Key="Register_FullNamePlaceholder">Full Name</sys:String>
-    <sys:String x:Key="Register_FullNameConfirmError">Are you sure that is your name?</sys:String>
+    <sys:String x:Key="Register_FullNameConfirmError">Enter a valid first and last name.</sys:String>
+    <sys:String x:Key="Register_FullNameError">Enter first and last name, without numbers or signs.</sys:String>
     <sys:String x:Key="Register_ConfirmYes">YES</sys:String>
     <sys:String x:Key="Register_PhoneLabel">PHONE</sys:String>
     <sys:String x:Key="Register_PhonePlaceholder">Phone Number</sys:String>
   
-    <sys:String x:Key="Register_PhoneError">Please enter at least 10 numeric digits</sys:String>
+    <sys:String x:Key="Register_PhoneError">Please enter exactly 10 numeric digits</sys:String>
   
     <sys:String x:Key="Register_BirthDateLabel">DATE OF BIRTH</sys:String>
   
     <sys:String x:Key="Register_BirthDateError">Select a valid date</sys:String>
     <sys:String x:Key="Register_MinimumAgeError">The player must be at least 3 years old</sys:String>
+    <sys:String x:Key="Register_BirthDateRangeError">Allowed age: 3 to 100 years</sys:String>
   
     <sys:String x:Key="Register_PreferredLanguageLabel">PREFERRED LANGUAGE</sys:String>
     <sys:String x:Key="Register_LanguageError">Select a language</sys:String>
@@ -101,13 +106,14 @@
     <sys:String x:Key="Profile_UsernameEditLabel">PLAYER NAME</sys:String>
     <sys:String x:Key="Profile_PreferredLanguageLabel">PREFERRED LANGUAGE</sys:String>
     <sys:String x:Key="Profile_LanguageError">Select a language</sys:String>
-    <sys:String x:Key="Profile_FullNameError">Enter a valid name</sys:String>
+    <sys:String x:Key="Profile_FullNameError">Enter first and last name, without numbers or signs</sys:String>
   
-    <sys:String x:Key="Profile_PhoneError">Please enter at least 10 numeric digits</sys:String>
+    <sys:String x:Key="Profile_PhoneError">Please enter exactly 10 numeric digits</sys:String>
   
   <sys:String x:Key="Profile_BirthdayLabel">BIRTHDAY</sys:String>
   <sys:String x:Key="Profile_BirthDateError">Select a valid date</sys:String>
     <sys:String x:Key="Profile_MinimumAgeError">The player must be at least 3 years old</sys:String>
+    <sys:String x:Key="Profile_BirthDateRangeError">Allowed age: 3 to 100 years</sys:String>
     <sys:String x:Key="Profile_ChangePasswordHeader">CHANGE PASSWORD</sys:String>
     <sys:String x:Key="Profile_CurrentPasswordLabel">CURRENT PASSWORD</sys:String>
     <sys:String x:Key="Profile_CurrentPasswordPlaceholder">Required to change password</sys:String>
@@ -117,6 +123,7 @@
     <sys:String x:Key="Profile_ConfirmNewPasswordLabel">CONFIRM NEW PASSWORD</sys:String>
     <sys:String x:Key="Profile_ConfirmNewPasswordPlaceholder">Confirm new password</sys:String>
     <sys:String x:Key="Profile_PasswordMatchError">Passwords do not match</sys:String>
+    <sys:String x:Key="Profile_PasswordFormatError">Password: 6-15, uppercase, lowercase, number, and symbol</sys:String>
     <sys:String x:Key="Profile_BtnChangePassword">CHANGE PASSWORD  🔑</sys:String>
     <sys:String x:Key="Profile_BtnSavePassword">Save Password  ✓</sys:String>
     <sys:String x:Key="Profile_BtnCancelPassword">Cancel  ✕</sys:String>

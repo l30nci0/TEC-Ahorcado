@@ -395,6 +395,8 @@
             <Setter Property="Foreground" Value="#E60067"/>
             <Setter Property="Margin" Value="2,2,0,8"/>
             <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextTrimming" Value="None"/>
         </Style>
     </Page.Resources>
 
@@ -627,12 +629,12 @@
 
                                         <!-- Phone -->
                                         <TextBlock Text="{DynamicResource Profile_PhoneLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <TextBox x:Name="TextBoxPhone" Height="36" Style="{StaticResource ModernTextBox}"/>
+                                        <TextBox x:Name="TextBoxPhone" Height="36" MaxLength="10" Style="{StaticResource ModernTextBox}" PreviewTextInput="TextBoxPhone_PreviewTextInput" DataObject.Pasting="TextBoxPhone_Pasting"/>
                                         <TextBlock x:Name="TextBlockPhoneError" Text="{DynamicResource Profile_PhoneError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,15"/>
 
                                         <!-- Birthday -->
                                         <TextBlock Text="{DynamicResource Profile_BirthdayLabel}" Style="{StaticResource FormLabelStyle}"/>
-                                        <DatePicker x:Name="DatePickerBirthDate" Height="36" Style="{StaticResource ModernDatePicker}" HorizontalAlignment="Stretch"/>
+                                        <DatePicker x:Name="DatePickerBirthDate" Height="36" Style="{StaticResource ModernDatePicker}" HorizontalAlignment="Stretch" PreviewKeyDown="DatePickerBirthDate_PreviewKeyDown" DataObject.Pasting="DatePickerBirthDate_Pasting"/>
                                         <TextBlock x:Name="TextBlockBirthDateError" Text="{DynamicResource Profile_BirthDateError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,0"/>
                                     </StackPanel>
                                 </Grid>
