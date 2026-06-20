@@ -67,6 +67,14 @@ namespace LetterClashServer.Services {
       }
     }
 
+    private bool EsTelefonoValido(string telefono) {
+      return !string.IsNullOrWhiteSpace(telefono) && Regex.IsMatch(telefono.Trim(), @"^[0-9]{10,}$");
+    }
+
+    private bool TieneEdadMinima(DateTime fechaDeNacimiento) {
+      return fechaDeNacimiento.Date <= DateTime.Today.AddYears(-3);
+    }
+
     public ServiceResult<bool> RegistrarJugador(JugadorDTO datosJugador, string contrasenaPlana) {
       if (datosJugador == null || string.IsNullOrEmpty(contrasenaPlana)) {
         return ServiceResult<bool>.Failure(
@@ -102,11 +110,19 @@ namespace LetterClashServer.Services {
         );
       }
 
-      if (datosJugador.FechaDeNacimiento == default(DateTime) || datosJugador.FechaDeNacimiento > DateTime.Today) {
+      if (datosJugador.FechaDeNacimiento == default(DateTime) || !TieneEdadMinima(datosJugador.FechaDeNacimiento)) {
         return ServiceResult<bool>.Failure(
           CodigoError.PARAMETRO_INVALIDO,
-          "La fecha de nacimiento no es válida.",
+          "El jugador debe tener al menos 3 años.",
           $"Fecha de nacimiento: {datosJugador.FechaDeNacimiento}"
+        );
+      }
+
+      if (!EsTelefonoValido(datosJugador.Telefono)) {
+        return ServiceResult<bool>.Failure(
+          CodigoError.PARAMETRO_INVALIDO,
+          "El teléfono debe contener mínimo 10 dígitos numéricos.",
+          $"Teléfono: {datosJugador.Telefono}"
         );
       }
 

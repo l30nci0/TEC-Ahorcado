@@ -48,9 +48,14 @@
     <sys:String x:Key="Register_ConfirmYes">YES</sys:String>
     <sys:String x:Key="Register_PhoneLabel">PHONE</sys:String>
     <sys:String x:Key="Register_PhonePlaceholder">Phone Number</sys:String>
-    <sys:String x:Key="Register_PhoneError">Please enter numbers only</sys:String>
+  
+    <sys:String x:Key="Register_PhoneError">Please enter at least 10 numeric digits</sys:String>
+  
     <sys:String x:Key="Register_BirthDateLabel">DATE OF BIRTH</sys:String>
-    <sys:String x:Key="Register_BirthDateError">Select date</sys:String>
+  
+    <sys:String x:Key="Register_BirthDateError">Select a valid date</sys:String>
+    <sys:String x:Key="Register_MinimumAgeError">The player must be at least 3 years old</sys:String>
+  
     <sys:String x:Key="Register_PreferredLanguageLabel">PREFERRED LANGUAGE</sys:String>
     <sys:String x:Key="Register_LanguageError">Select a language</sys:String>
     <sys:String x:Key="Register_AvatarLabel">PLAYER AVATAR</sys:String>
@@ -97,9 +102,12 @@
     <sys:String x:Key="Profile_PreferredLanguageLabel">PREFERRED LANGUAGE</sys:String>
     <sys:String x:Key="Profile_LanguageError">Select a language</sys:String>
     <sys:String x:Key="Profile_FullNameError">Enter a valid name</sys:String>
-    <sys:String x:Key="Profile_PhoneError">Please enter numbers only (10 digits)</sys:String>
-    <sys:String x:Key="Profile_BirthdayLabel">BIRTHDAY</sys:String>
-    <sys:String x:Key="Profile_BirthDateError">Select a date</sys:String>
+  
+    <sys:String x:Key="Profile_PhoneError">Please enter at least 10 numeric digits</sys:String>
+  
+  <sys:String x:Key="Profile_BirthdayLabel">BIRTHDAY</sys:String>
+  <sys:String x:Key="Profile_BirthDateError">Select a valid date</sys:String>
+    <sys:String x:Key="Profile_MinimumAgeError">The player must be at least 3 years old</sys:String>
     <sys:String x:Key="Profile_ChangePasswordHeader">CHANGE PASSWORD</sys:String>
     <sys:String x:Key="Profile_CurrentPasswordLabel">CURRENT PASSWORD</sys:String>
     <sys:String x:Key="Profile_CurrentPasswordPlaceholder">Required to change password</sys:String>

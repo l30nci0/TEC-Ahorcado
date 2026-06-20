@@ -1,5 +1,6 @@
 using System;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,6 +13,13 @@ namespace LetterClashClient.Views {
   public partial class GUIRegisterView : Page {
     public GUIRegisterView() {
       InitializeComponent();
+    }
+    private bool IsValidPhone(string phone) {
+      return !string.IsNullOrWhiteSpace(phone) && Regex.IsMatch(phone.Trim(), @"^[0-9]{10,}$");
+    }
+
+    private bool IsValidMinimumAge(DateTime birthDate) {
+      return birthDate.Date <= DateTime.Today.AddYears(-3);
     }
 
     private void Page_Loaded(object sender, RoutedEventArgs e) {
@@ -56,7 +64,10 @@ namespace LetterClashClient.Views {
         hasError = true;
       }
 
-      if (string.IsNullOrWhiteSpace(TextBoxPhone.Text) || !long.TryParse(TextBoxPhone.Text, out _)) {
+      string phone = TextBoxPhone.Text.Trim();
+
+      if (!IsValidPhone(phone)) {
+        TextBlockPhoneError.Text = (string) Application.Current.FindResource("Register_PhoneError") ?? "Ingrese mínimo 10 dígitos numéricos.";
         TextBlockPhoneError.Visibility = Visibility.Visible;
         hasError = true;
       }
@@ -67,6 +78,11 @@ namespace LetterClashClient.Views {
       }
 
       if (DatePickerBirthDate.SelectedDate == null) {
+        TextBlockBirthDateError.Text = (string) Application.Current.FindResource("Register_BirthDateError") ?? "Seleccione una fecha válida.";
+        TextBlockBirthDateError.Visibility = Visibility.Visible;
+        hasError = true;
+      } else if (!IsValidMinimumAge(DatePickerBirthDate.SelectedDate.Value)) {
+        TextBlockBirthDateError.Text = (string) Application.Current.FindResource("Register_MinimumAgeError") ?? "El jugador debe tener al menos 3 años.";
         TextBlockBirthDateError.Visibility = Visibility.Visible;
         hasError = true;
       }
@@ -89,7 +105,7 @@ namespace LetterClashClient.Views {
         Nombre = TextBoxFullName.Text.Trim(),
         NombreDeUsuario = TextBoxUsername.Text.Trim(),
         Correo = TextBoxEmail.Text.Trim(),
-        Telefono = TextBoxPhone.Text.Trim(),
+        Telefono = phone,
         FechaDeNacimiento = DatePickerBirthDate.SelectedDate.Value,
         IdiomaPreferido = ComboBoxPreferredLanguage.SelectedIndex == 1 ? Idiomas.INGLES : Idiomas.ESPANOL,
         Puntuacion = 0,

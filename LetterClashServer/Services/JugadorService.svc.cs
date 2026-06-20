@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 
 using LetterClashServer.Contracts;
 using LetterClashServer.DataAccess.Repositories;
@@ -16,6 +17,14 @@ namespace LetterClashServer.Services {
 
     public JugadorService(JugadorRepository repository) {
       this.jugadorRepository = repository;
+    }
+
+    private bool EsTelefonoValido(string telefono) {
+      return !string.IsNullOrWhiteSpace(telefono) && Regex.IsMatch(telefono.Trim(), @"^[0-9]{10,}$");
+    }
+
+    private bool TieneEdadMinima(DateTime fechaDeNacimiento) {
+      return fechaDeNacimiento.Date <= DateTime.Today.AddYears(-3);
     }
 
     public ServiceResult<bool> ActualizarPerfil(JugadorDTO jugadorDTO) {
@@ -40,6 +49,22 @@ namespace LetterClashServer.Services {
           CodigoError.PARAMETRO_INVALIDO,
           "El nombre del jugador es requerido y no puede estar vacío.",
           "Nombre es nulo o vacío"
+        );
+      }
+
+      if (!EsTelefonoValido(jugadorDTO.Telefono)) {
+        return ServiceResult<bool>.Failure(
+          CodigoError.PARAMETRO_INVALIDO,
+          "El teléfono debe contener mínimo 10 dígitos numéricos.",
+          $"Teléfono: {jugadorDTO.Telefono}"
+        );
+      }
+
+      if (jugadorDTO.FechaDeNacimiento == default(DateTime) || !TieneEdadMinima(jugadorDTO.FechaDeNacimiento)) {
+        return ServiceResult<bool>.Failure(
+          CodigoError.PARAMETRO_INVALIDO,
+          "El jugador debe tener al menos 3 años.",
+          $"Fecha de nacimiento: {jugadorDTO.FechaDeNacimiento}"
         );
       }
 
