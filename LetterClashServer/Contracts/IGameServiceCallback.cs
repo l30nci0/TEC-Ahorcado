@@ -11,6 +11,9 @@ namespace LetterClashServer.Contracts {
     void OnLetraPropuesta(char letra, bool esCorrecta, string palabraRevelada, int vidaRestante);
 
     [OperationContract(IsOneWay = true)]
+    void OnPistaUsada(char letra, string palabraRevelada, int vidaRestante);
+
+    [OperationContract(IsOneWay = true)]
     void OnPartidaFinalizada(string ganador, int puntuacionObtenida);
 
     [OperationContract(IsOneWay = true)]

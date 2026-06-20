@@ -24,6 +24,7 @@ namespace LetterClashClient.Views {
     private GameCallbackHandler callbackHandler;
     private int idPalabra;
     private string wordDescription;
+    private int pistasUsadas;
 
     public GUIGameView() : this(new PalabraDTO { PalabraTexto = "SOFTWARE", Descripcion = "Conjunto de programas y rutinas que permiten a la computadora realizar determinadas tareas.", Idioma = Idiomas.ESPANOL }, "000000") { }
 
@@ -120,7 +121,10 @@ namespace LetterClashClient.Views {
         string connMsg = (string) Application.Current.FindResource("Game_ErrorConnect") ?? "Error al conectar al servidor:";
         MessageBox.Show($"{connMsg} {ex.Message}", connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         NavigationService.Navigate(new GUIMainMenuView());
+        return;
       }
+
+      // Ya no hay música de fondo, solo efectos
     }
 
     private void OnJugadorSeUnio(JugadorPublicoDTO jugadorDTO) {
@@ -326,6 +330,34 @@ namespace LetterClashClient.Views {
           string sendErr = (string) Application.Current.FindResource("Game_ErrorSend") ?? "No se pudo enviar el mensaje: {0}";
           MessageBox.Show(string.Format(sendErr, ex.Message), connTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
+      }
+    }
+
+    private void ButtonHint_Click(object sender, RoutedEventArgs e) {
+      if (isHost || gameServiceProxy == null) {
+        return;
+      }
+
+      if (pistasUsadas >= 2) {
+        ButtonHint.IsEnabled = false;
+        return;
+      }
+
+      var usuario = SessionContext.UsuarioLogueado;
+      if (usuario == null) {
+        return;
+      }
+
+      try {
+        gameServiceProxy.VerPista(codigoAcceso, usuario.IDJugador);
+        pistasUsadas++;
+
+        if (pistasUsadas >= 2) {
+          ButtonHint.IsEnabled = false;
+        }
+      } catch (Exception ex) {
+        string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+        MessageBox.Show($"No se pudo solicitar la pista: {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 

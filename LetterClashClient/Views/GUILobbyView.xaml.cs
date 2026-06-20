@@ -124,8 +124,8 @@ namespace LetterClashClient.Views {
             var lobbyService = ServiceProxyManager.GetLobbyService();
             var result = lobbyService.UnirseAPartidaDeLobby(usuario.IDJugador, selectedMatch.IDPartida);
 
-            if (result != null && result.IsSuccess) {
-              NavigationService.Navigate(new GUIGameView(selectedMatch.NombreAnfitrion, selectedMatch.Idioma, selectedMatch.CodigoAcceso, selectedMatch.IDPalabra));
+          if (result != null && result.IsSuccess) {
+            NavigationService.Navigate(new GUIGameView(selectedMatch.NombreAnfitrion, selectedMatch.Idioma, selectedMatch.CodigoAcceso, selectedMatch.IDPalabra));
             } else {
               string joinTitle = (string) Application.Current.FindResource("Lobby_ErrorJoinTitle") ?? "Error al unirse";
               string joinMsg = (string) Application.Current.FindResource("Lobby_ErrorJoin") ?? "No se pudo unir a la partida.";

@@ -265,6 +265,13 @@
                                 </Grid>
                             </StackPanel>
 
+                            <Button x:Name="ButtonAudio"
+                                    Content="{DynamicResource Settings_BtnAudio}"
+                                    Height="45"
+                                    Style="{StaticResource ModernPrimaryButton}"
+                                    Margin="0,0,0,10"
+                                    Click="ButtonAudio_Click"/>
+
                             <!-- Logout button -->
                             <Button x:Name="ButtonLogout"
                                     Content="{DynamicResource Settings_BtnLogout}"

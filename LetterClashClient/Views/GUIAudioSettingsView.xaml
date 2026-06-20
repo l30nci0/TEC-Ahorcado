@@ -1,0 +1,245 @@
+<Page x:Class="LetterClashClient.Views.GUIAudioSettingsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:LetterClashClient.Services"
+      mc:Ignorable="d"
+      d:DesignHeight="720"
+      d:DesignWidth="1280"
+      Title="GUIAudioSettingsView"
+      Loaded="OnPaginaCargada"
+      Background="#0B0E14">
+
+    <Page.Resources>
+        <local:SliderFillConverter x:Key="SliderFillConverter"/>
+
+        <Style x:Key="NavBarButton" TargetType="Button">
+            <Setter Property="Background" Value="#0B0E14"/>
+            <Setter Property="Foreground" Value="#4DEEEA"/>
+            <Setter Property="BorderBrush" Value="#4DEEEA"/>
+            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1.5"
+                                CornerRadius="0"
+                                SnapsToDevicePixels="True">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="#0B0E14"/>
+                                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Foreground" Value="#0B0E14"/>
+                                <Setter TargetName="border" Property="Background" Value="#00A896"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#00A896"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="VolumeSlider" TargetType="Slider">
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="Maximum" Value="100"/>
+            <Setter Property="SmallChange" Value="1"/>
+            <Setter Property="LargeChange" Value="10"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Width" Value="340"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid Background="Transparent" Height="24">
+                            <Rectangle Height="6"
+                                       Fill="#2A2F3A"
+                                       VerticalAlignment="Center"
+                                       RadiusX="3"
+                                       RadiusY="3"/>
+                            <Rectangle Height="6"
+                                       Fill="#4DEEEA"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       RadiusX="3"
+                                       RadiusY="3"
+                                       IsHitTestVisible="False">
+                                <Rectangle.Width>
+                                    <MultiBinding Converter="{StaticResource SliderFillConverter}">
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Value"/>
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth"/>
+                                    </MultiBinding>
+                                </Rectangle.Width>
+                            </Rectangle>
+                            <Track x:Name="PART_Track">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Opacity="0" Focusable="False"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Width="0" Height="0" Opacity="0" Focusable="False"/>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Opacity="0" Focusable="False"/>
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#15151A" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Border Width="620"
+                        Height="390"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        BorderBrush="#4DEEEA"
+                        BorderThickness="1.5"
+                        Background="#0B0E14"
+                        CornerRadius="0"
+                        Padding="40">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#4DEEEA" Opacity="0.6"/>
+                    </Border.Effect>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Margin="0,0,0,28">
+                            <TextBlock Text="{DynamicResource AudioSettings_Title}"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="#4DEEEA"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,6"/>
+
+                            <TextBlock Text="{DynamicResource AudioSettings_Subtitle}"
+                                       FontFamily="{StaticResource GeistMono}"
+                                       FontSize="13"
+                                       Foreground="#4DEEEA"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                            <TextBlock Text="{DynamicResource AudioSettings_MusicLabel}"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="#FFFFFF"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,10"/>
+
+                            <Grid Width="340" HorizontalAlignment="Center" Margin="0,0,0,28">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource AudioSettings_LowLabel}" FontSize="11" FontFamily="{StaticResource GeistMono}" Foreground="#A1A1AA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{DynamicResource AudioSettings_HighLabel}" FontSize="11" FontFamily="{StaticResource GeistMono}" Foreground="#A1A1AA" HorizontalAlignment="Right"/>
+                                <Slider x:Name="SliderMusicVolume"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        Style="{StaticResource VolumeSlider}"
+                                        Value="70"
+                                        ValueChanged="SliderMusicVolume_ValueChanged"/>
+                            </Grid>
+
+                            <TextBlock Text="{DynamicResource AudioSettings_SfxLabel}"
+                                       FontFamily="{StaticResource GeistPixelSquare}"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="#FFFFFF"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,10"/>
+
+                            <Grid Width="340" HorizontalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource AudioSettings_LowLabel}" FontSize="11" FontFamily="{StaticResource GeistMono}" Foreground="#A1A1AA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{DynamicResource AudioSettings_HighLabel}" FontSize="11" FontFamily="{StaticResource GeistMono}" Foreground="#A1A1AA" HorizontalAlignment="Right"/>
+                                <Slider x:Name="SliderEffectsVolume"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        Style="{StaticResource VolumeSlider}"
+                                        Value="70"
+                                        ValueChanged="SliderEffectsVolume_ValueChanged"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="1"
+                    BorderBrush="#2D2D30"
+                    BorderThickness="0,1,0,0"
+                    Background="#121214">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="ButtonMainMenu" Grid.Column="0" Content="{DynamicResource Nav_MainMenu}" Style="{StaticResource NavBarButton}" Click="ButtonMainMenu_Click"/>
+                    <Button x:Name="ButtonProfile" Grid.Column="1" Content="{DynamicResource Nav_Profile}" Style="{StaticResource NavBarButton}" Click="ButtonProfile_Click"/>
+                    <Button x:Name="ButtonHistory" Grid.Column="2" Content="{DynamicResource Nav_History}" Style="{StaticResource NavBarButton}" Click="ButtonHistory_Click"/>
+                    <Button x:Name="ButtonScoreboard" Grid.Column="3" Content="{DynamicResource Nav_Scoreboard}" Style="{StaticResource NavBarButton}" Click="ButtonScoreboard_Click"/>
+                    <Button x:Name="ButtonSettings" Grid.Column="4" Content="{DynamicResource Nav_Settings}" Style="{StaticResource NavBarButton}" Click="ButtonSettings_Click"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

@@ -362,23 +362,35 @@
                   </StackPanel>
               </Grid>
 
-              <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                  <TextBlock Text="PALABRA A ADIVINAR"
-                             FontSize="11"
-                             FontFamily="{StaticResource GeistPixelSquare}"
-                             Foreground="#00A896"
-                             FontWeight="Bold"
-                             HorizontalAlignment="Center"
-                             Margin="0,0,0,8"/>
-                  <TextBlock x:Name="TextBlockHiddenWord"
-                             Text="_ _ _ _ _ _ _ _"
-                             FontSize="38"
-                             FontFamily="{StaticResource GeistMono}"
-                             FontWeight="Bold"
-                             Foreground="#4DEEEA"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"/>
-              </StackPanel>
+               <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                   <TextBlock Text="PALABRA A ADIVINAR"
+                              FontSize="11"
+                              FontFamily="{StaticResource GeistPixelSquare}"
+                              Foreground="#00A896"
+                              FontWeight="Bold"
+                              HorizontalAlignment="Center"
+                              Margin="0,0,0,8"/>
+                   <TextBlock x:Name="TextBlockHiddenWord"
+                              Text="_ _ _ _ _ _ _ _"
+                              FontSize="38"
+                              FontFamily="{StaticResource GeistMono}"
+                              FontWeight="Bold"
+                              Foreground="#4DEEEA"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"/>
+                   <Button x:Name="ButtonHint"
+                            Content="💡 PISTA"
+                            FontFamily="{StaticResource GeistPixelSquare}"
+                            FontSize="12"
+                            FontWeight="Bold"
+                            Foreground="#050D14"
+                            Background="#00A896"
+                            BorderBrush="#00FFCC"
+                            BorderThickness="1.5"
+                            Padding="12,6"
+                            Margin="0,12,0,0"
+                            Click="ButtonHint_Click"/>
+               </StackPanel>
 
               <Grid Grid.Row="2"
                                   Width="560"

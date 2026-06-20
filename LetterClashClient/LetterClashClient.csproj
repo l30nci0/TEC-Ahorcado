@@ -97,158 +97,203 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-	<ItemGroup>
-		<Page Include="Views\GUIBattleHistoryDetailView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUICreateRoomView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUIDifferentUserView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUIEntryMenuView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUIGameView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUIHistoryView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUILeaderboardView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUILobbyView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUILoginView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUIMainMenuView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUIProfileView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
+  <ItemGroup>
+    <Page Include="Views\GUIBattleHistoryDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUICreateRoomView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIDifferentUserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIEntryMenuView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIGameView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIHistoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUILeaderboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUILobbyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUILoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIMainMenuView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIProfileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
 
-		<Page Include="Themes\LangES.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Themes\LangEN.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUIRegisterView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUISelectWordView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Include="Views\GUISettingsView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<SubType>Designer</SubType>
-		</Page>
-	</ItemGroup>
+    <Page Include="Themes\LangES.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\LangEN.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIRegisterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUISelectWordView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUISettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIAudioSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Services\SliderFillConverter.cs" />
+    <Compile Include="Views\GUIBattleHistoryDetailView.xaml.cs">
+      <DependentUpon>GUIBattleHistoryDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUICreateRoomView.xaml.cs">
+      <DependentUpon>GUICreateRoomView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUIDifferentUserView.xaml.cs">
+      <DependentUpon>GUIDifferentUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUIEntryMenuView.xaml.cs">
+      <DependentUpon>GUIEntryMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUIGameView.xaml.cs">
+      <DependentUpon>GUIGameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUIHistoryView.xaml.cs">
+      <DependentUpon>GUIHistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUILeaderboardView.xaml.cs">
+      <DependentUpon>GUILeaderboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUILobbyView.xaml.cs">
+      <DependentUpon>GUILobbyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUILoginView.xaml.cs">
+      <DependentUpon>GUILoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUIMainMenuView.xaml.cs">
+      <DependentUpon>GUIMainMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUIProfileView.xaml.cs">
+      <DependentUpon>GUIProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUIRegisterView.xaml.cs">
+      <DependentUpon>GUIRegisterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUISelectWordView.xaml.cs">
+      <DependentUpon>GUISelectWordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUISettingsView.xaml.cs">
+      <DependentUpon>GUISettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ServiceProxyManager.cs" />
+    <Compile Include="Services\GameCallbackHandler.cs" />
+    <Compile Include="Services\LanguageManager.cs" />
+    <Compile Include="Models\SessionContext.cs" />
+    <Compile Include="Services\AudioManager.cs" />
+    <Compile Include="Services\AvatarHelper.cs" />
+    <Compile Include="Services\ValueToWidthConverter.cs" />
+    <Compile Include="Views\GUIAudioSettingsView.xaml.cs">
+      <DependentUpon>GUIAudioSettingsView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Hangedman1.png" />
+    <Resource Include="Assets\Images\Hangedman2.png" />
+    <Resource Include="Assets\Images\Hangedman3.png" />
+    <Resource Include="Assets\Images\Hangedman4.png" />
+    <Resource Include="Assets\Images\Hangedman5.png" />
+    <Resource Include="Assets\Images\Hangedman6.png" />
+    <Resource Include="Assets\Images\Hangman.jpg" />
+    <Resource Include="Assets\Images\LogoLetterClash.jpeg" />
+    <Resource Include="Assets\Images\LogoLetterClashRectangle.png" />
+    <Resource Include="Assets\Images\LogoLetterClashSquare.png" />
+    <Resource Include="Assets\Images\Stadistics.png" />
+    <Resource Include="Assets\Images\star.png" />
+    <Resource Include="Assets\Images\UserAvatar.png" />
+    <Resource Include="Assets\Fonts\GeistPixel-Circle.ttf" />
+    <Resource Include="Assets\Fonts\GeistPixel-Grid.ttf" />
+    <Resource Include="Assets\Fonts\GeistPixel-Line.ttf" />
+    <Resource Include="Assets\Fonts\GeistPixel-Square.ttf" />
+    <Resource Include="Assets\Fonts\GeistPixel-Triangle.ttf" />
+    <Resource Include="Assets\Fonts\GeistMono-Black.ttf" />
+    <Resource Include="Assets\Fonts\GeistMono-Bold.ttf" />
+    <Resource Include="Assets\Fonts\GeistMono-ExtraBold.ttf" />
+    <Resource Include="Assets\Fonts\GeistMono-Light.ttf" />
+    <Resource Include="Assets\Fonts\GeistMono-Medium.ttf" />
+    <Resource Include="Assets\Fonts\GeistMono-Regular.ttf" />
+    <Resource Include="Assets\Fonts\GeistMono-Thin.ttf" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Compile Include="Views\GUIBattleHistoryDetailView.xaml.cs">
-			<DependentUpon>GUIBattleHistoryDetailView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUICreateRoomView.xaml.cs">
-			<DependentUpon>GUICreateRoomView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUIDifferentUserView.xaml.cs">
-			<DependentUpon>GUIDifferentUserView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUIEntryMenuView.xaml.cs">
-			<DependentUpon>GUIEntryMenuView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUIGameView.xaml.cs">
-			<DependentUpon>GUIGameView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUIHistoryView.xaml.cs">
-			<DependentUpon>GUIHistoryView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUILeaderboardView.xaml.cs">
-			<DependentUpon>GUILeaderboardView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUILobbyView.xaml.cs">
-			<DependentUpon>GUILobbyView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUILoginView.xaml.cs">
-			<DependentUpon>GUILoginView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUIMainMenuView.xaml.cs">
-			<DependentUpon>GUIMainMenuView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUIProfileView.xaml.cs">
-			<DependentUpon>GUIProfileView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUIRegisterView.xaml.cs">
-			<DependentUpon>GUIRegisterView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUISelectWordView.xaml.cs">
-			<DependentUpon>GUISelectWordView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Views\GUISettingsView.xaml.cs">
-			<DependentUpon>GUISettingsView.xaml</DependentUpon>
-		</Compile>
-		<Compile Include="Services\ServiceProxyManager.cs" />
-		<Compile Include="Services\GameCallbackHandler.cs" />
-		<Compile Include="Services\LanguageManager.cs" />
-		<Compile Include="Services\AvatarHelper.cs" />
-		<Compile Include="Models\SessionContext.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Resource Include="Assets\Images\Hangedman1.png" />
-		<Resource Include="Assets\Images\Hangedman2.png" />
-		<Resource Include="Assets\Images\Hangedman3.png" />
-		<Resource Include="Assets\Images\Hangedman4.png" />
-		<Resource Include="Assets\Images\Hangedman5.png" />
-		<Resource Include="Assets\Images\Hangedman6.png" />
-		<Resource Include="Assets\Images\Hangman.jpg" />
-		<Resource Include="Assets\Images\LogoLetterClash.jpeg" />
-		<Resource Include="Assets\Images\LogoLetterClashRectangle.png" />
-		<Resource Include="Assets\Images\LogoLetterClashSquare.png" />
-		<Resource Include="Assets\Images\Stadistics.png" />
-		<Resource Include="Assets\Images\star.png" />
-		<Resource Include="Assets\Images\UserAvatar.png" />
-		<Resource Include="Assets\Fonts\GeistPixel-Circle.ttf" />
-		<Resource Include="Assets\Fonts\GeistPixel-Grid.ttf" />
-		<Resource Include="Assets\Fonts\GeistPixel-Line.ttf" />
-		<Resource Include="Assets\Fonts\GeistPixel-Square.ttf" />
-		<Resource Include="Assets\Fonts\GeistPixel-Triangle.ttf" />
-		<Resource Include="Assets\Fonts\GeistMono-Black.ttf" />
-		<Resource Include="Assets\Fonts\GeistMono-Bold.ttf" />
-		<Resource Include="Assets\Fonts\GeistMono-ExtraBold.ttf" />
-		<Resource Include="Assets\Fonts\GeistMono-Light.ttf" />
-		<Resource Include="Assets\Fonts\GeistMono-Medium.ttf" />
-		<Resource Include="Assets\Fonts\GeistMono-Regular.ttf" />
-		<Resource Include="Assets\Fonts\GeistMono-Thin.ttf" />
-	</ItemGroup>	
-	
   <ItemGroup>
     <ProjectReference Include="..\LetterClashServer\LetterClashServer.csproj">
       <Project>{7801DFFC-55E1-4E14-B3EF-A09331116E75}</Project>
       <Name>LetterClashServer</Name>
     </ProjectReference>
   </ItemGroup>
-
+  <ItemGroup>
+    <Content Include="Assets\Sounds\ConfirmSelection.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\Correct.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\Error.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\GameOst.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\GameOver.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\Hint.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\Hit.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\MenuOst.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\NewPlayerAproaching.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\Perfect.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\StartGame.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\Victory.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

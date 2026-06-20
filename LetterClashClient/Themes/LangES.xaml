@@ -298,5 +298,14 @@
     <sys:String x:Key="Settings_LangES">ESPAÑOL</sys:String>
     <sys:String x:Key="Settings_LangEN">ENGLISH</sys:String>
     <sys:String x:Key="Settings_BtnLogout">Cerrar Sesión ↩</sys:String>
+    <sys:String x:Key="Settings_BtnAudio">Configurar Audio 🔊</sys:String>
+    <sys:String x:Key="AudioSettings_WindowTitle">Configuración de Audio</sys:String>
+    <sys:String x:Key="AudioSettings_Title">CONFIGURACIÓN DE AUDIO</sys:String>
+    <sys:String x:Key="AudioSettings_Subtitle">Ajusta el volumen de música y efectos</sys:String>
+    <sys:String x:Key="AudioSettings_MusicLabel">MÚSICA DE FONDO</sys:String>
+    <sys:String x:Key="AudioSettings_SfxLabel">EFECTOS DE SONIDO</sys:String>
+    <sys:String x:Key="AudioSettings_LowLabel">BAJO</sys:String>
+    <sys:String x:Key="AudioSettings_HighLabel">ALTO</sys:String>
+    <sys:String x:Key="AudioSettings_BtnBack">REGRESAR ↩</sys:String>
 </ResourceDictionary>
 

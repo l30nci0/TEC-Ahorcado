@@ -21,6 +21,7 @@ namespace LetterClashServer.Services {
     public string PalabraObjetivo { get; set; }
     public string PalabraRevelada { get; set; }
     public int VidasRestantes { get; set; } = 5;
+    public int PistasUsadas { get; set; }
     public HashSet<char> LetrasPropuestas { get; set; } = new HashSet<char>();
     public int HostID { get; set; }
     public int GuesserID { get; set; }
@@ -28,6 +29,9 @@ namespace LetterClashServer.Services {
 
   [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
   public class GameService : IGameService {
+    private const int MaxPistasPorPartida = 2;
+    private static readonly Random random = new Random();
+    private static readonly object randomLock = new object();
     private readonly PartidaRepository partidaRepository;
     private readonly JugadorRepository jugadorRepository;
 
@@ -332,7 +336,101 @@ namespace LetterClashServer.Services {
     }
 
     public void VerPista(string codigoAcceso, int jugadorID) {
-      // No implementado/requerido en la interfaz del cliente
+      if (string.IsNullOrEmpty(codigoAcceso) || jugadorID <= 0) {
+        return;
+      }
+
+      if (!partidasActivas.TryGetValue(codigoAcceso, out var partida)) {
+        return;
+      }
+
+      if (jugadorID != partida.GuesserID) {
+        NotificarErrorJugador(codigoAcceso, jugadorID, "Solo el adivinador puede solicitar pistas.", CodigoError.ACCESO_DENEGADO);
+        return;
+      }
+
+      char letraPista;
+      bool partidaCompletada;
+
+      lock (partida) {
+        if (partida.VidasRestantes <= 0 || partida.PalabraRevelada == partida.PalabraObjetivo) {
+          return;
+        }
+
+        if (partida.PistasUsadas >= MaxPistasPorPartida) {
+          NotificarErrorJugador(codigoAcceso, jugadorID, "Ya usaste todas las pistas disponibles.", CodigoError.OPERACION_INVALIDA);
+          return;
+        }
+
+        var indicesOcultos = Enumerable.Range(0, partida.PalabraObjetivo.Length)
+                                       .Where(i => partida.PalabraRevelada[i] == '_')
+                                       .ToList();
+
+        if (!indicesOcultos.Any()) {
+          return;
+        }
+
+        int indiceElegido;
+        lock (randomLock) {
+          indiceElegido = indicesOcultos[random.Next(indicesOcultos.Count)];
+        }
+
+        letraPista = partida.PalabraObjetivo[indiceElegido];
+        char[] arrayRevelado = partida.PalabraRevelada.ToCharArray();
+
+        for (int i = 0; i < partida.PalabraObjetivo.Length; i++) {
+          if (partida.PalabraObjetivo[i] == letraPista) {
+            arrayRevelado[i] = letraPista;
+          }
+        }
+
+        partida.PalabraRevelada = new string(arrayRevelado);
+        partida.LetrasPropuestas.Add(letraPista);
+        partida.PistasUsadas++;
+        partidaCompletada = partida.PalabraRevelada == partida.PalabraObjetivo;
+      }
+
+      if (!salasDeJuego.TryGetValue(codigoAcceso, out var jugadoresEnSala)) {
+        return;
+      }
+
+      List<JugadorSesion> copiaJugadores;
+      lock (jugadoresEnSala) {
+        copiaJugadores = jugadoresEnSala.ToList();
+      }
+
+      foreach (var jugador in copiaJugadores) {
+        try {
+          jugador.Callback.OnLetraPropuesta(letraPista, true, partida.PalabraRevelada, partida.VidasRestantes);
+        } catch (CommunicationException) { }
+      }
+
+      if (partidaCompletada) {
+        TerminarPartida(codigoAcceso, partida, "ADIVINADA", partida.GuesserID, copiaJugadores);
+      }
+    }
+
+    private void NotificarErrorJugador(string codigoAcceso, int jugadorID, string mensaje, CodigoError codigoError) {
+      if (!salasDeJuego.TryGetValue(codigoAcceso, out var jugadoresEnSala)) {
+        return;
+      }
+
+      JugadorSesion jugador;
+      lock (jugadoresEnSala) {
+        jugador = jugadoresEnSala.FirstOrDefault(j => j.JugadorID == jugadorID);
+      }
+
+      if (jugador == null) {
+        return;
+      }
+
+      try {
+        jugador.Callback.OnErrorOcurrido(new ServiceFault {
+          Mensaje = mensaje,
+          CodigoError = codigoError,
+          Detalle = mensaje
+        });
+      } catch (CommunicationException) { }
     }
 
     public void EnviarMensaje(string codigoAcceso, int jugadorID, string mensaje) {
