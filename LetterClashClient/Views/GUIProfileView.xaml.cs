@@ -29,6 +29,14 @@ namespace LetterClashClient.Views {
       SwitchMode(false);
     }
 
+    private bool IsValidPhone(string phone) {
+      return !string.IsNullOrWhiteSpace(phone) && Regex.IsMatch(phone.Trim(), @"^[0-9]{10,}$");
+    }
+
+    private bool IsValidMinimumAge(DateTime birthDate) {
+      return birthDate.Date <= DateTime.Today.AddYears(-3);
+    }
+
     private void LoadViewData() {
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario != null) {
@@ -107,13 +115,18 @@ namespace LetterClashClient.Views {
       }
 
       string phone = TextBoxPhone.Text.Trim();
-      if (string.IsNullOrWhiteSpace(phone) || !Regex.IsMatch(phone, @"^[0-9]{10}$")) {
-        TextBlockPhoneError.Text = (string) Application.Current.FindResource("Profile_PhoneError") ?? "Coloque un número de 10 dígitos.";
+      if (!IsValidPhone(phone)) {
+        TextBlockPhoneError.Text = (string) Application.Current.FindResource("Profile_PhoneError") ?? "Ingrese mínimo 10 dígitos numéricos.";
         TextBlockPhoneError.Visibility = Visibility.Visible;
         hasError = true;
       }
 
-      if (DatePickerBirthDate.SelectedDate == null) {
+      if(DatePickerBirthDate.SelectedDate == null) {
+        TextBlockBirthDateError.Text = (string) Application.Current.FindResource("Profile_BirthDateError") ?? "Seleccione una fecha válida.";
+        TextBlockBirthDateError.Visibility = Visibility.Visible;
+        hasError = true;
+      } else if (!IsValidMinimumAge(DatePickerBirthDate.SelectedDate.Value)) {
+        TextBlockBirthDateError.Text = (string) Application.Current.FindResource("Profile_MinimumAgeError") ?? "El jugador debe tener al menos 3 años.";
         TextBlockBirthDateError.Visibility = Visibility.Visible;
         hasError = true;
       }

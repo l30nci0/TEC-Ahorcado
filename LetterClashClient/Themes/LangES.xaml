@@ -48,9 +48,10 @@
     <sys:String x:Key="Register_ConfirmYes">SÍ</sys:String>
     <sys:String x:Key="Register_PhoneLabel">TELÉFONO</sys:String>
     <sys:String x:Key="Register_PhonePlaceholder">Número Telefónico</sys:String>
-    <sys:String x:Key="Register_PhoneError">Coloque solo números</sys:String>
-    <sys:String x:Key="Register_BirthDateLabel">FECHA NACIMIENTO</sys:String>
-    <sys:String x:Key="Register_BirthDateError">Seleccione fecha</sys:String>
+    <sys:String x:Key="Register_PhoneError">Ingrese mínimo 10 dígitos numéricos</sys:String>
+    <sys:String x:Key="Register_BirthDateLabel">FECHA DE NACIMIENTO</sys:String>
+    <sys:String x:Key="Register_BirthDateError">Seleccione una fecha válida</sys:String>
+    <sys:String x:Key="Register_MinimumAgeError">El jugador debe tener al menos 3 años</sys:String>
     <sys:String x:Key="Register_PreferredLanguageLabel">IDIOMA PREFERIDO</sys:String>
     <sys:String x:Key="Register_LanguageError">Seleccione un idioma</sys:String>
     <sys:String x:Key="Register_AvatarLabel">AVATAR DE JUGADOR</sys:String>
@@ -97,9 +98,10 @@
     <sys:String x:Key="Profile_PreferredLanguageLabel">IDIOMA PREFERIDO</sys:String>
     <sys:String x:Key="Profile_LanguageError">Seleccione un idioma</sys:String>
     <sys:String x:Key="Profile_FullNameError">Ingrese un nombre válido</sys:String>
-    <sys:String x:Key="Profile_PhoneError">Coloque solo números (10 dígitos)</sys:String>
+    <sys:String x:Key="Profile_PhoneError">Ingrese mínimo 10 dígitos numéricos</sys:String>
     <sys:String x:Key="Profile_BirthdayLabel">CUMPLEAÑOS</sys:String>
-    <sys:String x:Key="Profile_BirthDateError">Seleccione una fecha</sys:String>
+    <sys:String x:Key="Profile_BirthDateError">Seleccione una fecha válida</sys:String>
+    <sys:String x:Key="Profile_MinimumAgeError">El jugador debe tener al menos 3 años</sys:String>
     <sys:String x:Key="Profile_ChangePasswordHeader">CAMBIAR CONTRASEÑA</sys:String>
     <sys:String x:Key="Profile_CurrentPasswordLabel">CONTRASEÑA ACTUAL</sys:String>
     <sys:String x:Key="Profile_CurrentPasswordPlaceholder">Requerida para cambiar contraseña</sys:String>

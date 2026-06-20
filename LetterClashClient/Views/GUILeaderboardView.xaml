@@ -10,135 +10,135 @@
       Loaded="Page_Loaded"
       Background="#0B0E14">
 
-    <Page.Resources>
-        <!-- Style for Bottom Navigation Bar Buttons -->
-        <Style x:Key="NavBarButton" TargetType="Button">
-            <Setter Property="Background" Value="#0B0E14"/>
-            <Setter Property="Foreground" Value="#4DEEEA"/>
-            <Setter Property="BorderBrush" Value="#4DEEEA"/>
-            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" 
+  <Page.Resources>
+    <!-- Style for Bottom Navigation Bar Buttons -->
+    <Style x:Key="NavBarButton" TargetType="Button">
+      <Setter Property="Background" Value="#0B0E14"/>
+      <Setter Property="Foreground" Value="#4DEEEA"/>
+      <Setter Property="BorderBrush" Value="#4DEEEA"/>
+      <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+      <Setter Property="FontSize" Value="14"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="border" 
                                 Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="0" 
                                 SnapsToDevicePixels="True">
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
-                        </Border.Effect>
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Foreground" Value="#0B0E14"/>
-                                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
-                                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Foreground" Value="#4DEEEA"/>
-                                <Setter TargetName="border" Property="Background" Value="#00A896"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
-                                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+              <Border.Effect>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
+              </Border.Effect>
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="#0B0E14"/>
+                <Setter TargetName="border" Property="Background" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
+              </Trigger>
+              <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Foreground" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="Background" Value="#00A896"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="#4DEEEA"/>
+                <Setter TargetName="border" Property="Effect" Value="{x:Null}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
 
-        <!-- DataGrid Dark Grayscale Styles -->
-        <Style TargetType="DataGrid">
-            <Setter Property="Background" Value="#0B0E14"/>
-            <Setter Property="BorderBrush" Value="#00A896"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" Value="#00A896"/>
-            <Setter Property="GridLinesVisibility" Value="All"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="#181E29"/>
-            <Setter Property="VerticalGridLinesBrush" Value="#181E29"/>
-            <Setter Property="RowBackground" Value="#0B0E14"/>
-            <Setter Property="AlternatingRowBackground" Value="#111622"/>
-        </Style>
+    <!-- DataGrid Dark Grayscale Styles -->
+    <Style TargetType="DataGrid">
+      <Setter Property="Background" Value="#0B0E14"/>
+      <Setter Property="BorderBrush" Value="#00A896"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Foreground" Value="#00A896"/>
+      <Setter Property="GridLinesVisibility" Value="All"/>
+      <Setter Property="HorizontalGridLinesBrush" Value="#181E29"/>
+      <Setter Property="VerticalGridLinesBrush" Value="#181E29"/>
+      <Setter Property="RowBackground" Value="#0B0E14"/>
+      <Setter Property="AlternatingRowBackground" Value="#111622"/>
+    </Style>
 
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#0B0E14"/>
-            <Setter Property="Foreground" Value="#4DEEEA"/>
-            <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Padding" Value="12,8"/>
-            <Setter Property="BorderBrush" Value="#181E29"/>
-            <Setter Property="BorderThickness" Value="0,0,1,1"/>
-        </Style>
+    <Style TargetType="DataGridColumnHeader">
+      <Setter Property="Background" Value="#0B0E14"/>
+      <Setter Property="Foreground" Value="#4DEEEA"/>
+      <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+      <Setter Property="FontSize" Value="12"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Padding" Value="12,8"/>
+      <Setter Property="BorderBrush" Value="#181E29"/>
+      <Setter Property="BorderThickness" Value="0,0,1,1"/>
+    </Style>
 
-        <Style TargetType="DataGridCell">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#7DE2D1"/>
-            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="10,0"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#181E29"/>
-                    <Setter Property="Foreground" Value="#4DEEEA"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+    <Style TargetType="DataGridCell">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="Foreground" Value="#7DE2D1"/>
+      <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+      <Setter Property="FontSize" Value="13"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Padding" Value="10,0"/>
+      <Style.Triggers>
+        <Trigger Property="IsSelected" Value="True">
+          <Setter Property="Background" Value="#181E29"/>
+          <Setter Property="Foreground" Value="#4DEEEA"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
 
-        <Style TargetType="DataGridRow">
-            <Setter Property="BorderBrush" Value="#181E29"/>
-            <Setter Property="BorderThickness" Value="0,0,0,1"/>
-        </Style>
+    <Style TargetType="DataGridRow">
+      <Setter Property="BorderBrush" Value="#181E29"/>
+      <Setter Property="BorderThickness" Value="0,0,0,1"/>
+    </Style>
 
-        <!-- Form Elements Generic Styles -->
-        <Style x:Key="FormLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
-            <Setter Property="FontSize" Value="11"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="#00A896"/>
-            <Setter Property="Margin" Value="2,0,0,6"/>
-        </Style>
-    </Page.Resources>
+    <!-- Form Elements Generic Styles -->
+    <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+      <Setter Property="FontFamily" Value="{StaticResource GeistMono}"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="Foreground" Value="#00A896"/>
+      <Setter Property="Margin" Value="2,0,0,6"/>
+    </Style>
+  </Page.Resources>
 
+  <Grid>
+    <!-- Modern Grid Line Background -->
+    <Grid.Background>
+      <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+          <GeometryDrawing>
+            <GeometryDrawing.Pen>
+              <Pen Brush="#0B0E14" Thickness="1"/>
+            </GeometryDrawing.Pen>
+            <GeometryDrawing.Geometry>
+              <GeometryGroup>
+                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
+                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
+              </GeometryGroup>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingBrush.Drawing>
+      </DrawingBrush>
+    </Grid.Background>
+
+    <!-- Main Shell Grid -->
     <Grid>
-        <!-- Modern Grid Line Background -->
-        <Grid.Background>
-            <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
-                <DrawingBrush.Drawing>
-                    <GeometryDrawing>
-                        <GeometryDrawing.Pen>
-                            <Pen Brush="#0B0E14" Thickness="1"/>
-                        </GeometryDrawing.Pen>
-                        <GeometryDrawing.Geometry>
-                            <GeometryGroup>
-                                <LineGeometry StartPoint="0,0" EndPoint="40,0"/>
-                                <LineGeometry StartPoint="0,0" EndPoint="0,40"/>
-                            </GeometryGroup>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                </DrawingBrush.Drawing>
-            </DrawingBrush>
-        </Grid.Background>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="80"/>
+      </Grid.RowDefinitions>
 
-        <!-- Main Shell Grid -->
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
-            </Grid.RowDefinitions>
-
-            <!-- Row 0: Content Area -->
-            <Grid Grid.Row="0">
-                <!-- Main Card Container -->
-                <Border Width="980"
+      <!-- Row 0: Content Area -->
+      <Grid Grid.Row="0">
+        <!-- Main Card Container -->
+        <Border Width="980"
                         Height="520"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
@@ -147,21 +147,21 @@
                         Background="#0B0E14"
                         CornerRadius="0"
                         Padding="30">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
-                    </Border.Effect>
+          <Border.Effect>
+            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00A896" Opacity="0.6"/>
+          </Border.Effect>
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <!-- Header -->
-                            <RowDefinition Height="Auto"/>
-                            <!-- Content -->
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+          <Grid>
+            <Grid.RowDefinitions>
+              <!-- Header -->
+              <RowDefinition Height="Auto"/>
+              <!-- Content -->
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                        <!-- Header Section -->
-                        <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                            <TextBlock Text="{DynamicResource Leaderboard_Title}"
+            <!-- Header Section -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,20">
+              <TextBlock Text="{DynamicResource Leaderboard_Title}"
                                        FontFamily="{StaticResource GeistPixelSquare}"
                                        FontSize="24"
                                        FontWeight="Bold"
@@ -169,26 +169,26 @@
                                        HorizontalAlignment="Center"
                                        Margin="0,0,0,4"/>
 
-                            <TextBlock Text="{DynamicResource Leaderboard_Subtitle}"
+              <TextBlock Text="{DynamicResource Leaderboard_Subtitle}"
                                        FontFamily="{StaticResource GeistMono}"
                                        FontSize="13"
                                        Foreground="#4DEEEA"
                                        HorizontalAlignment="Center"/>
-                        </StackPanel>
+            </StackPanel>
 
-                        <!-- Main Content Grid -->
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <!-- Scoreboard Grid (Left) -->
-                                <ColumnDefinition Width="1.3*"/>
-                                <!-- Divider -->
-                                <ColumnDefinition Width="Auto"/>
-                                <!-- Podium (Right) -->
-                                <ColumnDefinition Width="0.7*"/>
-                            </Grid.ColumnDefinitions>
+            <!-- Main Content Grid -->
+            <Grid Grid.Row="1">
+              <Grid.ColumnDefinitions>
+                <!-- Scoreboard Grid (Left) -->
+                <ColumnDefinition Width="1.3*"/>
+                <!-- Divider -->
+                <ColumnDefinition Width="Auto"/>
+                <!-- Podium (Right) -->
+                <ColumnDefinition Width="0.7*"/>
+              </Grid.ColumnDefinitions>
 
-                            <!-- Left Column: DataGrid -->
-                            <DataGrid x:Name="DataGridScoreboard"
+              <!-- Left Column: DataGrid -->
+              <DataGrid x:Name="DataGridScoreboard"
                                       Grid.Column="0"
                                       AutoGenerateColumns="False"
                                       CanUserAddRows="False"
@@ -201,64 +201,61 @@
                                       SelectionMode="Single"
                                       SelectionUnit="FullRow"
                                       MouseDoubleClick="DataGridScoreboard_MouseDoubleClick">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{DynamicResource Leaderboard_ColRank}"
+                <DataGrid.Columns>
+                  <DataGridTextColumn Header="{DynamicResource Leaderboard_ColRank}"
                                                         Binding="{Binding Puesto}"
                                                         Width="75"/>
 
-                                    <DataGridTextColumn Header="{DynamicResource Leaderboard_ColPlayer}"
+                  <DataGridTextColumn Header="{DynamicResource Leaderboard_ColPlayer}"
                                                         Binding="{Binding Nombre}"
                                                         Width="*"/>
 
-                                    <DataGridTextColumn Header="{DynamicResource Leaderboard_ColWins}"
+                  <DataGridTextColumn Header="{DynamicResource Leaderboard_ColWins}"
                                                         Binding="{Binding PartidasGanadas}"
                                                         Width="95"/>
 
-                                    <DataGridTextColumn Header="{DynamicResource Leaderboard_ColScore}"
+                  <DataGridTextColumn Header="{DynamicResource Leaderboard_ColScore}"
                                                         Binding="{Binding Puntuacion}"
                                                         Width="105"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
+                </DataGrid.Columns>
+              </DataGrid>
 
-                            <!-- Vertical Divider -->
-                            <Border Grid.Column="1" Width="1.5" Background="#0B0E14" VerticalAlignment="Stretch" Margin="0,5"/>
+              <!-- Vertical Divider -->
+              <Border Grid.Column="1" Width="1.5" Background="#0B0E14" VerticalAlignment="Stretch" Margin="0,5"/>
 
-                            <!-- Right Column: Podium -->
-                            <StackPanel Grid.Column="2" Margin="25,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="{DynamicResource Leaderboard_PodiumTitle}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+              <!-- Right Column: Podium -->
+              <StackPanel Grid.Column="2" Margin="25,0,0,0" VerticalAlignment="Center">
+                <TextBlock Text="{DynamicResource Leaderboard_PodiumTitle}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,15"/>
 
-                                <!-- First Place Card -->
-                                <Border BorderBrush="#FFD700" BorderThickness="1.5" Background="#0B0E14" Padding="12,10" Margin="0,0,0,12">
-                                <Border.Effect>
-                                    <DropShadowEffect x:Name="FirstPlaceGlow" BlurRadius="20" ShadowDepth="0" Color="#FFD700" Opacity="0.9"/>
-                                </Border.Effect>
-                  <Border.Triggers>
-                    <EventTrigger RoutedEvent="Binding.TargetUpdated">
-                    </EventTrigger>
+                <!-- First Place Card -->
+                <Border x:Name="FirstPlaceCard" BorderBrush="#FFD700" BorderThickness="1.5" Background="#0B0E14" Padding="12,10" Margin="0,0,0,12">
+                  <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="#FFD700" Opacity="0.9"/>
+                  </Border.Effect>                  <Border.Triggers>
                     <EventTrigger RoutedEvent="Border.Loaded">
                       <BeginStoryboard>
                         <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                          <DoubleAnimation Storyboard.TargetName="FirstPlaceGlow"
-                                     Storyboard.TargetProperty="BlurRadius"
-                                     From="15" To="32" 
-                                     Duration="0:0:1.2"/>
+                          <DoubleAnimation Storyboard.TargetName="FirstPlaceCard"
+                                                                     Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)"
+                                                                     From="15" To="32"
+                                                                     Duration="0:0:1.2"/>
 
-                          <DoubleAnimation Storyboard.TargetName="FirstPlaceGlow"
-                                     Storyboard.TargetProperty="Opacity"
-                                     From="0.7" To="1.0" 
-                                     Duration="0:0:1.2"/>
+                          <DoubleAnimation Storyboard.TargetName="FirstPlaceCard"
+                                                                     Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                                                     From="0.7" To="1.0"
+                                                                     Duration="0:0:1.2"/>
                         </Storyboard>
                       </BeginStoryboard>
                     </EventTrigger>
                   </Border.Triggers>
                   <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="40"/>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="40"/>
+                      <ColumnDefinition Width="50"/>
+                      <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                                        <TextBlock Text="1"
+                    <TextBlock Text="1"
                                                    FontFamily="{StaticResource GeistPixelSquare}"
                                                    FontSize="24"
                                                    FontWeight="Bold"
@@ -266,11 +263,11 @@
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"/>
 
-                                        <Border Grid.Column="1" Width="40" Height="40" BorderBrush="#00A896" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Image x:Name="ImageTopAvatar1" Stretch="UniformToFill"/>
-                                        </Border>
+                    <Border Grid.Column="1" Width="40" Height="40" BorderBrush="#00A896" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                      <Image x:Name="ImageTopAvatar1" Stretch="UniformToFill"/>
+                    </Border>
 
-                                        <TextBlock x:Name="TextBlockTopName1"
+                    <TextBlock x:Name="TextBlockTopName1"
                                                    Grid.Column="2"
                                                    Text="-"
                                                    FontFamily="{StaticResource GeistMono}"
@@ -279,49 +276,48 @@
                                                    Foreground="#00A896"
                                                    VerticalAlignment="Center"
                                                    Margin="15,0,0,0"/>
-                                    </Grid>
-                                </Border>
+                  </Grid>
+                </Border>
 
-                                <!-- Second Place Card -->
-                                 <Border BorderBrush="#C0C0C0" BorderThickness="1.2" Background="#0B0E14" Padding="12,8" Margin="0,0,0,12">
-                                     <Border.Effect>
-                                         <DropShadowEffect x:Name="SecondPlaceGlow" BlurRadius="20" ShadowDepth="0" Color="#C0C0C0" Opacity="0.8"/>
-                                     </Border.Effect>
-                                     <Border.Triggers>
-                                         <EventTrigger RoutedEvent="Border.Loaded">
-                                             <BeginStoryboard>
-                                                 <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                                     <DoubleAnimation Storyboard.TargetName="SecondPlaceGlow"
-                                                                      Storyboard.TargetProperty="BlurRadius"
-                                                                      From="12" To="24" 
-                                                                      Duration="0:0:1.4"/>
-                                                     <DoubleAnimation Storyboard.TargetName="SecondPlaceGlow"
-                                                                      Storyboard.TargetProperty="Opacity"
-                                                                      From="0.5" To="0.8" 
-                                                                      Duration="0:0:1.4"/>
-                                                 </Storyboard>
-                                             </BeginStoryboard>
-                                         </EventTrigger>
-                                     </Border.Triggers>
-                                     <Grid>
-                                         <Grid.ColumnDefinitions>
-                                             <ColumnDefinition Width="40"/>
-                                             <ColumnDefinition Width="50"/>
-                                             <ColumnDefinition Width="*"/>
-                                         </Grid.ColumnDefinitions>
+                <!-- Second Place Card -->
+                <Border BorderBrush="#C0C0C0" BorderThickness="1.2" Background="#0B0E14" Padding="12,8" Margin="0,0,0,12">
+                  <Border.Effect>
+                    <DropShadowEffect x:Name="SecondPlaceGlow" BlurRadius="20" ShadowDepth="0" Color="#C0C0C0" Opacity="0.8"/>
+                  </Border.Effect>
+                  <Border.Triggers>
+                    <EventTrigger RoutedEvent="Border.Loaded">
+                      <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                          <DoubleAnimation Storyboard.TargetName="SecondPlaceGlow"
+                                           Storyboard.TargetProperty="BlurRadius"
+                                           From="12" To="24"
+                                           Duration="0:0:1.4"/>
+                          <DoubleAnimation Storyboard.TargetName="SecondPlaceGlow"
+                                           Storyboard.TargetProperty="Opacity"
+                                           From="0.5" To="0.8"
+                                           Duration="0:0:1.4"/>
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger>
+                  </Border.Triggers>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="40"/>
+                      <ColumnDefinition Width="50"/>
+                      <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                                         <TextBlock Text="2"
-                                                    FontFamily="{StaticResource GeistPixelSquare}"
-                                                    FontSize="20"
-                                                    Foreground="#C0C0C0"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"/>
+                    <TextBlock Text="2"
+                                                   FontFamily="{StaticResource GeistPixelSquare}"
+                                                   FontSize="20"
+                                                   Foreground="#C0C0C0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                    <Border Grid.Column="1" Width="36" Height="36" BorderBrush="#00A896" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                      <Image x:Name="ImageTopAvatar2" Stretch="UniformToFill"/>
+                    </Border>
 
-                                        <Border Grid.Column="1" Width="36" Height="36" BorderBrush="#00A896" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Image x:Name="ImageTopAvatar2" Stretch="UniformToFill"/>
-                                        </Border>
-
-                                        <TextBlock x:Name="TextBlockTopName2"
+                    <TextBlock x:Name="TextBlockTopName2"
                                                    Grid.Column="2"
                                                    Text="-"
                                                    FontFamily="{StaticResource GeistMono}"
@@ -330,49 +326,48 @@
                                                    Foreground="#00A896"
                                                    VerticalAlignment="Center"
                                                    Margin="15,0,0,0"/>
-                                    </Grid>
-                                </Border>
+                  </Grid>
+                </Border>
 
-                                <!-- Third Place Card -->
-                                 <Border BorderBrush="#CD7F32" BorderThickness="1.1" Background="#0B0E14" Padding="12,8">
-                                     <Border.Effect>
-                                         <DropShadowEffect x:Name="ThirdPlaceGlow" BlurRadius="15" ShadowDepth="0" Color="#CD7F32" Opacity="0.7"/>
-                                     </Border.Effect>
-                                     <Border.Triggers>
-                                         <EventTrigger RoutedEvent="Border.Loaded">
-                                             <BeginStoryboard>
-                                                 <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                                     <DoubleAnimation Storyboard.TargetName="ThirdPlaceGlow"
-                                                                      Storyboard.TargetProperty="BlurRadius"
-                                                                      From="10" To="20" 
-                                                                      Duration="0:0:1.6"/>
-                                                     <DoubleAnimation Storyboard.TargetName="ThirdPlaceGlow"
-                                                                      Storyboard.TargetProperty="Opacity"
-                                                                      From="0.4" To="0.7" 
-                                                                      Duration="0:0:1.6"/>
-                                                 </Storyboard>
-                                             </BeginStoryboard>
-                                         </EventTrigger>
-                                     </Border.Triggers>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="40"/>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Text="3"
+                <!-- Third Place Card -->
+                <Border BorderBrush="#CD7F32" BorderThickness="1.1" Background="#0B0E14" Padding="12,8">
+                  <Border.Effect>
+                    <DropShadowEffect x:Name="ThirdPlaceGlow" BlurRadius="15" ShadowDepth="0" Color="#CD7F32" Opacity="0.7"/>
+                  </Border.Effect>
+                  <Border.Triggers>
+                    <EventTrigger RoutedEvent="Border.Loaded">
+                      <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                          <DoubleAnimation Storyboard.TargetName="ThirdPlaceGlow"
+                                           Storyboard.TargetProperty="BlurRadius"
+                                           From="10" To="20"
+                                           Duration="0:0:1.6"/>
+                          <DoubleAnimation Storyboard.TargetName="ThirdPlaceGlow"
+                                           Storyboard.TargetProperty="Opacity"
+                                           From="0.4" To="0.7"
+                                           Duration="0:0:1.6"/>
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger>
+                  </Border.Triggers>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="40"/>
+                      <ColumnDefinition Width="50"/>
+                      <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="3"
                                                    FontFamily="{StaticResource GeistPixelSquare}"
                                                    FontSize="20"
                                                    Foreground="#CD7F32"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"/>
 
-                                        <Border Grid.Column="1" Width="36" Height="36" BorderBrush="#00A896" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Image x:Name="ImageTopAvatar3" Stretch="UniformToFill"/>
-                                        </Border>
+                    <Border Grid.Column="1" Width="36" Height="36" BorderBrush="#00A896" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                      <Image x:Name="ImageTopAvatar3" Stretch="UniformToFill"/>
+                    </Border>
 
-                                        <TextBlock x:Name="TextBlockTopName3"
+                    <TextBlock x:Name="TextBlockTopName3"
                                                    Grid.Column="2"
                                                    Text="-"
                                                    FontFamily="{StaticResource GeistMono}"
@@ -381,67 +376,67 @@
                                                    Foreground="#4DEEEA"
                                                    VerticalAlignment="Center"
                                                    Margin="15,0,0,0"/>
-                                    </Grid>
-                                </Border>
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
+                  </Grid>
                 </Border>
+              </StackPanel>
             </Grid>
+          </Grid>
+        </Border>
+      </Grid>
 
-            <!-- Row 1: Bottom Navigation Bar Tray -->
-            <Border Grid.Row="1"
+      <!-- Row 1: Bottom Navigation Bar Tray -->
+      <Border Grid.Row="1"
                     BorderBrush="#00A896"
                     BorderThickness="0,1,0,0"
                     Background="#0B0E14">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
 
-                    <Button x:Name="ButtonMainMenu"
+          <Button x:Name="ButtonMainMenu"
                             Grid.Column="0"
                             Content="{DynamicResource Nav_MainMenu}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonMainMenu_Click"/>
 
-                    <Button x:Name="ButtonProfile"
+          <Button x:Name="ButtonProfile"
                             Grid.Column="1"
                             Content="{DynamicResource Nav_Profile}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonProfile_Click"/>
 
-                    <Button x:Name="ButtonHistory"
+          <Button x:Name="ButtonHistory"
                             Grid.Column="2"
                             Content="{DynamicResource Nav_History}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonHistory_Click"/>
 
-                    <Button x:Name="ButtonScoreboard"
+          <Button x:Name="ButtonScoreboard"
                             Grid.Column="3"
                             Content="{DynamicResource Nav_Scoreboard}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonScoreboard_Click"/>
 
-                    <Button x:Name="ButtonSettings"
+          <Button x:Name="ButtonSettings"
                             Grid.Column="4"
                             Content="{DynamicResource Nav_Settings}"
                             Style="{StaticResource NavBarButton}"
                             Click="ButtonSettings_Click"/>
-                </Grid>
-            </Border>
         </Grid>
-
-        <!-- Hidden elements to preserve code-behind field references -->
-        <Grid Visibility="Collapsed">
-            <Image x:Name="ImageStarHeader"/>
-            <Image x:Name="ImageStarLeft"/>
-            <Image x:Name="ImageStarRight"/>
-            <Image x:Name="ImageLogo"/>
-        </Grid>
+      </Border>
     </Grid>
+
+    <!-- Hidden elements to preserve code-behind field references -->
+    <Grid Visibility="Collapsed">
+      <Image x:Name="ImageStarHeader"/>
+      <Image x:Name="ImageStarLeft"/>
+      <Image x:Name="ImageStarRight"/>
+      <Image x:Name="ImageLogo"/>
+    </Grid>
+  </Grid>
 </Page>
