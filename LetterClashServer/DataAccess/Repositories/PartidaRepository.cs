@@ -18,6 +18,22 @@ namespace LetterClashServer.DataAccess.Repositories {
       }
     }
 
+    public virtual bool EliminarPartidaPendienteSinAdivinador(string codigoAcceso, int anfitrionID) {
+      using (var context = new LetterClashDBEntities()) {
+        var partida = context.Partidas.SingleOrDefault(p => p.CodigoAcceso == codigoAcceso);
+        if (partida == null ||
+            partida.IDAnfitrion != anfitrionID ||
+            partida.Estado != "PENDIENTE" ||
+            partida.IDAdivinador != null) {
+          return false;
+        }
+
+        context.Partidas.Remove(partida);
+        context.SaveChanges();
+        return true;
+      }
+    }
+
     public virtual bool ExistePartida(int partidaID) {
       using (var context = new LetterClashDBEntities()) {
         return context.Partidas

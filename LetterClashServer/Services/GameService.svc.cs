@@ -314,6 +314,7 @@ namespace LetterClashServer.Services {
       }
 
       if (!partidasActivas.TryRemove(codigoAcceso, out var partida)) {
+        partidaRepository.EliminarPartidaPendienteSinAdivinador(codigoAcceso, jugadorID);
         return;
       }
 

@@ -14,7 +14,9 @@ namespace LetterClashServer.DataAccess.Repositories {
                       .Include(p => p.Jugador)
                       .Include(p => p.Jugador1)
                       .Include(p => p.Palabra)
-                      .Where(p => p.IDAnfitrion == jugadorID || p.IDAdivinador == jugadorID)
+                      .Where(p => p.Estado == "CONCLUIDA" &&
+                                  p.IDAdivinador != null &&
+                                  (p.IDAnfitrion == jugadorID || p.IDAdivinador == jugadorID))
                       .OrderByDescending(p => p.FechaDeJuego)
                       .ToList();
       }
