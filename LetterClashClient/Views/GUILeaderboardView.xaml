@@ -232,7 +232,26 @@
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="#00A896" Opacity="0.9"/>
                                 </Border.Effect>
-                                    <Grid>
+                  <Border.Triggers>
+                    <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Border.Loaded">
+                      <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                          <DoubleAnimation Storyboard.TargetName="FirstPlaceGlow"
+                                     Storyboard.TargetProperty="BlurRadius"
+                                     From="15" To="32" 
+                                     Duration="0:0:1.2"/>
+
+                          <DoubleAnimation Storyboard.TargetName="FirstPlaceGlow"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.7" To="1.0" 
+                                     Duration="0:0:1.2"/>
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger>
+                  </Border.Triggers>
+                  <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="40"/>
                                             <ColumnDefinition Width="50"/>
