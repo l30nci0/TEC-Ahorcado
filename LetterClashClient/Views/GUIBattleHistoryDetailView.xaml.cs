@@ -37,7 +37,7 @@ namespace LetterClashClient.Views {
       TextBlockBattleStatus.Text = selectedBattle.Resultado;
       TextBlockScore.Text = selectedBattle.Puntuacion;
       ProgressBarBattle.Value = selectedBattle.Progreso;
-      TextBlockProgress.Text = $"{selectedBattle.Progreso}/5";
+      TextBlockProgress.Text = $"{selectedBattle.Progreso}/6";
 
       // Cargar avatar local (o default si no tiene)
       var usuario = SessionContext.UsuarioLogueado;

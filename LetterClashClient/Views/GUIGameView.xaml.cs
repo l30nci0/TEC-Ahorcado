@@ -13,6 +13,8 @@ using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class GUIGameView : Page {
+    private const int MaxMistakes = 6;
+    private static readonly int[] HangmanImageByMistakes = { 6, 5, 4, 3, 2, 7, 1 };
     private bool isHost;
     private string opponentName;
     private string selectedLanguage;
@@ -141,7 +143,7 @@ namespace LetterClashClient.Views {
     private void OnLetraPropuesta(char letra, bool esCorrecta, string palabraRevelada, int vidaRestante) {
       Dispatcher.Invoke(() => {
         targetWord = palabraRevelada;
-        mistakes = 5 - vidaRestante;
+        mistakes = Math.Max(0, Math.Min(MaxMistakes, MaxMistakes - vidaRestante));
 
         if (isHost) {
           if (letra != '\0') {
@@ -161,6 +163,7 @@ namespace LetterClashClient.Views {
 
         UpdateHangmanImage();
         UpdateAttempts();
+        ReproducirEfectoLetra(letra, esCorrecta, palabraRevelada, vidaRestante);
       });
     }
 
@@ -175,6 +178,7 @@ namespace LetterClashClient.Views {
             ? string.Format(wonMsg, puntuacionObtenida)
             : string.Format(lostMsg, ganador);
 
+        ReproducirEfectoResultado(ganador);
         MessageBox.Show(mensajeResult, resultTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         NavigationService.Navigate(new GUIGameHubView());
       });
@@ -398,16 +402,31 @@ namespace LetterClashClient.Views {
     }
 
     private void UpdateHangmanImage() {
-      int imageNumber = 6 - mistakes;
-      if (imageNumber < 1) {
-        imageNumber = 1;
-      }
+      int imageNumber = HangmanImageByMistakes[Math.Max(0, Math.Min(MaxMistakes, mistakes))];
       ImageHangman.Source = new BitmapImage(new Uri($"/Assets/Images/Hangedman{imageNumber}.png", UriKind.Relative));
     }
 
     private void UpdateAttempts() {
+      ProgressBarAttempts.Maximum = MaxMistakes;
       ProgressBarAttempts.Value = mistakes;
-      TextBlockAttempts.Text = $"{mistakes}/5";
+      TextBlockAttempts.Text = $"{mistakes}/{MaxMistakes}";
+    }
+
+    private void ReproducirEfectoLetra(char letra, bool esCorrecta, string palabraRevelada, int vidaRestante) {
+      if (letra == '\0' || vidaRestante <= 0 || palabraRevelada == null || !palabraRevelada.Contains("_")) {
+        return;
+      }
+
+      AudioManager.ReproducirEfecto(esCorrecta ? "Correct.mp3" : "Hit.mp3");
+    }
+
+    private void ReproducirEfectoResultado(string ganador) {
+      bool ganoJugadorActual = ganador == SessionContext.UsuarioLogueado?.NombreDeUsuario;
+      if (ganoJugadorActual) {
+        AudioManager.ReproducirEfecto(mistakes == 0 ? "Perfect.mp3" : "Victory.mp3");
+      } else {
+        AudioManager.ReproducirEfecto("GameOver.mp3");
+      }
     }
 
     private void ButtonSendMessage_Click(object sender, RoutedEventArgs e) {

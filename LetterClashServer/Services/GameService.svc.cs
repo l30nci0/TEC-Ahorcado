@@ -20,7 +20,7 @@ namespace LetterClashServer.Services {
     public int IDPartida { get; set; }
     public string PalabraObjetivo { get; set; }
     public string PalabraRevelada { get; set; }
-    public int VidasRestantes { get; set; } = 5;
+    public int VidasRestantes { get; set; } = GameService.VidasIniciales;
     public HashSet<char> LetrasPropuestas { get; set; } = new HashSet<char>();
     public int HostID { get; set; }
     public int GuesserID { get; set; }
@@ -28,6 +28,7 @@ namespace LetterClashServer.Services {
 
   [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
   public class GameService : IGameService {
+    public const int VidasIniciales = 6;
     private const int PuntosVictoriaAdivinador = 10;
     private const int PuntosVictoriaAnfitrion = 5;
     private const int PenalizacionAbandono = -3;
@@ -158,7 +159,7 @@ namespace LetterClashServer.Services {
                 IDPartida = partida.IDPartida,
                 PalabraObjetivo = palabraOriginal,
                 PalabraRevelada = new string('_', palabraOriginal.Length),
-                VidasRestantes = 5,
+                VidasRestantes = VidasIniciales,
                 HostID = partida.IDAnfitrion,
                 GuesserID = guesserId
               };

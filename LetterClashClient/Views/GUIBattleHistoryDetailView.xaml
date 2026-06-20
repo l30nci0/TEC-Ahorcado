@@ -431,7 +431,7 @@
                                                    HorizontalAlignment="Right" 
                                                    FontWeight="Bold"/>
                                     </Grid>
-                                    <ProgressBar x:Name="ProgressBarBattle" Height="22" Style="{StaticResource FlatProgressBar}" Minimum="0" Maximum="5"/>
+                                    <ProgressBar x:Name="ProgressBarBattle" Height="22" Style="{StaticResource FlatProgressBar}" Minimum="0" Maximum="6"/>
                                 </StackPanel>
  
                                 <!-- Back Button -->
