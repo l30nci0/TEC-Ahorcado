@@ -292,6 +292,13 @@
     <sys:String x:Key="Game_ErrorSend">Could not send the message: {0}</sys:String>
     <sys:String x:Key="Game_ConfirmAbandon">Are you sure you want to abandon the match?</sys:String>
 
+    <sys:String x:Key="Game_BtnClue">GET CLUE 👁</sys:String>
+    <sys:String x:Key="Game_ClueStatus">Clues used: {0}/{1}</sys:String>
+    <sys:String x:Key="Game_ClueNoClues">No clues available</sys:String>
+    <sys:String x:Key="Game_ClueLimitReached">Clue limit reached!</sys:String>
+    <sys:String x:Key="Game_ClueTooShort">Word is too short for clues.</sys:String>
+    <sys:String x:Key="Game_ClueAlmostWon">Cannot use clues if only one letter remains to guess.</sys:String>
+
     <!-- Settings Screen -->
     <sys:String x:Key="Settings_WindowTitle">Settings</sys:String>
     <sys:String x:Key="Settings_Title">SETTINGS</sys:String>

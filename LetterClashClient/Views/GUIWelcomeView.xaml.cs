@@ -2,8 +2,8 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace LetterClashClient.Views {
-  public partial class GUIEntryMenuView : Page {
-    public GUIEntryMenuView() {
+  public partial class GUIWelcomeView : Page {
+    public GUIWelcomeView() {
       InitializeComponent();
     }
 

@@ -1,4 +1,4 @@
-<Page x:Class="LetterClashClient.Views.GUIMainMenuView"
+<Page x:Class="LetterClashClient.Views.GUIGameHubView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       d:DesignHeight="720"
       d:DesignWidth="1280"
-      Title="GUIMainMenuView"
+      Title="GUIGameHubView"
       Loaded="Page_Loaded"
       Background="#0B0E14">
 

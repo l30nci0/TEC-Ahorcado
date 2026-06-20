@@ -290,6 +290,13 @@
     <sys:String x:Key="Game_ErrorSend">No se pudo enviar el mensaje: {0}</sys:String>
     <sys:String x:Key="Game_ConfirmAbandon">¿Seguro que deseas abandonar la partida?</sys:String>
 
+    <sys:String x:Key="Game_BtnClue">VER PISTA 👁</sys:String>
+    <sys:String x:Key="Game_ClueStatus">Pistas usadas: {0}/{1}</sys:String>
+    <sys:String x:Key="Game_ClueNoClues">No hay pistas disponibles</sys:String>
+    <sys:String x:Key="Game_ClueLimitReached">¡Límite de pistas alcanzado!</sys:String>
+    <sys:String x:Key="Game_ClueTooShort">La palabra es muy corta para pistas.</sys:String>
+    <sys:String x:Key="Game_ClueAlmostWon">No puedes usar pistas si solo queda una letra por adivinar.</sys:String>
+
     <!-- Pantalla de Ajustes -->
     <sys:String x:Key="Settings_WindowTitle">Ajustes</sys:String>
     <sys:String x:Key="Settings_Title">AJUSTES</sys:String>

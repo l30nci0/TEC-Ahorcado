@@ -326,28 +326,10 @@
                             </Border.Effect>
                         </Border>
 
-              <!-- Right Column: Actions & Access Key -->
+              <!-- Right Column: Actions -->
                             <Grid Grid.Column="2" Margin="30,0,0,0" VerticalAlignment="Center">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>                                <!-- Access Key Section -->
-                                <StackPanel Grid.Row="0" Margin="0,0,0,20" HorizontalAlignment="Center">
-                                    <TextBlock Text="{DynamicResource CreateRoom_AccessKeyLabel}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center"/>
-                                    <Border BorderBrush="#00A896" BorderThickness="1" Background="#0B0E14" Padding="25,10" MinWidth="180">
-                                        <TextBlock x:Name="TextBlockAccessKey"
-                                                   Text="------"
-                                                   FontFamily="{StaticResource GeistMono}"
-                                                   FontSize="22"
-                                                   FontWeight="Bold"
-                                                   Foreground="#4DEEEA"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-                                    </Border>
-                                </StackPanel>
- 
                                 <!-- Primary Buttons -->
-                                <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                                <StackPanel VerticalAlignment="Center">
                                     <Button x:Name="ButtonCreateRoom"
                                             Content="{DynamicResource CreateRoom_BtnCreate}"
                                             Height="46"

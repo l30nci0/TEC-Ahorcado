@@ -228,11 +228,30 @@
                                 <TextBlock Text="{DynamicResource Leaderboard_PodiumTitle}" Style="{StaticResource FormLabelStyle}" HorizontalAlignment="Center" Margin="0,0,0,15"/>
 
                                 <!-- First Place Card -->
-                                <Border BorderBrush="#4DEEEA" BorderThickness="1.5" Background="#0B0E14" Padding="12,10" Margin="0,0,0,12">
+                                <Border BorderBrush="#FFD700" BorderThickness="1.5" Background="#0B0E14" Padding="12,10" Margin="0,0,0,12">
                                 <Border.Effect>
-                                    <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="#00A896" Opacity="0.9"/>
+                                    <DropShadowEffect x:Name="FirstPlaceGlow" BlurRadius="20" ShadowDepth="0" Color="#FFD700" Opacity="0.9"/>
                                 </Border.Effect>
-                                    <Grid>
+                  <Border.Triggers>
+                    <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Border.Loaded">
+                      <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                          <DoubleAnimation Storyboard.TargetName="FirstPlaceGlow"
+                                     Storyboard.TargetProperty="BlurRadius"
+                                     From="15" To="32" 
+                                     Duration="0:0:1.2"/>
+
+                          <DoubleAnimation Storyboard.TargetName="FirstPlaceGlow"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.7" To="1.0" 
+                                     Duration="0:0:1.2"/>
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger>
+                  </Border.Triggers>
+                  <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="40"/>
                                             <ColumnDefinition Width="50"/>
@@ -243,7 +262,7 @@
                                                    FontFamily="{StaticResource GeistPixelSquare}"
                                                    FontSize="24"
                                                    FontWeight="Bold"
-                                                   Foreground="#4DEEEA"
+                                                   Foreground="#FFD700"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"/>
 
@@ -264,23 +283,39 @@
                                 </Border>
 
                                 <!-- Second Place Card -->
-                                <Border BorderBrush="#00A896" BorderThickness="1" Background="#0B0E14" Padding="12,8" Margin="0,0,0,12">
-                                    <Border.Effect>
-                                        <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="#00A896" Opacity="0.8"/>
-                                    </Border.Effect>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="40"/>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                                 <Border BorderBrush="#C0C0C0" BorderThickness="1.2" Background="#0B0E14" Padding="12,8" Margin="0,0,0,12">
+                                     <Border.Effect>
+                                         <DropShadowEffect x:Name="SecondPlaceGlow" BlurRadius="20" ShadowDepth="0" Color="#C0C0C0" Opacity="0.8"/>
+                                     </Border.Effect>
+                                     <Border.Triggers>
+                                         <EventTrigger RoutedEvent="Border.Loaded">
+                                             <BeginStoryboard>
+                                                 <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                     <DoubleAnimation Storyboard.TargetName="SecondPlaceGlow"
+                                                                      Storyboard.TargetProperty="BlurRadius"
+                                                                      From="12" To="24" 
+                                                                      Duration="0:0:1.4"/>
+                                                     <DoubleAnimation Storyboard.TargetName="SecondPlaceGlow"
+                                                                      Storyboard.TargetProperty="Opacity"
+                                                                      From="0.5" To="0.8" 
+                                                                      Duration="0:0:1.4"/>
+                                                 </Storyboard>
+                                             </BeginStoryboard>
+                                         </EventTrigger>
+                                     </Border.Triggers>
+                                     <Grid>
+                                         <Grid.ColumnDefinitions>
+                                             <ColumnDefinition Width="40"/>
+                                             <ColumnDefinition Width="50"/>
+                                             <ColumnDefinition Width="*"/>
+                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock Text="2"
-                                                   FontFamily="{StaticResource GeistPixelSquare}"
-                                                   FontSize="20"
-                                                   Foreground="#4DEEEA"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center"/>
+                                         <TextBlock Text="2"
+                                                    FontFamily="{StaticResource GeistPixelSquare}"
+                                                    FontSize="20"
+                                                    Foreground="#C0C0C0"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"/>
 
                                         <Border Grid.Column="1" Width="36" Height="36" BorderBrush="#00A896" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <Image x:Name="ImageTopAvatar2" Stretch="UniformToFill"/>
@@ -299,10 +334,26 @@
                                 </Border>
 
                                 <!-- Third Place Card -->
-                                <Border BorderBrush="#00A896" BorderThickness="1" Background="#0B0E14" Padding="12,8">
-                                    <Border.Effect>
-                                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00A896" Opacity="0.7"/>
-                                    </Border.Effect>
+                                 <Border BorderBrush="#CD7F32" BorderThickness="1.1" Background="#0B0E14" Padding="12,8">
+                                     <Border.Effect>
+                                         <DropShadowEffect x:Name="ThirdPlaceGlow" BlurRadius="15" ShadowDepth="0" Color="#CD7F32" Opacity="0.7"/>
+                                     </Border.Effect>
+                                     <Border.Triggers>
+                                         <EventTrigger RoutedEvent="Border.Loaded">
+                                             <BeginStoryboard>
+                                                 <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                     <DoubleAnimation Storyboard.TargetName="ThirdPlaceGlow"
+                                                                      Storyboard.TargetProperty="BlurRadius"
+                                                                      From="10" To="20" 
+                                                                      Duration="0:0:1.6"/>
+                                                     <DoubleAnimation Storyboard.TargetName="ThirdPlaceGlow"
+                                                                      Storyboard.TargetProperty="Opacity"
+                                                                      From="0.4" To="0.7" 
+                                                                      Duration="0:0:1.6"/>
+                                                 </Storyboard>
+                                             </BeginStoryboard>
+                                         </EventTrigger>
+                                     </Border.Triggers>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="40"/>
@@ -313,7 +364,7 @@
                                         <TextBlock Text="3"
                                                    FontFamily="{StaticResource GeistPixelSquare}"
                                                    FontSize="20"
-                                                   Foreground="#4DEEEA"
+                                                   Foreground="#CD7F32"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"/>
 
