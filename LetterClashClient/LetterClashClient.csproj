@@ -167,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\StarFieldBackground.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\SliderFillConverter.cs" />
@@ -222,6 +226,9 @@
     <Compile Include="Views\GUIAudioSettingsView.xaml.cs">
       <DependentUpon>GUIAudioSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StarFieldBackground.xaml.cs">
+      <DependentUpon>StarFieldBackground.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Hangedman1.png" />
@@ -232,9 +239,7 @@
     <Resource Include="Assets\Images\Hangedman6.png" />
     <Resource Include="Assets\Images\Hangedman7.png" />
     <Resource Include="Assets\Images\Hangman.jpg" />
-    <Resource Include="Assets\Images\LogoLetterClash.jpeg" />
-    <Resource Include="Assets\Images\LogoLetterClashRectangle.png" />
-    <Resource Include="Assets\Images\LogoLetterClashSquare.png" />
+    <Resource Include="Assets\Images\LetterClashLogo.png" />
     <Resource Include="Assets\Images\Stadistics.png" />
     <Resource Include="Assets\Images\star.png" />
     <Resource Include="Assets\Images\UserAvatar.png" />

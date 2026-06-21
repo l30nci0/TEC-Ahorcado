@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
+      xmlns:controls="clr-namespace:LetterClashClient.Controls"
       d:DesignHeight="720"
       d:DesignWidth="1280"
       Title="GUIWelcomeView"
@@ -127,14 +128,17 @@
       </DrawingBrush>
     </Grid.Background>
 
+    <!-- Starfield Background -->
+    <controls:StarfieldBackground />
+
     <StackPanel VerticalAlignment="Center" 
                     HorizontalAlignment="Center" 
                     Width="400">
 
       <Image x:Name="ImageLogo"
-                   Source="/Assets/Images/LogoLetterClashRectangle.png"
-                   Width="380"
-                   Height="150"
+                   Source="/Assets/Images/LetterClashLogo.png"
+                   Width="400"
+                   Height="170"
                    Stretch="Uniform"
                    HorizontalAlignment="Center"
                    Margin="0,0,0,10">
