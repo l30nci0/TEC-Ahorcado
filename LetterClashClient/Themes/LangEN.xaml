@@ -281,6 +281,7 @@
     <sys:String x:Key="DiffUser_BirthDateLabel">DATE OF BIRTH</sys:String>
     <sys:String x:Key="DiffUser_PhoneLabel">PHONE</sys:String>
     <sys:String x:Key="DiffUser_AvatarLabel">AVATAR</sys:String>
+    <sys:String x:Key="DiffUser_StatsTitle">MATCH STATISTICS</sys:String>
     <sys:String x:Key="DiffUser_BtnBack">BACK  ↩</sys:String>
     <sys:String x:Key="DiffUser_ErrorRetrieve">Could not retrieve user information.</sys:String>
     <sys:String x:Key="DiffUser_ErrorUnexpected">An unexpected error occurred while loading profile:</sys:String>

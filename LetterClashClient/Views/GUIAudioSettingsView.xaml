@@ -238,7 +238,7 @@
                                         Click="ButtonSaveAudio_Click"/>
 
                                 <Button x:Name="ButtonBackAudio"
-                                        Content="REGRESAR"
+                                        Content="{DynamicResource AudioSettings_BtnBack}"
                                         Width="220"
                                         Height="38"
                                         HorizontalAlignment="Center"

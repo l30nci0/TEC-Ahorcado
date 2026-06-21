@@ -293,7 +293,7 @@ namespace LetterClashClient.Views {
           
           ClearPasswordFields();
           GridPasswordModal.Visibility = Visibility.Collapsed;
-          SessionContext.UsuarioLogueado = null;
+          SessionContext.LimpiarSesion();
           NavigationService.Navigate(new GUILoginView());
         } else {
           if (passwordResult?.Error != null) {

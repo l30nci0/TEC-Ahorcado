@@ -273,6 +273,7 @@
     <sys:String x:Key="DiffUser_BirthDateLabel">FECHA DE NACIMIENTO</sys:String>
     <sys:String x:Key="DiffUser_PhoneLabel">TELÉFONO</sys:String>
     <sys:String x:Key="DiffUser_AvatarLabel">AVATAR</sys:String>
+    <sys:String x:Key="DiffUser_StatsTitle">ESTADÍSTICAS DE PARTIDAS</sys:String>
     <sys:String x:Key="DiffUser_BtnBack">REGRESAR  ↩</sys:String>
     <sys:String x:Key="DiffUser_ErrorRetrieve">No se pudo obtener la información del usuario.</sys:String>
     <sys:String x:Key="DiffUser_ErrorUnexpected">Ocurrió un error inesperado al cargar el perfil:</sys:String>

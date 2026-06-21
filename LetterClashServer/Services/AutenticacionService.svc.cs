@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.ServiceModel;
 using System.Text.RegularExpressions;
 
@@ -10,6 +11,9 @@ using LetterClashServer.Domain.Security;
 
 namespace LetterClashServer.Services {
   public class AutenticacionService : IAutenticacionService {
+    private static readonly ConcurrentDictionary<int, DateTime> sesionesActivas =
+        new ConcurrentDictionary<int, DateTime>();
+    private static readonly TimeSpan TiempoSesionActiva = TimeSpan.FromSeconds(75);
     private readonly JugadorRepository jugadorRepository;
 
     public AutenticacionService() : this(new JugadorRepository()) { }
@@ -52,6 +56,16 @@ namespace LetterClashServer.Services {
             "Contraseña no coincide"
           );
         }
+
+        if (TieneSesionActiva(jugador.IDJugador)) {
+          return ServiceResult<JugadorDTO>.Failure(
+            CodigoError.OPERACION_INVALIDA,
+            "Este usuario ya tiene una sesiÃ³n activa en otra instancia.",
+            $"Jugador ID {jugador.IDJugador} ya tiene una sesiÃ³n activa."
+          );
+        }
+
+        sesionesActivas[jugador.IDJugador] = DateTime.UtcNow;
 
         var dto = new JugadorDTO {
           IDJugador = jugador.IDJugador,
@@ -99,6 +113,45 @@ namespace LetterClashServer.Services {
     private bool EsContrasenaValida(string contrasena) {
       return !string.IsNullOrEmpty(contrasena) &&
              Regex.IsMatch(contrasena, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$");
+    }
+
+    private bool TieneSesionActiva(int jugadorID) {
+      if (!sesionesActivas.TryGetValue(jugadorID, out DateTime ultimaActividadUtc)) {
+        return false;
+      }
+
+      if (DateTime.UtcNow - ultimaActividadUtc <= TiempoSesionActiva) {
+        return true;
+      }
+
+      sesionesActivas.TryRemove(jugadorID, out _);
+      return false;
+    }
+
+    public ServiceResult<bool> RenovarSesion(int jugadorID) {
+      if (jugadorID <= 0) {
+        return ServiceResult<bool>.Failure(
+          CodigoError.PARAMETRO_INVALIDO,
+          "El ID del jugador debe ser un entero positivo.",
+          $"jugadorID = {jugadorID}"
+        );
+      }
+
+      sesionesActivas[jugadorID] = DateTime.UtcNow;
+      return ServiceResult<bool>.Success(true);
+    }
+
+    public ServiceResult<bool> CerrarSesion(int jugadorID) {
+      if (jugadorID <= 0) {
+        return ServiceResult<bool>.Failure(
+          CodigoError.PARAMETRO_INVALIDO,
+          "El ID del jugador debe ser un entero positivo.",
+          $"jugadorID = {jugadorID}"
+        );
+      }
+
+      sesionesActivas.TryRemove(jugadorID, out _);
+      return ServiceResult<bool>.Success(true);
     }
 
     public ServiceResult<bool> RegistrarJugador(JugadorDTO datosJugador, string contrasenaPlana) {

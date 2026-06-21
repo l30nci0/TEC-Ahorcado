@@ -248,6 +248,10 @@
                                                                         <Setter Property="Background" Value="#22C55E"/>
                                                                         <Setter Property="BorderBrush" Value="#22C55E"/>
                                                                     </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Resultado}" Value="Win">
+                                                                        <Setter Property="Background" Value="#22C55E"/>
+                                                                        <Setter Property="BorderBrush" Value="#22C55E"/>
+                                                                    </DataTrigger>
                                                                     <DataTrigger Binding="{Binding Resultado}" Value="Derrota">
                                                                         <Setter Property="Background" Value="#EF4444"/>
                                                                         <Setter Property="BorderBrush" Value="#EF4444"/>

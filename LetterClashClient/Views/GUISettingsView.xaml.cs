@@ -1,6 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
 
+using LetterClashClient.Models;
+
 namespace LetterClashClient.Views {
   public partial class GUISettingsView : Page {
     public GUISettingsView() {
@@ -52,6 +54,7 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonLogout_Click(object sender, RoutedEventArgs e) {
+      SessionContext.LimpiarSesion();
       NavigationService.Navigate(new GUILoginView());
     }
 

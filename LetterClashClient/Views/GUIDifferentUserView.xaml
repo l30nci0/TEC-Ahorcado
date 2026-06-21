@@ -357,7 +357,7 @@
 
                 <!-- Stats Title -->
                 <TextBlock Grid.Row="0"
-                           Text="ESTADÍSTICAS DE PARTIDAS"
+                           Text="{DynamicResource DiffUser_StatsTitle}"
                            FontFamily="{StaticResource GeistPixelSquare}"
                            FontSize="14"
                            FontWeight="Bold"
