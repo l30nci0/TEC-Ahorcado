@@ -6,7 +6,8 @@
         Width="1280"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
-        WindowStyle="None">
+        WindowStyle="None"
+        Icon="/Assets/Images/LetterClashIcon.png">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="36" 

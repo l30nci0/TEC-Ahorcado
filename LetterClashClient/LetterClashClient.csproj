@@ -240,6 +240,7 @@
     <Resource Include="Assets\Images\Hangedman7.png" />
     <Resource Include="Assets\Images\Hangman.jpg" />
     <Resource Include="Assets\Images\LetterClashLogo.png" />
+    <Resource Include="Assets\Images\LetterClashIcon.png" />
     <Resource Include="Assets\Images\Stadistics.png" />
     <Resource Include="Assets\Images\star.png" />
     <Resource Include="Assets\Images\UserAvatar.png" />
