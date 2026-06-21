@@ -93,7 +93,7 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonCreateAccount_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIRegisterView());
+      NavigationService.Navigate(new GuiRegisterView());
     }
 
     private void MostrarAvisoPenalizacionPendiente() {

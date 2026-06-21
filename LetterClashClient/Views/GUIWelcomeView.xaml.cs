@@ -16,7 +16,7 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonRegister_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIRegisterView());
+      NavigationService.Navigate(new GuiRegisterView());
     }
   }
 }

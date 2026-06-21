@@ -17,7 +17,9 @@ namespace LetterClashServer.Services {
     private static readonly TimeSpan RegexTimeout = TimeSpan.FromMilliseconds(100);
     private readonly JugadorRepository jugadorRepository;
 
-    public AutenticacionService() : this(new JugadorRepository()) { }
+    public AutenticacionService() : this(new JugadorRepository()) {
+      // Constructor requerido por WCF; delega la inicializacion al constructor inyectable.
+    }
 
     public AutenticacionService(JugadorRepository repository) {
       this.jugadorRepository = repository;
@@ -117,7 +119,7 @@ namespace LetterClashServer.Services {
              Regex.IsMatch(contrasena, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$", RegexOptions.None, RegexTimeout);
     }
 
-    private bool TieneSesionActiva(int jugadorID) {
+    private static bool TieneSesionActiva(int jugadorID) {
       if (!sesionesActivas.TryGetValue(jugadorID, out DateTime ultimaActividadUtc)) {
         return false;
       }

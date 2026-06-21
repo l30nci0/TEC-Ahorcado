@@ -2,6 +2,7 @@ using LetterClashServer.Domain.Models;
 using LetterClashClient.Services;
 
 using System;
+using System.Diagnostics;
 using System.Windows.Threading;
 
 namespace LetterClashClient.Models {
@@ -34,7 +35,9 @@ namespace LetterClashClient.Models {
       try {
         var authService = ServiceProxyManager.GetAutenticacionService();
         authService.RenovarSesion(UsuarioLogueado.IDJugador);
-      } catch { }
+      } catch (Exception ex) {
+        Debug.WriteLine($"No se pudo renovar la sesion: {ex.Message}");
+      }
     }
 
     public static void LimpiarSesion() {
@@ -49,7 +52,9 @@ namespace LetterClashClient.Models {
       try {
         var authService = ServiceProxyManager.GetAutenticacionService();
         authService.CerrarSesion(jugadorID.Value);
-      } catch { }
+      } catch (Exception ex) {
+        Debug.WriteLine($"No se pudo cerrar la sesion: {ex.Message}");
+      }
     }
   }
 }

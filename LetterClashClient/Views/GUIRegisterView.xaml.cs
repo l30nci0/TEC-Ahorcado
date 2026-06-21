@@ -13,7 +13,7 @@ using LetterClashClient.Services;
 using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
-  public partial class GUIRegisterView : Page {
+  public partial class GuiRegisterView : Page {
     private static readonly TimeSpan RegexTimeout = TimeSpan.FromMilliseconds(100);
     private byte[] selectedAvatarBytes;
     private bool isPasswordVisible;
@@ -21,7 +21,7 @@ namespace LetterClashClient.Views {
     private bool isSyncingPassword;
     private bool isSyncingConfirmPassword;
 
-    public GUIRegisterView() {
+    public GuiRegisterView() {
       InitializeComponent();
     }
 
