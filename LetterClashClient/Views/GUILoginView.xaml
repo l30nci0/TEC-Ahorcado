@@ -288,11 +288,23 @@
                            Margin="2,0,0,8"/>
 
         <Grid Margin="0,0,0,4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="42"/>
+          </Grid.ColumnDefinitions>
           <PasswordBox x:Name="PasswordBoxPassword"
+                                 Grid.Column="0"
                                  Style="{StaticResource ModernPasswordBox}"
                                  Height="42"
                                  PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
+          <TextBox x:Name="TextBoxPasswordVisible"
+                   Grid.Column="0"
+                   Style="{StaticResource ModernTextBox}"
+                   Height="42"
+                   Visibility="Collapsed"
+                   TextChanged="TextBoxPasswordVisible_TextChanged"/>
           <TextBlock x:Name="TextBlockPasswordPlaceholder"
+                               Grid.Column="0"
                                Text="{DynamicResource Login_PasswordPlaceholder}"
                                FontFamily="{StaticResource GeistMono}"
                                FontSize="14"
@@ -300,6 +312,13 @@
                                Margin="14,0,0,0"
                                VerticalAlignment="Center"
                                IsHitTestVisible="False"/>
+          <Button x:Name="ButtonTogglePasswordVisibility"
+                  Grid.Column="1"
+                  Content="👁"
+                  Height="42"
+                  Margin="6,0,0,0"
+                  Style="{StaticResource ModernSecondaryButton}"
+                  Click="ButtonTogglePasswordVisibility_Click"/>
         </Grid>
 
         <TextBlock x:Name="TextBlockPasswordError"

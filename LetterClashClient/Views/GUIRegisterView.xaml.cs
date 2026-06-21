@@ -15,6 +15,10 @@ using LetterClashServer.Domain.Models;
 namespace LetterClashClient.Views {
   public partial class GUIRegisterView : Page {
     private byte[] selectedAvatarBytes;
+    private bool isPasswordVisible;
+    private bool isConfirmPasswordVisible;
+    private bool isSyncingPassword;
+    private bool isSyncingConfirmPassword;
 
     public GUIRegisterView() {
       InitializeComponent();
@@ -250,10 +254,69 @@ namespace LetterClashClient.Views {
 
     private void PasswordBoxPassword_PasswordChanged(object sender, RoutedEventArgs e) {
       TextBlockPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+
+      if (isPasswordVisible && !isSyncingPassword) {
+        isSyncingPassword = true;
+        TextBoxPasswordVisible.Text = PasswordBoxPassword.Password;
+        isSyncingPassword = false;
+      }
     }
 
     private void PasswordBoxConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e) {
       TextBlockConfirmPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxConfirmPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+
+      if (isConfirmPasswordVisible && !isSyncingConfirmPassword) {
+        isSyncingConfirmPassword = true;
+        TextBoxConfirmPasswordVisible.Text = PasswordBoxConfirmPassword.Password;
+        isSyncingConfirmPassword = false;
+      }
+    }
+
+    private void TextBoxPasswordVisible_TextChanged(object sender, TextChangedEventArgs e) {
+      if (!isPasswordVisible || isSyncingPassword) {
+        return;
+      }
+
+      isSyncingPassword = true;
+      PasswordBoxPassword.Password = TextBoxPasswordVisible.Text;
+      isSyncingPassword = false;
+      TextBlockPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxPasswordVisible.Text) ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    private void TextBoxConfirmPasswordVisible_TextChanged(object sender, TextChangedEventArgs e) {
+      if (!isConfirmPasswordVisible || isSyncingConfirmPassword) {
+        return;
+      }
+
+      isSyncingConfirmPassword = true;
+      PasswordBoxConfirmPassword.Password = TextBoxConfirmPasswordVisible.Text;
+      isSyncingConfirmPassword = false;
+      TextBlockConfirmPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxConfirmPasswordVisible.Text) ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    private void ButtonTogglePasswordVisibility_Click(object sender, RoutedEventArgs e) {
+      isPasswordVisible = !isPasswordVisible;
+      TogglePasswordVisibility(PasswordBoxPassword, TextBoxPasswordVisible, isPasswordVisible);
+    }
+
+    private void ButtonToggleConfirmPasswordVisibility_Click(object sender, RoutedEventArgs e) {
+      isConfirmPasswordVisible = !isConfirmPasswordVisible;
+      TogglePasswordVisibility(PasswordBoxConfirmPassword, TextBoxConfirmPasswordVisible, isConfirmPasswordVisible);
+    }
+
+    private void TogglePasswordVisibility(PasswordBox passwordBox, TextBox visibleTextBox, bool showText) {
+      if (showText) {
+        visibleTextBox.Text = passwordBox.Password;
+        visibleTextBox.Visibility = Visibility.Visible;
+        passwordBox.Visibility = Visibility.Collapsed;
+        visibleTextBox.Focus();
+        visibleTextBox.CaretIndex = visibleTextBox.Text.Length;
+      } else {
+        passwordBox.Password = visibleTextBox.Text;
+        passwordBox.Visibility = Visibility.Visible;
+        visibleTextBox.Visibility = Visibility.Collapsed;
+        passwordBox.Focus();
+      }
     }
 
     private void ButtonLangES_Click(object sender, RoutedEventArgs e) {

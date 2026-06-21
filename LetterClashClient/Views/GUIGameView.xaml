@@ -324,25 +324,6 @@
                                  Margin="0,4,0,0"/>
                   </StackPanel>
                   
-                  <!-- Word Description Clue -->
-                  <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="340">
-                      <TextBlock Text="PISTA / DESCRIPCIÓN"
-                                 FontSize="11"
-                                 FontFamily="{StaticResource GeistPixelSquare}"
-                                 Foreground="#FF2D66"
-                                 FontWeight="Bold"
-                                 HorizontalAlignment="Center"
-                                 Margin="0,0,0,4"/>
-                      <TextBlock x:Name="TextBlockWordDescription"
-                                 Text="Cargando pista de la palabra..."
-                                 FontSize="13"
-                                 FontFamily="{StaticResource GeistMono}"
-                                 Foreground="#E0F7F4"
-                                 HorizontalAlignment="Center"
-                                 TextAlignment="Center"
-                                 TextWrapping="Wrap"/>
-                  </StackPanel>
-                  
                   <!-- Room Language -->
                   <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0">
                       <TextBlock Text="IDIOMA"

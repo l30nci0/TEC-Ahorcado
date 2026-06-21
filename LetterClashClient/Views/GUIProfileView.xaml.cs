@@ -16,6 +16,12 @@ using LetterClashServer.Domain.Models;
 namespace LetterClashClient.Views {
   public partial class GUIProfileView : Page {
     private byte[] selectedProfileAvatarBytes;
+    private bool isCurrentPasswordVisible;
+    private bool isPasswordVisible;
+    private bool isConfirmPasswordVisible;
+    private bool isSyncingCurrentPassword;
+    private bool isSyncingPassword;
+    private bool isSyncingConfirmPassword;
 
     public GUIProfileView() {
       InitializeComponent();
@@ -220,26 +226,20 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonCancel_Click(object sender, RoutedEventArgs e) {
-      PasswordBoxCurrentPassword.Password = "";
-      PasswordBoxPassword.Password = "";
-      PasswordBoxConfirmPassword.Password = "";
+      ClearPasswordFields();
       GridPasswordModal.Visibility = Visibility.Collapsed;
       SwitchMode(false);
     }
 
     private void ButtonOpenChangePassword_Click(object sender, RoutedEventArgs e) {
-      PasswordBoxCurrentPassword.Password = "";
-      PasswordBoxPassword.Password = "";
-      PasswordBoxConfirmPassword.Password = "";
+      ClearPasswordFields();
       TextBlockCurrentPasswordError.Visibility = Visibility.Hidden;
       TextBlockPasswordError.Visibility = Visibility.Hidden;
       GridPasswordModal.Visibility = Visibility.Visible;
     }
 
     private void ButtonCancelPassword_Click(object sender, RoutedEventArgs e) {
-      PasswordBoxCurrentPassword.Password = "";
-      PasswordBoxPassword.Password = "";
-      PasswordBoxConfirmPassword.Password = "";
+      ClearPasswordFields();
       GridPasswordModal.Visibility = Visibility.Collapsed;
     }
 
@@ -291,9 +291,7 @@ namespace LetterClashClient.Views {
           string successTitle = (string) Application.Current.FindResource("Profile_UpdateSuccessTitle") ?? "TecnoHorcado";
           MessageBox.Show(successMsg, successTitle, MessageBoxButton.OK, MessageBoxImage.Information);
           
-          PasswordBoxCurrentPassword.Password = "";
-          PasswordBoxPassword.Password = "";
-          PasswordBoxConfirmPassword.Password = "";
+          ClearPasswordFields();
           GridPasswordModal.Visibility = Visibility.Collapsed;
           SessionContext.UsuarioLogueado = null;
           NavigationService.Navigate(new GUILoginView());
@@ -327,11 +325,23 @@ namespace LetterClashClient.Views {
       if (TextBlockCurrentPasswordPlaceholder != null) {
         TextBlockCurrentPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxCurrentPassword.Password) ? Visibility.Visible : Visibility.Hidden;
       }
+
+      if (isCurrentPasswordVisible && !isSyncingCurrentPassword) {
+        isSyncingCurrentPassword = true;
+        TextBoxCurrentPasswordVisible.Text = PasswordBoxCurrentPassword.Password;
+        isSyncingCurrentPassword = false;
+      }
     }
 
     private void PasswordBoxPassword_PasswordChanged(object sender, RoutedEventArgs e) {
       if (TextBlockPasswordPlaceholder != null) {
         TextBlockPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+      }
+
+      if (isPasswordVisible && !isSyncingPassword) {
+        isSyncingPassword = true;
+        TextBoxPasswordVisible.Text = PasswordBoxPassword.Password;
+        isSyncingPassword = false;
       }
     }
 
@@ -339,6 +349,93 @@ namespace LetterClashClient.Views {
       if (TextBlockConfirmPasswordPlaceholder != null) {
         TextBlockConfirmPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxConfirmPassword.Password) ? Visibility.Visible : Visibility.Hidden;
       }
+
+      if (isConfirmPasswordVisible && !isSyncingConfirmPassword) {
+        isSyncingConfirmPassword = true;
+        TextBoxConfirmPasswordVisible.Text = PasswordBoxConfirmPassword.Password;
+        isSyncingConfirmPassword = false;
+      }
+    }
+
+    private void TextBoxCurrentPasswordVisible_TextChanged(object sender, TextChangedEventArgs e) {
+      if (!isCurrentPasswordVisible || isSyncingCurrentPassword) {
+        return;
+      }
+
+      isSyncingCurrentPassword = true;
+      PasswordBoxCurrentPassword.Password = TextBoxCurrentPasswordVisible.Text;
+      isSyncingCurrentPassword = false;
+      TextBlockCurrentPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxCurrentPasswordVisible.Text) ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    private void TextBoxPasswordVisible_TextChanged(object sender, TextChangedEventArgs e) {
+      if (!isPasswordVisible || isSyncingPassword) {
+        return;
+      }
+
+      isSyncingPassword = true;
+      PasswordBoxPassword.Password = TextBoxPasswordVisible.Text;
+      isSyncingPassword = false;
+      TextBlockPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxPasswordVisible.Text) ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    private void TextBoxConfirmPasswordVisible_TextChanged(object sender, TextChangedEventArgs e) {
+      if (!isConfirmPasswordVisible || isSyncingConfirmPassword) {
+        return;
+      }
+
+      isSyncingConfirmPassword = true;
+      PasswordBoxConfirmPassword.Password = TextBoxConfirmPasswordVisible.Text;
+      isSyncingConfirmPassword = false;
+      TextBlockConfirmPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxConfirmPasswordVisible.Text) ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    private void ButtonToggleCurrentPasswordVisibility_Click(object sender, RoutedEventArgs e) {
+      isCurrentPasswordVisible = !isCurrentPasswordVisible;
+      TogglePasswordVisibility(PasswordBoxCurrentPassword, TextBoxCurrentPasswordVisible, isCurrentPasswordVisible);
+    }
+
+    private void ButtonTogglePasswordVisibility_Click(object sender, RoutedEventArgs e) {
+      isPasswordVisible = !isPasswordVisible;
+      TogglePasswordVisibility(PasswordBoxPassword, TextBoxPasswordVisible, isPasswordVisible);
+    }
+
+    private void ButtonToggleConfirmPasswordVisibility_Click(object sender, RoutedEventArgs e) {
+      isConfirmPasswordVisible = !isConfirmPasswordVisible;
+      TogglePasswordVisibility(PasswordBoxConfirmPassword, TextBoxConfirmPasswordVisible, isConfirmPasswordVisible);
+    }
+
+    private void TogglePasswordVisibility(PasswordBox passwordBox, TextBox visibleTextBox, bool showText) {
+      if (showText) {
+        visibleTextBox.Text = passwordBox.Password;
+        visibleTextBox.Visibility = Visibility.Visible;
+        passwordBox.Visibility = Visibility.Collapsed;
+        visibleTextBox.Focus();
+        visibleTextBox.CaretIndex = visibleTextBox.Text.Length;
+      } else {
+        passwordBox.Password = visibleTextBox.Text;
+        passwordBox.Visibility = Visibility.Visible;
+        visibleTextBox.Visibility = Visibility.Collapsed;
+        passwordBox.Focus();
+      }
+    }
+
+    private void ClearPasswordFields() {
+      PasswordBoxCurrentPassword.Password = "";
+      PasswordBoxPassword.Password = "";
+      PasswordBoxConfirmPassword.Password = "";
+      TextBoxCurrentPasswordVisible.Text = "";
+      TextBoxPasswordVisible.Text = "";
+      TextBoxConfirmPasswordVisible.Text = "";
+      isCurrentPasswordVisible = false;
+      isPasswordVisible = false;
+      isConfirmPasswordVisible = false;
+      PasswordBoxCurrentPassword.Visibility = Visibility.Visible;
+      PasswordBoxPassword.Visibility = Visibility.Visible;
+      PasswordBoxConfirmPassword.Visibility = Visibility.Visible;
+      TextBoxCurrentPasswordVisible.Visibility = Visibility.Collapsed;
+      TextBoxPasswordVisible.Visibility = Visibility.Collapsed;
+      TextBoxConfirmPasswordVisible.Visibility = Visibility.Collapsed;
     }
 
     private void TextBoxPhone_PreviewTextInput(object sender, TextCompositionEventArgs e) {

@@ -12,6 +12,9 @@ using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class GUILoginView : Page {
+    private bool isPasswordVisible;
+    private bool isSyncingPassword;
+
     public GUILoginView() {
       InitializeComponent();
     }
@@ -118,6 +121,40 @@ namespace LetterClashClient.Views {
 
     private void PasswordBoxPassword_PasswordChanged(object sender, RoutedEventArgs e) {
       TextBlockPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordBoxPassword.Password) ? Visibility.Visible : Visibility.Hidden;
+
+      if (isPasswordVisible && !isSyncingPassword) {
+        isSyncingPassword = true;
+        TextBoxPasswordVisible.Text = PasswordBoxPassword.Password;
+        isSyncingPassword = false;
+      }
+    }
+
+    private void TextBoxPasswordVisible_TextChanged(object sender, TextChangedEventArgs e) {
+      if (!isPasswordVisible || isSyncingPassword) {
+        return;
+      }
+
+      isSyncingPassword = true;
+      PasswordBoxPassword.Password = TextBoxPasswordVisible.Text;
+      isSyncingPassword = false;
+      TextBlockPasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(TextBoxPasswordVisible.Text) ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    private void ButtonTogglePasswordVisibility_Click(object sender, RoutedEventArgs e) {
+      isPasswordVisible = !isPasswordVisible;
+
+      if (isPasswordVisible) {
+        TextBoxPasswordVisible.Text = PasswordBoxPassword.Password;
+        TextBoxPasswordVisible.Visibility = Visibility.Visible;
+        PasswordBoxPassword.Visibility = Visibility.Collapsed;
+        TextBoxPasswordVisible.Focus();
+        TextBoxPasswordVisible.CaretIndex = TextBoxPasswordVisible.Text.Length;
+      } else {
+        PasswordBoxPassword.Password = TextBoxPasswordVisible.Text;
+        PasswordBoxPassword.Visibility = Visibility.Visible;
+        TextBoxPasswordVisible.Visibility = Visibility.Collapsed;
+        PasswordBoxPassword.Focus();
+      }
     }
   }
 }

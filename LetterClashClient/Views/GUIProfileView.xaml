@@ -853,23 +853,41 @@
                         <!-- Current Password -->
                         <TextBlock Text="{DynamicResource Profile_CurrentPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Height="36" Margin="0,0,0,2">
-                            <PasswordBox x:Name="PasswordBoxCurrentPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxCurrentPassword_PasswordChanged"/>
-                            <TextBlock x:Name="TextBlockCurrentPasswordPlaceholder" Text="{DynamicResource Profile_CurrentPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <PasswordBox x:Name="PasswordBoxCurrentPassword" Grid.Column="0" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxCurrentPassword_PasswordChanged"/>
+                            <TextBox x:Name="TextBoxCurrentPasswordVisible" Grid.Column="0" Style="{StaticResource ModernTextBox}" Visibility="Collapsed" TextChanged="TextBoxCurrentPasswordVisible_TextChanged"/>
+                            <TextBlock x:Name="TextBlockCurrentPasswordPlaceholder" Grid.Column="0" Text="{DynamicResource Profile_CurrentPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                            <Button x:Name="ButtonToggleCurrentPasswordVisibility" Grid.Column="1" Content="👁" Margin="6,0,0,0" Style="{StaticResource ModernSecondaryButton}" Click="ButtonToggleCurrentPasswordVisibility_Click"/>
                         </Grid>
                         <TextBlock x:Name="TextBlockCurrentPasswordError" Text="{DynamicResource Profile_CurrentPasswordError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,8"/>
 
                         <!-- New Password -->
                         <TextBlock Text="{DynamicResource Profile_NewPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Height="36" Margin="0,0,0,12">
-                            <PasswordBox x:Name="PasswordBoxPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
-                            <TextBlock x:Name="TextBlockPasswordPlaceholder" Text="{DynamicResource Profile_NewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <PasswordBox x:Name="PasswordBoxPassword" Grid.Column="0" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxPassword_PasswordChanged"/>
+                            <TextBox x:Name="TextBoxPasswordVisible" Grid.Column="0" Style="{StaticResource ModernTextBox}" Visibility="Collapsed" TextChanged="TextBoxPasswordVisible_TextChanged"/>
+                            <TextBlock x:Name="TextBlockPasswordPlaceholder" Grid.Column="0" Text="{DynamicResource Profile_NewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                            <Button x:Name="ButtonTogglePasswordVisibility" Grid.Column="1" Content="👁" Margin="6,0,0,0" Style="{StaticResource ModernSecondaryButton}" Click="ButtonTogglePasswordVisibility_Click"/>
                         </Grid>
 
                         <!-- Confirm Password -->
                         <TextBlock Text="{DynamicResource Profile_ConfirmNewPasswordLabel}" Style="{StaticResource FormLabelStyle}"/>
                         <Grid Height="36" Margin="0,0,0,2">
-                            <PasswordBox x:Name="PasswordBoxConfirmPassword" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxConfirmPassword_PasswordChanged"/>
-                            <TextBlock x:Name="TextBlockConfirmPasswordPlaceholder" Text="{DynamicResource Profile_ConfirmNewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <PasswordBox x:Name="PasswordBoxConfirmPassword" Grid.Column="0" Style="{StaticResource ModernPasswordBox}" PasswordChanged="PasswordBoxConfirmPassword_PasswordChanged"/>
+                            <TextBox x:Name="TextBoxConfirmPasswordVisible" Grid.Column="0" Style="{StaticResource ModernTextBox}" Visibility="Collapsed" TextChanged="TextBoxConfirmPasswordVisible_TextChanged"/>
+                            <TextBlock x:Name="TextBlockConfirmPasswordPlaceholder" Grid.Column="0" Text="{DynamicResource Profile_ConfirmNewPasswordPlaceholder}" Style="{StaticResource PlaceholderStyle}"/>
+                            <Button x:Name="ButtonToggleConfirmPasswordVisibility" Grid.Column="1" Content="👁" Margin="6,0,0,0" Style="{StaticResource ModernSecondaryButton}" Click="ButtonToggleConfirmPasswordVisibility_Click"/>
                         </Grid>
                         <TextBlock x:Name="TextBlockPasswordError" Text="{DynamicResource Profile_PasswordMatchError}" Style="{StaticResource ErrorLabelStyle}" Margin="2,2,0,8"/>
                     </StackPanel>

@@ -377,8 +377,6 @@ namespace LetterClashClient.Views {
     }
 
     private void CargarPistaAdivinador() {
-      TextBlockWordDescription.Text = "";
-
       if (idPalabra <= 0) {
         pistasMaximas = ObtenerPistasMaximas(targetWord.Length);
         ActualizarEstadoPistas();
@@ -396,8 +394,6 @@ namespace LetterClashClient.Views {
 
         var palabra = result.Value.FirstOrDefault(p => p.IDPalabra == idPalabra);
         if (palabra != null) {
-          this.wordDescription = palabra.Descripcion;
-          TextBlockWordDescription.Text = palabra.Descripcion;
           this.targetWord = palabra.PalabraTexto.ToUpper();
           this.fullTargetWord = this.targetWord;
         }
