@@ -31,7 +31,7 @@ namespace LetterClashClient.Views {
         string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
         string invalidSession = (string) Application.Current.FindResource("Msg_InvalidUserSession") ?? "Sesión de usuario inválida.";
         MessageBox.Show(invalidSession, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-        NavigationService.Navigate(new GUIGameHubView());
+        NavigationService.Navigate(new GuiGameHubView());
         return;
       }
 
@@ -222,23 +222,23 @@ namespace LetterClashClient.Views {
     }
 
     private void OnClicMenuPrincipal(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIGameHubView());
+      NavigationHelper.NavigateToMainMenu(NavigationService);
     }
 
     private void OnClicPerfil(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIProfileView());
+      NavigationHelper.NavigateToProfile(NavigationService);
     }
 
     private void OnClicHistorial(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIHistoryView());
+      NavigationHelper.NavigateToHistory(NavigationService);
     }
 
     private void OnClicMarcadores(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUILeaderboardView());
+      NavigationHelper.NavigateToScoreboard(NavigationService);
     }
 
     private void OnClicAjustes(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUISettingsView());
+      NavigationHelper.NavigateToSettings(NavigationService);
     }
 
     private void OnClicItemHistorial(object sender, MouseButtonEventArgs e) {

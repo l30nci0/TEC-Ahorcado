@@ -8,11 +8,11 @@ using LetterClashClient.Models;
 using LetterClashClient.Services;
 
 namespace LetterClashClient.Views {
-  public partial class GUIGameHubView : Page {
+  public partial class GuiGameHubView : Page {
     private static readonly int[] HangmanStates = { 6, 5, 4, 3, 2, 7, 1 };
     private int currentHangmanStateIndex;
 
-    public GUIGameHubView() {
+    public GuiGameHubView() {
       InitializeComponent();
     }
 
@@ -35,7 +35,7 @@ namespace LetterClashClient.Views {
       UpdateHangmanImage();
     }
 
-    private int CalculateAge(DateTime birthDate) {
+    private static int CalculateAge(DateTime birthDate) {
       DateTime today = DateTime.Today;
       int age = today.Year - birthDate.Year;
 
@@ -77,23 +77,23 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIGameHubView());
+      NavigationHelper.NavigateToMainMenu(NavigationService);
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIProfileView());
+      NavigationHelper.NavigateToProfile(NavigationService);
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIHistoryView());
+      NavigationHelper.NavigateToHistory(NavigationService);
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUILeaderboardView());
+      NavigationHelper.NavigateToScoreboard(NavigationService);
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUISettingsView());
+      NavigationHelper.NavigateToSettings(NavigationService);
     }
   }
 }

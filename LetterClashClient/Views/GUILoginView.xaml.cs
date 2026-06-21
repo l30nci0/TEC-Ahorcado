@@ -70,7 +70,7 @@ namespace LetterClashClient.Views {
         if (result != null && result.IsSuccess) {
           SessionContext.IniciarSesion(result.Value);
           MostrarAvisoPenalizacionPendiente();
-          NavigationService.Navigate(new GUIGameHubView());
+          NavigationService.Navigate(new GuiGameHubView());
         } else {
           string errorMsg = result?.Error?.Mensaje ?? "Credenciales incorrectas o error en el sistema.";
           if (result?.Error?.CodigoError == CodigoError.CREDENCIALES_INVALIDAS) {

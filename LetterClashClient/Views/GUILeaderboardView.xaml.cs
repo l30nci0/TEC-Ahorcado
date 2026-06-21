@@ -113,23 +113,23 @@ namespace LetterClashClient.Views {
     }
 
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIGameHubView());
+      NavigationHelper.NavigateToMainMenu(NavigationService);
     }
 
     private void ButtonProfile_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIProfileView());
+      NavigationHelper.NavigateToProfile(NavigationService);
     }
 
     private void ButtonHistory_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUIHistoryView());
+      NavigationHelper.NavigateToHistory(NavigationService);
     }
 
     private void ButtonScoreboard_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUILeaderboardView());
+      NavigationHelper.NavigateToScoreboard(NavigationService);
     }
 
     private void ButtonSettings_Click(object sender, RoutedEventArgs e) {
-      NavigationService.Navigate(new GUISettingsView());
+      NavigationHelper.NavigateToSettings(NavigationService);
     }
   }
 
