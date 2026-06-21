@@ -234,7 +234,15 @@ namespace LetterClashClient.Views {
       Dispatcher.Invoke(() => {
         partidaCerrada = true;
         DesconectarJuego();
-        if (fault != null && !string.IsNullOrWhiteSpace(fault.Detalle) && fault.Detalle.Contains("Timeout de inactividad")) {
+        if (fault == null) {
+          string unknownErrTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
+          string unknownServerErr = (string) Application.Current.FindResource("Game_ServerError") ?? "Ocurrió un error en el servidor: {0}";
+          MessageBox.Show(string.Format(unknownServerErr, "Error desconocido."), unknownErrTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+          NavigationService.Navigate(new GUIGameHubView());
+          return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(fault.Detalle) && fault.Detalle.Contains("Timeout de inactividad")) {
           string inactivityMsg = (string) Application.Current.FindResource("Game_InactivityPenalty") ?? "La partida se cerro por inactividad. Se aplico una penalizacion de -3 puntos.";
           string resultTitle = (string) Application.Current.FindResource("Game_ResultTitle") ?? "Partida Finalizada";
           MessageBox.Show(inactivityMsg, resultTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
