@@ -35,8 +35,6 @@ namespace LetterClashServer.Services {
     private const int PuntosVictoriaAnfitrion = 5;
     private const int PenalizacionAbandono = -3;
     private static readonly TimeSpan TiempoMaximoInactividad = TimeSpan.FromMinutes(5);
-    private static readonly Random random = new Random();
-    private static readonly object randomLock = new object();
     private static readonly Timer inactivityTimer = new Timer(VerificarInactividad, null, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(30));
     private readonly PartidaRepository partidaRepository;
     private readonly JugadorRepository jugadorRepository;

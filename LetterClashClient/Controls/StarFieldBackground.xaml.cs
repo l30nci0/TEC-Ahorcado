@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,7 +22,7 @@ namespace LetterClashClient.Controls {
 
     private readonly List<Star> _stars = new List<Star>();
     private readonly DispatcherTimer _timer;
-    private readonly Random _rng = new Random();
+    private static readonly RandomNumberGenerator secureRandom = RandomNumberGenerator.Create();
     private const int StarCount = 120;
 
     public StarfieldBackground() {
@@ -60,14 +61,14 @@ namespace LetterClashClient.Controls {
       if (w <= 0 || h <= 0) return;
 
       for (int i = 0; i < StarCount; i++) {
-        double size = _rng.NextDouble() < 0.15 ? _rng.Next(8, 13) : _rng.Next(2, 4); // 15% shine stars (8-12px), 85% normal (2-3px)
-        double opacity = 0.15 + _rng.NextDouble() * 0.75;
-        double opacityDelta = (0.003 + _rng.NextDouble() * 0.007)
-                              * (_rng.NextDouble() < 0.5 ? 1 : -1);
-        double speed = 0.08 + _rng.NextDouble() * 0.22;
+        double size = ObtenerDoubleSeguro() < 0.15 ? ObtenerEnteroSeguro(8, 13) : ObtenerEnteroSeguro(2, 4); // 15% shine stars (8-12px), 85% normal (2-3px)
+        double opacity = 0.15 + ObtenerDoubleSeguro() * 0.75;
+        double opacityDelta = (0.003 + ObtenerDoubleSeguro() * 0.007)
+                              * (ObtenerDoubleSeguro() < 0.5 ? 1 : -1);
+        double speed = 0.08 + ObtenerDoubleSeguro() * 0.22;
 
         Brush fillBrush;
-        double p = _rng.NextDouble();
+        double p = ObtenerDoubleSeguro();
         if (p < 0.40) {
           fillBrush = Brushes.White;
         } else if (p < 0.60) {
@@ -105,8 +106,8 @@ namespace LetterClashClient.Controls {
           starShape = rect;
         }
 
-        double x = _rng.NextDouble() * w;
-        double y = _rng.NextDouble() * h;
+        double x = ObtenerDoubleSeguro() * w;
+        double y = ObtenerDoubleSeguro() * h;
 
         Canvas.SetLeft(starShape, x);
         Canvas.SetTop(starShape, y);
@@ -149,7 +150,7 @@ namespace LetterClashClient.Controls {
         // Wrap star back to top when it falls off screen
         if (s.Y > h + s.Size) {
           s.Y = -s.Size;
-          s.X = _rng.NextDouble() * w;
+          s.X = ObtenerDoubleSeguro() * w;
         }
 
         s.Rect.Opacity = s.Opacity;
@@ -158,6 +159,38 @@ namespace LetterClashClient.Controls {
 
         _stars[i] = s;
       }
+    }
+
+    private static int ObtenerEnteroSeguro(int minimoInclusivo, int maximoExclusivo) {
+      if (maximoExclusivo <= minimoInclusivo) {
+        throw new ArgumentOutOfRangeException(nameof(maximoExclusivo));
+      }
+
+      return minimoInclusivo + ObtenerEnteroSeguro(maximoExclusivo - minimoInclusivo);
+    }
+
+    private static int ObtenerEnteroSeguro(int maximoExclusivo) {
+      if (maximoExclusivo <= 0) {
+        throw new ArgumentOutOfRangeException(nameof(maximoExclusivo));
+      }
+
+      byte[] bytes = new byte[4];
+      uint limite = uint.MaxValue - (uint.MaxValue % (uint) maximoExclusivo);
+      uint valor;
+
+      do {
+        secureRandom.GetBytes(bytes);
+        valor = BitConverter.ToUInt32(bytes, 0);
+      } while (valor >= limite);
+
+      return (int) (valor % (uint) maximoExclusivo);
+    }
+
+    private static double ObtenerDoubleSeguro() {
+      byte[] bytes = new byte[8];
+      secureRandom.GetBytes(bytes);
+      ulong valor = BitConverter.ToUInt64(bytes, 0) >> 11;
+      return valor / (double) (1UL << 53);
     }
   }
 }

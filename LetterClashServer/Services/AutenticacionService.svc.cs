@@ -14,6 +14,7 @@ namespace LetterClashServer.Services {
     private static readonly ConcurrentDictionary<int, DateTime> sesionesActivas =
         new ConcurrentDictionary<int, DateTime>();
     private static readonly TimeSpan TiempoSesionActiva = TimeSpan.FromSeconds(75);
+    private static readonly TimeSpan RegexTimeout = TimeSpan.FromMilliseconds(100);
     private readonly JugadorRepository jugadorRepository;
 
     public AutenticacionService() : this(new JugadorRepository()) { }
@@ -90,7 +91,8 @@ namespace LetterClashServer.Services {
     }
 
     private bool EsTelefonoValido(string telefono) {
-      return !string.IsNullOrWhiteSpace(telefono) && Regex.IsMatch(telefono.Trim(), @"^[0-9]{10}$");
+      return !string.IsNullOrWhiteSpace(telefono) &&
+             Regex.IsMatch(telefono.Trim(), @"^[0-9]{10}$", RegexOptions.None, RegexTimeout);
     }
 
     private bool EsFechaNacimientoValida(DateTime fechaDeNacimiento) {
@@ -102,17 +104,17 @@ namespace LetterClashServer.Services {
 
     private bool EsNombreCompletoValido(string nombre) {
       return !string.IsNullOrWhiteSpace(nombre) &&
-             Regex.IsMatch(nombre.Trim(), @"^(?=.{8,}$)\p{L}{3,}(?:\s+\p{L}+)*\s+\p{L}{4,}$");
+             Regex.IsMatch(nombre.Trim(), @"^(?=.{8,}$)\p{L}{3,}(?:\s+\p{L}+)*\s+\p{L}{4,}$", RegexOptions.None, RegexTimeout);
     }
 
     private bool EsNombreUsuarioValido(string nombreUsuario) {
       return !string.IsNullOrWhiteSpace(nombreUsuario) &&
-             Regex.IsMatch(nombreUsuario.Trim(), @"^[A-Za-z0-9_-]{3,12}$");
+             Regex.IsMatch(nombreUsuario.Trim(), @"^[A-Za-z0-9_-]{3,12}$", RegexOptions.None, RegexTimeout);
     }
 
     private bool EsContrasenaValida(string contrasena) {
       return !string.IsNullOrEmpty(contrasena) &&
-             Regex.IsMatch(contrasena, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$");
+             Regex.IsMatch(contrasena, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$", RegexOptions.None, RegexTimeout);
     }
 
     private bool TieneSesionActiva(int jugadorID) {
@@ -264,7 +266,7 @@ namespace LetterClashServer.Services {
 
     private bool EsCorreoValido(string correo) {
       if (string.IsNullOrWhiteSpace(correo)) return false;
-      var regex = new Regex(@"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,24}$", RegexOptions.IgnoreCase);
+      var regex = new Regex(@"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,24}$", RegexOptions.IgnoreCase, RegexTimeout);
       return regex.IsMatch(correo);
     }
   }

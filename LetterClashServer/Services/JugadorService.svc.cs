@@ -11,6 +11,7 @@ using LetterClashServer.Domain.Security;
 
 namespace LetterClashServer.Services {
   public class JugadorService : IJugadorService {
+    private static readonly TimeSpan RegexTimeout = TimeSpan.FromMilliseconds(100);
     private readonly JugadorRepository jugadorRepository;
 
     public JugadorService() : this(new JugadorRepository()) { }
@@ -20,7 +21,8 @@ namespace LetterClashServer.Services {
     }
 
     private bool EsTelefonoValido(string telefono) {
-      return !string.IsNullOrWhiteSpace(telefono) && Regex.IsMatch(telefono.Trim(), @"^[0-9]{10}$");
+      return !string.IsNullOrWhiteSpace(telefono) &&
+             Regex.IsMatch(telefono.Trim(), @"^[0-9]{10}$", RegexOptions.None, RegexTimeout);
     }
 
     private bool EsFechaNacimientoValida(DateTime fechaDeNacimiento) {
@@ -32,12 +34,12 @@ namespace LetterClashServer.Services {
 
     private bool EsNombreCompletoValido(string nombre) {
       return !string.IsNullOrWhiteSpace(nombre) &&
-             Regex.IsMatch(nombre.Trim(), @"^(?=.{8,}$)\p{L}{3,}(?:\s+\p{L}+)*\s+\p{L}{4,}$");
+             Regex.IsMatch(nombre.Trim(), @"^(?=.{8,}$)\p{L}{3,}(?:\s+\p{L}+)*\s+\p{L}{4,}$", RegexOptions.None, RegexTimeout);
     }
 
     private bool EsContrasenaValida(string contrasena) {
       return !string.IsNullOrEmpty(contrasena) &&
-             Regex.IsMatch(contrasena, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$");
+             Regex.IsMatch(contrasena, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$", RegexOptions.None, RegexTimeout);
     }
 
     public ServiceResult<bool> ActualizarPerfil(JugadorDTO jugadorDTO) {

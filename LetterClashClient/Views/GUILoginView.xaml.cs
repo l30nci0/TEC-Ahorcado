@@ -12,6 +12,7 @@ using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class GUILoginView : Page {
+    private static readonly TimeSpan RegexTimeout = TimeSpan.FromMilliseconds(100);
     private bool isPasswordVisible;
     private bool isSyncingPassword;
 
@@ -29,7 +30,7 @@ namespace LetterClashClient.Views {
 
     private bool IsValidPassword(string password) {
       return !string.IsNullOrEmpty(password) &&
-             Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$");
+             Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$", RegexOptions.None, RegexTimeout);
     }
 
     private void ButtonLogin_Click(object sender, RoutedEventArgs e) {

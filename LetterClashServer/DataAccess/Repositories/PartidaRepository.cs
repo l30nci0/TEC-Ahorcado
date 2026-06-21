@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
 
 using LetterClashServer.DataAccess.Context;
 
 namespace LetterClashServer.DataAccess.Repositories {
   public class PartidaRepository {
+    private static readonly RandomNumberGenerator secureRandom = RandomNumberGenerator.Create();
+
     public virtual List<Partida> ObtenerPartidasDisponibles() {
       using (var context = new LetterClashDBEntities()) {
         return context.Partidas
@@ -163,14 +166,30 @@ namespace LetterClashServer.DataAccess.Repositories {
     }
 
     private string GenerarCodigoAccesoUnico(LetterClashDBEntities context) {
-      var random = new Random();
       const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       string codigo;
       do {
         codigo = new string(Enumerable.Repeat(chars, 6)
-                                      .Select(s => s[random.Next(s.Length)]).ToArray());
+                                      .Select(s => s[ObtenerEnteroSeguro(s.Length)]).ToArray());
       } while (context.Partidas.Any(p => p.CodigoAcceso == codigo));
       return codigo;
+    }
+
+    private static int ObtenerEnteroSeguro(int maximoExclusivo) {
+      if (maximoExclusivo <= 0) {
+        throw new ArgumentOutOfRangeException(nameof(maximoExclusivo));
+      }
+
+      byte[] bytes = new byte[4];
+      uint limite = uint.MaxValue - (uint.MaxValue % (uint) maximoExclusivo);
+      uint valor;
+
+      do {
+        secureRandom.GetBytes(bytes);
+        valor = BitConverter.ToUInt32(bytes, 0);
+      } while (valor >= limite);
+
+      return (int) (valor % (uint) maximoExclusivo);
     }
   }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,6 +18,7 @@ namespace LetterClashClient.Views {
   public partial class GUIGameView : Page {
     private const int MaxMistakes = 6;
     private static readonly int[] HangmanImageByMistakes = { 6, 5, 4, 3, 2, 7, 1 };
+    private static readonly RandomNumberGenerator secureRandom = RandomNumberGenerator.Create();
     private bool isHost;
     private string opponentName;
     private string selectedLanguage;
@@ -549,9 +551,7 @@ namespace LetterClashClient.Views {
         return;
       }
 
-      // Choose a random letter
-      var random = new Random();
-      char letraPista = letrasRestantes[random.Next(letrasRestantes.Count)];
+      char letraPista = letrasRestantes[ObtenerEnteroSeguro(letrasRestantes.Count)];
 
       var usuario = SessionContext.UsuarioLogueado;
       if (usuario != null) {
@@ -678,6 +678,23 @@ namespace LetterClashClient.Views {
           channel.Close();
         }
       } catch { }
+    }
+
+    private static int ObtenerEnteroSeguro(int maximoExclusivo) {
+      if (maximoExclusivo <= 0) {
+        throw new ArgumentOutOfRangeException(nameof(maximoExclusivo));
+      }
+
+      byte[] bytes = new byte[4];
+      uint limite = uint.MaxValue - (uint.MaxValue % (uint) maximoExclusivo);
+      uint valor;
+
+      do {
+        secureRandom.GetBytes(bytes);
+        valor = BitConverter.ToUInt32(bytes, 0);
+      } while (valor >= limite);
+
+      return (int) (valor % (uint) maximoExclusivo);
     }
   }
 }

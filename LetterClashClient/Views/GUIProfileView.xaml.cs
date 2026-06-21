@@ -15,6 +15,7 @@ using LetterClashServer.Domain.Models;
 
 namespace LetterClashClient.Views {
   public partial class GUIProfileView : Page {
+    private static readonly TimeSpan RegexTimeout = TimeSpan.FromMilliseconds(100);
     private byte[] selectedProfileAvatarBytes;
     private bool isCurrentPasswordVisible;
     private bool isPasswordVisible;
@@ -40,11 +41,12 @@ namespace LetterClashClient.Views {
 
     private bool IsValidFullName(string fullName) {
       return !string.IsNullOrWhiteSpace(fullName) &&
-             Regex.IsMatch(fullName.Trim(), @"^(?=.{8,}$)\p{L}{3,}(?:\s+\p{L}+)*\s+\p{L}{4,}$");
+             Regex.IsMatch(fullName.Trim(), @"^(?=.{8,}$)\p{L}{3,}(?:\s+\p{L}+)*\s+\p{L}{4,}$", RegexOptions.None, RegexTimeout);
     }
 
     private bool IsValidPhone(string phone) {
-      return !string.IsNullOrWhiteSpace(phone) && Regex.IsMatch(phone.Trim(), @"^[0-9]{10}$");
+      return !string.IsNullOrWhiteSpace(phone) &&
+             Regex.IsMatch(phone.Trim(), @"^[0-9]{10}$", RegexOptions.None, RegexTimeout);
     }
 
     private bool IsValidBirthDate(DateTime birthDate) {
@@ -56,7 +58,7 @@ namespace LetterClashClient.Views {
 
     private bool IsValidPassword(string password) {
       return !string.IsNullOrEmpty(password) &&
-             Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$");
+             Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,15}$", RegexOptions.None, RegexTimeout);
     }
 
     private void LoadViewData() {
@@ -439,12 +441,12 @@ namespace LetterClashClient.Views {
     }
 
     private void TextBoxPhone_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-      e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]+$");
+      e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]+$", RegexOptions.None, RegexTimeout);
     }
 
     private void TextBoxPhone_Pasting(object sender, DataObjectPastingEventArgs e) {
       if (!e.DataObject.GetDataPresent(typeof(string)) ||
-          !Regex.IsMatch((string) e.DataObject.GetData(typeof(string)), @"^[0-9]+$")) {
+          !Regex.IsMatch((string) e.DataObject.GetData(typeof(string)), @"^[0-9]+$", RegexOptions.None, RegexTimeout)) {
         e.CancelCommand();
       }
     }
