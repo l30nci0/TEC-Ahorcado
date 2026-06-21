@@ -233,6 +233,15 @@
                                         Margin="0,14,0,0"
                                         Style="{StaticResource NavBarButton}"
                                         Click="ButtonSaveAudio_Click"/>
+
+                                <Button x:Name="ButtonBackAudio"
+                                        Content="REGRESAR"
+                                        Width="220"
+                                        Height="38"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,14,0,0"
+                                        Style="{StaticResource NavBarButton}"
+                                        Click="ButtonBackAudio_Click"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>

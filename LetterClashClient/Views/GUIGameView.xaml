@@ -245,7 +245,7 @@
                                        VerticalAlignment="Center"/>
               <TextBlock x:Name="TextBlockOpponent"
                                        Grid.Column="1"
-                                       Text="Usuario 1"
+                                       Text="Esperando jugador..."
                                        FontSize="14"
                                        FontFamily="{StaticResource GeistMono}"
                                        Foreground="#00A986"
@@ -309,7 +309,7 @@
                   </Grid.ColumnDefinitions>
                   
                   <!-- Access Code for Guesser -->
-                  <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
+                  <StackPanel x:Name="StackPanelAccessCodeGuesser" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
                       <TextBlock Text="{DynamicResource Game_AccessCodeLabel}"
                                  FontSize="11"
                                  FontFamily="{StaticResource GeistPixelSquare}"
@@ -488,7 +488,7 @@
                   </Grid.ColumnDefinitions>
                   
                   <!-- Access Code for Host -->
-                  <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
+                  <StackPanel x:Name="StackPanelAccessCodeHost" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
                       <TextBlock Text="{DynamicResource Game_AccessCodeLabel}"
                                  FontSize="11"
                                  FontFamily="{StaticResource GeistPixelSquare}"
@@ -560,41 +560,81 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
 
-              <Border Grid.Row="3"
-                                    Width="520"
-                                    Height="120"
-                                    BorderBrush="#00FFCC44"
-                                    BorderThickness="1.5"
-                                    Background="#061A22"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    CornerRadius="0">
-                <Grid>
-                  <Grid.RowDefinitions>
-                    <RowDefinition Height="45"/>
-                    <RowDefinition Height="*"/>
-                  </Grid.RowDefinitions>
+              <Grid Grid.Row="3"
+                    Width="560"
+                    Height="155"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsHitTestVisible="False"
+                    Opacity="0.72"
+                    x:Name="GridHostKeyboard">
+                <Grid.Resources>
+                  <Style TargetType="Button">
+                    <Setter Property="Background" Value="#111827"/>
+                    <Setter Property="Foreground" Value="#8A8F98"/>
+                    <Setter Property="BorderBrush" Value="#3A3F48"/>
+                    <Setter Property="BorderThickness" Value="1.5"/>
+                    <Setter Property="FontFamily" Value="{StaticResource GeistPixelSquare}"/>
+                    <Setter Property="FontSize" Value="15"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Margin" Value="2"/>
+                    <Setter Property="Focusable" Value="False"/>
+                    <Setter Property="Template">
+                      <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                          <Border Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="0"
+                                  SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                          </Border>
+                        </ControlTemplate>
+                      </Setter.Value>
+                    </Setter>
+                  </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="50"/>
+                  <RowDefinition Height="50"/>
+                  <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
 
-                  <TextBlock Grid.Row="0"
-                                               Text="{DynamicResource Game_ProposedLetterLabel}"
-                                               FontSize="11"
-                                               FontFamily="{StaticResource GeistPixelSquare}"
-                                               Foreground="#00A896"
-                                               FontWeight="Bold"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
+                <UniformGrid Grid.Row="0" Columns="10">
+                  <Button Content="Q"/>
+                  <Button Content="W"/>
+                  <Button Content="E"/>
+                  <Button Content="R"/>
+                  <Button Content="T"/>
+                  <Button Content="Y"/>
+                  <Button Content="U"/>
+                  <Button Content="I"/>
+                  <Button Content="O"/>
+                  <Button Content="P"/>
+                </UniformGrid>
 
-                  <TextBlock x:Name="TextBlockSelectedLetter"
-                                               Grid.Row="1"
-                                               Text="A"
-                                               FontSize="36"
-                                               FontFamily="{StaticResource GeistMono}"
-                                               FontWeight="Bold"
-                                               Foreground="#FF2D66"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
-                </Grid>
-              </Border>
+                <UniformGrid Grid.Row="1" Columns="9" Margin="24,0,24,0">
+                  <Button Content="A"/>
+                  <Button Content="S"/>
+                  <Button Content="D"/>
+                  <Button Content="F"/>
+                  <Button Content="G"/>
+                  <Button Content="H"/>
+                  <Button Content="J"/>
+                  <Button Content="K"/>
+                  <Button Content="L"/>
+                </UniformGrid>
+
+                <UniformGrid Grid.Row="2" Columns="7" Margin="70,0,70,0">
+                  <Button Content="Z"/>
+                  <Button Content="X"/>
+                  <Button Content="C"/>
+                  <Button Content="V"/>
+                  <Button Content="B"/>
+                  <Button Content="N"/>
+                  <Button Content="M"/>
+                </UniformGrid>
+              </Grid>
             </Grid>
           </Grid>
 

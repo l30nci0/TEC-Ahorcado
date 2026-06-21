@@ -33,15 +33,18 @@ namespace LetterClashClient.Views {
     private int pistasMaximas = 0;
     private bool partidaCerrada;
     private bool abandonoEnviado;
+    private bool esPartidaPublica;
     private Window hostWindow;
 
     public GUIGameView() : this(new PalabraDTO { PalabraTexto = "SOFTWARE", Descripcion = "Conjunto de programas y rutinas que permiten a la computadora realizar determinadas tareas.", Idioma = Idiomas.ESPANOL }, "000000") { }
 
     // Host constructor
-    public GUIGameView(PalabraDTO selectedWord, string codigoAcceso) {
+    public GUIGameView(PalabraDTO selectedWord, string codigoAcceso) : this(selectedWord, codigoAcceso, false) { }
+
+    public GUIGameView(PalabraDTO selectedWord, string codigoAcceso, bool esPartidaPublica) {
       InitializeComponent();
       this.isHost = true;
-      this.opponentName = "Usuario 1";
+      this.opponentName = null;
       this.targetWord = selectedWord != null && !string.IsNullOrWhiteSpace(selectedWord.PalabraTexto) 
           ? selectedWord.PalabraTexto.ToUpper() 
           : "SOFTWARE";
@@ -49,17 +52,21 @@ namespace LetterClashClient.Views {
       this.wordDescription = selectedWord != null ? selectedWord.Descripcion : "";
       this.selectedLanguage = selectedWord != null ? selectedWord.Idioma : Idiomas.ESPANOL;
       this.codigoAcceso = string.IsNullOrWhiteSpace(codigoAcceso) ? "------" : codigoAcceso;
+      this.esPartidaPublica = esPartidaPublica;
       this.mistakes = 0;
     }
 
     // Guesser constructor
-    public GUIGameView(string opponentName, string selectedLanguage, string codigoAcceso, int idPalabra) {
+    public GUIGameView(string opponentName, string selectedLanguage, string codigoAcceso, int idPalabra) : this(opponentName, selectedLanguage, codigoAcceso, idPalabra, false) { }
+
+    public GUIGameView(string opponentName, string selectedLanguage, string codigoAcceso, int idPalabra, bool esPartidaPublica) {
       InitializeComponent();
       this.isHost = false;
       this.opponentName = opponentName;
       this.selectedLanguage = selectedLanguage;
       this.codigoAcceso = codigoAcceso;
       this.idPalabra = idPalabra;
+      this.esPartidaPublica = esPartidaPublica;
       this.targetWord = "SOFTWARE";
       this.fullTargetWord = "SOFTWARE";
       this.mistakes = 0;
@@ -76,8 +83,9 @@ namespace LetterClashClient.Views {
         GridGuesserSection.Visibility = Visibility.Collapsed;
 
         TextBlockWord.Text = string.Join(" ", targetWord.ToCharArray());
-        TextBlockAccessCode.Text = codigoAcceso;
-        TextBlockSelectedLetter.Text = "-";
+        StackPanelAccessCodeHost.Visibility = esPartidaPublica ? Visibility.Collapsed : Visibility.Visible;
+        TextBlockAccessCode.Text = esPartidaPublica ? "" : codigoAcceso;
+        ReiniciarTecladoHost();
         
         TextBlockLanguageHost.Text = selectedLanguage == Idiomas.INGLES ? "ENGLISH" : "ESPAÑOL";
         TextBlockWordDescriptionHost.Text = wordDescription;
@@ -88,7 +96,8 @@ namespace LetterClashClient.Views {
         GridHostSection.Visibility = Visibility.Collapsed;
         GridGuesserSection.Visibility = Visibility.Visible;
 
-        TextBlockAccessCodeGuesser.Text = codigoAcceso;
+        StackPanelAccessCodeGuesser.Visibility = esPartidaPublica ? Visibility.Collapsed : Visibility.Visible;
+        TextBlockAccessCodeGuesser.Text = esPartidaPublica ? "" : codigoAcceso;
         TextBlockLanguageGuesser.Text = selectedLanguage == Idiomas.INGLES ? "ENGLISH" : "ESPAÑOL";
         CargarPistaAdivinador();
 
@@ -99,9 +108,7 @@ namespace LetterClashClient.Views {
         UpdateHiddenWord();
       }
 
-      TextBlockOpponent.Text = opponentName;
-      string chatTitle = (string) Application.Current.FindResource("Game_ChatTitleTemplate") ?? "Chat con {0}";
-      TextBlockChatTitle.Text = string.Format(chatTitle, opponentName);
+      ActualizarOponenteEnPantalla();
       TextBoxChatMessages.Text = "";
       UpdateHangmanImage();
       UpdateAttempts();
@@ -140,9 +147,7 @@ namespace LetterClashClient.Views {
     private void OnJugadorSeUnio(JugadorPublicoDTO jugadorDTO) {
       Dispatcher.Invoke(() => {
         opponentName = jugadorDTO.NombreDeUsuario;
-        TextBlockOpponent.Text = opponentName;
-        string chatTitle = (string) Application.Current.FindResource("Game_ChatTitleTemplate") ?? "Chat con {0}";
-        TextBlockChatTitle.Text = string.Format(chatTitle, opponentName);
+        ActualizarOponenteEnPantalla();
         AvatarHelper.AsignarAImageControl(ImageOpponentAvatar, jugadorDTO.Avatar);
       });
     }
@@ -154,9 +159,7 @@ namespace LetterClashClient.Views {
 
         if (isHost) {
           if (letra != '\0') {
-            TextBlockSelectedLetter.Text = letra.ToString().ToUpper();
-          } else {
-            TextBlockSelectedLetter.Text = "-";
+            MarcarLetraHost(letra, esCorrecta);
           }
           TextBlockWord.Text = string.Join(" ", palabraRevelada.ToCharArray());
         } else {
@@ -261,6 +264,77 @@ namespace LetterClashClient.Views {
       string systemName = (string) Application.Current.FindResource("Game_SystemSender") ?? "Sistema";
       TextBoxChatMessages.Text += $"\n{systemName}: {mensaje}";
       TextBoxChatMessages.ScrollToEnd();
+    }
+
+    private void ActualizarOponenteEnPantalla() {
+      bool esperandoJugador = string.IsNullOrWhiteSpace(opponentName);
+      string nombreVisible = esperandoJugador ? "Esperando jugador..." : opponentName;
+      TextBlockOpponent.Text = nombreVisible;
+      ImageOpponentAvatar.Visibility = esperandoJugador ? Visibility.Hidden : Visibility.Visible;
+
+      string chatTitle = (string) Application.Current.FindResource("Game_ChatTitleTemplate") ?? "Chat con {0}";
+      TextBlockChatTitle.Text = esperandoJugador ? "Esperando jugador..." : string.Format(chatTitle, opponentName);
+    }
+
+    private void ReiniciarTecladoHost() {
+      AplicarAButtons(GridHostKeyboard, button => {
+        button.Background = CrearBrocha("#111827");
+        button.Foreground = CrearBrocha("#8A8F98");
+        button.BorderBrush = CrearBrocha("#3A3F48");
+      });
+    }
+
+    private void MarcarLetraHost(char letra, bool esCorrecta) {
+      Button button = BuscarBotonPorContenido(GridHostKeyboard, letra.ToString().ToUpper());
+      if (button == null) {
+        return;
+      }
+
+      string color = esCorrecta ? "#2DD36F" : "#FF2D66";
+      button.Background = CrearBrocha(color);
+      button.BorderBrush = CrearBrocha(color);
+      button.Foreground = CrearBrocha("#050D14");
+    }
+
+    private Button BuscarBotonPorContenido(DependencyObject parent, string contenido) {
+      if (parent == null) {
+        return null;
+      }
+
+      int count = VisualTreeHelper.GetChildrenCount(parent);
+      for (int index = 0; index < count; index++) {
+        DependencyObject child = VisualTreeHelper.GetChild(parent, index);
+        if (child is Button button && button.Content != null && button.Content.ToString().ToUpper() == contenido) {
+          return button;
+        }
+
+        Button found = BuscarBotonPorContenido(child, contenido);
+        if (found != null) {
+          return found;
+        }
+      }
+
+      return null;
+    }
+
+    private void AplicarAButtons(DependencyObject parent, Action<Button> action) {
+      if (parent == null || action == null) {
+        return;
+      }
+
+      int count = VisualTreeHelper.GetChildrenCount(parent);
+      for (int index = 0; index < count; index++) {
+        DependencyObject child = VisualTreeHelper.GetChild(parent, index);
+        if (child is Button button) {
+          action(button);
+        }
+
+        AplicarAButtons(child, action);
+      }
+    }
+
+    private SolidColorBrush CrearBrocha(string color) {
+      return new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
     }
 
     private void RegresarAlMenuDespuesDeAviso() {

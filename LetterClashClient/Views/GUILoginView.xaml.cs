@@ -62,6 +62,14 @@ namespace LetterClashClient.Views {
 
       string identityInput = TextBoxUsername.Text.Trim();
       string passwordInput = PasswordBoxPassword.Password;
+      var usuarioActual = SessionContext.UsuarioLogueado;
+      if (usuarioActual != null &&
+          (string.Equals(usuarioActual.NombreDeUsuario, identityInput, StringComparison.OrdinalIgnoreCase) ||
+           string.Equals(usuarioActual.Correo, identityInput, StringComparison.OrdinalIgnoreCase))) {
+        TextBlockPasswordError.Text = "Este usuario ya tiene una sesión iniciada.";
+        TextBlockPasswordError.Visibility = Visibility.Visible;
+        return;
+      }
 
       try {
         var authService = ServiceProxyManager.GetAutenticacionService();

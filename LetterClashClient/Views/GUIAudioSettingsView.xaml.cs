@@ -55,6 +55,15 @@ namespace LetterClashClient.Views {
       AudioManager.ReproducirEfecto("ConfirmSelection.mp3");
     }
 
+    private void ButtonBackAudio_Click(object sender, RoutedEventArgs e) {
+      if (NavigationService != null && NavigationService.CanGoBack) {
+        NavigationService.GoBack();
+        return;
+      }
+
+      NavigationService?.Navigate(new GUISettingsView());
+    }
+
     private void ButtonMainMenu_Click(object sender, RoutedEventArgs e) {
       NavigationService.Navigate(new GUIGameHubView());
     }

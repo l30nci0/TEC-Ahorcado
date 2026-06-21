@@ -149,7 +149,7 @@ namespace LetterClashClient.Views {
           string successMsg = (string) Application.Current.FindResource("CreateRoom_SuccessCreate") ?? "Partida creada con éxito.";
           string successTitle = (string) Application.Current.FindResource("CreateRoom_SuccessTitle") ?? "Sala Creada";
           MessageBox.Show(successMsg, successTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-          NavigationService.Navigate(new GUIGameView(selectedWord, accessCode));
+          NavigationService.Navigate(new GUIGameView(selectedWord, accessCode, ComboBoxGameType.SelectedIndex == 1));
         } else {
           string errTitle = (string) Application.Current.FindResource("Msg_ErrorTitle") ?? "Error";
           string errCreate = (string) Application.Current.FindResource("CreateRoom_ErrorCreate") ?? "No se pudo crear la partida.";
