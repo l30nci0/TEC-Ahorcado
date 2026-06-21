@@ -1,4 +1,4 @@
-<Page x:Class="LetterClashClient.Views.GUIProfileView"
+<Page xmlns:controls="clr-namespace:LetterClashClient.Controls" x:Class="LetterClashClient.Views.GUIProfileView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -419,6 +419,9 @@
                 </DrawingBrush.Drawing>
             </DrawingBrush>
         </Grid.Background>
+
+        <!-- Starfield Background -->
+        <controls:StarfieldBackground />
 
         <!-- Main Shell Grid -->
         <Grid>
